@@ -18,7 +18,7 @@ import AuthorizedRoute from './routes/authorized-route'
 import AuthorizationCallbackRoute from "./routes/authorization-callback-route"
 import LogOutCallbackRoute from './routes/logout-callback-route'
 import AuthButton from './components/auth-button'
-import DefaultRoute from './routes/default-route'
+import NotFoundPage from './pages/not-found-page'
 import { connect } from 'react-redux'
 import { AjaxLoader, OPSessionChecker } from "openstack-uicore-foundation/lib/components";
 import { getBackURL, onUserAuth, doLogin, doLogout, initLogOut, getUserInfo } from "openstack-uicore-foundation/lib/methods";
@@ -61,7 +61,7 @@ class App extends React.PureComponent {
         let profile_pic = member ? member.pic : '';
         return (
             <Router history={history}>
-                <div>
+                <div className="container">
                     <AjaxLoader show={ this.props.loading } size={ 120 }/>
                     {isLoggedUser &&
                     <OPSessionChecker
@@ -69,19 +69,23 @@ class App extends React.PureComponent {
                         idpBaseUrl={window.IDP_BASE_URL}
                     />
                     }
-                    <div className="header">
-                        <div className={"header-title " + (isLoggedUser ? '' : 'center')}>
+                    <div className="header row">
+                        <div className="header-logo col-md-2">LOGO</div>
+                        <div className="header-title col-md-8">
                             <a href="/app/start">Summit Registration</a>
+                        </div>
+                        <div className="col-md-2">
                             <AuthButton isLoggedUser={isLoggedUser} picture={profile_pic} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut}/>
                         </div>
                     </div>
                     <Switch>
-                        <AuthorizedRoute isLoggedUser={isLoggedUser} backUrl={backUrl} path="/app" component={PrimaryLayout} />
+                        <Route path="/app/:summit_slug" component={PrimaryLayout}/>
+                        <AuthorizedRoute isLoggedUser={isLoggedUser} backUrl={backUrl} path="/auth/login" component={PrimaryLayout} />
                         <AuthorizationCallbackRoute onUserAuth={onUserAuth} path='/auth/callback' getUserInfo={getUserInfo} />
                         <LogOutCallbackRoute doLogout={doLogout}  path='/auth/logout'/>
-                        <Route path="/logout" render={props => (<p>404 - Not Found</p>)}/>
-                        <Route path="/404" render={props => (<p>404 - Not Found</p>)}/>
-                        <DefaultRoute isLoggedUser={isLoggedUser} />
+                        <Route path="/logout" component={NotFoundPage} />
+                        <Route path="/404" component={NotFoundPage} />
+                        <Route component={NotFoundPage} />
                     </Switch>
                 </div>
             </Router>

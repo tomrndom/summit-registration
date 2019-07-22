@@ -42,7 +42,7 @@ export default class AuthButton extends React.Component {
                         <img src={picture} />
                     </div>
                     {showLogOut &&
-                    <button className="btn btn-default logout" onClick={() => { initLogOut(); }}>
+                    <button className="btn btn-default btn-xs logout" onClick={() => { initLogOut(); }}>
                         {T.translate("landing.sign_out")}
                     </button>
                     }
@@ -50,10 +50,8 @@ export default class AuthButton extends React.Component {
             );
         } else {
             return (
-                <div className="login">
-                    {T.translate("landing.not_logged_in")}
-                    <br/><br/>
-                    <button className="btn btn-primary btn-lg" onClick={() => { doLogin(); }}>
+                <div className="user-menu">
+                    <button className="btn btn-primary btn-xs login" onClick={() => { doLogin(); }}>
                         {T.translate("landing.log_in")}
                     </button>
                 </div>

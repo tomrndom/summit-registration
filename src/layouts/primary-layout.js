@@ -14,33 +14,63 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import LandingPage from '../pages/landing-page'
+import { getSummitBySlug } from '../actions/base-actions';
+import StepOnePage from '../pages/step-one-page'
+import StepTwoPage from '../pages/step-two-page'
+import StepThreePage from '../pages/step-three-page'
 
 class PrimaryLayout extends React.Component {
 
-  render(){
-    let { location } = this.props;
+    componentDidMount() {
+        let summitSlug = this.props.match.params.summit_slug;
 
-    return(
-      <div className="primary-layout">
-        <main id="page-wrap">
-          <Switch>
-              <Route exact path="/app/start" component={LandingPage}/>
-          </Switch>
-        </main>
-      </div>
-    );
-  }
+        if (summitSlug) {
+            this.props.getSummitBySlug(summitSlug);
+        }
+    }
+
+    componentWillReceiveProps(newProps) {
+        let oldId = this.props.match.params.summit_slug;
+        let newId = newProps.match.params.summit_slug;
+
+        if (newId != oldId) {
+            if (newId) {
+                this.props.getSummitBySlug(newId);
+            }
+        }
+    }
+
+    render(){
+        let { location, match, summit } = this.props;
+        let summitSlug = this.props.match.params.summit_slug;
+
+        //if (!summit || summitSlug != summit.slug) return (<div></div>);
+
+        return(
+            <div className="primary-layout">
+                <main id="page-wrap">
+                    <Switch>
+                        <Route exact path={`${match.url}/start`} component={StepOnePage}/>
+                        <Route exact path={`${match.url}/confirm`} component={StepTwoPage}/>
+                        <Route exact path={`${match.url}/checkout`} component={StepThreePage}/>
+                        <Route render={props => (<Redirect to={`${match.url}/start`} />)}/>
+                    </Switch>
+                </main>
+            </div>
+        );
+    }
 
 }
 
-const mapStateToProps = ({  }) => ({
-
+const mapStateToProps = ({ summitState  }) => ({
+    summit: summitState.summit
 })
 
 export default connect(
     mapStateToProps,
-    {}
+    {
+        getSummitBySlug
+    }
 )(PrimaryLayout);
 
 

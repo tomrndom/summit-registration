@@ -11,33 +11,27 @@
  * limitations under the License.
  **/
 
-import { START_LOADING, STOP_LOADING, LOGOUT_USER, RECEIVE_COUNTRIES } from "openstack-uicore-foundation/lib/actions";
+import { LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
+import {RECEIVE_ORDER} from "../actions/order-actions";
+
 
 const DEFAULT_STATE = {
-    loading: false,
-    countries: []
+    ticketSelection: [],
 }
 
-const baseReducer = (state = DEFAULT_STATE, action) => {
+const orderReducer = (state = DEFAULT_STATE, action) => {
     const { type, payload } = action
 
     switch(type){
         case LOGOUT_USER:
             return DEFAULT_STATE;
-        case START_LOADING:
-            console.log('START_LOADING')
-            return {...state, loading: true};
+        case RECEIVE_ORDER:
+            return state;
             break;
-        case STOP_LOADING:
-            console.log('STOP_LOADING')
-            return {...state, loading: false};
-            break;
-        case RECEIVE_COUNTRIES:
-            return {...state, countries: payload};
         default:
             return state;
             break;
     }
 }
 
-export default baseReducer
+export default orderReducer

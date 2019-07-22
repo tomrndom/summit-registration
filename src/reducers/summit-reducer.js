@@ -11,33 +11,39 @@
  * limitations under the License.
  **/
 
-import { START_LOADING, STOP_LOADING, LOGOUT_USER, RECEIVE_COUNTRIES } from "openstack-uicore-foundation/lib/actions";
+import { LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
+import {RECEIVE_SUMMIT, REQUEST_SUMMIT} from "../actions/base-actions";
+
 
 const DEFAULT_STATE = {
-    loading: false,
-    countries: []
+    summit: null,
 }
 
-const baseReducer = (state = DEFAULT_STATE, action) => {
+const summitReducer = (state = DEFAULT_STATE, action) => {
     const { type, payload } = action
 
     switch(type){
         case LOGOUT_USER:
             return DEFAULT_STATE;
-        case START_LOADING:
-            console.log('START_LOADING')
-            return {...state, loading: true};
-            break;
-        case STOP_LOADING:
-            console.log('STOP_LOADING')
-            return {...state, loading: false};
-            break;
-        case RECEIVE_COUNTRIES:
-            return {...state, countries: payload};
+        case REQUEST_SUMMIT:
+            return state;
+        break;
+        case RECEIVE_SUMMIT: {
+            let entity = {...payload.response};
+
+            for(var key in entity) {
+                if(entity.hasOwnProperty(key)) {
+                    entity[key] = (entity[key] == null) ? '' : entity[key] ;
+                }
+            }
+
+            return {...state, summit: entity};
+        }
+        break;
         default:
             return state;
             break;
     }
 }
 
-export default baseReducer
+export default summitReducer

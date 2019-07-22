@@ -24,8 +24,7 @@ import {
 } from 'openstack-uicore-foundation/lib/methods';
 
 
-export const REQUEST_SUMMIT           = 'REQUEST_SUMMIT';
-export const RECEIVE_SUMMIT           = 'RECEIVE_SUMMIT';
+export const RECEIVE_ORDER  = 'RECEIVE_ORDER';
 
 
 
@@ -37,7 +36,7 @@ export const getSummitBySlug = (slug) => (dispatch, getState) => {
         expand: ''
     };
 
-    /*return getRequest(
+    return getRequest(
         createAction(REQUEST_SUMMIT),
         createAction(RECEIVE_SUMMIT),
         `${window.API_BASE_URL}/api/public/v1/summits/all/${slug}`,
@@ -45,9 +44,7 @@ export const getSummitBySlug = (slug) => (dispatch, getState) => {
     )(params)(dispatch).then(() => {
             dispatch(stopLoading());
         }
-    );*/
-
-    dispatch(stopLoading());
+    );
 }
 
 

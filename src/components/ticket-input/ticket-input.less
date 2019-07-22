@@ -1,0 +1,61 @@
+@import '../../styles/constants.less';
+
+
+.ticket-wrapper {
+  background-color: @lblue_color_1;
+  border: 2px solid @lblue_color_2;
+  border-radius: 4px;
+  margin-top: 20px;
+  padding: 10px 0;
+  width: 80%;
+
+  .ticket-type {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .ticket-price {
+    font-size: 25px;
+  }
+
+  .ticket-expiration {
+    font-size: 12px;
+    margin-top: 14px;
+  }
+
+  .ticket-quantity {
+    text-align: right;
+
+    .quantity-value {
+      display: inline-block;
+      width: 38px;
+      background-color: #eef4f9;
+      text-align: center;
+      height: 36px;
+      line-height: 34px;
+      font-size: 20px;
+      border-top: 1px solid #c6e3fd;
+      border-bottom: 1px solid #c6e3fd;
+      position: relative;
+      top: 3px;
+    }
+
+    .btn {
+      background-color: #61b2f7;
+      color: white;
+      border: none;
+      width: 42px;
+      height: 36px;
+
+      &:first-child {
+        border-bottom-right-radius: unset;
+        border-top-right-radius: unset;
+      }
+
+      &:last-child {
+        border-bottom-left-radius: unset;
+        border-top-left-radius: unset;
+      }
+    }
+  }
+}

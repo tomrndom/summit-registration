@@ -12,27 +12,29 @@
  **/
 
 import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import T from 'i18n-react/dist/i18n-react'
 
-class DefaultRoute extends React.Component {
+
+export default class StepRow extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+        };
+
+    }
 
     render() {
-        const { isLoggedUser, ...rest } = this.props;
+        let {step} = this.props;
+
         return (
-            <Route {...rest} render={props => {
-                if(isLoggedUser)
-                    return (<Redirect
-                            exact
-                            to={{
-                                pathname: '/app/dashboard',
-                                state: { from: props.location }
-                            }}
-                    />)
-                 return null;
-            }} />
-        )
+            <div className="row step-row">
+                <div className="col-md-12">
+                    Step {step} of 4
+                </div>
+            </div>
+        );
+
     }
 }
-
-
-export default DefaultRoute;

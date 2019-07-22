@@ -16,10 +16,10 @@ import { connect } from 'react-redux';
 import T from "i18n-react/dist/i18n-react";
 
 
-//import '../styles/landing-page.less';
+//import '../styles/not-found-page.less';
 
 
-class LandingPage extends React.Component {
+export default class NotFoundPage extends React.Component {
 
     constructor(props){
         super(props);
@@ -38,22 +38,11 @@ class LandingPage extends React.Component {
         return (
             <div className="container">
                 <div className="row">
-                    LANDING
+                    NOT FOUND
                 </div>
             </div>
         );
     }
 }
 
-const mapStateToProps = ({ loggedUserState }) => ({
-    member: loggedUserState.member,
-    accessToken: loggedUserState.accessToken,
-})
-
-export default connect (
-    mapStateToProps,
-    {
-
-    }
-)(LandingPage);
 

@@ -14,6 +14,8 @@
 import { createStore, applyMiddleware, compose} from 'redux';
 import { loggedUserReducer } from "openstack-uicore-foundation/lib/reducers"
 import baseReducer from './reducers/base-reducer'
+import summitReducer from './reducers/summit-reducer'
+import orderReducer from './reducers/order-reducer'
 
 import thunk from 'redux-thunk';
 import { persistStore, persistCombineReducers } from 'redux-persist'
@@ -27,6 +29,8 @@ const config = {
 const reducers = persistCombineReducers(config, {
   loggedUserState: loggedUserReducer,
   baseState: baseReducer,
+  summitState: summitReducer,
+  orderState: orderReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

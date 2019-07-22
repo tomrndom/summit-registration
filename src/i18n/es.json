@@ -11,7 +11,17 @@
     "server_error"              : "There was a problem with our server, please contact admin.",
     "not_allowed"               : "You are not allowed here, please login with another user to access this page."
   },
-  "menu": {
-    "survey_analytics"  : "Survey Analytics"
+  "general": {
+    "continue": "Continue",
+    "back" : "Back"
+  },
+  "step_one": {
+    "choose_tickets"  : "Choose your tickets",
+    "choose_tickets_desc"  : "a description",
+    "expiration"  : "Promotional pricing available until ",
+    "about_title"  : "About the event",
+    "about_desc"  : "a description",
+    "directions"  : "Get Directions",
+    "calendar"  : "Add to Calendar"
   }
 }

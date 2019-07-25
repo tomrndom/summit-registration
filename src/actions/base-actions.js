@@ -33,6 +33,8 @@ export const getSummitBySlug = (slug) => (dispatch, getState) => {
 
     dispatch(startLoading());
 
+    dispatch(createAction(REQUEST_SUMMIT)());
+
     let params = {
         expand: ''
     };

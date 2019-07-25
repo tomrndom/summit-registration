@@ -25,7 +25,12 @@ import {
 
 
 export const RECEIVE_ORDER  = 'RECEIVE_ORDER';
+export const CHANGE_ORDER  = 'CHANGE_ORDER';
 
+
+export const handleOrderChange = (order) => (dispatch, getState) => {
+    dispatch(createAction(CHANGE_ORDER)({order}));
+}
 
 
 export const getSummitBySlug = (slug) => (dispatch, getState) => {

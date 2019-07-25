@@ -14,6 +14,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import T from "i18n-react/dist/i18n-react";
+import EventInfo from "../components/event-info";
 import TicketInput from "../components/ticket-input";
 import StepRow from '../components/step-row';
 import SubmitButtons from "../components/submit-buttons";
@@ -28,7 +29,7 @@ class StepOnePage extends React.Component {
         super(props);
 
         this.state = {
-            ticketSelection: props.ticketSelection
+            ticketSelection: props.order.ticketSelection
         };
 
         this.saveTicketQuantity = this.saveTicketQuantity.bind(this);
@@ -58,25 +59,13 @@ class StepOnePage extends React.Component {
                                 <p>{T.translate("step_one.choose_tickets_desc")}</p>
                             </div>
                             <div className="col-md-12">
-                                <TicketInput summit={summit} selection={ticketSelection} save={this.saveTicketQuantity} />
+                                <TicketInput ticketTypes={summit.ticketTypes} selection={ticketSelection} save={this.saveTicketQuantity} />
                             </div>
                         </div>
 
                     </div>
-                    <div className="col-md-4 about-event-wrapper">
-                        <div className="row">
-                            <div className="col-md-12">
-                                <h3>{T.translate("step_one.about_title")}</h3>
-                                <p>{T.translate("step_one.about_desc")}</p>
-                                <a>{T.translate("step_one.directions")}</a><br/>
-                                <a>{T.translate("step_one.calendar")}</a>
-                                <hr/>
-                                <a>twitter</a><br/>
-                                <a>facebook</a><br/>
-                                <a>mail</a><br/>
-                                <a>web</a><br/>
-                            </div>
-                        </div>
+                    <div className="col-md-4">
+                        <EventInfo />
                     </div>
                 </div>
                 <SubmitButtons step={2} />
@@ -88,7 +77,7 @@ class StepOnePage extends React.Component {
 const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
     member: loggedUserState.member,
     summit: summitState.summit,
-    ...orderState
+    order:  orderState
 })
 
 export default connect (

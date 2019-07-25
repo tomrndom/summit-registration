@@ -16,17 +16,17 @@ import { connect } from 'react-redux';
 import T from "i18n-react/dist/i18n-react";
 import OrderSummary from "../components/order-summary";
 import EventInfo from "../components/event-info";
+import BasicInfoForm from '../components/basic-info-form';
+import TicketInfoForm from '../components/ticket-info-form';
 import StepRow from '../components/step-row';
 import { saveOrderDetails, handleOrderChange } from '../actions/order-actions'
 import {findElementPos} from "openstack-uicore-foundation/lib/methods";
-import PaymentInfoForm from "../components/payment-info-form";
-import BillingInfoForm from "../components/billing-info-form";
 
 
 //import '../styles/step-two-page.less';
 
 
-class StepThreePage extends React.Component {
+class StepFourPage extends React.Component {
 
     constructor(props){
         super(props);
@@ -35,50 +35,25 @@ class StepThreePage extends React.Component {
 
         };
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-
     }
 
-    componentWillReceiveProps(nextProps) {
-        //scroll to first error
-        if(Object.keys(nextProps.errors).length > 0) {
-            let firstError = Object.keys(nextProps.errors)[0]
-            let firstNode = document.getElementById(firstError);
-            if (firstNode) window.scrollTo(0, findElementPos(firstNode));
-        }
-    }
-
-    handleChange(ev) {
-        let order = {...this.props.order};
-        let errors = {...this.props.errors};
-        let {value, id} = ev.target;
-
-        errors[id] = '';
-        order[id] = value;
-
-        this.props.handleOrderChange(order, errors)
-    }
-
-    handleSubmit(ev) {
-        ev.preventDefault();
-        this.props.saveOrderDetails();
-    }
 
     render(){
         let {summit, order, errors} = this.props;
 
         return (
-            <div className="step-three">
-                <StepRow step={2} />
+            <div className="step-four">
                 <div className="row">
-                    <div className="col-md-8">
-                        <PaymentInfoForm order={order} summit={summit} errors={errors} />
-                        <BillingInfoForm order={order} summit={summit} errors={errors} />
-                    </div>
-                    <div className="col-md-4">
-                        <OrderSummary order={order} summit={summit} />
-                        <EventInfo />
+                    <div className="col-md-12">
+                        <h1>{T.translate("step_four.congratulations")}</h1>
+                        <p>{T.translate("step_four.subtitle")}</p>
+                        <p>{T.translate("step_four.text")}</p>
+                        <div className="order_no_box">
+                            <p>{T.translate("step_four.order_no")}</p>
+                        </div>
+                        <button className="btn btn-primary manage-btn">
+                            {T.translate("step_four.manage")}
+                        </button>
                     </div>
                 </div>
             </div>
@@ -99,5 +74,5 @@ export default connect (
         saveOrderDetails,
         handleOrderChange
     }
-)(StepThreePage);
+)(StepFourPage);
 

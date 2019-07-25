@@ -16,7 +16,13 @@ import {RECEIVE_SUMMIT, REQUEST_SUMMIT} from "../actions/base-actions";
 
 
 const DEFAULT_STATE = {
-    summit: null,
+    summit: {
+        slug: 'shanghai-2019',
+        ticketTypes: [
+            {id: 1, name: 'Full Pass', price: 800},
+            {id: 2, name: 'One Day Pass', price: 300}
+        ]
+    }
 }
 
 const summitReducer = (state = DEFAULT_STATE, action) => {
@@ -26,8 +32,8 @@ const summitReducer = (state = DEFAULT_STATE, action) => {
         case LOGOUT_USER:
             return DEFAULT_STATE;
         case REQUEST_SUMMIT:
-            return state;
-        break;
+            return DEFAULT_STATE;
+            break;
         case RECEIVE_SUMMIT: {
             let entity = {...payload.response};
 

@@ -14,8 +14,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import T from "i18n-react/dist/i18n-react";
-
+import OrderSummary from "../components/order-summary";
+import EventInfo from "../components/event-info";
+import BasicInfoForm from '../components/basic-info-form';
+import TicketInfoForm from '../components/ticket-info-form';
 import StepRow from '../components/step-row';
+import { saveOrderDetails, handleOrderChange } from '../actions/order-actions'
+import {findElementPos} from "openstack-uicore-foundation/lib/methods";
 
 
 //import '../styles/step-two-page.less';
@@ -29,36 +34,72 @@ class StepTwoPage extends React.Component {
         this.state = {
 
         };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
-    componentWillMount() {
+    componentWillReceiveProps(nextProps) {
+        //scroll to first error
+        if(Object.keys(nextProps.errors).length > 0) {
+            let firstError = Object.keys(nextProps.errors)[0]
+            let firstNode = document.getElementById(firstError);
+            if (firstNode) window.scrollTo(0, findElementPos(firstNode));
+        }
+    }
 
+    handleChange(ev) {
+        let order = {...this.props.order};
+        let errors = {...this.props.errors};
+        let {value, id} = ev.target;
+
+        errors[id] = '';
+        order[id] = value;
+
+        this.props.handleOrderChange(order, errors)
+    }
+
+    handleSubmit(ev) {
+        ev.preventDefault();
+        this.props.saveOrderDetails();
     }
 
     render(){
+        let {summit, order, errors} = this.props;
 
         return (
-            <React.Fragment>
+            <div className="step-two">
                 <StepRow step={2} />
                 <div className="row">
-                    <div className="col-md-12">
-                        STEP 2
+                    <div className="col-md-8">
+                        <BasicInfoForm order={order} errors={errors} onChange={this.handleChange}/>
+                        {summit.ticketTypes.map(t => (
+                            <TicketInfoForm ticketType={t} order={order} errors={errors} onChange={this.handleChange}/>
+                        ))}
+                    </div>
+                    <div className="col-md-4">
+                        <OrderSummary order={order} summit={summit} />
+                        <EventInfo />
                     </div>
                 </div>
-            </React.Fragment>
+            </div>
         );
     }
 }
 
-const mapStateToProps = ({ loggedUserState }) => ({
+const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
     member: loggedUserState.member,
-    accessToken: loggedUserState.accessToken,
+    summit: summitState.summit,
+    order:  orderState.order,
+    errors:  orderState.errors
 })
 
 export default connect (
     mapStateToProps,
     {
-
+        saveOrderDetails,
+        handleOrderChange
     }
 )(StepTwoPage);
 

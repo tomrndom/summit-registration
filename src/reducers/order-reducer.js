@@ -12,11 +12,20 @@
  **/
 
 import { LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
-import {RECEIVE_ORDER} from "../actions/order-actions";
+import {RECEIVE_ORDER, CHANGE_ORDER} from "../actions/order-actions";
 
+
+const DEFAULT_ENTITY = {
+    first_name: '',
+    last_name: '',
+    email: '',
+    company: null,
+    tickets: [],
+}
 
 const DEFAULT_STATE = {
-    ticketSelection: [],
+    order: DEFAULT_ENTITY,
+    errors: {}
 }
 
 const orderReducer = (state = DEFAULT_STATE, action) => {
@@ -27,6 +36,10 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             return DEFAULT_STATE;
         case RECEIVE_ORDER:
             return state;
+            break;
+        case CHANGE_ORDER:
+            let {order} = payload;
+            return {...state, order: order};
             break;
         default:
             return state;

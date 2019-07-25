@@ -43,12 +43,7 @@ export default class TicketInput extends React.Component {
     }
 
     render() {
-        let {summit, selection} = this.props;
-
-        let ticketTypes = [
-            {id: 1, name: 'Full Pass', price: 800},
-            {id: 2, name: 'One Day Pass', price: 300}
-        ];
+        let {selection, ticketTypes} = this.props;
 
         return (
             <div className="ticket-input-box">
@@ -56,25 +51,27 @@ export default class TicketInput extends React.Component {
                     let quantity = selection.hasOwnProperty(t.id) ? selection[t.id] : 0;
 
                     return (
-                        <div className="ticket-wrapper row">
-                            <div className="col-md-8">
-                                <div className="ticket-type">{t.name}</div>
-                                <div className="ticket-price">
-                                    ${t.price}
+                        <div className="ticket-wrapper">
+                            <div className="row">
+                                <div className="col-md-8">
+                                    <div className="ticket-type">{t.name}</div>
+                                    <div className="ticket-price">
+                                        ${t.price}
+                                    </div>
+                                    <div className="ticket-expiration">
+                                        {T.translate("step_one.expiration")} July 15, 2019
+                                    </div>
                                 </div>
-                                <div className="ticket-expiration">
-                                    {T.translate("step_one.expiration")} July 15, 2019
-                                </div>
-                            </div>
-                            <div className="col-md-4">
-                                <div className="form-inline ticket-quantity">
-                                    <button className="btn btn-default" onClick={this.changeQuantity.bind(this, t.id, true)}>
-                                        <i className="fa fa-plus"></i>
-                                    </button>
-                                    <div className="quantity-value">{quantity}</div>
-                                    <button className="btn btn-default" onClick={this.changeQuantity.bind(this, t.id, false)}>
-                                        <i className="fa fa-minus"></i>
-                                    </button>
+                                <div className="col-md-4">
+                                    <div className="form-inline ticket-quantity">
+                                        <button className="btn btn-default" onClick={this.changeQuantity.bind(this, t.id, true)}>
+                                            <i className="fa fa-plus"></i>
+                                        </button>
+                                        <div className="quantity-value">{quantity}</div>
+                                        <button className="btn btn-default" onClick={this.changeQuantity.bind(this, t.id, false)}>
+                                            <i className="fa fa-minus"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

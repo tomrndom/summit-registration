@@ -28,6 +28,8 @@ export default class SubmitButtons extends React.Component {
     render() {
         let {step} = this.props;
 
+        if (step > 3) return null;
+
         return (
             <div className="row submit-buttons-wrapper">
                 <div className="col-md-12">
@@ -37,9 +39,19 @@ export default class SubmitButtons extends React.Component {
                         {T.translate("general.back")}
                     </a>
                     }
+
+                    {step < 3 &&
                     <button className="btn btn-primary continue-btn">
                         {T.translate("general.continue")}
                     </button>
+                    }
+
+                    {step == 3 &&
+                    <button className="btn btn-primary continue-btn">
+                        {T.translate("general.pay_now")}
+                    </button>
+                    }
+
                 </div>
             </div>
         );

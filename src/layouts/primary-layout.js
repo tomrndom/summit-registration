@@ -18,10 +18,11 @@ import { getSummitBySlug } from '../actions/base-actions';
 import StepOnePage from '../pages/step-one-page'
 import StepTwoPage from '../pages/step-two-page'
 import StepThreePage from '../pages/step-three-page'
+import StepFourPage from '../pages/step-four-page'
 
 class PrimaryLayout extends React.Component {
 
-    componentDidMount() {
+    componentWillMount() {
         let summitSlug = this.props.match.params.summit_slug;
 
         if (summitSlug) {
@@ -44,15 +45,16 @@ class PrimaryLayout extends React.Component {
         let { location, match, summit } = this.props;
         let summitSlug = this.props.match.params.summit_slug;
 
-        //if (!summit || summitSlug != summit.slug) return (<div></div>);
+        if (!summit || summitSlug != summit.slug) return (<div></div>);
 
         return(
             <div className="primary-layout">
                 <main id="page-wrap">
                     <Switch>
                         <Route exact path={`${match.url}/start`} component={StepOnePage}/>
-                        <Route exact path={`${match.url}/confirm`} component={StepTwoPage}/>
+                        <Route exact path={`${match.url}/details`} component={StepTwoPage}/>
                         <Route exact path={`${match.url}/checkout`} component={StepThreePage}/>
+                        <Route exact path={`${match.url}/done`} component={StepFourPage}/>
                         <Route render={props => (<Redirect to={`${match.url}/start`} />)}/>
                     </Switch>
                 </main>

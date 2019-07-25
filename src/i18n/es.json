@@ -12,16 +12,60 @@
     "not_allowed"               : "You are not allowed here, please login with another user to access this page."
   },
   "general": {
-    "continue": "Continue",
-    "back" : "Back"
+    "continue"      : "Continue",
+    "back"          : "Back"
+  },
+  "order_summary": {
+    "order_summary"   : "Order Summary",
+    "discounts"       : "Discounts",
+    "total"           : "Total"
+  },
+  "event_info": {
+    "about_title"   : "About the event",
+    "about_desc"    : "a description",
+    "directions"    : "Get Directions",
+    "calendar"      : "Add to Calendar"
   },
   "step_one": {
-    "choose_tickets"  : "Choose your tickets",
-    "choose_tickets_desc"  : "a description",
-    "expiration"  : "Promotional pricing available until ",
-    "about_title"  : "About the event",
-    "about_desc"  : "a description",
-    "directions"  : "Get Directions",
-    "calendar"  : "Add to Calendar"
+    "choose_tickets"        : "Choose your tickets",
+    "choose_tickets_desc"   : "a description",
+    "expiration"            : "Promotional pricing available until "
+  },
+  "step_two": {
+    "basic_info"        : "Basic Information",
+    "required"          : "Required fields",
+    "have_account"      : "Do you have an FNid account?",
+    "sign_in"           : "Sign in to your account",
+    "first_name"        : "First Name",
+    "last_name"         : "Last Name",
+    "email"             : "Email",
+    "company"           : "Company",
+    "tickets"           : "Tickets",
+    "ticket"            : "Ticket",
+    "add_ticket"        : "Add Ticket",
+    "no_tickets"        : "No tickets selected."
+  },
+  "step_three": {
+    "payment_info"        : "Payment Information",
+    "required"            : "Required fields",
+    "payment_subtitle"    : "a subtitle...",
+    "cardholder_name"     : "Cardholder Name",
+    "card_number"         : "Card Number",
+    "expiration"          : "Expiration & Code",
+    "billing_info"        : "Billing Information",
+    "billing_subtitle"    : "a subtitle...",
+    "billing_country"     : "Country",
+    "billing_address"     : "Address",
+    "billing_address_two" : "Address 2",
+    "billing_city"        : "City",
+    "billing_state"       : "State",
+    "billing_zipcode"     : "ZIP Code"
+  },
+  "step_four": {
+    "congratulations"     : "Congratulations",
+    "subtitle"            : "a subtitle",
+    "text"                : "blah blah a text",
+    "order_no"            : "ORDER NO",
+    "manage"              : "Manage Your Tickets"
   }
 }

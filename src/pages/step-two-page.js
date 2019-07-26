@@ -14,16 +14,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import T from "i18n-react/dist/i18n-react";
+import moment from "moment";
 import OrderSummary from "../components/order-summary";
 import EventInfo from "../components/event-info";
 import BasicInfoForm from '../components/basic-info-form';
 import TicketInfoForm from '../components/ticket-info-form';
 import StepRow from '../components/step-row';
+import SubmitButtons from "../components/submit-buttons";
 import { saveOrderDetails, handleOrderChange } from '../actions/order-actions'
 import {findElementPos} from "openstack-uicore-foundation/lib/methods";
 
 
-//import '../styles/step-two-page.less';
+import '../styles/step-two-page.less';
 
 
 class StepTwoPage extends React.Component {
@@ -36,6 +38,9 @@ class StepTwoPage extends React.Component {
         };
 
         this.handleChange = this.handleChange.bind(this);
+        this.handleTicketInfoChange = this.handleTicketInfoChange.bind(this);
+        this.handleAddTicket = this.handleAddTicket.bind(this);
+        this.handleRemoveTicket = this.handleRemoveTicket.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
     }
@@ -49,6 +54,23 @@ class StepTwoPage extends React.Component {
         }
     }
 
+    handleTicketInfoChange(ticketId, field, value) {
+        let order = {...this.props.order};
+        let randomNumber = moment().valueOf();
+
+        order.tickets.forEach(tix => {
+            if (tix.id == ticketId) {
+                if (field == 'coupon') {
+                    tix.coupon = {id: randomNumber, code: value, percentage: 100};
+                } else {
+                    tix[field] = value;
+                }
+            }
+        });
+
+        this.props.handleOrderChange(order)
+    }
+
     handleChange(ev) {
         let order = {...this.props.order};
         let errors = {...this.props.errors};
@@ -58,6 +80,21 @@ class StepTwoPage extends React.Component {
         order[id] = value;
 
         this.props.handleOrderChange(order, errors)
+    }
+
+    handleAddTicket(ticketTypeId) {
+        let order = {...this.props.order};
+        let randomNumber = moment().valueOf();
+
+        order.tickets.push({id: randomNumber, tix_type_id: ticketTypeId});
+        this.props.handleOrderChange(order)
+    }
+
+    handleRemoveTicket(ticketId) {
+        let order = {...this.props.order};
+
+        order.tickets = order.tickets.filter(t => t.id != ticketId);
+        this.props.handleOrderChange(order)
     }
 
     handleSubmit(ev) {
@@ -74,8 +111,16 @@ class StepTwoPage extends React.Component {
                 <div className="row">
                     <div className="col-md-8">
                         <BasicInfoForm order={order} errors={errors} onChange={this.handleChange}/>
-                        {summit.ticketTypes.map(t => (
-                            <TicketInfoForm ticketType={t} order={order} errors={errors} onChange={this.handleChange}/>
+                        {summit.ticketTypes.map((t,i) => (
+                            <TicketInfoForm
+                                key={`tixinfo_${t.id}_${i}`}
+                                ticketType={t}
+                                order={order}
+                                errors={errors}
+                                onAddTicket={this.handleAddTicket}
+                                onRemoveTicket={this.handleRemoveTicket}
+                                onChange={this.handleTicketInfoChange}
+                            />
                         ))}
                     </div>
                     <div className="col-md-4">
@@ -83,6 +128,7 @@ class StepTwoPage extends React.Component {
                         <EventInfo />
                     </div>
                 </div>
+                <SubmitButtons step={2} />
             </div>
         );
     }

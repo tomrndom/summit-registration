@@ -14,10 +14,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import T from "i18n-react/dist/i18n-react";
+import moment from "moment";
 import EventInfo from "../components/event-info";
 import TicketInput from "../components/ticket-input";
 import StepRow from '../components/step-row';
 import SubmitButtons from "../components/submit-buttons";
+import { handleOrderChange } from '../actions/order-actions'
 
 
 import '../styles/step-one-page.less';
@@ -29,24 +31,35 @@ class StepOnePage extends React.Component {
         super(props);
 
         this.state = {
-            ticketSelection: props.order.ticketSelection
         };
 
-        this.saveTicketQuantity = this.saveTicketQuantity.bind(this);
+        this.handleAddTicket = this.handleAddTicket.bind(this);
+        this.handleSubstractTicket = this.handleSubstractTicket.bind(this);
     }
 
     componentWillMount() {
 
     }
 
-    saveTicketQuantity(selection) {
-        this.setState({ticketSelection: selection})
+    handleAddTicket(ticketTypeId) {
+        let order = {...this.props.order};
+        let randomNumber = moment().valueOf();
+
+        order.tickets.push({id: randomNumber, tix_type_id: ticketTypeId});
+        this.props.handleOrderChange(order)
+    }
+
+    handleSubstractTicket(ticketTypeId) {
+        let order = {...this.props.order};
+        let idx = order.tickets.findIndex(t => t.tix_type_id == ticketTypeId);
+
+        order.tickets.splice(idx,1);
+        this.props.handleOrderChange(order)
     }
 
     render(){
 
-        let {summit} = this.props;
-        let {ticketSelection} = this.state;
+        let {summit, order} = this.props;
 
         return (
             <div className="step-one">
@@ -59,7 +72,12 @@ class StepOnePage extends React.Component {
                                 <p>{T.translate("step_one.choose_tickets_desc")}</p>
                             </div>
                             <div className="col-md-12">
-                                <TicketInput ticketTypes={summit.ticketTypes} selection={ticketSelection} save={this.saveTicketQuantity} />
+                                <TicketInput
+                                    ticketTypes={summit.ticketTypes}
+                                    selection={order.tickets}
+                                    add={this.handleAddTicket}
+                                    substract={this.handleSubstractTicket}
+                                />
                             </div>
                         </div>
 
@@ -68,7 +86,7 @@ class StepOnePage extends React.Component {
                         <EventInfo />
                     </div>
                 </div>
-                <SubmitButtons step={2} />
+                <SubmitButtons step={1} />
             </div>
         );
     }
@@ -77,13 +95,14 @@ class StepOnePage extends React.Component {
 const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
     member: loggedUserState.member,
     summit: summitState.summit,
-    order:  orderState
+    order:  orderState.order,
+    errors:  orderState.errors
 })
 
 export default connect (
     mapStateToProps,
     {
-
+        handleOrderChange
     }
 )(StepOnePage);
 

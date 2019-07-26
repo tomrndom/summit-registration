@@ -13,7 +13,8 @@
   },
   "general": {
     "continue"      : "Continue",
-    "back"          : "Back"
+    "back"          : "Back",
+    "pay_now"       : "Pay now"
   },
   "order_summary": {
     "order_summary"   : "Order Summary",
@@ -43,7 +44,11 @@
     "tickets"           : "Tickets",
     "ticket"            : "Ticket",
     "add_ticket"        : "Add Ticket",
-    "no_tickets"        : "No tickets selected."
+    "no_tickets"        : "No tickets selected.",
+    "placeholders": {
+      "email" : "Email (optional)",
+      "coupon" : "Coupon Code (optional)"
+    }
   },
   "step_three": {
     "payment_info"        : "Payment Information",
@@ -63,8 +68,8 @@
   },
   "step_four": {
     "congratulations"     : "Congratulations",
-    "subtitle"            : "a subtitle",
-    "text"                : "blah blah a text",
+    "subtitle"            : "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    "text"                : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     "order_no"            : "ORDER NO",
     "manage"              : "Manage Your Tickets"
   }

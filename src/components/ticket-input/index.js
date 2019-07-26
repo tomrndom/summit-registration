@@ -21,25 +21,21 @@ export default class TicketInput extends React.Component {
     constructor(props) {
         super(props);
 
-        this.changeQuantity = this.changeQuantity.bind(this);
+        this.addTicket = this.addTicket.bind(this);
+        this.substractTicket = this.substractTicket.bind(this);
 
     }
 
-    changeQuantity(ticketId, add, ev) {
-        let {selection} = this.props;
-
+    addTicket(ticketTypeId, ev) {
         ev.preventDefault();
 
-        if (!selection.hasOwnProperty(ticketId)) selection[ticketId] = 0;
+        this.props.add(ticketTypeId);
+    }
 
-        if (add) {
-            selection[ticketId]++;
-        } else if (selection[ticketId] > 0) {
-            selection[ticketId]--;
-        }
+    substractTicket(ticketTypeId, ev) {
+        ev.preventDefault();
 
-        this.props.save(selection);
-
+        this.props.substract(ticketTypeId);
     }
 
     render() {
@@ -48,10 +44,10 @@ export default class TicketInput extends React.Component {
         return (
             <div className="ticket-input-box">
                 {ticketTypes.map(t => {
-                    let quantity = selection.hasOwnProperty(t.id) ? selection[t.id] : 0;
+                    let quantity = selection.filter(sel => sel.tix_type_id == t.id).length;
 
                     return (
-                        <div className="ticket-wrapper">
+                        <div className="ticket-wrapper" key={`ttype_${t.id}`}>
                             <div className="row">
                                 <div className="col-md-8">
                                     <div className="ticket-type">{t.name}</div>
@@ -64,12 +60,12 @@ export default class TicketInput extends React.Component {
                                 </div>
                                 <div className="col-md-4">
                                     <div className="form-inline ticket-quantity">
-                                        <button className="btn btn-default" onClick={this.changeQuantity.bind(this, t.id, true)}>
-                                            <i className="fa fa-plus"></i>
+                                        <button className="btn btn-default" onClick={this.substractTicket.bind(this, t.id)}>
+                                            <i className="fa fa-minus"></i>
                                         </button>
                                         <div className="quantity-value">{quantity}</div>
-                                        <button className="btn btn-default" onClick={this.changeQuantity.bind(this, t.id, false)}>
-                                            <i className="fa fa-minus"></i>
+                                        <button className="btn btn-default" onClick={this.addTicket.bind(this, t.id)}>
+                                            <i className="fa fa-plus"></i>
                                         </button>
                                     </div>
                                 </div>

@@ -26,11 +26,24 @@ class TicketInfoForm extends React.Component {
         };
 
         this.addTicket = this.addTicket.bind(this);
+        this.removeTicket = this.removeTicket.bind(this);
+        this.ticketInfoChange = this.ticketInfoChange.bind(this);
 
     }
 
-    addTicket(ev) {
+    addTicket(ticketTypeId, ev) {
+        ev.preventDefault();
+        this.props.onAddTicket(ticketTypeId);
+    }
 
+    removeTicket(ticketId, ev) {
+        ev.preventDefault();
+        this.props.onRemoveTicket(ticketId);
+    }
+
+    ticketInfoChange(ticketId, field, ev) {
+        ev.preventDefault();
+        this.props.onChange(ticketId, field, ev.target.value);
     }
 
     hasErrors(field) {
@@ -45,7 +58,7 @@ class TicketInfoForm extends React.Component {
 
     render() {
         let {order, onChange, ticketType} = this.props;
-        let orderedTickets = order.tickets.hasOwnProperty(ticketType.id) ? order.tickets[ticketType.id] : [];
+        let orderedTickets = order.tickets.filter(tix => tix.tix_type_id == ticketType.id);
 
         return (
             <div className="ticket-info-wrapper">
@@ -55,29 +68,30 @@ class TicketInfoForm extends React.Component {
                     </div>
                 </div>
                 { orderedTickets.map((tix, i) => (
-                    <div className="row" key={`tix_${ticketType.id}_${i}`}>
+                    <div className="row field-wrapper" key={`tix_${ticketType.id}_${i}`}>
                         <div className="col-md-4">
-                            <label>{T.translate("step_two.ticket")} #{i}</label>
+                            <label>{T.translate("step_two.ticket")} #{i+1}</label>
                         </div>
                         <div className="col-md-6">
                             <Input
-                                id={`ticket_${ticketType.id}_${i}`}
                                 className="form-control"
-                                placeholder={T.translate("step_two.coupon")}
+                                placeholder={T.translate("step_two.placeholders.coupon")}
                                 error={this.hasErrors(`ticket_${i}`)}
-                                onChange={onChange}
-                                value={tix.promo_code}
+                                onChange={this.ticketInfoChange.bind(this, tix.id, 'coupon')}
+                                value={tix.coupon ? tix.coupon.code : ''}
                             />
-                        </div>
-                        <div className="col-md-6 col-md-offset-4">
                             <Input
-                                id={`ticket_${ticketType.id}_${i}`}
-                                className="form-control"
-                                placeholder={T.translate("step_two.email")}
+                                className="form-control email"
+                                placeholder={T.translate("step_two.placeholders.email")}
                                 error={this.hasErrors(`ticket_${i}`)}
-                                onChange={onChange}
+                                onChange={this.ticketInfoChange.bind(this, tix.id, 'email')}
                                 value={tix.email}
                             />
+                        </div>
+                        <div className="col-md-2">
+                            <a href="" onClick={this.removeTicket.bind(this, tix.id)}>
+                                <i className="fa fa-trash-o" aria-hidden="true"></i>
+                            </a>
                         </div>
                     </div>
                 ))}
@@ -91,7 +105,7 @@ class TicketInfoForm extends React.Component {
                 }
 
                 <div className="row ticket-add-wrapper">
-                    <div className="col-md-12 text-right">
+                    <div className="col-md-10 text-right">
                         <button className="btn btn-primary" onClick={this.addTicket.bind(this, ticketType.id)}>
                             {T.translate("step_two.add_ticket")}
                         </button>

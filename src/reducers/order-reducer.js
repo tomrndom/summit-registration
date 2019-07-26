@@ -19,7 +19,7 @@ const DEFAULT_ENTITY = {
     first_name: '',
     last_name: '',
     email: '',
-    company: null,
+    company: '',
     tickets: [],
 }
 
@@ -35,7 +35,7 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
         case LOGOUT_USER:
             return DEFAULT_STATE;
         case RECEIVE_ORDER:
-            return state;
+            return DEFAULT_STATE;
             break;
         case CHANGE_ORDER:
             let {order} = payload;

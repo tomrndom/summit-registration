@@ -13,7 +13,9 @@
 
 import React from 'react'
 import T from 'i18n-react/dist/i18n-react'
+import history from '../history'
 
+const stepDefs = ['start', 'details', 'checkout', 'done'];
 
 export default class SubmitButtons extends React.Component {
 
@@ -23,31 +25,51 @@ export default class SubmitButtons extends React.Component {
         this.state = {
         };
 
+        this.continueClick = this.continueClick.bind(this);
+        this.backClick = this.backClick.bind(this);
+        this.payClick = this.payClick.bind(this);
+
+    }
+
+    continueClick(ev) {
+        let {step} = this.props;
+        ev.preventDefault();
+        // stepDefs start on 0 so next step is the same as step
+        history.push(stepDefs[step]);
+    }
+
+    backClick(ev) {
+        let {step} = this.props;
+        let backStep = step - 2; // step is one plus the stepDef index
+        ev.preventDefault();
+        history.push(stepDefs[backStep]);
+    }
+
+    payClick(ev) {
+        this.continueClick(ev);
     }
 
     render() {
         let {step} = this.props;
 
-        if (step > 3) return null;
-
         return (
             <div className="row submit-buttons-wrapper">
                 <div className="col-md-12">
                     {step > 1 &&
-                    <a href="" className="back-btn">
+                    <a href="" className="back-btn" onClick={this.backClick}>
                         <i className="fa fa-chevron-left" aria-hidden="true"></i>
                         {T.translate("general.back")}
                     </a>
                     }
 
                     {step < 3 &&
-                    <button className="btn btn-primary continue-btn">
+                    <button className="btn btn-primary continue-btn" onClick={this.continueClick}>
                         {T.translate("general.continue")}
                     </button>
                     }
 
                     {step == 3 &&
-                    <button className="btn btn-primary continue-btn">
+                    <button className="btn btn-primary continue-btn" onClick={this.payClick}>
                         {T.translate("general.pay_now")}
                     </button>
                     }

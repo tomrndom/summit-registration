@@ -47,7 +47,7 @@ class PaymentInfoForm extends React.Component {
                         <h3>{T.translate("step_three.payment_info")}</h3>
                     </div>
                     <div className="col-md-4">
-                        {T.translate("step_three.required")}
+                        * {T.translate("step_three.required")}
                     </div>
                 </div>
                 <div className="row">
@@ -55,9 +55,9 @@ class PaymentInfoForm extends React.Component {
                         {T.translate("step_three.payment_subtitle")}
                     </div>
                 </div>
-                <div className="row">
+                <div className="row field-wrapper">
                     <div className="col-md-4">
-                        <label>{T.translate("step_three.cardholder_name")}*</label>
+                        <label>{T.translate("step_three.cardholder_name")} *</label>
                     </div>
                     <div className="col-md-6">
                         <Input
@@ -69,9 +69,9 @@ class PaymentInfoForm extends React.Component {
                         />
                     </div>
                 </div>
-                <div className="row">
+                <div className="row field-wrapper">
                     <div className="col-md-4">
-                        <label>{T.translate("step_three.card_number")}*</label>
+                        <label>{T.translate("step_three.card_number")} *</label>
                     </div>
                     <div className="col-md-6">
                         <Input
@@ -83,9 +83,9 @@ class PaymentInfoForm extends React.Component {
                         />
                     </div>
                 </div>
-                <div className="row">
+                <div className="row field-wrapper">
                     <div className="col-md-4">
-                        <label>{T.translate("step_three.expiration")}*</label>
+                        <label>{T.translate("step_three.expiration")} *</label>
                     </div>
                     <div className="col-md-3">
                         <Input

@@ -17,13 +17,14 @@ import T from "i18n-react/dist/i18n-react";
 import OrderSummary from "../components/order-summary";
 import EventInfo from "../components/event-info";
 import StepRow from '../components/step-row';
+import SubmitButtons from "../components/submit-buttons";
 import { saveOrderDetails, handleOrderChange } from '../actions/order-actions'
 import {findElementPos} from "openstack-uicore-foundation/lib/methods";
 import PaymentInfoForm from "../components/payment-info-form";
 import BillingInfoForm from "../components/billing-info-form";
 
 
-//import '../styles/step-two-page.less';
+import '../styles/step-three-page.less';
 
 
 class StepThreePage extends React.Component {
@@ -70,7 +71,7 @@ class StepThreePage extends React.Component {
 
         return (
             <div className="step-three">
-                <StepRow step={2} />
+                <StepRow step={3} />
                 <div className="row">
                     <div className="col-md-8">
                         <PaymentInfoForm order={order} summit={summit} errors={errors} />
@@ -81,6 +82,7 @@ class StepThreePage extends React.Component {
                         <EventInfo />
                     </div>
                 </div>
+                <SubmitButtons step={3} />
             </div>
         );
     }

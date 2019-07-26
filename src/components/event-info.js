@@ -31,7 +31,7 @@ class EventInfo extends React.Component {
             <div className="about-event-wrapper">
                 <div className="row">
                     <div className="col-md-12">
-                        <h3>{T.translate("event_info.about_title")}</h3>
+                        <h4>{T.translate("event_info.about_title")}</h4>
                         <p>{T.translate("event_info.about_desc")}</p>
                         <a>{T.translate("event_info.directions")}</a><br/>
                         <a>{T.translate("event_info.calendar")}</a>

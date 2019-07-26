@@ -47,17 +47,17 @@ class BasicInfoForm extends React.Component {
                         <h3>{T.translate("step_two.basic_info")}</h3>
                     </div>
                     <div className="col-md-4">
-                        {T.translate("step_two.required")}
+                        * {T.translate("step_two.required")}
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        {T.translate("step_two.sign_in")}
+                        {T.translate("step_two.have_account")} {T.translate("step_two.sign_in")}
                     </div>
                 </div>
-                <div className="row">
+                <div className="row field-wrapper">
                     <div className="col-md-4">
-                        <label>{T.translate("step_two.first_name")}*</label>
+                        <label>{T.translate("step_two.first_name")} *</label>
                     </div>
                     <div className="col-md-6">
                         <Input
@@ -69,9 +69,9 @@ class BasicInfoForm extends React.Component {
                         />
                     </div>
                 </div>
-                <div className="row">
+                <div className="row field-wrapper">
                     <div className="col-md-4">
-                        <label>{T.translate("step_two.last_name")}*</label>
+                        <label>{T.translate("step_two.last_name")} *</label>
                     </div>
                     <div className="col-md-6">
                         <Input
@@ -83,9 +83,9 @@ class BasicInfoForm extends React.Component {
                         />
                     </div>
                 </div>
-                <div className="row">
+                <div className="row field-wrapper">
                     <div className="col-md-4">
-                        <label>{T.translate("step_two.email")}*</label>
+                        <label>{T.translate("step_two.email")} *</label>
                     </div>
                     <div className="col-md-6">
                         <Input
@@ -97,9 +97,9 @@ class BasicInfoForm extends React.Component {
                         />
                     </div>
                 </div>
-                <div className="row">
+                <div className="row field-wrapper">
                     <div className="col-md-4">
-                        <label>{T.translate("step_two.company")}*</label>
+                        <label>{T.translate("step_two.company")} *</label>
                     </div>
                     <div className="col-md-6">
                         <Input

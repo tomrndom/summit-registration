@@ -23,7 +23,7 @@ import { saveOrderDetails, handleOrderChange } from '../actions/order-actions'
 import {findElementPos} from "openstack-uicore-foundation/lib/methods";
 
 
-//import '../styles/step-two-page.less';
+import '../styles/step-four-page.less';
 
 
 class StepFourPage extends React.Component {
@@ -44,12 +44,13 @@ class StepFourPage extends React.Component {
         return (
             <div className="step-four">
                 <div className="row">
-                    <div className="col-md-12">
-                        <h1>{T.translate("step_four.congratulations")}</h1>
-                        <p>{T.translate("step_four.subtitle")}</p>
-                        <p>{T.translate("step_four.text")}</p>
-                        <div className="order_no_box">
+                    <div className="col-md-6 col-md-offset-3">
+                        <h1>{T.translate("step_four.congratulations")} !</h1>
+                        <p className="subtitle">{T.translate("step_four.subtitle")}</p>
+                        <p className="text">{T.translate("step_four.text")}</p>
+                        <div className="order-no-box">
                             <p>{T.translate("step_four.order_no")}</p>
+                            <div className="order-no">12341234</div>
                         </div>
                         <button className="btn btn-primary manage-btn">
                             {T.translate("step_four.manage")}

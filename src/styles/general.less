@@ -25,6 +25,15 @@ body {
   color: @font_blue_2;
 }
 
+input {
+  color: @font_blue_2 !important;
+}
+
+.btn-primary {
+  background-color: @lblue_color_2;
+  border: none;
+}
+
 #root {
 
 }
@@ -91,9 +100,7 @@ body {
   background-color: white;
 
   .continue-btn {
-    background-color: @lblue_color_2;
     width: 140px;
-    border: none;
     height: 40px;
   }
 
@@ -129,10 +136,39 @@ body {
   border: 1px solid lightgray;
   margin-top: 20px;
   padding: 0 15px 15px 15px;
+  h4 {
+    font-weight: bold;
+  }
 }
 
 .order-summary-wrapper {
   border: 1px solid lightgray;
   margin-top: 20px;
   padding: 0 15px 15px 15px;
+  h4 {
+    font-weight: bold;
+    margin: 15px 0 20px 0;
+  }
+  .order-row {
+    border-bottom: 1px solid lightgray;
+    padding: 10px 0;
+    margin: 0 5px;
+  }
+  .total-row {
+    padding: 10px 0;
+    margin: 0 5px;
+  }
+  .order-discounts {
+    color: green;
+    .discount-desc {
+      font-size: 12px;
+    }
+  }
+  .subtotal {
+    font-weight: bold;
+  }
+  .total {
+    font-weight: bold;
+    font-size: 16px;
+  }
 }

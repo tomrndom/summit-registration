@@ -14,6 +14,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import T from "i18n-react/dist/i18n-react";
+import cloneDeep from "lodash.clonedeep";
 import OrderSummary from "../components/order-summary";
 import EventInfo from "../components/event-info";
 import StepRow from '../components/step-row';
@@ -51,11 +52,11 @@ class StepThreePage extends React.Component {
     }
 
     handleChange(ev) {
-        let order = {...this.props.order};
-        let errors = {...this.props.errors};
+        let order = cloneDeep(this.props.order);
+        let errors = cloneDeep(this.props.errors);
         let {value, id} = ev.target;
 
-        errors[id] = '';
+        delete(errors[id]);
         order[id] = value;
 
         this.props.handleOrderChange(order, errors)
@@ -74,8 +75,8 @@ class StepThreePage extends React.Component {
                 <StepRow step={3} />
                 <div className="row">
                     <div className="col-md-8">
-                        <PaymentInfoForm order={order} summit={summit} errors={errors} />
-                        <BillingInfoForm order={order} summit={summit} errors={errors} />
+                        <PaymentInfoForm onChange={this.handleChange} order={order} summit={summit} errors={errors} />
+                        <BillingInfoForm onChange={this.handleChange} order={order} summit={summit} errors={errors} />
                     </div>
                     <div className="col-md-4">
                         <OrderSummary order={order} summit={summit} />

@@ -76,16 +76,16 @@ class TicketInfoForm extends React.Component {
                             <Input
                                 className="form-control"
                                 placeholder={T.translate("step_two.placeholders.coupon")}
-                                error={this.hasErrors(`ticket_${i}`)}
+                                error={this.hasErrors(`tix_coupon_${tix.id}`)}
                                 onChange={this.ticketInfoChange.bind(this, tix.id, 'coupon')}
                                 value={tix.coupon ? tix.coupon.code : ''}
                             />
                             <Input
                                 className="form-control email"
                                 placeholder={T.translate("step_two.placeholders.email")}
-                                error={this.hasErrors(`ticket_${i}`)}
+                                error={this.hasErrors(`tix_email_${tix.id}`)}
                                 onChange={this.ticketInfoChange.bind(this, tix.id, 'email')}
-                                value={tix.email}
+                                value={tix.email ? tix.email : ''}
                             />
                         </div>
                         <div className="col-md-2">

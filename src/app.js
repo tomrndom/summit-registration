@@ -22,6 +22,7 @@ import NotFoundPage from './pages/not-found-page'
 import { connect } from 'react-redux'
 import { AjaxLoader, OPSessionChecker } from "openstack-uicore-foundation/lib/components";
 import { getBackURL, onUserAuth, doLogin, doLogout, initLogOut, getUserInfo } from "openstack-uicore-foundation/lib/methods";
+import { handleResetOrder } from './actions/order-actions'
 import T from 'i18n-react';
 import history from './history'
 
@@ -76,6 +77,7 @@ class App extends React.PureComponent {
                         </div>
                         <div className="col-md-2">
                             <AuthButton isLoggedUser={isLoggedUser} picture={profile_pic} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut}/>
+                            <a href="" onClick={this.props.handleResetOrder}>x</a>
                         </div>
                     </div>
                     <Switch>
@@ -104,4 +106,5 @@ export default connect(mapStateToProps, {
     onUserAuth,
     doLogout,
     getUserInfo,
+    handleResetOrder
 })(App)

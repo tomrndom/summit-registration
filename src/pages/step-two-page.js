@@ -15,6 +15,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import T from "i18n-react/dist/i18n-react";
 import moment from "moment";
+import cloneDeep from "lodash.clonedeep";
 import OrderSummary from "../components/order-summary";
 import EventInfo from "../components/event-info";
 import BasicInfoForm from '../components/basic-info-form';
@@ -55,7 +56,8 @@ class StepTwoPage extends React.Component {
     }
 
     handleTicketInfoChange(ticketId, field, value) {
-        let order = {...this.props.order};
+        let order = cloneDeep(this.props.order);
+        let errors = cloneDeep(this.props.errors);
         let randomNumber = moment().valueOf();
 
         order.tickets.forEach(tix => {
@@ -68,33 +70,35 @@ class StepTwoPage extends React.Component {
             }
         });
 
-        this.props.handleOrderChange(order)
+        this.props.handleOrderChange(order, errors)
     }
 
     handleChange(ev) {
-        let order = {...this.props.order};
-        let errors = {...this.props.errors};
+        let order = cloneDeep(this.props.order);
+        let errors = cloneDeep(this.props.errors);
         let {value, id} = ev.target;
 
-        errors[id] = '';
+        delete(errors[id]);
         order[id] = value;
 
         this.props.handleOrderChange(order, errors)
     }
 
     handleAddTicket(ticketTypeId) {
-        let order = {...this.props.order};
+        let order = cloneDeep(this.props.order);
+        let errors = cloneDeep(this.props.errors);
         let randomNumber = moment().valueOf();
 
         order.tickets.push({id: randomNumber, tix_type_id: ticketTypeId});
-        this.props.handleOrderChange(order)
+        this.props.handleOrderChange(order, errors)
     }
 
     handleRemoveTicket(ticketId) {
-        let order = {...this.props.order};
+        let order = cloneDeep(this.props.order);
+        let errors = cloneDeep(this.props.errors);
 
         order.tickets = order.tickets.filter(t => t.id != ticketId);
-        this.props.handleOrderChange(order)
+        this.props.handleOrderChange(order, errors)
     }
 
     handleSubmit(ev) {
@@ -128,7 +132,7 @@ class StepTwoPage extends React.Component {
                         <EventInfo />
                     </div>
                 </div>
-                <SubmitButtons step={2} />
+                <SubmitButtons step={2} canContinue={(Object.keys(errors).length == 0)} />
             </div>
         );
     }

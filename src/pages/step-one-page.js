@@ -53,8 +53,10 @@ class StepOnePage extends React.Component {
         let order = {...this.props.order};
         let idx = order.tickets.findIndex(t => t.tix_type_id == ticketTypeId);
 
-        order.tickets.splice(idx,1);
-        this.props.handleOrderChange(order)
+        if (idx !== -1) {
+            order.tickets.splice(idx,1);
+            this.props.handleOrderChange(order)
+        }
     }
 
     render(){
@@ -86,7 +88,7 @@ class StepOnePage extends React.Component {
                         <EventInfo />
                     </div>
                 </div>
-                <SubmitButtons step={1} />
+                <SubmitButtons step={1} canContinue={order.tickets.length > 0} />
             </div>
         );
     }

@@ -50,7 +50,7 @@ export default class SubmitButtons extends React.Component {
     }
 
     render() {
-        let {step} = this.props;
+        let {step, canContinue} = this.props;
 
         return (
             <div className="row submit-buttons-wrapper">
@@ -63,13 +63,13 @@ export default class SubmitButtons extends React.Component {
                     }
 
                     {step < 3 &&
-                    <button className="btn btn-primary continue-btn" onClick={this.continueClick}>
+                    <button className="btn btn-primary continue-btn" onClick={this.continueClick} disabled={!canContinue}>
                         {T.translate("general.continue")}
                     </button>
                     }
 
                     {step == 3 &&
-                    <button className="btn btn-primary continue-btn" onClick={this.payClick}>
+                    <button className="btn btn-primary continue-btn" onClick={this.payClick} disabled={!canContinue}>
                         {T.translate("general.pay_now")}
                     </button>
                     }

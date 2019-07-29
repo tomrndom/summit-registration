@@ -52,7 +52,7 @@ class OrderSummary extends React.Component {
             let discountTmp = (tix.coupon.percentage / 100) * tixType.price;
             discountTotal = discountTotal + discountTmp;
 
-            return {tix_type: tixType, percentage: tix.coupon.percentage};
+            return {tix_type: tixType, percentage: tix.coupon.percentage, code: tix.coupon.code};
         });
 
         let total = ticketTotal - discountTotal;
@@ -67,7 +67,7 @@ class OrderSummary extends React.Component {
                 {ticketSummary.map(tix => {
                     let total = tix.qty * tix.tix_type.price;
                     return (
-                        <div className="row order-row" key={`tixorder_${tix.id}`}>
+                        <div className="row order-row" key={`tixorder_${tix.tix_type.id}`}>
                             <div className="col-xs-6">
                                 {tix.tix_type.name}
                             </div>
@@ -86,7 +86,7 @@ class OrderSummary extends React.Component {
                         {T.translate("order_summary.discounts")}
                         <p className="discount-desc">
                             {discounts.map(dis => (
-                                <div>x1 {dis.tix_type.name} / {dis.percentage}%</div>
+                                <div key={dis.code}>x1 {dis.tix_type.name} / {dis.percentage}%</div>
                             ))}
                         </p>
                     </div>

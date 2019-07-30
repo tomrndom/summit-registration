@@ -46,6 +46,18 @@ class StepTwoPage extends React.Component {
 
     }
 
+    componentWillMount() {
+        let order = {...this.props.order};
+        let currentStep = 1
+        
+        order = {
+            ...order,
+            currentStep
+        };
+        
+        this.props.handleOrderChange(order)
+    }
+
     componentWillReceiveProps(nextProps) {
         //scroll to first error
         if(Object.keys(nextProps.errors).length > 0) {

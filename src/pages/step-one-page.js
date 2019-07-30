@@ -41,6 +41,18 @@ class StepOnePage extends React.Component {
 
     }
 
+    componentWillMount() {
+        let order = {...this.props.order};
+        let currentStep = 0
+        
+        order = {
+            ...order,
+            currentStep
+        };
+        
+        this.props.handleOrderChange(order)
+    }
+
     handleAddTicket(ticketTypeId) {
         let order = {...this.props.order};
         let randomNumber = moment().valueOf();

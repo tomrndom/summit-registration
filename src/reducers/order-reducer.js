@@ -31,6 +31,7 @@ const DEFAULT_ENTITY = {
     billing_city: '',
     billing_state: '',
     billing_zipcode: '',
+    currentStep: 0,
 }
 
 const DEFAULT_STATE = {

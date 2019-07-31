@@ -41,7 +41,7 @@ export const handleOrderChange = (order, errors = {}) => (dispatch, getState) =>
 
     let {currentStep} = order;
 
-    if(currentStep === 1) {
+    if(currentStep === 2) {
         if (validator.isEmpty(order.first_name)) errors.first_name = 'Please enter your First Name.';
         if (validator.isEmpty(order.last_name)) errors.last_name = 'Please enter your Last Name.';
         if (!validator.isEmail(order.email)) errors.email = 'Please enter a valid Email.';
@@ -55,7 +55,7 @@ export const handleOrderChange = (order, errors = {}) => (dispatch, getState) =>
            else delete(errors[`tix_email_${tix.id}`]);
         });
         dispatch(createAction(CHANGE_ORDER)({order, errors}));
-    } else if(currentStep === 2) {
+    } else if(currentStep === 3) {
         if (validator.isEmpty(order.cardholder_name)) errors.cardholder_name = "Please enter the cardholder's Name.";
         if (!validator.isCreditCard(order.card_number)) errors.card_number = "Please enter a valid Credit Card.";
         if (validator.isEmpty(order.card_expiration)) errors.card_expiration = "Please enter the card expiration.";

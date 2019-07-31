@@ -33,6 +33,8 @@ class StepOnePage extends React.Component {
         this.state = {
         };
 
+        this.step = 1;
+
         this.handleAddTicket = this.handleAddTicket.bind(this);
         this.handleSubstractTicket = this.handleSubstractTicket.bind(this);
     }
@@ -42,12 +44,11 @@ class StepOnePage extends React.Component {
     }
 
     componentWillMount() {
-        let order = {...this.props.order};
-        let currentStep = 0
+        let order = {...this.props.order};        
         
         order = {
             ...order,
-            currentStep
+            currentStep: this.step
         };
         
         this.props.handleOrderChange(order)
@@ -77,7 +78,7 @@ class StepOnePage extends React.Component {
 
         return (
             <div className="step-one">
-                <StepRow step={1} />
+                <StepRow step={this.step} />
                 <div className="row">
                     <div className="col-md-8">
                         <div className="row">
@@ -100,7 +101,7 @@ class StepOnePage extends React.Component {
                         <EventInfo />
                     </div>
                 </div>
-                <SubmitButtons step={1} canContinue={order.tickets.length > 0} />
+                <SubmitButtons step={this.step} canContinue={order.tickets.length > 0} />
             </div>
         );
     }

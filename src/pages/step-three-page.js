@@ -34,12 +34,24 @@ class StepThreePage extends React.Component {
         super(props);
 
         this.state = {
-
         };
+
+        this.step = 3;
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
+    }
+
+    componentWillMount() {
+        let order = {...this.props.order};    
+        
+        order = {
+            ...order,
+            currentStep: this.step
+        };
+        
+        this.props.handleOrderChange(order)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -72,7 +84,7 @@ class StepThreePage extends React.Component {
 
         return (
             <div className="step-three">
-                <StepRow step={3} />
+                <StepRow step={this.step} />
                 <div className="row">
                     <div className="col-md-8">
                         <PaymentInfoForm onChange={this.handleChange} order={order} summit={summit} errors={errors} />
@@ -83,7 +95,7 @@ class StepThreePage extends React.Component {
                         <EventInfo />
                     </div>
                 </div>
-                <SubmitButtons step={3} />
+                <SubmitButtons step={this.step} canContinue={(Object.keys(errors).length == 0)} />
             </div>
         );
     }

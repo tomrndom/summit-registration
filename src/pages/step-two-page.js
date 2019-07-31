@@ -35,8 +35,9 @@ class StepTwoPage extends React.Component {
         super(props);
 
         this.state = {
-
         };
+
+        this.step = 2;
 
         this.handleChange = this.handleChange.bind(this);
         this.handleTicketInfoChange = this.handleTicketInfoChange.bind(this);
@@ -44,6 +45,17 @@ class StepTwoPage extends React.Component {
         this.handleRemoveTicket = this.handleRemoveTicket.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
 
+    }
+
+    componentWillMount() {
+        let order = {...this.props.order};        
+        
+        order = {
+            ...order,
+            currentStep: this.step
+        };
+        
+        this.props.handleOrderChange(order)
     }
 
     componentWillReceiveProps(nextProps) {
@@ -111,7 +123,7 @@ class StepTwoPage extends React.Component {
 
         return (
             <div className="step-two">
-                <StepRow step={2} />
+                <StepRow step={this.step} />
                 <div className="row">
                     <div className="col-md-8">
                         <BasicInfoForm order={order} errors={errors} onChange={this.handleChange}/>
@@ -132,7 +144,7 @@ class StepTwoPage extends React.Component {
                         <EventInfo />
                     </div>
                 </div>
-                <SubmitButtons step={2} canContinue={(Object.keys(errors).length == 0)} />
+                <SubmitButtons step={this.step} canContinue={(Object.keys(errors).length == 0)} />
             </div>
         );
     }

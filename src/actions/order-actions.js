@@ -46,11 +46,11 @@ export const handleOrderChange = (order, errors = {}) => (dispatch, getState) =>
         if (validator.isEmpty(order.last_name)) errors.last_name = 'Please enter your Last Name.';
         if (!validator.isEmail(order.email)) errors.email = 'Please enter a valid Email.';
         if (validator.isEmpty(order.company)) errors.company = 'Please enter your Company.';
-    
+
         order.tickets.forEach(tix => {
            if (tix.coupon && tix.coupon.code == 'NOTACOUPON') errors[`tix_coupon_${tix.id}`] = 'Coupon not valid.';
            else delete(errors[`tix_coupon_${tix.id}`]);
-    
+
            if (tix.email && !validator.isEmail(tix.email)) errors[`tix_email_${tix.id}`] = 'Please enter a valid Email.';
            else delete(errors[`tix_email_${tix.id}`]);
         });
@@ -73,25 +73,6 @@ export const handleOrderChange = (order, errors = {}) => (dispatch, getState) =>
 
 }
 
-
-export const getSummitBySlug = (slug) => (dispatch, getState) => {
-
-    dispatch(startLoading());
-
-    let params = {
-        expand: ''
-    };
-
-    return getRequest(
-        createAction(REQUEST_SUMMIT),
-        createAction(RECEIVE_SUMMIT),
-        `${window.API_BASE_URL}/api/public/v1/summits/all/${slug}`,
-        authErrorHandler
-    )(params)(dispatch).then(() => {
-            dispatch(stopLoading());
-        }
-    );
-}
 
 
 

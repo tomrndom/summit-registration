@@ -16,11 +16,10 @@ module.exports = merge(common, {
         pathinfo: false
     },
     optimization: {
-        /*minimizer: [
-            new TerserJSPlugin({terserOptions: {keep_fnames: true, ecma: 7}}),
+        minimizer: [
+            new TerserJSPlugin({terserOptions: {compress: {inline: false}}}),
             new OptimizeCSSAssetsPlugin({})
-        ],*/
-        minimize: false
+        ],
     },
     plugins: [
         new MiniCssExtractPlugin({

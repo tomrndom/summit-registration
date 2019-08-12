@@ -21,6 +21,7 @@ import StepRow from '../components/step-row';
 import SubmitButtons from "../components/submit-buttons";
 import { saveOrderDetails, handleOrderChange } from '../actions/order-actions'
 import {findElementPos} from "openstack-uicore-foundation/lib/methods";
+import { Elements, StripeProvider } from 'react-stripe-elements';
 import PaymentInfoForm from "../components/payment-info-form";
 import BillingInfoForm from "../components/billing-info-form";
 
@@ -83,20 +84,24 @@ class StepThreePage extends React.Component {
         let {summit, order, errors} = this.props;
 
         return (
-            <div className="step-three">
-                <StepRow step={this.step} />
-                <div className="row">
-                    <div className="col-md-8">
-                        <PaymentInfoForm onChange={this.handleChange} order={order} summit={summit} errors={errors} />
-                        <BillingInfoForm onChange={this.handleChange} order={order} summit={summit} errors={errors} />
+            <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
+                <div className="step-three">
+                    <StepRow step={this.step} />
+                    <div className="row">
+                        <div className="col-md-8">
+                            <Elements>
+                                <PaymentInfoForm onChange={this.handleChange} order={order} summit={summit} errors={errors} />
+                            </Elements>
+                            <BillingInfoForm onChange={this.handleChange} order={order} summit={summit} errors={errors} />
+                        </div>
+                        <div className="col-md-4">
+                            <OrderSummary order={order} summit={summit} />
+                            <EventInfo />
+                        </div>
                     </div>
-                    <div className="col-md-4">
-                        <OrderSummary order={order} summit={summit} />
-                        <EventInfo />
-                    </div>
+                    <SubmitButtons step={this.step} canContinue={(Object.keys(errors).length == 0)} />
                 </div>
-                <SubmitButtons step={this.step} canContinue={(Object.keys(errors).length == 0)} />
-            </div>
+            </StripeProvider>
         );
     }
 }

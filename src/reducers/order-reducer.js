@@ -12,7 +12,7 @@
  **/
 
 import { LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
-import {RESET_ORDER, RECEIVE_ORDER, CHANGE_ORDER} from "../actions/order-actions";
+import {RESET_ORDER, RECEIVE_ORDER, CHANGE_ORDER, VALIDATE_STRIPE} from "../actions/order-actions";
 
 
 const DEFAULT_ENTITY = {
@@ -21,10 +21,6 @@ const DEFAULT_ENTITY = {
     email: '',
     company: '',
     tickets: [],
-    cardholder_name: '',
-    card_number: '',
-    card_expiration: '',
-    card_cvc: '',
     billing_country: '',
     billing_address: '',
     billing_address_two: '',
@@ -36,7 +32,8 @@ const DEFAULT_ENTITY = {
 
 const DEFAULT_STATE = {
     order: DEFAULT_ENTITY,
-    errors: {}
+    errors: {},
+    stripe: null
 }
 
 const orderReducer = (state = DEFAULT_STATE, action) => {
@@ -55,6 +52,9 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             let {order, errors} = payload;
             return {...state, order: order, errors: errors};
             break;
+        case VALIDATE_STRIPE:
+            let {value} = payload
+            return {...state, stripe: value}
         default:
             return state;
             break;

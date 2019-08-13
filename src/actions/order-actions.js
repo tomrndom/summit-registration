@@ -30,6 +30,7 @@ import {
 export const RESET_ORDER  = 'RESET_ORDER';
 export const RECEIVE_ORDER  = 'RECEIVE_ORDER';
 export const CHANGE_ORDER  = 'CHANGE_ORDER';
+export const VALIDATE_STRIPE  = 'VALIDATE_STRIPE';
 
 
 export const handleResetOrder = () => (dispatch, getState) => {
@@ -56,11 +57,11 @@ export const handleOrderChange = (order, errors = {}) => (dispatch, getState) =>
         });
         dispatch(createAction(CHANGE_ORDER)({order, errors}));
     } else if(currentStep === 3) {
-        if (validator.isEmpty(order.cardholder_name)) errors.cardholder_name = "Please enter the cardholder's Name.";
-        if (!validator.isCreditCard(order.card_number)) errors.card_number = "Please enter a valid Credit Card.";
-        if (validator.isEmpty(order.card_expiration)) errors.card_expiration = "Please enter the card expiration.";
-        if (validator.isEmpty(order.card_cvc)) errors.card_cvc = "Please enter the card cvc.";
-
+        // if (validator.isEmpty(order.cardholder_name)) errors.cardholder_name = "Please enter the cardholder's Name.";
+        // if (!validator.isCreditCard(order.card_number)) errors.card_number = "Please enter a valid Credit Card.";
+        // if (validator.isEmpty(order.card_expiration)) errors.card_expiration = "Please enter the card expiration.";
+        // if (validator.isEmpty(order.card_cvc)) errors.card_cvc = "Please enter the card cvc.";
+        // if (order.card_number) error.card_number = order.card_number;        
         if (validator.isEmpty(order.billing_country)) errors.billing_country = "Please enter the billing Country.";
         if (validator.isEmpty(order.billing_address)) errors.billing_address = "Please enter the billing Address.";
         if (validator.isEmpty(order.billing_city)) errors.billing_city = "Please enter the billing City.";
@@ -73,6 +74,9 @@ export const handleOrderChange = (order, errors = {}) => (dispatch, getState) =>
 
 }
 
+export const validateStripe = (value) => (dispatch, getState) => {
+    dispatch(createAction(VALIDATE_STRIPE)({value}))
+}
 
 
 

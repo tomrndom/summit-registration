@@ -19,7 +19,7 @@ import OrderSummary from "../components/order-summary";
 import EventInfo from "../components/event-info";
 import StepRow from '../components/step-row';
 import SubmitButtons from "../components/submit-buttons";
-import { saveOrderDetails, handleOrderChange } from '../actions/order-actions'
+import { saveOrderDetails, handleOrderChange, validateStripe } from '../actions/order-actions'
 import {findElementPos} from "openstack-uicore-foundation/lib/methods";
 import { Elements, StripeProvider } from 'react-stripe-elements';
 import PaymentInfoForm from "../components/payment-info-form";
@@ -41,6 +41,7 @@ class StepThreePage extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleStripe = this.handleStripe.bind(this);
 
     }
 
@@ -68,11 +69,18 @@ class StepThreePage extends React.Component {
         let order = cloneDeep(this.props.order);
         let errors = cloneDeep(this.props.errors);
         let {value, id} = ev.target;
+        console.log(value, id)
 
         delete(errors[id]);
         order[id] = value;
 
         this.props.handleOrderChange(order, errors)
+    }
+
+    handleStripe(ev) {        
+        console.log('stripe form', this.props.stripe);
+        console.log('hay error?', ev);
+        this.props.validateStripe(ev);
     }
 
     handleSubmit(ev) {
@@ -81,7 +89,9 @@ class StepThreePage extends React.Component {
     }
 
     render(){
-        let {summit, order, errors} = this.props;
+        let {summit, order, errors, stripe} = this.props;
+
+        console.log('render stripe', stripe);
 
         return (
             <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">
@@ -90,7 +100,7 @@ class StepThreePage extends React.Component {
                     <div className="row">
                         <div className="col-md-8">
                             <Elements>
-                                <PaymentInfoForm onChange={this.handleChange} order={order} summit={summit} errors={errors} />
+                                <PaymentInfoForm onChange={this.handleStripe} order={order} summit={summit} errors={errors} />
                             </Elements>
                             <BillingInfoForm onChange={this.handleChange} order={order} summit={summit} errors={errors} />
                         </div>
@@ -99,7 +109,7 @@ class StepThreePage extends React.Component {
                             <EventInfo />
                         </div>
                     </div>
-                    <SubmitButtons step={this.step} canContinue={(Object.keys(errors).length == 0)} />
+                    <SubmitButtons step={this.step} canContinue={(Object.keys(errors).length == 0 && stripe === true)} />
                 </div>
             </StripeProvider>
         );
@@ -110,14 +120,16 @@ const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
     member: loggedUserState.member,
     summit: summitState.summit,
     order:  orderState.order,
-    errors:  orderState.errors
+    errors:  orderState.errors,
+    stripe:  orderState.stripe
 })
 
 export default connect (
     mapStateToProps,
     {
         saveOrderDetails,
-        handleOrderChange
+        handleOrderChange,
+        validateStripe
     }
 )(StepThreePage);
 

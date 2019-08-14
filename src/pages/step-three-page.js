@@ -69,7 +69,6 @@ class StepThreePage extends React.Component {
         let order = cloneDeep(this.props.order);
         let errors = cloneDeep(this.props.errors);
         let {value, id} = ev.target;
-        console.log(value, id)
 
         delete(errors[id]);
         order[id] = value;
@@ -77,10 +76,9 @@ class StepThreePage extends React.Component {
         this.props.handleOrderChange(order, errors)
     }
 
-    handleStripe(ev) {        
-        console.log('stripe form', this.props.stripe);
-        console.log('hay error?', ev);
-        this.props.validateStripe(ev);
+    handleStripe(ev) {
+        let stripeErrors = Object.values(ev).filter(x => x.required === true && x.message === '');
+        stripeErrors.length === 3 ? this.props.validateStripe(true) : this.props.validateStripe(false);
     }
 
     handleSubmit(ev) {
@@ -90,8 +88,6 @@ class StepThreePage extends React.Component {
 
     render(){
         let {summit, order, errors, stripe} = this.props;
-
-        console.log('render stripe', stripe);
 
         return (
             <StripeProvider apiKey="pk_test_TYooMQauvdEDq54NiTphI7jx">

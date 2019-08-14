@@ -27,15 +27,15 @@ class PaymentInfoForm extends React.Component {
 
         this.state = {
             stripeErrors: {
-                cardNumber: '',
-                cardExpiry: '',
-                cardCvc: '',
-                required: ''
+                cardNumber: { message: '', required: false },
+                cardExpiry: { message: '', required: false },
+                cardCvc: { message: '', required: false },
             }
         };
 
         // this.hasErrors = this.hasErrors.bind(this);
         this.hasStripeErrors = this.hasStripeErrors.bind(this);
+        this.hasUncompletedFields = this.hasUncompletedFields.bind(this);
     }
 
     hasErrors(field) {        
@@ -48,37 +48,46 @@ class PaymentInfoForm extends React.Component {
     }
 
     hasStripeErrors(ev) {
-        let {error, complete, empty, elementType} = ev;          
-        let {onChange} = this.props;
+        let {error, elementType} = ev;          
 
-        console.log(ev)
-
-        if(!complete && empty) {
-            this.setState({ 
-                stripeErrors: { ...this.state.stripeErrors, required: true }
-            }, () => onChange(false));
-        } else if(error) {
+        if(error) {
             switch(elementType) {
                 case 'cardNumber':
                     this.setState({
-                        stripeErrors: { ...this.state.stripeErrors, cardNumber: error.message }
-                    }, () => onChange(false));
+                        stripeErrors: { ...this.state.stripeErrors, cardNumber: { message: error.message}}
+                    }, () => this.hasUncompletedFields(ev));
                     break;
                 case 'cardExpiry':                    
                     this.setState({ 
-                        stripeErrors: { ...this.state.stripeErrors, cardExpiry: error.message }
-                    }, () => onChange(false));
+                        stripeErrors: { ...this.state.stripeErrors, cardExpiry: { message: error.message}}
+                    }, () => this.hasUncompletedFields(ev));
                     break;
                 case 'cardCvc':                    
                     this.setState({ 
-                        stripeErrors: { ...this.state.stripeErrors, cardCvc: error.message }
-                    }, () => onChange(false));
+                        stripeErrors: { ...this.state.stripeErrors, cardCvc: { message: error.message}}
+                    }, () => this.hasUncompletedFields(ev));
                     break;
             }            
         } else {
             this.setState({ 
-                    stripeErrors: { ...this.state.stripeErrors, [elementType]: '' }
-                }, () => onChange(true));
+                    stripeErrors: { ...this.state.stripeErrors, [elementType]: { message: ''}}
+                }, () => this.hasUncompletedFields(ev));
+        }                
+    }
+
+    hasUncompletedFields(ev){    
+        let {complete, elementType} = ev;
+        let {onChange} = this.props;        
+        let {message} = this.state.stripeErrors[elementType];        
+
+        if(complete) {
+            this.setState({ 
+                stripeErrors: { ...this.state.stripeErrors, [elementType]: { message, required: true }}
+            }, () => onChange(this.state.stripeErrors));
+        } else {
+            this.setState({ 
+                stripeErrors: { ...this.state.stripeErrors, [elementType]: { message, required: false }}
+            }, () => onChange(this.state.stripeErrors));
         }
     }
 
@@ -136,7 +145,7 @@ class PaymentInfoForm extends React.Component {
                     </div>
                     <div className="col-md-6">
                         <CardNumberElement style={style} className="form-control stripe-input" onChange={this.hasStripeErrors} />
-                        {cardNumber && <p className="error-label">{cardNumber}</p>}                        
+                        {cardNumber.message && <p className="error-label">{cardNumber.message}</p>}                        
                         {/* <Input
                             id="cardNumber"
                             className="form-control"
@@ -152,7 +161,7 @@ class PaymentInfoForm extends React.Component {
                     </div>
                     <div className="col-md-3">
                         <CardExpiryElement style={style} className="form-control stripe-input" onChange={this.hasStripeErrors}/>                        
-                        {cardExpiry && <p className="error-label">{cardExpiry}</p>}
+                        {cardExpiry.message && <p className="error-label">{cardExpiry.message}</p>}
                         {/* <Input
                             id="cardExpiry"
                             className="form-control"
@@ -163,7 +172,7 @@ class PaymentInfoForm extends React.Component {
                     </div>
                     <div className="col-md-3">
                         <CardCvcElement style={style} className="form-control stripe-input" onChange={this.hasStripeErrors} />                        
-                        {cardCvc && <p className="error-label">{cardCvc}</p>}
+                        {cardCvc.message && <p className="error-label">{cardCvc.message}</p>}
                         {/* <Input
                             id="cardCvc"
                             className="form-control"

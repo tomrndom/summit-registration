@@ -33,7 +33,7 @@ const DEFAULT_ENTITY = {
 const DEFAULT_STATE = {
     order: DEFAULT_ENTITY,
     errors: {},
-    stripe: null
+    stripeForm: null
 }
 
 const orderReducer = (state = DEFAULT_STATE, action) => {
@@ -54,7 +54,7 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             break;
         case VALIDATE_STRIPE:
             let {value} = payload
-            return {...state, stripe: value}
+            return {...state, stripeForm: value}
         default:
             return state;
             break;

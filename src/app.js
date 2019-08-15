@@ -49,7 +49,8 @@ window.API_BASE_URL        = process.env['API_BASE_URL'];
 window.OAUTH2_CLIENT_ID    = process.env['OAUTH2_CLIENT_ID'];
 window.SCOPES              = process.env['SCOPES'];
 window.ALLOWED_USER_GROUPS = process.env['ALLOWED_USER_GROUPS'];
-window.GRAPH_API_BASE_URL = process.env['GRAPH_API_BASE_URL'];
+window.GRAPH_API_BASE_URL  = process.env['GRAPH_API_BASE_URL'];
+window.STRIPE_PRIVATE_KEY  = process.env['STRIPE_PRIVATE_KEY'];
 
 class App extends React.PureComponent {
 

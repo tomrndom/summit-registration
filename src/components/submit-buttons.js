@@ -48,24 +48,21 @@ export default class SubmitButtons extends React.Component {
     payClick(ev) {
         let {stripe, token, order} = this.props;
         
-        stripe.handleCardPayment(
-            client_secret, token, {
-                payment_method_data: {
-                    billing_details: {name: `${order.first_name} ${order.last_name}`}
-                }
-            }
-        ).then(function(result) {
-            console.log(result)
-            if (result.error) {
-                // Display error.message in your UI.
-                console.log('error');
-                this.continueClick(ev);
-            } else {
-                console.log('ok');
-                // The payment has succeeded. Display a success message.
-                this.continueClick(ev);
-            }
-        });
+        // stripe.handleCardPayment(
+        //     client_secret, token, {
+        //         payment_method_data: {
+        //             billing_details: {name: `${order.first_name} ${order.last_name}`}
+        //         }
+        //     }
+        // ).then(function(result) {
+        //     if (result.error) {
+        //         // Display error.message in your UI.
+        //         this.continueClick(ev);
+        //     } else {
+        //         // The payment has succeeded. Display a success message.
+        //         this.continueClick(ev);
+        //     }
+        // });
 
     }
 

@@ -34,6 +34,7 @@ class StepThreePage extends React.Component {
         super(props);
 
         this.state = {
+            dirty: false
         };
 
         this.step = 3;
@@ -67,11 +68,12 @@ class StepThreePage extends React.Component {
         let order = cloneDeep(this.props.order);
         let errors = cloneDeep(this.props.errors);
         let {value, id} = ev.target;
+        let {dirty} = this.state;
 
         delete(errors[id]);
         order[id] = value;
 
-        this.props.handleOrderChange(order, errors)
+        this.setState({dirty:true}, () => this.props.handleOrderChange(order, errors, dirty));
     }
 
     handleSubmit(ev) {
@@ -95,7 +97,7 @@ class StepThreePage extends React.Component {
                         <EventInfo />
                     </div>
                 </div>
-                <SubmitButtons step={this.step} canContinue={(Object.keys(errors).length == 0)} />
+                <SubmitButtons step={this.step} canContinue={(Object.keys(errors).length == 0) && dirty === true} />
             </div>
         );
     }

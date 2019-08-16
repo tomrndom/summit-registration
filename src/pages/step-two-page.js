@@ -35,6 +35,7 @@ class StepTwoPage extends React.Component {
         super(props);
 
         this.state = {
+            dirty: false
         };
 
         this.step = 2;
@@ -48,14 +49,15 @@ class StepTwoPage extends React.Component {
     }
 
     componentWillMount() {
-        let order = {...this.props.order};        
+        let order = {...this.props.order};   
+        let {dirty} = this.state;
         
         order = {
             ...order,
             currentStep: this.step
         };
         
-        this.props.handleOrderChange(order)
+        this.props.handleOrderChange(order, {}, dirty);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -82,18 +84,19 @@ class StepTwoPage extends React.Component {
             }
         });
 
-        this.props.handleOrderChange(order, errors)
+        this.props.handleOrderChange(order, errors);
     }
 
     handleChange(ev) {
         let order = cloneDeep(this.props.order);
         let errors = cloneDeep(this.props.errors);
         let {value, id} = ev.target;
+        let {dirty} = this.state;
 
         delete(errors[id]);
         order[id] = value;
 
-        this.props.handleOrderChange(order, errors)
+        this.setState({dirty: true}, () => this.props.handleOrderChange(order, errors, dirty))
     }
 
     handleAddTicket(ticketTypeId) {
@@ -102,7 +105,7 @@ class StepTwoPage extends React.Component {
         let randomNumber = moment().valueOf();
 
         order.tickets.push({id: randomNumber, tix_type_id: ticketTypeId});
-        this.props.handleOrderChange(order, errors)
+        this.props.handleOrderChange(order, errors);
     }
 
     handleRemoveTicket(ticketId) {
@@ -110,7 +113,7 @@ class StepTwoPage extends React.Component {
         let errors = cloneDeep(this.props.errors);
 
         order.tickets = order.tickets.filter(t => t.id != ticketId);
-        this.props.handleOrderChange(order, errors)
+        this.props.handleOrderChange(order, errors);
     }
 
     handleSubmit(ev) {
@@ -120,6 +123,7 @@ class StepTwoPage extends React.Component {
 
     render(){
         let {summit, order, errors} = this.props;
+        let {dirty} = this.state;
 
         return (
             <div className="step-two">
@@ -144,7 +148,7 @@ class StepTwoPage extends React.Component {
                         <EventInfo />
                     </div>
                 </div>
-                <SubmitButtons step={this.step} canContinue={(Object.keys(errors).length == 0)} />
+                <SubmitButtons step={this.step} canContinue={(Object.keys(errors).length == 0) && dirty === true} />
             </div>
         );
     }

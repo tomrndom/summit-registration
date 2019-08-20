@@ -33,7 +33,7 @@ const DEFAULT_ENTITY = {
 const DEFAULT_STATE = {
     order: DEFAULT_ENTITY,
     errors: {},
-    stripeForm: null
+    stripeForm: false
 }
 
 const orderReducer = (state = DEFAULT_STATE, action) => {

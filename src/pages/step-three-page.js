@@ -79,7 +79,7 @@ class StepThreePage extends React.Component {
         this.props.handleOrderChange(order, errors);
     }
 
-    async handleStripe(ev, stripe) {
+    async handleStripe(ev, stripe) {        
         let stripeErrors = Object.values(ev).filter(x => x.required === true && x.message === '');
         if(stripeErrors.length === 3) { 
             let {token} = await stripe.createToken({name: "Name"});
@@ -96,7 +96,6 @@ class StepThreePage extends React.Component {
     render(){
         let {summit, order, errors, stripeForm} = this.props;
         let {token, stripe, dirty} = this.state;
-
         return (
             <div className="step-three">
                 <StepRow step={this.step} />
@@ -126,7 +125,7 @@ class StepThreePage extends React.Component {
                     stripe={stripe} 
                     token={token} 
                     order={order} 
-                    errors={errors}
+                    errors={{errors, stripeForm}}
                     canContinue={true} 
                     dirty={this.handleShowErrors} />
             </div>

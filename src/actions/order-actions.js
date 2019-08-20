@@ -37,15 +37,15 @@ export const handleResetOrder = () => (dispatch, getState) => {
 }
 
 
-export const handleOrderChange = (order, errors = {}, validate = false) => (dispatch, getState) => {
+export const handleOrderChange = (order, errors = {}) => (dispatch, getState) => {
 
     let {currentStep} = order;
 
     if(currentStep === 2) {
-        if (validate && validator.isEmpty(order.first_name)) errors.first_name = 'Please enter your First Name.';
-        if (validate && validator.isEmpty(order.last_name)) errors.last_name = 'Please enter your Last Name.';
-        if (validate && !validator.isEmail(order.email)) errors.email = 'Please enter a valid Email.';
-        if (validate && validator.isEmpty(order.company)) errors.company = 'Please enter your Company.';
+        if (validator.isEmpty(order.first_name)) errors.first_name = 'Please enter your First Name.';
+        if (validator.isEmpty(order.last_name)) errors.last_name = 'Please enter your Last Name.';
+        if (!validator.isEmail(order.email)) errors.email = 'Please enter a valid Email.';
+        if (validator.isEmpty(order.company)) errors.company = 'Please enter your Company.';
 
         order.tickets.forEach(tix => {
            if (tix.coupon && tix.coupon.code == 'NOTACOUPON') errors[`tix_coupon_${tix.id}`] = 'Coupon not valid.';
@@ -61,11 +61,11 @@ export const handleOrderChange = (order, errors = {}, validate = false) => (disp
         if (validator.isEmpty(order.card_expiration)) errors.card_expiration = "Please enter the card expiration.";
         if (validator.isEmpty(order.card_cvc)) errors.card_cvc = "Please enter the card cvc.";
 
-        if (validate && validator.isEmpty(order.billing_country)) errors.billing_country = "Please enter the billing Country.";
-        if (validate && validator.isEmpty(order.billing_address)) errors.billing_address = "Please enter the billing Address.";
-        if (validate && validator.isEmpty(order.billing_city)) errors.billing_city = "Please enter the billing City.";
-        if (validate && validator.isEmpty(order.billing_state)) errors.billing_state = "Please enter the billing State.";
-        if (validate && validator.isEmpty(order.billing_zipcode)) errors.billing_zipcode = "Please enter the billing ZipCode.";
+        if (validator.isEmpty(order.billing_country)) errors.billing_country = "Please enter the billing Country.";
+        if (validator.isEmpty(order.billing_address)) errors.billing_address = "Please enter the billing Address.";
+        if (validator.isEmpty(order.billing_city)) errors.billing_city = "Please enter the billing City.";
+        if (validator.isEmpty(order.billing_state)) errors.billing_state = "Please enter the billing State.";
+        if (validator.isEmpty(order.billing_zipcode)) errors.billing_zipcode = "Please enter the billing ZipCode.";
         dispatch(createAction(CHANGE_ORDER)({order, errors}));
     } else {
         dispatch(createAction(CHANGE_ORDER)({order, errors}));

@@ -45,19 +45,19 @@ class StepTwoPage extends React.Component {
         this.handleAddTicket = this.handleAddTicket.bind(this);
         this.handleRemoveTicket = this.handleRemoveTicket.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleShowErrors = this.handleShowErrors.bind(this);
 
     }
 
     componentWillMount() {
         let order = {...this.props.order};   
-        let {dirty} = this.state;
         
         order = {
             ...order,
             currentStep: this.step
         };
         
-        this.props.handleOrderChange(order, {}, dirty);
+        this.props.handleOrderChange(order);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -91,12 +91,11 @@ class StepTwoPage extends React.Component {
         let order = cloneDeep(this.props.order);
         let errors = cloneDeep(this.props.errors);
         let {value, id} = ev.target;
-        let {dirty} = this.state;
 
         delete(errors[id]);
         order[id] = value;
 
-        this.setState({dirty: true}, () => this.props.handleOrderChange(order, errors, dirty))
+        this.props.handleOrderChange(order, errors);
     }
 
     handleAddTicket(ticketTypeId) {
@@ -121,16 +120,20 @@ class StepTwoPage extends React.Component {
         this.props.saveOrderDetails();
     }
 
+    handleShowErrors() {        
+        this.setState({dirty: true});
+    }
+
     render(){
         let {summit, order, errors} = this.props;
-        let {dirty} = this.state;
+        let {dirty} = this.state;        
 
         return (
             <div className="step-two">
                 <StepRow step={this.step} />
                 <div className="row">
                     <div className="col-md-8">
-                        <BasicInfoForm order={order} errors={errors} onChange={this.handleChange}/>
+                        <BasicInfoForm order={order} errors={dirty? errors : {}} onChange={this.handleChange}/>
                         {summit.ticketTypes.map((t,i) => (
                             <TicketInfoForm
                                 key={`tixinfo_${t.id}_${i}`}
@@ -148,7 +151,7 @@ class StepTwoPage extends React.Component {
                         <EventInfo />
                     </div>
                 </div>
-                <SubmitButtons step={this.step} canContinue={(Object.keys(errors).length == 0) && dirty === true} />
+                <SubmitButtons step={this.step} errors={errors} canContinue={true} dirty={this.handleShowErrors}/>
             </div>
         );
     }

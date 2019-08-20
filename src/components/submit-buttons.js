@@ -32,10 +32,14 @@ export default class SubmitButtons extends React.Component {
     }
 
     continueClick(ev) {
-        let {step} = this.props;
+        let {step, errors, dirty} = this.props;
         ev.preventDefault();
-        // stepDefs start on 0 so next step is the same as step
-        history.push(stepDefs[step]);
+        if ((Object.keys(errors).length === 0)) {
+            // stepDefs start on 0 so next step is the same as step
+            history.push(stepDefs[step]);
+        } else {
+            return dirty.call();
+        }
     }
 
     backClick(ev) {

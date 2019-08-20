@@ -35,6 +35,7 @@ class StepTwoPage extends React.Component {
         super(props);
 
         this.state = {
+            dirty: false
         };
 
         this.step = 2;
@@ -44,18 +45,19 @@ class StepTwoPage extends React.Component {
         this.handleAddTicket = this.handleAddTicket.bind(this);
         this.handleRemoveTicket = this.handleRemoveTicket.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleShowErrors = this.handleShowErrors.bind(this);
 
     }
 
     componentWillMount() {
-        let order = {...this.props.order};        
+        let order = {...this.props.order};   
         
         order = {
             ...order,
             currentStep: this.step
         };
         
-        this.props.handleOrderChange(order)
+        this.props.handleOrderChange(order);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -82,7 +84,7 @@ class StepTwoPage extends React.Component {
             }
         });
 
-        this.props.handleOrderChange(order, errors)
+        this.props.handleOrderChange(order, errors);
     }
 
     handleChange(ev) {
@@ -93,7 +95,7 @@ class StepTwoPage extends React.Component {
         delete(errors[id]);
         order[id] = value;
 
-        this.props.handleOrderChange(order, errors)
+        this.props.handleOrderChange(order, errors);
     }
 
     handleAddTicket(ticketTypeId) {
@@ -102,7 +104,7 @@ class StepTwoPage extends React.Component {
         let randomNumber = moment().valueOf();
 
         order.tickets.push({id: randomNumber, tix_type_id: ticketTypeId});
-        this.props.handleOrderChange(order, errors)
+        this.props.handleOrderChange(order, errors);
     }
 
     handleRemoveTicket(ticketId) {
@@ -110,7 +112,7 @@ class StepTwoPage extends React.Component {
         let errors = cloneDeep(this.props.errors);
 
         order.tickets = order.tickets.filter(t => t.id != ticketId);
-        this.props.handleOrderChange(order, errors)
+        this.props.handleOrderChange(order, errors);
     }
 
     handleSubmit(ev) {
@@ -118,15 +120,20 @@ class StepTwoPage extends React.Component {
         this.props.saveOrderDetails();
     }
 
+    handleShowErrors() {        
+        this.setState({dirty: true});
+    }
+
     render(){
         let {summit, order, errors} = this.props;
+        let {dirty} = this.state;        
 
         return (
             <div className="step-two">
                 <StepRow step={this.step} />
                 <div className="row">
                     <div className="col-md-8">
-                        <BasicInfoForm order={order} errors={errors} onChange={this.handleChange}/>
+                        <BasicInfoForm order={order} errors={dirty? errors : {}} onChange={this.handleChange}/>
                         {summit.ticketTypes.map((t,i) => (
                             <TicketInfoForm
                                 key={`tixinfo_${t.id}_${i}`}
@@ -144,7 +151,7 @@ class StepTwoPage extends React.Component {
                         <EventInfo />
                     </div>
                 </div>
-                <SubmitButtons step={this.step} canContinue={(Object.keys(errors).length == 0)} />
+                <SubmitButtons step={this.step} errors={errors} canContinue={true} dirty={this.handleShowErrors}/>
             </div>
         );
     }

@@ -36,13 +36,15 @@ class StepThreePage extends React.Component {
 
         this.state = {
             stripe: {},
-            token: {}
+            token: {},
+            dirty: false
         };
 
         this.step = 3;
 
         this.handleChange = this.handleChange.bind(this);
         this.handleStripe = this.handleStripe.bind(this);
+        this.handleShowErrors = this.handleShowErrors.bind(this);
 
     }
 
@@ -74,7 +76,7 @@ class StepThreePage extends React.Component {
         delete(errors[id]);
         order[id] = value;
 
-        this.props.handleOrderChange(order, errors)
+        this.props.handleOrderChange(order, errors);
     }
 
     async handleStripe(ev, stripe) {
@@ -87,9 +89,13 @@ class StepThreePage extends React.Component {
         }
     }
 
+    handleShowErrors() {        
+        this.setState({dirty: true});
+    }
+
     render(){
         let {summit, order, errors, stripeForm} = this.props;
-        let {token, stripe} = this.state;
+        let {token, stripe, dirty} = this.state;
 
         return (
             <div className="step-three">
@@ -98,17 +104,31 @@ class StepThreePage extends React.Component {
                         <div className="col-md-8">
                         <StripeProvider apiKey={window.STRIPE_PRIVATE_KEY}>
                             <Elements>
-                                <PaymentInfoForm onChange={this.handleStripe} order={order} />
+                                <PaymentInfoForm 
+                                    onChange={this.handleStripe} 
+                                    order={order} 
+                                    errors={dirty ? errors : {}} />
                             </Elements>
                         </StripeProvider>
-                            <BillingInfoForm onChange={this.handleChange} order={order} summit={summit} errors={errors} />
+                            <BillingInfoForm 
+                                onChange={this.handleChange} 
+                                order={order} 
+                                summit={summit} 
+                                errors={dirty ? errors : {}} />
                         </div>
                         <div className="col-md-4">
                             <OrderSummary order={order} summit={summit} />
                             <EventInfo />
                         </div>
                     </div>
-                <SubmitButtons stripe={stripe} token={token} order={order} step={this.step} canContinue={(Object.keys(errors).length == 0 && stripeForm === true)} />
+                <SubmitButtons 
+                    step={this.step} 
+                    stripe={stripe} 
+                    token={token} 
+                    order={order} 
+                    errors={errors}
+                    canContinue={true} 
+                    dirty={this.handleShowErrors} />
             </div>
         );
     }

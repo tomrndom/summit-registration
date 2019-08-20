@@ -32,10 +32,18 @@ export default class SubmitButtons extends React.Component {
     }
 
     continueClick(ev) {
-        let {step} = this.props;
+        let {step, errors, dirty} = this.props;
         ev.preventDefault();
-        // stepDefs start on 0 so next step is the same as step
-        history.push(stepDefs[step]);
+        if (step > 1) {
+            if((Object.keys(errors).length === 0)) {
+                // stepDefs start on 0 so next step is the same as step
+                history.push(stepDefs[step]);
+            } else {
+                return dirty.call();
+            }
+        } else {
+            history.push(stepDefs[step]);
+        }
     }
 
     backClick(ev) {
@@ -46,7 +54,14 @@ export default class SubmitButtons extends React.Component {
     }
 
     payClick(ev) {
-        let {stripe, token, order} = this.props;
+        let {dirty, errors, stripe, token, order} = this.props;
+        ev.preventDefault();
+        if((Object.keys(errors).length === 0)) {
+            // stepDefs start on 0 so next step is the same as step
+            history.push(stepDefs[step]);
+        } else {
+            return dirty.call();
+        }
         
         // stripe.handleCardPayment(
         //     client_secret, token, {

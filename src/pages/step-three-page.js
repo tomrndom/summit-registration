@@ -107,7 +107,7 @@ class StepThreePage extends React.Component {
                                 <PaymentInfoForm 
                                     onChange={this.handleStripe} 
                                     order={order} 
-                                    errors={dirty ? errors : {}} />
+                                    dirty={dirty} />
                             </Elements>
                         </StripeProvider>
                             <BillingInfoForm 

@@ -27,9 +27,9 @@ class PaymentInfoForm extends React.Component {
 
         this.state = {
             stripeErrors: {
-                cardNumber: { message: '', required: false },
-                cardExpiry: { message: '', required: false },
-                cardCvc: { message: '', required: false },
+                cardNumber: { message: 'Please enter a valid Credit Card.', required: false },
+                cardExpiry: { message: 'Please enter the card expiration.', required: false },
+                cardCvc: { message: 'Please enter the card cvc.', required: false },
             }
         };
 
@@ -93,7 +93,7 @@ class PaymentInfoForm extends React.Component {
 
 
     render() {
-        let {onChange} = this.props;
+        let {onChange, dirty} = this.props;
         let {stripeErrors: {cardNumber, cardExpiry, cardCvc}} = this.state;
 
         const style = {
@@ -145,7 +145,7 @@ class PaymentInfoForm extends React.Component {
                     </div>
                     <div className="col-md-6">
                         <CardNumberElement style={style} className="form-control" onChange={this.hasStripeErrors} />
-                        {cardNumber.message && <p className="error-label">{cardNumber.message}</p>}                        
+                        {dirty && cardNumber.message && <p className="error-label">{cardNumber.message}</p>}                        
                     </div>
                 </div>
                 <div className="row field-wrapper">
@@ -154,11 +154,11 @@ class PaymentInfoForm extends React.Component {
                     </div>
                     <div className="col-md-3">
                         <CardExpiryElement style={style} className="form-control" onChange={this.hasStripeErrors}/>                        
-                        {cardExpiry.message && <p className="error-label">{cardExpiry.message}</p>}
+                        {dirty && cardExpiry.message && <p className="error-label">{cardExpiry.message}</p>}
                     </div>
                     <div className="col-md-3">
                         <CardCvcElement style={style} className="form-control" onChange={this.hasStripeErrors} />                        
-                        {cardCvc.message && <p className="error-label">{cardCvc.message}</p>}
+                        {dirty && cardCvc.message && <p className="error-label">{cardCvc.message}</p>}
                     </div>
                 </div>
             </div>

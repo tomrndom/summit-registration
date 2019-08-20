@@ -34,12 +34,14 @@ class StepThreePage extends React.Component {
         super(props);
 
         this.state = {
+            dirty: false
         };
 
         this.step = 3;
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleShowErrors = this.handleShowErrors.bind(this);
 
     }
 
@@ -71,7 +73,7 @@ class StepThreePage extends React.Component {
         delete(errors[id]);
         order[id] = value;
 
-        this.props.handleOrderChange(order, errors)
+        this.props.handleOrderChange(order, errors);
     }
 
     handleSubmit(ev) {
@@ -79,23 +81,28 @@ class StepThreePage extends React.Component {
         this.props.saveOrderDetails();
     }
 
+    handleShowErrors() {        
+        this.setState({dirty: true});
+    }
+
     render(){
         let {summit, order, errors} = this.props;
+        let {dirty} = this.state;
 
         return (
             <div className="step-three">
                 <StepRow step={this.step} />
                 <div className="row">
                     <div className="col-md-8">
-                        <PaymentInfoForm onChange={this.handleChange} order={order} summit={summit} errors={errors} />
-                        <BillingInfoForm onChange={this.handleChange} order={order} summit={summit} errors={errors} />
+                        <PaymentInfoForm onChange={this.handleChange} order={order} summit={summit} errors={dirty ? errors : {}} />
+                        <BillingInfoForm onChange={this.handleChange} order={order} summit={summit} errors={dirty ? errors : {}} />
                     </div>
                     <div className="col-md-4">
                         <OrderSummary order={order} summit={summit} />
                         <EventInfo />
                     </div>
                 </div>
-                <SubmitButtons step={this.step} canContinue={(Object.keys(errors).length == 0)} />
+                <SubmitButtons step={this.step} errors={errors} canContinue={true} dirty={this.handleShowErrors} />
             </div>
         );
     }

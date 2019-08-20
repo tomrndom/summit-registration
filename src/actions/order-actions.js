@@ -53,7 +53,7 @@ export const handleOrderChange = (order, errors = {}) => (dispatch, getState) =>
 
            if (tix.email && !validator.isEmail(tix.email)) errors[`tix_email_${tix.id}`] = 'Please enter a valid Email.';
            else delete(errors[`tix_email_${tix.id}`]);
-        });
+        });        
         dispatch(createAction(CHANGE_ORDER)({order, errors}));
     } else if(currentStep === 3) {
         if (validator.isEmpty(order.cardholder_name)) errors.cardholder_name = "Please enter the cardholder's Name.";

@@ -35,7 +35,7 @@ class OrderSummary extends React.Component {
             let idx = ticketSummary.findIndex(o => o.tix_type_id == tix.tix_type_id);
             let tixType = ticketTypes.find(tt => tt.id == tix.tix_type_id);
 
-            if (!idx) {
+            if (idx >= 0) {
                 ticketSummary[idx].qty++;
             } else {
                 ticketSummary.push({tix_type_id: tix.tix_type_id, tix_type: tixType, qty: 1})
@@ -44,7 +44,7 @@ class OrderSummary extends React.Component {
             ticketTotal = ticketTotal + tixType.price;
 
         });
-
+        
         let discountTotal = 0;
         let discounts = order.tickets.filter(tix => tix.coupon).map(tix => {
             let tixType = ticketTypes.find(tt => tt.id == tix.tix_type_id);

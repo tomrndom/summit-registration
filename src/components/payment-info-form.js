@@ -144,7 +144,7 @@ class PaymentInfoForm extends React.Component {
                         <label>{T.translate("step_three.card_number")} *</label>
                     </div>
                     <div className="col-md-6">
-                        <CardNumberElement style={style} className="form-control stripe-input" onChange={this.hasStripeErrors} />
+                        <CardNumberElement style={style} className="form-control" onChange={this.hasStripeErrors} />
                         {cardNumber.message && <p className="error-label">{cardNumber.message}</p>}                        
                     </div>
                 </div>
@@ -153,11 +153,11 @@ class PaymentInfoForm extends React.Component {
                         <label>{T.translate("step_three.expiration")} *</label>
                     </div>
                     <div className="col-md-3">
-                        <CardExpiryElement style={style} className="form-control stripe-input" onChange={this.hasStripeErrors}/>                        
+                        <CardExpiryElement style={style} className="form-control" onChange={this.hasStripeErrors}/>                        
                         {cardExpiry.message && <p className="error-label">{cardExpiry.message}</p>}
                     </div>
                     <div className="col-md-3">
-                        <CardCvcElement style={style} className="form-control stripe-input" onChange={this.hasStripeErrors} />                        
+                        <CardCvcElement style={style} className="form-control" onChange={this.hasStripeErrors} />                        
                         {cardCvc.message && <p className="error-label">{cardCvc.message}</p>}
                     </div>
                 </div>

@@ -148,7 +148,10 @@ export const payReservation = (card, stripe, clientSecret) => (dispatch, getStat
             //     .then((payload) => {
             //         dispatch(stopLoading());
             //         history.push(`app/${summitState.summit.slug}/done`);
-            //     })
+            //     }), (error) => {
+            //         dispatch(stopLoading());
+            //         console.log('error', error);
+            //     }
 
             setTimeout(() => { 
                 dispatch(stopLoading());        

@@ -103,7 +103,26 @@ export const createReservation = (owner_email, owner_first_name, owner_last_name
     //     }
 
     setTimeout(() => { 
-        dispatch(stopLoading());        
+        const mockReservation = {
+            response: {
+                hash:"", // this hash need to be saved somewhere on client and its needed to do checkout after calling the payment gateway
+                raw_amount: 100000,
+                discounts: 100.00,
+                taxes:200.00,
+                amount:1110.00,
+                payment_gateway_client_token:"",
+                tickets:[
+                    {
+                        ticket_type_id:1,
+                        raw_cost:100.00,
+                        promo_code: "1234",
+                    }
+                ]
+            }                        
+        };
+        dispatch(createAction(CREATE_RESERVATION));
+        dispatch(createAction(CREATE_RESERVATION_SUCCESS)(mockReservation));
+        dispatch(stopLoading());
         history.push(stepDefs[2]);
     }, 1000);    
 }

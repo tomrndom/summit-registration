@@ -71,6 +71,7 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             break;
         case CREATE_RESERVATION_SUCCESS: {
             let entity = {...payload.response};
+            console.log(payload);
             return {...state, reservation: entity, errors: {}, loading: false, loaded: true};
         }
             break;

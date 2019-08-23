@@ -12,7 +12,14 @@
  **/
 
 import { LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
-import {RESET_ORDER, RECEIVE_ORDER, CHANGE_ORDER, VALIDATE_STRIPE} from "../actions/order-actions";
+import { 
+    RESET_ORDER, 
+    RECEIVE_ORDER, 
+    CHANGE_ORDER, 
+    VALIDATE_STRIPE, 
+    CREATE_RESERVATION, 
+    CREATE_RESERVATION_SUCCESS 
+} from "../actions/order-actions";
 
 
 const DEFAULT_ENTITY = {
@@ -28,12 +35,15 @@ const DEFAULT_ENTITY = {
     billing_state: '',
     billing_zipcode: '',
     currentStep: null,
+    reservation: {},
 }
 
 const DEFAULT_STATE = {
     order: DEFAULT_ENTITY,
     errors: {},
-    stripeForm: false
+    stripeForm: false,
+    loaded: false,
+	loading: false
 }
 
 const orderReducer = (state = DEFAULT_STATE, action) => {
@@ -55,6 +65,15 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
         case VALIDATE_STRIPE:
             let {value} = payload
             return {...state, stripeForm: value}
+        case CREATE_RESERVATION: {
+            return DEFAULT_STATE
+        }
+            break;
+        case CREATE_RESERVATION_SUCCESS: {
+            let entity = {...payload.response};
+            return {...state, reservation: entity, errors: {}, loading: false, loaded: true};
+        }
+            break;
         default:
             return state;
             break;

@@ -32,8 +32,7 @@ class PaymentInfoForm extends React.Component {
                 cardCvc: { message: 'Please enter the card cvc.', required: false },
             }
         };
-
-        // this.hasErrors = this.hasErrors.bind(this);
+        
         this.hasStripeErrors = this.hasStripeErrors.bind(this);
         this.hasUncompletedFields = this.hasUncompletedFields.bind(this);
     }
@@ -93,7 +92,6 @@ class PaymentInfoForm extends React.Component {
 
 
     render() {
-        let {onChange, dirty} = this.props;
         let {stripeErrors: {cardNumber, cardExpiry, cardCvc}} = this.state;
 
         const style = {
@@ -125,27 +123,13 @@ class PaymentInfoForm extends React.Component {
                         {T.translate("step_three.payment_subtitle")}
                     </div>
                 </div>
-                {/* <div className="row field-wrapper">
-                    <div className="col-md-4">
-                        <label>{T.translate("step_three.cardholder_name")} *</label>
-                    </div>
-                    <div className="col-md-6">
-                        <Input
-                            id="cardholder_name"
-                            className="form-control"
-                            error={this.hasErrors('cardholder_name')}
-                            onChange={onChange}
-                            value={order.cardholder_name}
-                        />
-                    </div>
-                </div> */}
                 <div className="row field-wrapper">
                     <div className="col-md-4">
                         <label>{T.translate("step_three.card_number")} *</label>
                     </div>
                     <div className="col-md-6">
                         <CardNumberElement style={style} className="form-control" onChange={this.hasStripeErrors} />
-                        {dirty && cardNumber.message && <p className="error-label">{cardNumber.message}</p>}                        
+                        {cardNumber.message && <p className="error-label">{cardNumber.message}</p>}                        
                     </div>
                 </div>
                 <div className="row field-wrapper">
@@ -154,11 +138,11 @@ class PaymentInfoForm extends React.Component {
                     </div>
                     <div className="col-md-3">
                         <CardExpiryElement style={style} className="form-control" onChange={this.hasStripeErrors}/>                        
-                        {dirty && cardExpiry.message && <p className="error-label">{cardExpiry.message}</p>}
+                        {cardExpiry.message && <p className="error-label">{cardExpiry.message}</p>}
                     </div>
                     <div className="col-md-3">
                         <CardCvcElement style={style} className="form-control" onChange={this.hasStripeErrors} />                        
-                        {dirty && cardCvc.message && <p className="error-label">{cardCvc.message}</p>}
+                        {cardCvc.message && <p className="error-label">{cardCvc.message}</p>}
                     </div>
                 </div>
             </div>

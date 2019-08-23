@@ -151,7 +151,7 @@ class StepTwoPage extends React.Component {
                         <EventInfo />
                     </div>
                 </div>
-                <SubmitButtons step={this.step} errors={errors} canContinue={true} dirty={this.handleShowErrors}/>
+                <SubmitButtons step={this.step} errors={errors} dirty={this.handleShowErrors}/>
             </div>
         );
     }

@@ -123,10 +123,8 @@ class StepThreePage extends React.Component {
                 <SubmitButtons 
                     step={this.step} 
                     stripe={stripe} 
-                    token={token} 
-                    order={order} 
+                    token={token}
                     errors={{errors, stripeForm}}
-                    canContinue={true} 
                     dirty={this.handleShowErrors} />
             </div>
         );

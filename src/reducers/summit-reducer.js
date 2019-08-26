@@ -12,11 +12,12 @@
  **/
 
 import { LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
-import {RECEIVE_SUMMIT, REQUEST_SUMMIT} from "../actions/base-actions";
+import {RECEIVE_SUMMIT, REQUEST_SUMMITS} from "../actions/base-actions";
 
 
 const DEFAULT_STATE = {
-    summit: {
+    summits: [],
+    currentSummit: {
         slug: 'shanghai-2019',
         ticketTypes: [
             {id: 1, name: 'Full Pass', price: 800},
@@ -31,11 +32,12 @@ const summitReducer = (state = DEFAULT_STATE, action) => {
     switch(type){
         case LOGOUT_USER:
             return DEFAULT_STATE;
-        case REQUEST_SUMMIT:
-            return DEFAULT_STATE;
+        case REQUEST_SUMMITS:
+            let { data } = payload.response;
+            return {...state, summits: data};
             break;
         case RECEIVE_SUMMIT: {
-            let entity = {...payload.response};
+            let entity = {...payload};
 
             for(var key in entity) {
                 if(entity.hasOwnProperty(key)) {
@@ -43,7 +45,7 @@ const summitReducer = (state = DEFAULT_STATE, action) => {
                 }
             }
 
-            return {...state, summit: entity};
+            return {...state, currentSummit: entity};
         }
         break;
         default:

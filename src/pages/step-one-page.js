@@ -88,7 +88,7 @@ class StepOnePage extends React.Component {
                             </div>
                             <div className="col-md-12">
                                 <TicketInput
-                                    ticketTypes={summit.ticketTypes}
+                                    ticketTypes={summit.ticket_types}
                                     selection={order.tickets}
                                     add={this.handleAddTicket}
                                     substract={this.handleSubstractTicket}
@@ -109,7 +109,7 @@ class StepOnePage extends React.Component {
 
 const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
     member: loggedUserState.member,
-    summit: summitState.summit,
+    summit: summitState.currentSummit,
     order:  orderState.order,
     errors:  orderState.errors
 })

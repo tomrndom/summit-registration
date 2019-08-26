@@ -27,13 +27,13 @@ class OrderSummary extends React.Component {
 
     render() {
         let {order, summit} = this.props;
-        let {ticketTypes} = summit;
+        let {ticket_types} = summit;
 
         let ticketTotal = 0;
         let ticketSummary = [];
         order.tickets.forEach(tix => {
             let idx = ticketSummary.findIndex(o => o.tix_type_id == tix.tix_type_id);
-            let tixType = ticketTypes.find(tt => tt.id == tix.tix_type_id);
+            let tixType = ticket_types.find(tt => tt.id == tix.tix_type_id);
 
             if (idx >= 0) {
                 ticketSummary[idx].qty++;
@@ -47,7 +47,7 @@ class OrderSummary extends React.Component {
         
         let discountTotal = 0;
         let discounts = order.tickets.filter(tix => tix.coupon).map(tix => {
-            let tixType = ticketTypes.find(tt => tt.id == tix.tix_type_id);
+            let tixType = ticket_types.find(tt => tt.id == tix.tix_type_id);
 
             let discountTmp = (tix.coupon.percentage / 100) * tixType.price;
             discountTotal = discountTotal + discountTmp;

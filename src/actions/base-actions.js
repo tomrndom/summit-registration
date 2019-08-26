@@ -24,23 +24,39 @@ import {
 } from 'openstack-uicore-foundation/lib/methods';
 
 
-export const REQUEST_SUMMIT           = 'REQUEST_SUMMIT';
+export const REQUEST_SUMMITS           = 'REQUEST_SUMMITS';
 export const RECEIVE_SUMMIT           = 'RECEIVE_SUMMIT';
 
+export const getSummits = () => (dispatch, getState) => {
+  
+  let params = {
+      expand: ''
+  };
 
+  return getRequest(
+      dispatch(startLoading()),
+      createAction(REQUEST_SUMMITS),
+      `${window.API_BASE_URL}/api/public/v1/summits/`,
+      authErrorHandler
+  )(params)(dispatch).then(() => {
+      dispatch(stopLoading());
+    }
+  );
+
+}
 
 export const getSummitBySlug = (slug) => (dispatch, getState) => {
 
     dispatch(startLoading());
 
-    dispatch(createAction(REQUEST_SUMMIT)());
+    let { summitState: {summits} } = getState();
 
-    let params = {
-        expand: ''
-    };
+    let currentSummit = summits.find(s => s.slug === slug);  
+
+    dispatch(createAction(RECEIVE_SUMMIT)(currentSummit));
 
     /*return getRequest(
-        createAction(REQUEST_SUMMIT),
+        createAction(REQUEST_SUMMITS),
         createAction(RECEIVE_SUMMIT),
         `${window.API_BASE_URL}/api/public/v1/summits/all/${slug}`,
         authErrorHandler

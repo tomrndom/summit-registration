@@ -14,18 +14,18 @@
 import React from 'react'
 import { Switch, Route, Router } from 'react-router-dom'
 import PrimaryLayout from "./layouts/primary-layout"
+import DashboardLayout from "./layouts/dashboard-layout"
 import AuthorizedRoute from './routes/authorized-route'
 import AuthorizationCallbackRoute from "./routes/authorization-callback-route"
 import LogOutCallbackRoute from './routes/logout-callback-route'
 import AuthButton from './components/auth-button'
 import NotFoundPage from './pages/not-found-page'
 import { connect } from 'react-redux'
-import { AjaxLoader, OPSessionChecker } from "openstack-uicore-foundation/lib/components";
+import { AjaxLoader } from "openstack-uicore-foundation/lib/components";
 import { getBackURL, onUserAuth, doLogin, doLogout, initLogOut, getUserInfo } from "openstack-uicore-foundation/lib/methods";
 import { handleResetOrder } from './actions/order-actions'
 import T from 'i18n-react';
 import history from './history'
-
 
 
 // here is set by default user lang as en
@@ -49,41 +49,34 @@ window.API_BASE_URL        = process.env['API_BASE_URL'];
 window.OAUTH2_CLIENT_ID    = process.env['OAUTH2_CLIENT_ID'];
 window.SCOPES              = process.env['SCOPES'];
 window.ALLOWED_USER_GROUPS = process.env['ALLOWED_USER_GROUPS'];
-window.GRAPH_API_BASE_URL  = process.env['GRAPH_API_BASE_URL'];
 window.STRIPE_PRIVATE_KEY  = process.env['STRIPE_PRIVATE_KEY'];
 
 class App extends React.PureComponent {
 
-    onClickLogin(){
+    onClickLogin() {
         doLogin(getBackURL());
     }
 
     render() {
-        let { isLoggedUser, onUserAuth, doLogout, getUserInfo, member, backUrl} = this.props;
+        let {isLoggedUser, onUserAuth, doLogout, getUserInfo, member, backUrl} = this.props;
         let profile_pic = member ? member.pic : '';
         return (
             <Router history={history}>
                 <div className="container">
                     <AjaxLoader show={ this.props.loading } size={ 120 }/>
-                    {isLoggedUser &&
-                    <OPSessionChecker
-                        clientId={window.OAUTH2_CLIENT_ID}
-                        idpBaseUrl={window.IDP_BASE_URL}
-                    />
-                    }
                     <div className="header row">
                         <div className="header-logo col-md-2">LOGO</div>
                         <div className="header-title col-md-8">
-                            <a href="/app/start">Summit Registration</a>
+                            <h3>Summit Registration</h3>
                         </div>
                         <div className="col-md-2">
                             <AuthButton isLoggedUser={isLoggedUser} picture={profile_pic} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut}/>
-                            <a href="" onClick={this.props.handleResetOrder}>x</a>
+                            <a onClick={this.props.handleResetOrder}>x</a>
                         </div>
                     </div>
                     <Switch>
-                        <Route path="/app/:summit_slug" component={PrimaryLayout}/>
-                        <AuthorizedRoute isLoggedUser={isLoggedUser} backUrl={backUrl} path="/auth/login" component={PrimaryLayout} />
+                        <Route path="/a/:summit_slug/register" component={PrimaryLayout}/>
+                        <AuthorizedRoute isLoggedUser={isLoggedUser} backUrl={backUrl} path="/a" component={DashboardLayout} />
                         <AuthorizationCallbackRoute onUserAuth={onUserAuth} path='/auth/callback' getUserInfo={getUserInfo} />
                         <LogOutCallbackRoute doLogout={doLogout}  path='/auth/logout'/>
                         <Route path="/logout" component={NotFoundPage} />

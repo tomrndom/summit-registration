@@ -22,7 +22,7 @@ import { persistStore, persistCombineReducers } from 'redux-persist'
 import storage from 'redux-persist/es/storage' // default: localStorage if web, AsyncStorage if react-native
 
 const config = {
-  key: 'root_openstack survey analytics',
+  key: 'root_registration',
   storage,
 }
 

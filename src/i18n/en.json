@@ -13,8 +13,8 @@
   },
   "general": {
     "continue"      : "Continue",
-    "pay_now"       : "Pay Now",
-    "back"          : "Back"
+    "back"          : "Back",
+    "pay_now"       : "Pay Now"
   },
   "order_summary": {
     "order_summary"   : "Order Summary",
@@ -69,5 +69,11 @@
     "text"                : "blah blah a text",
     "order_no"            : "ORDER NO",
     "manage"              : "Manage Your Tickets"
+  },
+  "orders": {
+    "empty"               : "There are no active orders so far"
+  },
+  "tickets": {
+    "empty"               : "There are no tickets so far"
   }
 }

@@ -14,7 +14,7 @@
   "general": {
     "continue"      : "Continue",
     "back"          : "Back",
-    "pay_now"       : "Pay now"
+    "pay_now"       : "Pay Now"
   },
   "order_summary": {
     "order_summary"   : "Order Summary",
@@ -73,5 +73,11 @@
     "text"                : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
     "order_no"            : "ORDER NO",
     "manage"              : "Manage Your Tickets"
+  },
+  "orders": {
+    "empty"               : "There are no active orders so far"
+  },
+  "tickets": {
+    "empty"               : "There are no tickets so far"
   }
 }

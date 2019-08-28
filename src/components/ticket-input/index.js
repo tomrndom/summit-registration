@@ -42,6 +42,7 @@ export default class TicketInput extends React.Component {
         let {selection, ticketTypes} = this.props;
 
         return (
+            ticketTypes && 
             <div className="ticket-input-box">
                 {ticketTypes.map(t => {
                     let quantity = selection.filter(sel => sel.tix_type_id == t.id).length;
@@ -52,7 +53,7 @@ export default class TicketInput extends React.Component {
                                 <div className="col-md-8">
                                     <div className="ticket-type">{t.name}</div>
                                     <div className="ticket-price">
-                                        ${t.price}
+                                        {t.cost > 0 ? `$ ${t.cost}` : T.translate("step_one.free")}
                                     </div>
                                     <div className="ticket-expiration">
                                         {T.translate("step_one.expiration")} July 15, 2019
@@ -64,7 +65,9 @@ export default class TicketInput extends React.Component {
                                             <i className="fa fa-minus"></i>
                                         </button>
                                         <div className="quantity-value">{quantity}</div>
-                                        <button className="btn btn-default" onClick={this.addTicket.bind(this, t.id)}>
+                                        <button className="btn btn-default" onClick={this.addTicket.bind(this, t.id)} 
+                                          disabled={(t.max_quantity_per_order > 0 && t.max_quantity_per_order <= quantity) ||
+                                          (quantity >= t.quantity_2_sell - t.quantity_sold)}>
                                             <i className="fa fa-plus"></i>
                                         </button>
                                     </div>

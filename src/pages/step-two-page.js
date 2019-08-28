@@ -134,7 +134,7 @@ class StepTwoPage extends React.Component {
                 <div className="row">
                     <div className="col-md-8">
                         <BasicInfoForm order={order} errors={dirty? errors : {}} onChange={this.handleChange}/>
-                        {summit.ticketTypes.map((t,i) => (
+                        {summit.ticket_types.map((t,i) => (
                             <TicketInfoForm
                                 key={`tixinfo_${t.id}_${i}`}
                                 ticketType={t}
@@ -151,7 +151,7 @@ class StepTwoPage extends React.Component {
                         <EventInfo />
                     </div>
                 </div>
-                <SubmitButtons step={this.step} errors={errors} canContinue={true} dirty={this.handleShowErrors}/>
+                <SubmitButtons step={this.step} errors={errors} dirty={this.handleShowErrors}/>
             </div>
         );
     }
@@ -159,7 +159,7 @@ class StepTwoPage extends React.Component {
 
 const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
     member: loggedUserState.member,
-    summit: summitState.summit,
+    summit: summitState.currentSummit,
     order:  orderState.order,
     errors:  orderState.errors
 })

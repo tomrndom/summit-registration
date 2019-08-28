@@ -30,7 +30,8 @@
   "step_one": {
     "choose_tickets"        : "Choose your tickets",
     "choose_tickets_desc"   : "a description",
-    "expiration"            : "Promotional pricing available until "
+    "expiration"            : "Promotional pricing available until ",
+    "free"                  : "Free"
   },
   "step_two": {
     "basic_info"        : "Basic Information",

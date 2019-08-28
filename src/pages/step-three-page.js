@@ -19,8 +19,9 @@ import OrderSummary from "../components/order-summary";
 import EventInfo from "../components/event-info";
 import StepRow from '../components/step-row';
 import SubmitButtons from "../components/submit-buttons";
-import { saveOrderDetails, handleOrderChange } from '../actions/order-actions'
+import { saveOrderDetails, handleOrderChange, validateStripe } from '../actions/order-actions'
 import {findElementPos} from "openstack-uicore-foundation/lib/methods";
+import { Elements, StripeProvider } from 'react-stripe-elements';
 import PaymentInfoForm from "../components/payment-info-form";
 import BillingInfoForm from "../components/billing-info-form";
 
@@ -34,13 +35,15 @@ class StepThreePage extends React.Component {
         super(props);
 
         this.state = {
+            stripe: {},
+            token: {},
             dirty: false
         };
 
         this.step = 3;
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleStripe = this.handleStripe.bind(this);
         this.handleShowErrors = this.handleShowErrors.bind(this);
 
     }
@@ -76,9 +79,14 @@ class StepThreePage extends React.Component {
         this.props.handleOrderChange(order, errors);
     }
 
-    handleSubmit(ev) {
-        ev.preventDefault();
-        this.props.saveOrderDetails();
+    async handleStripe(ev, stripe) {        
+        let stripeErrors = Object.values(ev).filter(x => x.required === true && x.message === '');
+        if(stripeErrors.length === 3) { 
+            let {token} = await stripe.createToken({name: "Name"});
+            this.setState({token, stripe}, () => this.props.validateStripe(true));
+        } else {
+            this.props.validateStripe(false);         
+        }
     }
 
     handleShowErrors() {        
@@ -86,23 +94,38 @@ class StepThreePage extends React.Component {
     }
 
     render(){
-        let {summit, order, errors} = this.props;
-        let {dirty} = this.state;
-
+        let {summit, order, errors, stripeForm} = this.props;
+        let {token, stripe, dirty} = this.state;
         return (
             <div className="step-three">
                 <StepRow step={this.step} />
-                <div className="row">
-                    <div className="col-md-8">
-                        <PaymentInfoForm onChange={this.handleChange} order={order} summit={summit} errors={dirty ? errors : {}} />
-                        <BillingInfoForm onChange={this.handleChange} order={order} summit={summit} errors={dirty ? errors : {}} />
+                    <div className="row">
+                        <div className="col-md-8">
+                        <StripeProvider apiKey={window.STRIPE_PRIVATE_KEY}>
+                            <Elements>
+                                <PaymentInfoForm 
+                                    onChange={this.handleStripe} 
+                                    order={order} 
+                                    dirty={dirty} />
+                            </Elements>
+                        </StripeProvider>
+                            <BillingInfoForm 
+                                onChange={this.handleChange} 
+                                order={order} 
+                                summit={summit} 
+                                errors={dirty ? errors : {}} />
+                        </div>
+                        <div className="col-md-4">
+                            <OrderSummary order={order} summit={summit} />
+                            <EventInfo />
+                        </div>
                     </div>
-                    <div className="col-md-4">
-                        <OrderSummary order={order} summit={summit} />
-                        <EventInfo />
-                    </div>
-                </div>
-                <SubmitButtons step={this.step} errors={errors} canContinue={true} dirty={this.handleShowErrors} />
+                <SubmitButtons 
+                    step={this.step} 
+                    stripe={stripe} 
+                    token={token}
+                    errors={{errors, stripeForm}}
+                    dirty={this.handleShowErrors} />
             </div>
         );
     }
@@ -110,16 +133,18 @@ class StepThreePage extends React.Component {
 
 const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
     member: loggedUserState.member,
-    summit: summitState.summit,
+    summit: summitState.currentSummit,
     order:  orderState.order,
-    errors:  orderState.errors
+    errors:  orderState.errors,
+    stripeForm:  orderState.stripeForm
 })
 
 export default connect (
     mapStateToProps,
     {
         saveOrderDetails,
-        handleOrderChange
+        handleOrderChange,
+        validateStripe
     }
 )(StepThreePage);
 

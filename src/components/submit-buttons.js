@@ -12,12 +12,14 @@
  **/
 
 import React from 'react'
+import { connect } from 'react-redux';
 import T from 'i18n-react/dist/i18n-react'
 import history from '../history'
+import { createReservation, payReservation } from '../actions/order-actions'
 
 const stepDefs = ['start', 'details', 'checkout', 'done'];
 
-export default class SubmitButtons extends React.Component {
+class SubmitButtons extends React.Component {
 
     constructor(props) {
         super(props);
@@ -28,21 +30,24 @@ export default class SubmitButtons extends React.Component {
         this.continueClick = this.continueClick.bind(this);
         this.backClick = this.backClick.bind(this);
         this.payClick = this.payClick.bind(this);
+        this.reservationClick = this.reservationClick.bind(this);
 
     }
 
     continueClick(ev) {
-        let {step, errors, dirty} = this.props;
+        let {step} = this.props;
         ev.preventDefault();
-        if (step > 1) {            
-            if((Object.keys(errors).length === 0)) {
-                // stepDefs start on 0 so next step is the same as step
-                history.push(stepDefs[step]);
-            } else {
-                return dirty.call();
-            }
+        history.push(stepDefs[step]);        
+    }
+
+    reservationClick(ev) {
+        let {errors, dirty, createReservation, order} = this.props;
+        ev.preventDefault();
+        if((Object.keys(errors).length === 0)) {
+            let {email, first_name, last_name, company, tickets} = order;            
+            createReservation(email, first_name, last_name, company, tickets);
         } else {
-            history.push(stepDefs[step]);
+            return dirty.call();
         }
     }
 
@@ -54,7 +59,31 @@ export default class SubmitButtons extends React.Component {
     }
 
     payClick(ev) {
-        this.continueClick(ev);
+        let {dirty, errors, stripe, token, order, step} = this.props;
+        ev.preventDefault();
+        if((Object.keys(errors.errors).length === 0) && errors.stripeForm) {
+            // stepDefs start on 0 so next step is the same as step
+            history.push(stepDefs[step]);
+        } else {
+            return dirty.call();
+        }
+        
+        // stripe.handleCardPayment(
+        //     client_secret, token, {
+        //         payment_method_data: {
+        //             billing_details: {name: `${order.first_name} ${order.last_name}`}
+        //         }
+        //     }
+        // ).then(function(result) {
+        //     if (result.error) {
+        //         // Display error.message in your UI.
+        //         this.continueClick(ev);
+        //     } else {
+        //         // The payment has succeeded. Display a success message.
+        //         this.continueClick(ev);
+        //     }
+        // });
+
     }
 
     render() {
@@ -70,14 +99,20 @@ export default class SubmitButtons extends React.Component {
                     </a>
                     }
 
-                    {step < 3 &&
+                    {step == 1 &&
                     <button className="btn btn-primary continue-btn" onClick={this.continueClick} disabled={!canContinue}>
                         {T.translate("general.continue")}
                     </button>
                     }
 
+                    {step == 2 &&
+                    <button className="btn btn-primary continue-btn" onClick={this.reservationClick}>
+                        {T.translate("general.continue")}
+                    </button>
+                    }
+
                     {step == 3 &&
-                    <button className="btn btn-primary continue-btn" onClick={this.payClick} disabled={!canContinue}>
+                    <button className="btn btn-primary continue-btn" onClick={this.payClick}>
                         {T.translate("general.pay_now")}
                     </button>
                     }
@@ -88,3 +123,18 @@ export default class SubmitButtons extends React.Component {
 
     }
 }
+
+const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
+    member: loggedUserState.member,
+    summit: summitState.currentSummit,
+    order:  orderState.order
+})
+
+export default connect (
+    mapStateToProps,
+    {
+        createReservation,
+        payReservation
+    }
+)(SubmitButtons);
+

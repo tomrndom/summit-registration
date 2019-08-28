@@ -86,13 +86,15 @@ class StepOnePage extends React.Component {
                                 <h3>{T.translate("step_one.choose_tickets")}</h3>
                                 <p>{T.translate("step_one.choose_tickets_desc")}</p>
                             </div>
-                            <div className="col-md-12">
+                            <div className="col-md-12">                                                           
+                              {(summit.timestamp > summit.start_date && summit.timestamp <summit.end_date) &&
                                 <TicketInput
-                                    ticketTypes={summit.ticketTypes}
+                                    ticketTypes={summit.ticket_types}
                                     selection={order.tickets}
                                     add={this.handleAddTicket}
                                     substract={this.handleSubstractTicket}
                                 />
+                              }
                             </div>
                         </div>
 
@@ -109,7 +111,7 @@ class StepOnePage extends React.Component {
 
 const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
     member: loggedUserState.member,
-    summit: summitState.summit,
+    summit: summitState.currentSummit,
     order:  orderState.order,
     errors:  orderState.errors
 })

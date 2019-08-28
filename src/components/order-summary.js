@@ -41,7 +41,7 @@ class OrderSummary extends React.Component {
                 ticketSummary.push({tix_type_id: tix.tix_type_id, tix_type: tixType, qty: 1})
             }
 
-            ticketTotal = ticketTotal + tixType.price;
+            ticketTotal = ticketTotal + tixType.cost;
 
         });
         
@@ -49,7 +49,7 @@ class OrderSummary extends React.Component {
         let discounts = order.tickets.filter(tix => tix.coupon).map(tix => {
             let tixType = ticket_types.find(tt => tt.id == tix.tix_type_id);
 
-            let discountTmp = (tix.coupon.percentage / 100) * tixType.price;
+            let discountTmp = (tix.coupon.percentage / 100) * tixType.cost;
             discountTotal = discountTotal + discountTmp;
 
             return {tix_type: tixType, percentage: tix.coupon.percentage, code: tix.coupon.code};
@@ -65,7 +65,7 @@ class OrderSummary extends React.Component {
                     </div>
                 </div>
                 {ticketSummary.map(tix => {
-                    let total = tix.qty * tix.tix_type.price;
+                    let total = tix.qty * tix.tix_type.cost;
                     return (
                         <div className="row order-row" key={`tixorder_${tix.tix_type.id}`}>
                             <div className="col-xs-6">

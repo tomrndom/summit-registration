@@ -27,6 +27,7 @@ class PrimaryLayout extends React.Component {
         getSummits();
     }
 
+    /*
     componentDidMount() {
       let { getSummitBySlug } = this.props;
 
@@ -35,8 +36,8 @@ class PrimaryLayout extends React.Component {
       if (summitSlug) {
           getSummitBySlug(summitSlug);
       }
-
     }
+    */
 
     componentWillReceiveProps(newProps) {
         let oldId = this.props.match.params.summit_slug;

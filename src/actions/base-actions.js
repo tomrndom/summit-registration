@@ -47,6 +47,7 @@ export const getSummits = () => (dispatch, getState) => {
 
 export const getSummitBySlug = (slug) => (dispatch, getState) => {
 
+    
     dispatch(startLoading());
 
     let { summitState: {summits} } = getState();
@@ -55,17 +56,21 @@ export const getSummitBySlug = (slug) => (dispatch, getState) => {
 
     dispatch(createAction(RECEIVE_SUMMIT)(currentSummit));
 
-    /*return getRequest(
-        createAction(REQUEST_SUMMITS),
+    dispatch(stopLoading());
+
+    
+    /*
+    return getRequest(
+        dispatch(startLoading()),
         createAction(RECEIVE_SUMMIT),
         `${window.API_BASE_URL}/api/public/v1/summits/all/${slug}`,
         authErrorHandler
-    )(params)(dispatch).then(() => {
-            dispatch(stopLoading());
+    )()(dispatch).then(() => {
+          dispatch(stopLoading());
         }
-    );*/
+    );
+    */
 
-    dispatch(stopLoading());
 }
 
 

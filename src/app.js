@@ -58,8 +58,7 @@ class App extends React.PureComponent {
     }
 
     render() {
-        let {isLoggedUser, onUserAuth, doLogout, getUserInfo, member, backUrl} = this.props;
-        let profile_pic = member ? member.pic : '';
+        let {isLoggedUser, onUserAuth, doLogout, getUserInfo, member, backUrl} = this.props;        
         return (
             <Router history={history}>
                 <div className="container">
@@ -70,7 +69,7 @@ class App extends React.PureComponent {
                             <h3>Summit Registration</h3>
                         </div>
                         <div className="col-md-2">
-                            <AuthButton isLoggedUser={isLoggedUser} picture={profile_pic} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut}/>
+                            <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut}/>
                             <a onClick={this.props.handleResetOrder}>x</a>
                         </div>
                     </div>

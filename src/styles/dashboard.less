@@ -3,7 +3,16 @@
 .dashboard-menu {
     background-color: @header_lblue_color;
     color: @font_blue_1;
-    margin: -15px;
     display: flex;
+    align-self: flex-end;
     justify-content: center;  
+    margin: -15px;        
+}
+
+.dashboard-menu *:hover {
+  text-decoration: none;
+}
+
+.active {  
+    border-bottom: 2px solid @font_blue_1;  
 }

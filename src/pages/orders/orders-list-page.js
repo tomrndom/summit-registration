@@ -15,86 +15,13 @@ import React from 'react'
 import T from "i18n-react/dist/i18n-react";
 
 import '../../styles/orders-list-page.less';
+import OrderList from '../../components/order-list';
 
 class OrdersListPage extends React.Component {
     render() {
         return (
             <div>
-                <div className="mt-5 p-5">
-                    <div className="row">
-                        <div className="col-sm-12 mt-5 text-center">
-                            <i className="fa fa-5x fa-inbox"></i>
-                            <h5>{T.translate("orders.empty")}</h5>
-                        </div>
-                    </div>
-                </div>
-                <div className="orders-list">
-                    <div className="row">
-                        <div className="order complete p-2 col-sm-8 col-sm-offset-2">
-                            <div className="col-sm-6">
-                                <h4>Equinoccio Summit 2020</h4>
-                                <p className="status">Ready to Use</p>
-                            </div>
-                            <div className="col-sm-4">
-                                <h5>On March 20th</h5>
-                                <ul>
-                                    <li>
-                                        x3 Full Passes
-                                    </li>
-                                    <li>
-                                        x2 One Day Passes
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="col-sm-2">
-                                <h4>$2200</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="order warning p-2 col-sm-8 col-sm-offset-2">
-                            <div className="col-sm-6">
-                                <h4>Solsticio Summit 2019</h4>
-                                <p className="status">Required Details Needed</p>
-                            </div>
-                            <div className="col-sm-4">
-                                <h5>On December 22nd</h5>
-                                <ul>
-                                    <li>
-                                        x3 Full Passes
-                                    </li>
-                                    <li>
-                                        x2 One Day Passes
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="col-sm-2">
-                                <h4>$2200</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="order p-2 col-sm-8 col-sm-offset-2">
-                            <div className="col-sm-6">
-                                <h4>Equinoccio Summit 2019</h4>
-                            </div>
-                            <div className="col-sm-4">
-                                <h5>On March 20th</h5>
-                                <ul>
-                                    <li>
-                                        x3 Full Passes
-                                    </li>
-                                    <li>
-                                        x2 One Day Passes
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="col-sm-2">
-                                <h4>$2200</h4>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+              <OrderList />
             </div>
         );
     }

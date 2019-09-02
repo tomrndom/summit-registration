@@ -79,5 +79,9 @@
   },
   "tickets": {
     "empty"               : "There are no tickets so far"
+  },
+  "nav_bar": {
+    "my-orders"           : "My Orders",
+    "my-tickets"          : "My Tickets"
   }
 }

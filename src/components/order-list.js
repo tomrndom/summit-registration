@@ -14,7 +14,7 @@
 import React from 'react'
 import T from 'i18n-react/dist/i18n-react'
 
-class OrderItem extends React.Component {
+class OrderList extends React.Component {
     constructor(props) {
         super(props);
 
@@ -27,7 +27,11 @@ class OrderItem extends React.Component {
 
     render() {
 
-        return (
+      let { orders } = this.props;      
+
+      if (orders) {
+        orders.map(o => {
+          return (
             <div className="row">
                 <div className="order complete p-2 col-sm-8 col-sm-offset-2">
                     <div className="col-sm-6">
@@ -50,8 +54,21 @@ class OrderItem extends React.Component {
                     </div>
                 </div>
             </div>
-        );
+          )
+        })
+      } else {
+        return (
+         <div className="mt-5 p-5">
+            <div className="row">
+                <div className="col-sm-12 mt-5 text-center">
+                    <i className="fa fa-5x fa-inbox"></i>
+                    <h5>{T.translate("orders.empty")}</h5>
+                </div>
+            </div>
+          </div>
+        )
+      }
     }
 }
 
-export default OrderItem;
+export default OrderList;

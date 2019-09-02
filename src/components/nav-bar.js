@@ -12,9 +12,10 @@
  **/
 
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import T from 'i18n-react/dist/i18n-react'
 
-class OrderItem extends React.Component {
+class NavBar extends React.Component {
     constructor(props) {
         super(props);
 
@@ -28,23 +29,12 @@ class OrderItem extends React.Component {
     render() {
 
         return (
-            <div className="row">
-                <div className="ticket complete p-2 col-sm-8 col-sm-offset-2">
-                    <div className="col-sm-5">
-                        <h4>Equinoccio Summit 2020</h4>
-                        <p className="status">Ready to Use</p>
-                    </div>
-                    <div className="col-sm-5">
-                        <h5>One Day Pass</h5>
-                        <p>California, US / December 22nd 2020</p>
-                    </div>
-                    <div className="arrow col-sm-2">
-                        <i className="fa fa-angle-right"></i>
-                    </div>
-                </div>
-            </div>
+          <nav className="row dashboard-menu">
+            <NavLink to={'/a/orders'} activeClassName="active">{T.translate("nav_bar.my-orders")}</NavLink>
+            <NavLink to={'/a/tickets'} activeClassName="active">{T.translate("nav_bar.my-tickets")}</NavLink>
+          </nav>
         );
     }
 }
 
-export default OrderItem;
+export default NavBar;

@@ -19,6 +19,7 @@ import AuthorizedRoute from './routes/authorized-route'
 import AuthorizationCallbackRoute from "./routes/authorization-callback-route"
 import LogOutCallbackRoute from './routes/logout-callback-route'
 import AuthButton from './components/auth-button'
+import NavBar from './components/nav-bar'
 import NotFoundPage from './pages/not-found-page'
 import { connect } from 'react-redux'
 import { AjaxLoader } from "openstack-uicore-foundation/lib/components";
@@ -67,6 +68,7 @@ class App extends React.PureComponent {
                         <div className="header-logo col-md-2">LOGO</div>
                         <div className="header-title col-md-8">
                             <h3>Summit Registration</h3>
+                            <NavBar />                      
                         </div>
                         <div className="col-md-2">
                             <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut}/>

@@ -13,6 +13,9 @@
 
 import React from 'react'
 import T from 'i18n-react/dist/i18n-react'
+import { Link } from 'react-router-dom'
+
+import '../styles/orders-list-page.less';
 
 class OrderList extends React.Component {
     constructor(props) {
@@ -27,35 +30,43 @@ class OrderList extends React.Component {
 
     render() {
 
-      let { orders } = this.props;      
+      let { orders } = this.props;   
+      
+      console.log(orders);
 
-      if (orders) {
-        orders.map(o => {
+      if (orders) {      
           return (
-            <div className="row">
-                <div className="order complete p-2 col-sm-8 col-sm-offset-2">
-                    <div className="col-sm-6">
-                        <h4>Equinoccio Summit 2020</h4>
-                        <p className="status">Ready to Use</p>
+            <div className="orders-list">
+                {orders.map(o => {
+                  return (
+                    <Link to="/a/orders/detail">
+                    <div className="row" key={o.id}>
+                        <div className="order complete p-2 col-sm-8 col-sm-offset-2">
+                            <div className="col-sm-6">
+                                <h4>{o.title}</h4>
+                                <p className="status">Ready to Use</p>
+                            </div>
+                            <div className="col-sm-4">
+                                <h5>On March 20th</h5>
+                                <ul>
+                                    <li>
+                                        x3 Full Passes
+                                    </li>
+                                    <li>
+                                        x2 One Day Passes
+                                    </li>
+                                </ul>
+                            </div>
+                            <div className="col-sm-2">
+                                <h4>$ {o.total}</h4>
+                            </div>
+                        </div>
                     </div>
-                    <div className="col-sm-4">
-                        <h5>On March 20th</h5>
-                        <ul>
-                            <li>
-                                x3 Full Passes
-                            </li>
-                            <li>
-                                x2 One Day Passes
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="col-sm-2">
-                        <h4>$2200</h4>
-                    </div>
-                </div>
+                    </Link>
+                  )
+                })}
             </div>
-          )
-        })
+          )          
       } else {
         return (
          <div className="mt-5 p-5">

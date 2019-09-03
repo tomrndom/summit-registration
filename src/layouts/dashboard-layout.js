@@ -14,6 +14,7 @@
 import React from 'react'
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
 import OrdersListPage from '../pages/orders/orders-list-page';
+import OrderDetailPage from '../pages/orders/order-detail-page'
 import TicketsListPage from '../pages/tickets/tickets-list-page';
 
 import '../styles/dashboard.less';
@@ -26,6 +27,7 @@ class DashboardLayout extends React.Component {
                 <main id="page-wrap">
                     <Switch>
                         <Route exact path="/a/orders" component={OrdersListPage}/>
+                        <Route exact path="/a/orders/detail" component={OrderDetailPage}/>                        
                         <Route exact path="/a/tickets" component={TicketsListPage}/>
                         <Route render={props => (<Redirect to={`${match.url}/orders`} />)}/>
                     </Switch>

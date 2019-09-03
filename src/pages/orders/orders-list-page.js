@@ -23,6 +23,7 @@ class OrdersListPage extends React.Component {
       let ordersMock = [
         {
           title: "Google I/O 2019",
+          id: 1231231,
           date: new Date(),
           total: "1280",
           status: "Ready to Use",
@@ -73,9 +74,7 @@ class OrdersListPage extends React.Component {
       ];
 
         return (
-            <div>
-              <OrderList />
-            </div>
+            <OrderList orders={ordersMock} />
         );
     }
 }

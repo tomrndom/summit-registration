@@ -13,7 +13,7 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import OrderSummary from "../components/order-summary";
+import OrderSummary from "../../components/order-summary";
 
 class OrderDetailPage extends React.Component {
 

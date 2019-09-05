@@ -73,6 +73,12 @@
   "orders": {
     "empty"               : "There are no active orders so far"
   },
+  "order_info": {
+    "print"               : "Print",
+    "resend"              : "Resend Receipt",
+    "download"            : "Download PDF",
+    "cancel"              : "Cancel Order"
+  },
   "tickets": {
     "empty"               : "There are no tickets so far"
   },

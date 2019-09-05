@@ -14,6 +14,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import OrderSummary from "../../components/order-summary";
+import OrderInfo from "../../components/order-info";
 
 import '../../styles/order-detail-page.less';
 
@@ -117,6 +118,7 @@ class OrderDetailPage extends React.Component {
                     </div>
                     <div className="col-md-4">
                         <OrderSummary order={order} />
+                        <OrderInfo />
                     </div>
                 </div>
             </div>

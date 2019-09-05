@@ -1,6 +1,7 @@
 @import 'constants.less';
 
 .tickets-list {
+  margin-top: 50px;
     .ticket {
         display: flex;
         background-color: #fff;
@@ -13,8 +14,16 @@
             list-style-type: none;
         }
         div:first-of-type {
-            display: flex;
-            flex-direction: column;
+          display: flex;
+          flex-direction: column;          
+        }
+        div:nth-child(2) {
+          margin-top: 10px;
+        }
+        div:last-child {
+          text-align: right;
+          align-self: center;
+          font-size: 1.5em;
         }
         .status {
             margin-top: auto;
@@ -22,14 +31,9 @@
             color: #000;
             text-transform: uppercase;
         }
-        .arrow {
-            display: flex;
-            align-items: center;
-            justify-content: right;
-            font-size: 1.5em;
-        }
         &:hover {
             background-color: #eee;
+            cursor: pointer;
         }
     }
     .warning {

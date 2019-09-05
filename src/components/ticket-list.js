@@ -29,9 +29,9 @@ class TicketList extends React.Component {
 
       let { tickets } = this.props;
 
-      if (tickets) {
-        tickets.map(t => {
-          return (
+      if (!tickets) {
+        return (
+          <div className="tickets-list">            
             <div className="row">
               <div className="ticket complete p-2 col-sm-8 col-sm-offset-2">
                   <div className="col-sm-5">
@@ -47,8 +47,8 @@ class TicketList extends React.Component {
                   </div>
               </div>
             </div>
-          )
-        })
+          </div>
+        )        
       } else {
         return (
           <div className="mt-5 p-5">

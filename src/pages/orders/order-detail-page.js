@@ -79,7 +79,41 @@ class OrderDetailPage extends React.Component {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <div className="separator"></div>
+                        <div className="ticket-type">
+                          One Day Pass Tickets x2
+                        </div>
+                        <div className="row">
+                            <div className="ticket complete p-2 col-sm-12 col-sm-offset-1">
+                                <div className="col-sm-6">
+                                    <h4>Speaker</h4>
+                                    100% Discount
+                                    <p className="status">Ready to Use</p>
+                                </div>
+                                <div className="col-sm-5">
+                                    ned.stark@winterfell.com
+                                </div>
+                                <div className="col-sm-1">
+                                    <h4>&#10095;</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="ticket complete p-2 col-sm-12 col-sm-offset-1">
+                                <div className="col-sm-6">
+                                    <h4>Speaker</h4>
+                                    100% Discount
+                                    <p className="status">Ready to Use</p>
+                                </div>
+                                <div className="col-sm-5">
+                                    ned.stark@winterfell.com
+                                </div>
+                                <div className="col-sm-1">
+                                    <h4>&#10095;</h4>
+                                </div>
+                            </div>
+                        </div>
+                      </div>                      
                     </div>
                     <div className="col-md-4">
                         <OrderSummary order={order} />

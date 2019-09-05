@@ -26,9 +26,10 @@ const DEFAULT_STATE = {
           {
             id: 1567685178277,
             tix_type_id: 105,
-            type: "Full Pass Ticket",
+            name: "Full Pass Ticket",
             title: "SPEAKER",
             discount: 100,
+            cost: 100,
             member: {
               email: "ned.stark@winterfell.com"
             },
@@ -37,9 +38,10 @@ const DEFAULT_STATE = {
           {
             id: 1567685178278,
             tix_type_id: 105,
-            type: "Full Pass Ticket",
+            name: "Full Pass Ticket",
             title: "SPEAKER",
             discount: 50,
+            cost: 100,
             member: {
               email: "jon.snow@thewall.com"
             },
@@ -48,27 +50,30 @@ const DEFAULT_STATE = {
           {
             id: 1567685178279,
             tix_type_id: 105,
-            type: "Full Pass Ticket",
+            name: "Full Pass Ticket",
             title: "CREW",
             discount: 50,
+            cost: 100,
             member: {},
             status: "Unassigned"
           },
           {
             id: 1567685178280,
             tix_type_id: 106,
-            type: "One Day Pass Ticket",
+            name: "One Day Pass Ticket",
             title: "CREW",
             discount: 20,
+            cost: 100,
             member: {},
             status: "Unassigned"
           },
           {
             id: 1567685178281,
             tix_type_id: 106,
-            type: "One Day Pass Ticket",
+            name: "One Day Pass Ticket",
             title: "SPEAKER",
             discount: 20,
+            cost: 100,
             member: {
               name: "YOU"
             },

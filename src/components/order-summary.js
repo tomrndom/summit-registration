@@ -26,17 +26,15 @@ class OrderSummary extends React.Component {
 
 
     render() {
-        let {order, summit} = this.props;
-
-        console.log(order, summit);
-
-        let {ticket_types} = summit;
+        // TODO: replace the order[0] with selected order
+        let {order, summit} = this.props;        
+        let ticket_types = summit ? summit.ticket_types : order[0].tickets;
 
         let ticketTotal = 0;
         let ticketSummary = [];
-        order.tickets.forEach(tix => {
+        order[0].tickets.forEach(tix => {
             let idx = ticketSummary.findIndex(o => o.tix_type_id == tix.tix_type_id);
-            let tixType = ticket_types.find(tt => tt.id == tix.tix_type_id);
+            let tixType = ticket_types.find(tt => tt.tix_type_id == tix.tix_type_id);            
 
             if (idx >= 0) {
                 ticketSummary[idx].qty++;
@@ -49,8 +47,8 @@ class OrderSummary extends React.Component {
         });
         
         let discountTotal = 0;
-        let discounts = order.tickets.filter(tix => tix.coupon).map(tix => {
-            let tixType = ticket_types.find(tt => tt.id == tix.tix_type_id);
+        let discounts = order[0].tickets.filter(tix => tix.coupon).map(tix => {
+            let tixType = ticket_types.find(tt => tt.tix_type_id == tix.tix_type_id);
 
             let discountTmp = (tix.coupon.percentage / 100) * tixType.cost;
             discountTotal = discountTotal + discountTmp;
@@ -67,7 +65,7 @@ class OrderSummary extends React.Component {
                         <h4>{T.translate("order_summary.order_summary")}</h4>
                     </div>
                 </div>
-                {ticketSummary.map(tix => {
+                {ticketSummary.map(tix => {                  
                     let total = tix.qty * tix.tix_type.cost;
                     return (
                         <div className="row order-row" key={`tixorder_${tix.tix_type.id}`}>

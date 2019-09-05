@@ -33,7 +33,7 @@ class OrderList extends React.Component {
       let quantity = [];
       tickets.map(t => {
         if(quantity.some(q => q.tix_type_id === t.tix_type_id)) {          
-          quantity = quantity.map(q => {
+          quantity.map(q => {
             if (q.tix_type_id === t.tix_type_id) {
               q.quantity++;
               return q
@@ -43,14 +43,14 @@ class OrderList extends React.Component {
           let addTicket = { quantity : 1, ...t};
           quantity.push(addTicket);
         }
-      });
+      });      
+      return quantity;
     }
 
 
     render() {
 
-      let { orders } = this.props;   
-      
+      let { orders } = this.props;         
 
       if (orders) {      
           return (
@@ -67,12 +67,13 @@ class OrderList extends React.Component {
                               <div className="col-sm-4">
                                   <h5>On March 20th</h5>
                                   <ul>
-                                      <li>
-                                          x3 Full Passes
-                                      </li>
-                                      <li>
-                                          x2 One Day Passes
-                                      </li>
+                                    {this.handleTicketCount(o.tickets).map(t => {
+                                      return (
+                                        <li key={t.tix_type_id}>
+                                          x{t.quantity} {t.name}
+                                        </li>                                      
+                                      )
+                                    })}                                      
                                   </ul>
                               </div>
                               <div className="col-sm-2">

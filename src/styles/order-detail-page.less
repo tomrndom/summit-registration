@@ -1,0 +1,61 @@
+.order-detail__title {
+    background-color: #F9F9F9;
+    margin-top: 20px;
+    padding: 15px;
+}
+
+.ticket-list {
+  width: 90%;
+  margin-top: 20px;
+
+  .ticket-type {
+    padding: 15px;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .ticket {
+      display: flex;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      margin-top: 0.5em;
+      min-height: 6em;
+      ul {
+          padding: 0;
+          list-style-type: none;
+      }
+      div:first-of-type {
+          display: flex;
+          flex-direction: column;          
+      }
+      div:nth-child(2) {
+        margin-top: 10px;
+      }
+      div:last-child {
+        text-align: right;
+        align-self: center;
+      }
+      .status {
+          margin-top: auto;
+          font-size: 0.7em;
+          color: #000;
+          text-transform: uppercase;
+      }
+      &:hover {
+          background-color: #eee;
+          cursor: pointer;
+      }      
+  }
+  .warning {
+      border: 1px solid #cc9933;
+      .status {
+          color: #cc9933;
+      }
+  }  
+  .complete {
+      .status {
+          color: #669933;
+      }
+  }
+}

@@ -32,16 +32,35 @@ class FormPopup extends React.Component {
             <div className='popup-form'>
                 <Tabs>
                     <TabList>
-                        <Tab>Assign</Tab>      
-                        <Tab>Edit Details</Tab>
+                        <Tab>{T.translate("popup.tab_assign")}</Tab>      
+                        <Tab>{T.translate("popup.tab_reassign")}</Tab>
+                        <Tab>{T.translate("popup.tab_edit")}</Tab>
                     </TabList>
                     <TabPanel>
-                        <p>assign</p>
+                        <p>{T.translate("popup.assign_text")} September 29</p>
+                        <button className="btn btn-primary">
+                          {T.translate("popup.assign_me")}
+                        </button>
+                        {T.translate("popup.assign_or")}
+                        <Input
+                          className="form-control email"
+                          placeholder={T.translate("popup.placeholders.email")}
+                          error={this.hasErrors(`tix_email_${tix.id}`)}
+                          onChange={this.ticketInfoChange.bind(this, tix.id, 'email')}
+                          value={tix.email ? tix.email : ''}
+                        />
+                        <button className="btn btn-primary">
+                          {T.translate("popup.assign_someone")}
+                        </button>
                     </TabPanel>
                     <TabPanel>
                         <p>edit</p>
-                        <button onClick={this.props.closePopup}>Save Changes</button>  
-                    </TabPanel>            
+                        <button className="btn btn-primary" onClick={this.props.closePopup}>{T.translate("popup.save_changes")}</button>  
+                    </TabPanel>
+                    <TabPanel>
+                        <p>reassign</p>
+                        <button className="btn btn-primary" onClick={this.props.closePopup}>{T.translate("popup.save_changes")}</button>  
+                    </TabPanel>
                 </Tabs>
             </div>  
         </div>  

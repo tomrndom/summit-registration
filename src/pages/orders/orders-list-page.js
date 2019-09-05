@@ -30,7 +30,7 @@ class OrdersListPage extends React.Component {
 
 const mapStateToProps = ({ userState, orderState }) => ({
   orders: userState.orders,
-  errors:  orderState.errors
+  errors: orderState.errors
 })
 
 export default connect (mapStateToProps)(OrdersListPage);

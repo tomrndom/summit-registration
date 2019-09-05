@@ -39,7 +39,7 @@ export default class AuthButton extends React.Component {
         if (isLoggedUser) {
             return (
                 <div className="user-menu" onMouseEnter={this.toggleLogOut} onMouseLeave={this.toggleLogOut}>
-                    Hi {member.first_name} &nbsp;
+                    Hi {member} &nbsp;
                     <div className="profile-pic">
                         <img src={profile_pic} />
                     </div>

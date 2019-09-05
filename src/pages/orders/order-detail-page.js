@@ -36,7 +36,7 @@ class OrderDetailPage extends React.Component {
 
 const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
     member: loggedUserState.member,
-    summit: summitState.summit,
+    summit: summitState.currentSummit,
     order:  orderState.order
 })
 

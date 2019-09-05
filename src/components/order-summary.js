@@ -27,6 +27,9 @@ class OrderSummary extends React.Component {
 
     render() {
         let {order, summit} = this.props;
+
+        console.log(order, summit);
+
         let {ticket_types} = summit;
 
         let ticketTotal = 0;

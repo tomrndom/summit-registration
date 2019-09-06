@@ -13,6 +13,9 @@
 
 import React from 'react'
 import T from 'i18n-react/dist/i18n-react'
+import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
+
+import '../styles/popup-form.less'
 
 class FormPopup extends React.Component {
     constructor(props) {
@@ -29,6 +32,9 @@ class FormPopup extends React.Component {
 
         return (  
         <div className='popup'>  
+
+          <button onClick={this.props.closePopup}>close me</button>  
+
             <div className='popup-form'>
                 <Tabs>
                     <TabList>
@@ -42,13 +48,7 @@ class FormPopup extends React.Component {
                           {T.translate("popup.assign_me")}
                         </button>
                         {T.translate("popup.assign_or")}
-                        <Input
-                          className="form-control email"
-                          placeholder={T.translate("popup.placeholders.email")}
-                          error={this.hasErrors(`tix_email_${tix.id}`)}
-                          onChange={this.ticketInfoChange.bind(this, tix.id, 'email')}
-                          value={tix.email ? tix.email : ''}
-                        />
+
                         <button className="btn btn-primary">
                           {T.translate("popup.assign_someone")}
                         </button>

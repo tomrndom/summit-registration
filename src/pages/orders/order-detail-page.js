@@ -14,14 +14,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import OrderSummary from "../../components/order-summary";
+import FormPopup from "../../components/form-popup";
 import OrderInfo from "../../components/order-info";
 
 import '../../styles/order-detail-page.less';
 
 class OrderDetailPage extends React.Component {
 
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        showPopup: false
+      };
+
+      this.togglePopup = this.togglePopup.bind(this);
+  }
+
+  togglePopup() {
+    console.log('abrir-cerrar');
+    this.setState({
+      showPopup: !this.state.showPopup  
+    });  
+  }
+
     render() {
         let {order} = this.props;
+        let {showPopup} = this.state;
 
         return (
             <div className="order-detail">
@@ -35,7 +54,7 @@ class OrderDetailPage extends React.Component {
                         <div className="ticket-type">
                           Full Pass Tickets x3
                         </div>
-                        <div className="row">
+                        <div className="row" onClick={() => this.togglePopup()}>
                             <div className="ticket complete p-2 col-sm-12 col-sm-offset-1">
                                 <div className="col-sm-6">
                                     <h4>Speaker</h4>
@@ -121,6 +140,13 @@ class OrderDetailPage extends React.Component {
                         <OrderInfo />
                     </div>
                 </div>
+                {showPopup ?  
+                  <FormPopup  
+                    text='Click "Close Button" to hide popup'  
+                    closePopup={this.togglePopup.bind(this)}  
+                  />  
+                : null  
+                }
             </div>
         );
     }

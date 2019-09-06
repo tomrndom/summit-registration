@@ -14,6 +14,7 @@
 import React from 'react'
 import T from 'i18n-react/dist/i18n-react'
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
+import { Input } from 'openstack-uicore-foundation/lib/components'
 
 import '../styles/popup-form.less';
 
@@ -35,13 +36,15 @@ class FormPopup extends React.Component {
             <div className='popup-form'>
               <div className="popup-header">
                 <div className="row">
-                  <div className="col-sm-10 popup-title">
-                    <h4>Full Day Pass</h4>
+                  <div className="col-sm-9 popup-title">
+                    <h4><b>Full Day Pass</b></h4>
                     <p>Speaker</p>
-                    <p>Speaker ticket</p>
+                    <p>Ready to use</p>
                   </div>
-                  <div className="col-sm-2 popup-icons">
-                    <button onClick={this.props.closePopup}>close me</button>  
+                  <div className="col-sm-3 popup-icons">
+                    <i className="fa fa-print"></i>
+                    <i className="fa fa-file-pdf-o"></i>
+                    <i onClick={this.props.closePopup} className="fa fa-times"></i>                    
                   </div>
                 </div>
               </div>
@@ -51,22 +54,32 @@ class FormPopup extends React.Component {
                         <Tab>{T.translate("popup.tab_reassign")}</Tab>
                         <Tab>{T.translate("popup.tab_edit")}</Tab>
                     </TabList>
-                    <TabPanel>
+                    <TabPanel className="popup-panel popup-panel--assign">
                         <p>{T.translate("popup.assign_text")} September 29</p>
                         <button className="btn btn-primary">
                           {T.translate("popup.assign_me")}
                         </button>
-                        {T.translate("popup.assign_or")}
-
+                        <div className="popup-separator">
+                          <div><hr/></div>
+                          <span>{T.translate("popup.assign_or")}</span>
+                          <div><hr/></div>
+                        </div>
+                        <Input
+                            id="email"
+                            className="form-control"
+                            //error={this.hasErrors('email')}
+                            //onChange={onChange}
+                            //value={order.email}
+                        />
                         <button className="btn btn-primary">
                           {T.translate("popup.assign_someone")}
                         </button>
                     </TabPanel>
-                    <TabPanel>
+                    <TabPanel className="popup-panel popup-panel--reassign">
                         <p>edit</p>
                         <button className="btn btn-primary" onClick={this.props.closePopup}>{T.translate("popup.save_changes")}</button>  
                     </TabPanel>
-                    <TabPanel>
+                    <TabPanel className="popup-panel popup-panel--edit">
                         <p>reassign</p>
                         <button className="btn btn-primary" onClick={this.props.closePopup}>{T.translate("popup.save_changes")}</button>  
                     </TabPanel>

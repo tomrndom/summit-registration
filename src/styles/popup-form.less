@@ -18,12 +18,37 @@
   top: 0%;  
   bottom: 0%;  
   margin: auto;    
-  background: white;  
+  background: white;
 }
 
 .popup-header {
   background-color: #F9F9F9;
-  padding: 15px;
+  font-weight: bold;
+  padding: 25px;
+  h4 {
+    font-size: 20px;
+  }
+  p {
+    margin: 2px 0;
+    text-transform: uppercase;
+    .warning {      
+      color: #cc9933;
+    }  
+    .complete {
+      color: #669933;
+    }
+  }
+  .popup-icons {
+    display: flex;
+    justify-content: space-around;
+    i {
+      font-size: 1.5em;
+      cursor: pointer;      
+    }
+    :last-child {
+      color: black;
+    }
+  }
 }
 
 .popup-tabs {
@@ -38,5 +63,45 @@
     .active {
       border-bottom: 2px solid @lblue_color_2;
     }        
+  }
+}
+
+.popup-panel {
+  padding: 20px;
+  &--assign {
+    margin-top: 50px;    
+    justify-content: center;
+    padding: 0 25%;
+    p {
+      font-size: 22px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .popup-separator {      
+      display: table;    
+      margin: 25px 0;
+      text-align: center;
+      width: 100%;
+      div {
+        display: table-cell;
+        vertical-align: middle;
+        width: 40%;
+      }
+      span {
+        display: table-cell;
+        padding: 0 5px;
+        vertical-align: middle;
+        white-space: nowrap;
+      }
+    }
+    .form-control {
+      margin: 25px 0;
+    }
+  }
+  &--reassign{
+    
+  }
+  &--edit{
+    
   }
 }

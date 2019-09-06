@@ -47,7 +47,7 @@ class OrderDetailPage extends React.Component {
                 <div className="row">
                     <div className="col-md-8">
                       <div className="order-detail__title">
-                        <h4>Google I/O 2019</h4>
+                        <h4><b>Google I/O 2019</b></h4>
                         California, US / September 18, 2019
                       </div>
                       <div className="ticket-list">

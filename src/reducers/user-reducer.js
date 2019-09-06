@@ -12,6 +12,7 @@
  **/
 
 import { START_LOADING, STOP_LOADING, LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
+import { GET_ORDERS, GET_TICKETS, SELECT_ORDER } from "../actions/user-actions";
 
 const DEFAULT_STATE = {
     loading: false,
@@ -82,7 +83,8 @@ const DEFAULT_STATE = {
         ]
       },        
     ],
-    tickets: []
+    tickets: [],
+    selectedOrder: {},
 }
 
 const userReducer = (state = DEFAULT_STATE, action) => {
@@ -99,6 +101,12 @@ const userReducer = (state = DEFAULT_STATE, action) => {
             console.log('STOP_LOADING')
             return {...state, loading: false};
             break;
+        case GET_ORDERS:
+            return {...state, orders: payload};
+        case GET_TICKETS:            
+            return {...state, tickets: payload};
+        case SELECT_ORDER:
+            return {...state, selectedOrder: payload};
         default:
             return state;
             break;

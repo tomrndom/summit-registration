@@ -102,6 +102,6 @@
     "reassign_check"        : "Clean all fields",
     "reassign_me"           : "Re-Assign to Me",
     "reassign_someone"      : "Re-Assign to Someone Else",
-    "edit_savechanges"      : "Save Changes"
+    "save_changes"          : "Save Changes"
   }
 }

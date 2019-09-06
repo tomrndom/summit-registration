@@ -60,18 +60,17 @@
   li {
     list-style-type: none;
     cursor: pointer;
-    .active {
-      border-bottom: 2px solid @lblue_color_2;
-    }        
   }
+  &--active {
+    border-bottom: 2px solid @lblue_color_2;
+  }        
 }
 
-.popup-panel {
-  padding: 20px;
+.popup-panel {  
   &--assign {
     margin-top: 50px;    
     justify-content: center;
-    padding: 0 25%;
+    padding: 20px 25%;
     p {
       font-size: 22px;
       text-align: center;
@@ -99,9 +98,42 @@
     }
   }
   &--reassign{
-    
+    padding: 20px;
   }
   &--edit{
-    
+    padding: 20px;
+    .popup-basic-info {
+      div:first-child {
+        font-size: 18px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      div:last-child {
+        text-align: right;
+      }
+    }
+    .field-wrapper {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      input {
+        background-color: @lblue_color_1;
+        border-color: @header_lblue_color;
+      }
+    }
+    .popup-footer-save {
+      border-top: 1px solid #f8f8f8;
+      bottom: 0;
+      height: 60px;
+      padding: 10px 0;
+      position: absolute;
+      text-align: center;
+      width: 100%;
+      button {
+        font-size: 16px;
+      }
+    }
+  }
+  &--notify{
+    padding: 20px;
   }
 }

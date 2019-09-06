@@ -87,21 +87,21 @@
     "my-tickets"          : "My Tickets"
   },
   "popup": {
-    "popup.tab_assign"            : "Assign",
-    "popup.tab_reassign"          : "Re-Assign",
-    "popup.tab_edit"              : "Edit Details",
-    "popup.tab_notify"            : "Notify attendee",
-    "popup.assign_text"           : "Select the option to assign this ticket before",
-    "popup.assign_or"             : "Or",
-    "popup.assign_me"             : "Assign to Me",
-    "popup.assign_someone"        : "Assign to Someone Else",
-    "popup.assign_ticket"         : "Assign this Ticket",
-    "popup.reassign_text"         : "All required details must be completed before",
-    "popup.reassign_notify"       : "Notify the attendee to",
-    "popup.reassign_button"       : "Re-Send Notification",
-    "popup.reassign_check"        : "Clean all fields",
-    "popup.reassign_me"           : "Re-Assign to Me",
-    "popup.reassign_someone"      : "Re-Assign to Someone Else",
-    "popup.edit_savechanges"      : "Save Changes"
+    "tab_assign"            : "Assign",
+    "tab_reassign"          : "Re-Assign",
+    "tab_edit"              : "Edit Details",
+    "tab_notify"            : "Notify attendee",
+    "assign_text"           : "Select the option to assign this ticket before",
+    "assign_or"             : "Or",
+    "assign_me"             : "Assign to Me",
+    "assign_someone"        : "Assign to Someone Else",
+    "assign_ticket"         : "Assign this Ticket",
+    "reassign_text"         : "All required details must be completed before",
+    "reassign_notify"       : "Notify the attendee to",
+    "reassign_button"       : "Re-Send Notification",
+    "reassign_check"        : "Clean all fields",
+    "reassign_me"           : "Re-Assign to Me",
+    "reassign_someone"      : "Re-Assign to Someone Else",
+    "edit_savechanges"      : "Save Changes"
   }
 }

@@ -15,7 +15,7 @@ import React from 'react'
 import T from 'i18n-react/dist/i18n-react'
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 
-import '../styles/popup-form.less'
+import '../styles/popup-form.less';
 
 class FormPopup extends React.Component {
     constructor(props) {
@@ -31,13 +31,22 @@ class FormPopup extends React.Component {
     render() {
 
         return (  
-        <div className='popup'>  
-
-          <button onClick={this.props.closePopup}>close me</button>  
-
+        <div className='popup'>
             <div className='popup-form'>
+              <div className="popup-header">
+                <div className="row">
+                  <div className="col-sm-10 popup-title">
+                    <h4>Full Day Pass</h4>
+                    <p>Speaker</p>
+                    <p>Speaker ticket</p>
+                  </div>
+                  <div className="col-sm-2 popup-icons">
+                    <button onClick={this.props.closePopup}>close me</button>  
+                  </div>
+                </div>
+              </div>
                 <Tabs>
-                    <TabList>
+                    <TabList className="popup-tabs">
                         <Tab>{T.translate("popup.tab_assign")}</Tab>      
                         <Tab>{T.translate("popup.tab_reassign")}</Tab>
                         <Tab>{T.translate("popup.tab_edit")}</Tab>

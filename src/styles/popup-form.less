@@ -1,3 +1,5 @@
+@import 'constants.less';
+
 .popup {  
   position: fixed;  
   width: 100%;  
@@ -17,4 +19,24 @@
   bottom: 0%;  
   margin: auto;    
   background: white;  
+}
+
+.popup-header {
+  background-color: #F9F9F9;
+  padding: 15px;
+}
+
+.popup-tabs {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border-bottom: 2px solid #F9F9F9;
+  line-height: 40px;
+  li {
+    list-style-type: none;
+    cursor: pointer;
+    .active {
+      border-bottom: 2px solid @lblue_color_2;
+    }        
+  }
 }

@@ -14,7 +14,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import OrderSummary from "../../components/order-summary";
-import FormPopup from "../../components/form-popup";
+import TicketPopup from "../../components/ticket-popup";
 import OrderInfo from "../../components/order-info";
 
 import '../../styles/order-detail-page.less';
@@ -141,7 +141,7 @@ class OrderDetailPage extends React.Component {
                     </div>
                 </div>
                 {showPopup ?  
-                  <FormPopup  
+                  <TicketPopup  
                     text='Click "Close Button" to hide popup'  
                     closePopup={this.togglePopup.bind(this)}  
                   />  

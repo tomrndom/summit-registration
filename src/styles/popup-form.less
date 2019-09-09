@@ -1,6 +1,6 @@
 @import 'constants.less';
 
-.popup {  
+.popup-bg {  
   position: fixed;  
   width: 100%;  
   height: 100%;  
@@ -69,17 +69,15 @@
 .popup-panel {  
   &--assign {
     margin-top: 50px;    
-    justify-content: center;
+    text-align: center;
     padding: 20px 25%;
     p {
-      font-size: 22px;
-      text-align: center;
+      font-size: 22px;      
       margin-bottom: 20px;
     }
     .popup-separator {      
       display: table;    
-      margin: 25px 0;
-      text-align: center;
+      margin: 25px 0;      
       width: 100%;
       div {
         display: table-cell;
@@ -97,11 +95,39 @@
       margin: 25px 0;
     }
   }
-  &--reassign{
+  &--reassign {
     padding: 20px;
+    text-align: center;
+    p {
+      font-size: 22px;      
+      margin-bottom: 20px;
+    }
+    .popup-separator {      
+      display: table;    
+      margin: 25px 0;      
+      width: 100%;
+      div {
+        display: table-cell;
+        vertical-align: middle;
+        width: 40%;
+      }
+      span {
+        display: table-cell;
+        padding: 0 5px;
+        vertical-align: middle;
+        white-space: nowrap;
+      }
+    }
+    .form-control {
+      margin: 25px 0;
+    }
+    .popup-clean {
+      margin-bottom: 30px;
+    }
   }
-  &--edit{
+  &--edit {
     padding: 20px;
+    z-index: 10;
     .popup-basic-info {
       div:first-child {
         font-size: 18px;
@@ -128,12 +154,23 @@
       position: absolute;
       text-align: center;
       width: 100%;
+      background-color: white;
+      z-index: 15;
       button {
         font-size: 16px;
       }
     }
+    .popup-cancel-ticket {
+      color: #da0000;
+      cursor: pointer;
+    }
   }
-  &--notify{
+  &--notify {
     padding: 20px;
+    text-align: center;
+    p {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
   }
 }

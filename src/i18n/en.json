@@ -86,7 +86,7 @@
     "my-orders"           : "My Orders",
     "my-tickets"          : "My Tickets"
   },
-  "popup": {
+  "ticket_popup": {
     "tab_assign"            : "Assign",
     "tab_reassign"          : "Re-Assign",
     "tab_edit"              : "Edit Details",
@@ -96,12 +96,28 @@
     "assign_me"             : "Assign to Me",
     "assign_someone"        : "Assign to Someone Else",
     "assign_ticket"         : "Assign this Ticket",
-    "reassign_text"         : "All required details must be completed before",
-    "reassign_notify"       : "Notify the attendee to",
-    "reassign_button"       : "Re-Send Notification",
+    "reassign_text"         : "Select the option to re-assign this ticket from",    
     "reassign_check"        : "Clean all fields",
     "reassign_me"           : "Re-Assign to Me",
     "reassign_someone"      : "Re-Assign to Someone Else",
+    "edit_basic_info"       : "Basic Information",
+    "edit_required"         : "* Required Fields",
+    "edit_email"            : "Email *",
+    "edit_first_name"       : "First Name *",
+    "edit_last_name"        : "Last Name *",
+    "edit_preferences"      : "Preferences",
+    "notify_text_1"         : "All required details must be completed before",
+    "notify_text_2"         : "Notify the attendee to",
+    "notify_button"         : "Re-Send Notification",    
     "save_changes"          : "Save Changes"
+  },
+  "confirm_popup": {
+    "question_title"        : "Re-Assign Request",
+    "question_text"         : "Are you sure you want to clean all the fields?",
+    "cancel"                : "Cancel",
+    "accept"                : "Yeah",
+    "success_title"         : "Request Submitted",
+    "success_text"          : "An email notification has been sent to",
+    "success_button"        : "Got it"
   }
 }

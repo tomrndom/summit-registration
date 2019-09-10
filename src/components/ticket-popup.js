@@ -17,6 +17,7 @@ import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { Input, Dropdown, CheckboxList, TextArea } from 'openstack-uicore-foundation/lib/components'
 
 import TicketAssignForm from '../components/ticket-assign-form';
+import ConfirmPopup from '../components/confirm-popup';
 
 import '../styles/popup-form.less';
 
@@ -25,13 +26,22 @@ class TicketPopup extends React.Component {
         super(props);
 
         this.state = {
-
+          showPopup: false
         };
-
+  
+        this.togglePopup = this.togglePopup.bind(this);
+    }
+  
+    togglePopup() {
+      this.setState({
+        showPopup: !this.state.showPopup  
+      });  
     }
 
 
     render() {
+
+      let {showPopup} = this.state;
 
         return (  
         <div className='popup-bg'>
@@ -106,7 +116,7 @@ class TicketPopup extends React.Component {
                             //onChange={onChange}
                             //value={order.email}
                         />
-                        <button className="btn btn-primary">
+                        <button className="btn btn-primary" onClick={() => this.togglePopup()}>
                           {T.translate("ticket_popup.reassign_someone")}
                         </button>
                     </TabPanel>
@@ -116,7 +126,13 @@ class TicketPopup extends React.Component {
                         <button className="btn btn-primary">{T.translate("ticket_popup.notify_button")}</button>  
                     </TabPanel>
                 </Tabs>
-            </div>  
+            </div>
+            {showPopup ?  
+              <ConfirmPopup
+                closePopup={this.togglePopup.bind(this)}  
+              />  
+            : null  
+            }  
         </div>  
         );  
     }

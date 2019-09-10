@@ -14,7 +14,7 @@
 import React from 'react'
 import T from 'i18n-react/dist/i18n-react'
 
-import '../styles/popup-form.less';
+import '../styles/confirm-popup.less';
 
 class ConfirmPopup extends React.Component {
     constructor(props) {
@@ -29,13 +29,18 @@ class ConfirmPopup extends React.Component {
 
     render() {
 
-        return (  
-          <div className="confirmation-popup">
-            <h4>{T.translate("confirm_popup.question_title")}</h4>            
-            <p>{T.translate("confirm_popup.question_text")}</p>
+      console.log('confirm');
 
-            <span>{T.translate("confirm_popup.cancel")}</span>
-            <span>{T.translate("confirm_popup.accept")}</span>
+        return (  
+          <div className="confirm-popup-bg">
+            <div className="confirm-popup">
+              <h4>{T.translate("confirm_popup.question_title")}</h4>            
+              <p>{T.translate("confirm_popup.question_text")}</p>
+              <div className="buttons">
+                <span onClick={this.props.closePopup}>{T.translate("confirm_popup.cancel")}</span>
+                <span onClick={this.props.closePopup}>{T.translate("confirm_popup.accept")}</span>
+              </div>              
+            </div>
           </div>
         );  
     }

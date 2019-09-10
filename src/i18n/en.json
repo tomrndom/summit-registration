@@ -77,7 +77,10 @@
     "print"               : "Print",
     "resend"              : "Resend Receipt",
     "download"            : "Download PDF",
-    "cancel"              : "Cancel Order"
+    "cancel_order"        : "Cancel Order",
+    "cancel_ticket"       : "Cancel Ticket",
+    "directions"          : "Get Directions",
+    "calendar"            : "Add to Calendar"
   },
   "tickets": {
     "empty"               : "There are no tickets so far"

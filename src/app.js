@@ -15,6 +15,7 @@ import React from 'react'
 import { Switch, Route, Router } from 'react-router-dom'
 import PrimaryLayout from "./layouts/primary-layout"
 import DashboardLayout from "./layouts/dashboard-layout"
+import GuestsLayout from "./layouts/guests-layout"
 import AuthorizedRoute from './routes/authorized-route'
 import AuthorizationCallbackRoute from "./routes/authorization-callback-route"
 import LogOutCallbackRoute from './routes/logout-callback-route'
@@ -77,6 +78,7 @@ class App extends React.PureComponent {
                     </div>
                     <Switch>
                         <Route path="/a/:summit_slug/register" component={PrimaryLayout}/>
+                        <Route path="/a/guests" component={GuestsLayout}/>
                         <AuthorizedRoute isLoggedUser={isLoggedUser} backUrl={backUrl} path="/a" component={DashboardLayout} />
                         <AuthorizationCallbackRoute onUserAuth={onUserAuth} path='/auth/callback' getUserInfo={getUserInfo} />
                         <LogOutCallbackRoute doLogout={doLogout}  path='/auth/logout'/>

@@ -16,6 +16,8 @@ import T from 'i18n-react/dist/i18n-react'
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { Input, Dropdown, CheckboxList, TextArea } from 'openstack-uicore-foundation/lib/components'
 
+import TicketAssignForm from '../components/ticket-assign-form';
+
 import '../styles/popup-form.less';
 
 class TicketPopup extends React.Component {
@@ -78,78 +80,7 @@ class TicketPopup extends React.Component {
                         </button>
                     </TabPanel>
                     <TabPanel className="popup-panel popup-panel--edit">
-                        <div className="row popup-basic-info">
-                          <div className="col-sm-6">{T.translate("ticket_popup.edit_basic_info")}</div>
-                          <div className="col-sm-6">{T.translate("ticket_popup.edit_required")}</div>
-                        </div>
-                        <div className="row field-wrapper">
-                          <div className="col-sm-4">{T.translate("ticket_popup.edit_email")}</div>
-                          <div className="col-sm-6">john.snow@thewall.com</div>
-                        </div>
-                        <div className="row field-wrapper">
-                          <div className="col-sm-4">{T.translate("ticket_popup.edit_first_name")}</div>
-                          <div className="col-sm-6">
-                            <Input
-                              id="first_name"
-                              className="form-control"                              
-                              //error={this.hasErrors('email')}
-                              //onChange={onChange}
-                              value="John"
-                            />
-                          </div>
-                        </div>
-                        <div className="row field-wrapper">
-                          <div className="col-sm-4">{T.translate("ticket_popup.edit_last_name")}</div>
-                          <div className="col-sm-6">
-                            <Input
-                              id="last_name"
-                              className="form-control"
-                              placeholder="Email"
-                              //error={this.hasErrors('email')}
-                              //onChange={onChange}
-                              value="Snow"
-                            />
-                          </div>
-                        </div>
-                        <hr/>
-                        <div className="row popup-basic-info">
-                          <div className="col-sm-6">{T.translate("ticket_popup.edit_preferences")}</div>
-                          <div className="col-sm-6"></div>
-                        </div>
-                        <div className="row field-wrapper">
-                          <div className="col-sm-4">Small Select*</div>
-                          <div className="col-sm-6">
-                            <Dropdown />
-                          </div>
-                        </div>
-                        <div className="row field-wrapper">
-                          <div className="col-sm-4">Small Select*</div>
-                          <div className="col-sm-6">
-                            <Dropdown />
-                          </div>
-                        </div>
-                        <div className="row field-wrapper">
-                          <div className="col-sm-4">Checkbox List</div>
-                          <div className="col-sm-6"></div>
-                        </div>
-                        <div className="row field-wrapper">
-                          <div className="col-sm-4">Checkbox List</div>
-                          <div className="col-sm-6"></div>
-                        </div>
-                        <div className="row field-wrapper">
-                          <div className="col-sm-4">TextArea *</div>
-                          <div className="col-sm-6">
-                            <TextArea />
-                          </div>
-                        </div>                        
-                        <div className="row field-wrapper">
-                          <div className="col-sm-4"></div>
-                          <div className="col-sm-6">
-                            <h4 className="popup-cancel-ticket">Cancel Ticket</h4>
-                            <p>Description about the refund policy lorem ipsum dolor sit amet.</p>
-                            learn more
-                          </div>
-                        </div>
+                        <TicketAssignForm />
                         <div className="popup-footer-save">
                           <button className="btn btn-primary" onClick={this.props.closePopup}>{T.translate("ticket_popup.save_changes")}</button>  
                         </div>

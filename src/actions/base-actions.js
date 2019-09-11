@@ -46,20 +46,9 @@ export const getSummits = () => (dispatch, getState) => {
 }
 
 export const getSummitBySlug = (slug) => (dispatch, getState) => {
-
     
-    dispatch(startLoading());
-
-    let { summitState: {summits} } = getState();
-
-    let currentSummit = summits.find(s => s.slug === slug);  
-
-    dispatch(createAction(RECEIVE_SUMMIT)(currentSummit));
-
-    dispatch(stopLoading());
-
+    dispatch(startLoading());    
     
-    /*
     return getRequest(
         dispatch(startLoading()),
         createAction(RECEIVE_SUMMIT),
@@ -68,8 +57,7 @@ export const getSummitBySlug = (slug) => (dispatch, getState) => {
     )()(dispatch).then(() => {
           dispatch(stopLoading());
         }
-    );
-    */
+    );    
 
 }
 

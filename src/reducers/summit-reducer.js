@@ -159,7 +159,7 @@ const summitReducer = (state = DEFAULT_STATE, action) => {
             return DEFAULT_STATE;
             break;
         case RECEIVE_SUMMIT: {
-            let entity = {...payload};
+            let entity = {...payload.response};
 
             for(var key in entity) {
                 if(entity.hasOwnProperty(key)) {

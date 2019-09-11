@@ -85,56 +85,32 @@ export const createReservation = (owner_email, owner_first_name, owner_last_name
     
     let normalizedEntity = {owner_email, owner_first_name, owner_last_name, owner_company, tickets };
 
-    // postRequest(
-    //     createAction(CREATE_RESERVATION),
-    //     createAction(CREATE_RESERVATION_SUCCESS),        
-    //     `${window.API_BASE_URL}/api/public/v1/summit/${currentSummit.id}/orders/reserve`,
-    //     normalizedEntity,
-    //     authErrorHandler,
-    //     // entity
-    // )(dispatch)
-    //     .then((payload) => {
-    //         dispatch(stopLoading());
-    //         console.log(payload);
-    //         history.push(stepDefs[2]);
-    //     }), (error) => {
-    //         dispatch(stopLoading());
-    //         console.log('error', error);
-    //     }
-
-    setTimeout(() => { 
-        const mockReservation = {
-            response: {
-                hash:"", // this hash need to be saved somewhere on client and its needed to do checkout after calling the payment gateway
-                raw_amount: 100000,
-                discounts: 100.00,
-                taxes:200.00,
-                amount:1110.00,
-                payment_gateway_client_token:"",
-                tickets:[
-                    {
-                        ticket_type_id:1,
-                        raw_cost:100.00,
-                        promo_code: "1234",
-                    }
-                ]
-            }                        
-        };
-        dispatch(createAction(CREATE_RESERVATION));
-        dispatch(createAction(CREATE_RESERVATION_SUCCESS)(mockReservation));
-        dispatch(stopLoading());
-        history.push(stepDefs[2]);
-    }, 1000);    
+    postRequest(
+        createAction(CREATE_RESERVATION),
+        createAction(CREATE_RESERVATION_SUCCESS),        
+        `${window.API_BASE_URL}/api/public/v1/summit/${currentSummit.id}/orders/reserve`,
+        normalizedEntity,
+        authErrorHandler,
+        // entity
+    )()(dispatch)
+        .then((payload) => {
+            dispatch(stopLoading());
+            console.log(payload);
+            history.push(stepDefs[2]);
+        }), (error) => {
+            dispatch(stopLoading());
+            console.log('error', error);
+        }
 }
 
 export const payReservation = (card, stripe, clientSecret) => (dispatch, getState) => {
     let {orderState, summitState} = getState();
 
-    // let success_message = {
-    //     title: T.translate("general.done"),
-    //     html: T.translate("book_meeting.reservation_created"),
-    //     type: 'success'
-    // };
+    let success_message = {
+        title: T.translate("general.done"),
+        html: T.translate("book_meeting.reservation_created"),
+        type: 'success'
+    };
 
     dispatch(startLoading());
     
@@ -150,36 +126,31 @@ export const payReservation = (card, stripe, clientSecret) => (dispatch, getStat
             dispatch(stopLoading());
             console.log('error', error);
         } else {
-            // let normalizedEntity = {
-            //     billing_address_1: orderState.billing_address,
-            //     billing_address_2: orderState.billing_address_two,
-            //     billing_address_zip_code: orderState.billing_zipcode,
-            //     billing_address_city: orderState.billing_city,
-            //     billing_address_state: orderState.billing_state,
-            //     billing_address_country: orderState.billing_country
-            // };
-            // putRequest(
-            //     `${window.API_BASE_URL}/api/public/v1/summit/${currentSummit.id}/orders/reserve`,
-            //     normalizedEntity,
-            //     authErrorHandler,
-            //     // entity
-            // )(dispatch)
-            //     .then((payload) => {
-            //         dispatch(stopLoading());
-            //         history.push(`app/${summitState.summit.slug}/done`);
-            //     }), (error) => {
-            //         dispatch(stopLoading());
-            //         console.log('error', error);
-            //     }
-
-            setTimeout(() => { 
-                dispatch(stopLoading());        
-                history.push(stepDefs[3]);
-            }, 1000);               
-            // dispatch(showMessage(
-            //     success_message,
-            //     () => { history.push(`/a/${summitReducer.currentSummit.id}/my-meetings`) }
-            // ));
+            let normalizedEntity = {
+                billing_address_1: orderState.billing_address,
+                billing_address_2: orderState.billing_address_two,
+                billing_address_zip_code: orderState.billing_zipcode,
+                billing_address_city: orderState.billing_city,
+                billing_address_state: orderState.billing_state,
+                billing_address_country: orderState.billing_country
+            };
+            putRequest(
+                `${window.API_BASE_URL}/api/public/v1/summit/${currentSummit.id}/orders/reserve`,
+                normalizedEntity,
+                authErrorHandler,
+                // entity
+            )(dispatch)
+                .then((payload) => {
+                    dispatch(stopLoading());
+                    console.log('success', payload);
+                }), (error) => {
+                    dispatch(stopLoading());
+                    console.log('error', error);
+                }             
+            dispatch(showMessage(
+                 success_message,
+                 history.push(stepDefs[3])
+            ));
             // The payment has succeeded. Display a success message.
         }
     });

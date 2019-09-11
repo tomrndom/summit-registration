@@ -40,10 +40,6 @@ class StepOnePage extends React.Component {
     }
 
     componentWillMount() {
-
-    }
-
-    componentWillMount() {
         let order = {...this.props.order};        
         
         order = {
@@ -76,6 +72,8 @@ class StepOnePage extends React.Component {
 
         let {summit, order} = this.props;
 
+        console.log('render step 1');
+
         return (
             <div className="step-one">
                 <StepRow step={this.step} />
@@ -87,7 +85,7 @@ class StepOnePage extends React.Component {
                                 <p>{T.translate("step_one.choose_tickets_desc")}</p>
                             </div>
                             <div className="col-md-12">                                                           
-                              {(summit.timestamp > summit.start_date && summit.timestamp <summit.end_date) &&
+                              {(summit.timestamp < summit.start_date && summit.timestamp < summit.end_date) &&
                                 <TicketInput
                                     ticketTypes={summit.ticket_types}
                                     selection={order.tickets}

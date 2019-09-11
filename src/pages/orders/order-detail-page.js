@@ -44,7 +44,7 @@ class OrderDetailPage extends React.Component {
 
         return (
             <div className="order-detail">
-                <div className="row">
+                <div className="row" style={showPopup? {overflow: 'hidden'} : {overflow: 'auto'}}>
                     <div className="col-md-8">
                       <div className="order-detail__title">
                         <h4><b>Google I/O 2019</b></h4>

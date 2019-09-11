@@ -76,7 +76,8 @@ class TicketAssignForm extends React.Component {
             </div>
             <div className="row field-wrapper">
               <div className="col-sm-4">Checkbox List</div>
-              <div className="col-sm-6"></div>
+              <div className="col-sm-6">                
+              </div>
             </div>
             <div className="row field-wrapper">
               <div className="col-sm-4">Checkbox List</div>

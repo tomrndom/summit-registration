@@ -27,7 +27,7 @@ class PrimaryLayout extends React.Component {
         getSummits();
     }
 
-    /*
+    
     componentDidMount() {
       let { getSummitBySlug } = this.props;
 
@@ -37,7 +37,6 @@ class PrimaryLayout extends React.Component {
           getSummitBySlug(summitSlug);
       }
     }
-    */
 
     componentWillReceiveProps(newProps) {
         let oldId = this.props.match.params.summit_slug;
@@ -55,6 +54,11 @@ class PrimaryLayout extends React.Component {
         let summitSlug = this.props.match.params.summit_slug;
 
         if (!summit || summitSlug != summit.slug) return (<div></div>);
+
+        console.log('summit', summit);
+        console.log('slug', summitSlug);
+
+        console.log('render!');
 
         return(
             <div className="primary-layout">

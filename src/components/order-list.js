@@ -32,9 +32,9 @@ class OrderList extends React.Component {
     handleTicketCount(tickets) {
       let quantity = [];
       tickets.map(t => {
-        if(quantity.some(q => q.tix_type_id === t.tix_type_id)) {          
+        if(quantity.some(q => q.type_id === t.type_id)) {          
           quantity.map(q => {
-            if (q.tix_type_id === t.tix_type_id) {
+            if (q.type_id === t.type_id) {
               q.quantity++;
               return q
             }
@@ -69,7 +69,7 @@ class OrderList extends React.Component {
                                   <ul>
                                     {this.handleTicketCount(o.tickets).map(t => {
                                       return (
-                                        <li key={t.tix_type_id}>
+                                        <li key={t.type_id}>
                                           x{t.quantity} {t.name}
                                         </li>                                      
                                       )

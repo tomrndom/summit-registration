@@ -35,6 +35,7 @@ export const CHANGE_ORDER  = 'CHANGE_ORDER';
 export const VALIDATE_STRIPE  = 'VALIDATE_STRIPE';
 export const CREATE_RESERVATION = 'CREATE_RESERVATION';
 export const CREATE_RESERVATION_SUCCESS = 'CREATE_RESERVATION_SUCCESS';
+export const CREATE_RESERVATION_ERROR = 'CREATE_RESERVATION_ERROR';
 
 export const handleResetOrder = () => (dispatch, getState) => {
     dispatch(createAction(RESET_ORDER)({}));
@@ -85,10 +86,10 @@ export const createReservation = (owner_email, owner_first_name, owner_last_name
     
     let normalizedEntity = {owner_email, owner_first_name, owner_last_name, owner_company, tickets };
 
-    postRequest(
+    return postRequest(
         createAction(CREATE_RESERVATION),
         createAction(CREATE_RESERVATION_SUCCESS),        
-        `${window.API_BASE_URL}/api/public/v1/summit/${currentSummit.id}/orders/reserve`,
+        `${window.API_BASE_URL}/api/public/v1/summits/${currentSummit.id}/orders/reserve`,
         normalizedEntity,
         authErrorHandler,
         // entity
@@ -97,10 +98,12 @@ export const createReservation = (owner_email, owner_first_name, owner_last_name
             dispatch(stopLoading());
             console.log(payload);
             history.push(stepDefs[2]);
-        }), (error) => {
-            dispatch(stopLoading());
-            console.log('error', error);
-        }
+            return (payload)
+        })
+        .catch(e => {
+            dispatch(createAction(CREATE_RESERVATION_ERROR)(e));
+            return (e);
+        })
 }
 
 export const payReservation = (card, stripe, clientSecret) => (dispatch, getState) => {
@@ -139,7 +142,7 @@ export const payReservation = (card, stripe, clientSecret) => (dispatch, getStat
                 normalizedEntity,
                 authErrorHandler,
                 // entity
-            )(dispatch)
+            )()(dispatch)
                 .then((payload) => {
                     dispatch(stopLoading());
                     console.log('success', payload);

@@ -45,7 +45,11 @@
     "tickets"           : "Tickets",
     "ticket"            : "Ticket",
     "add_ticket"        : "Add Ticket",
-    "no_tickets"        : "No tickets selected."
+    "no_tickets"        : "No tickets selected.",
+    "placeholders": {
+      "coupon"          : "Coupon Code (Optional)",
+      "email"           : "Email (Optional)"
+    }
   },
   "step_three": {
     "payment_info"        : "Payment Information",

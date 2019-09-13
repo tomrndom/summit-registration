@@ -18,7 +18,8 @@ import {
     CHANGE_ORDER, 
     VALIDATE_STRIPE, 
     CREATE_RESERVATION, 
-    CREATE_RESERVATION_SUCCESS 
+    CREATE_RESERVATION_SUCCESS,
+    CREATE_RESERVATION_ERROR
 } from "../actions/order-actions";
 
 
@@ -66,13 +67,16 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             let {value} = payload
             return {...state, stripeForm: value}
         case CREATE_RESERVATION: {
-            return DEFAULT_STATE
+            return state
         }
             break;
         case CREATE_RESERVATION_SUCCESS: {
             let entity = {...payload.response};
             console.log(payload);
             return {...state, reservation: entity, errors: {}, loading: false, loaded: true};
+        }
+        case CREATE_RESERVATION_ERROR: {          
+          return {...state};
         }
             break;
         default:

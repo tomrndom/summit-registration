@@ -55,11 +55,6 @@ class PrimaryLayout extends React.Component {
 
         if (!summit || summitSlug != summit.slug) return (<div></div>);
 
-        console.log('summit', summit);
-        console.log('slug', summitSlug);
-
-        console.log('render!');
-
         return(
             <div className="primary-layout">
                 <main id="page-wrap">

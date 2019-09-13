@@ -26,7 +26,7 @@ const DEFAULT_STATE = {
         tickets: [
           {
             id: 1567685178277,
-            tix_type_id: 105,
+            type_id: 105,
             name: "Full Pass Ticket",
             title: "SPEAKER",
             discount: 100,
@@ -38,7 +38,7 @@ const DEFAULT_STATE = {
           },
           {
             id: 1567685178278,
-            tix_type_id: 105,
+            type_id: 105,
             name: "Full Pass Ticket",
             title: "SPEAKER",
             discount: 50,
@@ -50,7 +50,7 @@ const DEFAULT_STATE = {
           },
           {
             id: 1567685178279,
-            tix_type_id: 105,
+            type_id: 105,
             name: "Full Pass Ticket",
             title: "CREW",
             discount: 50,
@@ -60,7 +60,7 @@ const DEFAULT_STATE = {
           },
           {
             id: 1567685178280,
-            tix_type_id: 106,
+            type_id: 106,
             name: "One Day Pass Ticket",
             title: "CREW",
             discount: 20,
@@ -70,7 +70,7 @@ const DEFAULT_STATE = {
           },
           {
             id: 1567685178281,
-            tix_type_id: 106,
+            type_id: 106,
             name: "One Day Pass Ticket",
             title: "SPEAKER",
             discount: 20,

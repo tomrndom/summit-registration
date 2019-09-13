@@ -101,9 +101,8 @@ class StepTwoPage extends React.Component {
     handleAddTicket(ticketTypeId) {
         let order = cloneDeep(this.props.order);
         let errors = cloneDeep(this.props.errors);
-        let randomNumber = moment().valueOf();
 
-        order.tickets.push({id: randomNumber, tix_type_id: ticketTypeId});
+        order.tickets.push({type_id: ticketTypeId});
         this.props.handleOrderChange(order, errors);
     }
 

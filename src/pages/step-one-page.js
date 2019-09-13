@@ -51,16 +51,15 @@ class StepOnePage extends React.Component {
     }
 
     handleAddTicket(ticketTypeId) {
-        let order = {...this.props.order};
-        let randomNumber = moment().valueOf();
+        let order = {...this.props.order};        
 
-        order.tickets.push({id: randomNumber, tix_type_id: ticketTypeId});
+        order.tickets.push({ type_id: ticketTypeId });
         this.props.handleOrderChange(order)
     }
 
     handleSubstractTicket(ticketTypeId) {
         let order = {...this.props.order};
-        let idx = order.tickets.findIndex(t => t.tix_type_id == ticketTypeId);
+        let idx = order.tickets.findIndex(t => t.type_id == ticketTypeId);
 
         if (idx !== -1) {
             order.tickets.splice(idx,1);

@@ -36,6 +36,7 @@ export const VALIDATE_STRIPE  = 'VALIDATE_STRIPE';
 export const CREATE_RESERVATION = 'CREATE_RESERVATION';
 export const CREATE_RESERVATION_SUCCESS = 'CREATE_RESERVATION_SUCCESS';
 export const CREATE_RESERVATION_ERROR = 'CREATE_RESERVATION_ERROR';
+export const PAY_RESERVATION = 'PAY_RESERVATION';
 
 export const handleResetOrder = () => (dispatch, getState) => {
     dispatch(createAction(RESET_ORDER)({}));
@@ -106,8 +107,8 @@ export const createReservation = (owner_email, owner_first_name, owner_last_name
         })
 }
 
-export const payReservation = (card, stripe, clientSecret) => (dispatch, getState) => {
-    let {orderState, summitState} = getState();
+export const payReservation = (card, stripe) => (dispatch, getState) => {
+    let {orderState: {order, reservation}, summitState: {currentSummit}} = getState();
 
     let success_message = {
         title: T.translate("general.done"),
@@ -118,27 +119,29 @@ export const payReservation = (card, stripe, clientSecret) => (dispatch, getStat
     dispatch(startLoading());
     
     stripe.handleCardPayment(
-        clientSecret, card, {
+      reservation.payment_gateway_client_token, card, {
             payment_method_data: {
-                billing_details: {name: `${orderState.first_name} ${orderState.last_name}`}
+                billing_details: {name: `${order.first_name} ${order.last_name}`}
             }
         }
-    ).then(function(result) {
+    ).then((result) => {
         if (result.error) {
             // Display error.message in your UI.
             dispatch(stopLoading());
             console.log('error', error);
         } else {
             let normalizedEntity = {
-                billing_address_1: orderState.billing_address,
-                billing_address_2: orderState.billing_address_two,
-                billing_address_zip_code: orderState.billing_zipcode,
-                billing_address_city: orderState.billing_city,
-                billing_address_state: orderState.billing_state,
-                billing_address_country: orderState.billing_country
-            };
-            putRequest(
-                `${window.API_BASE_URL}/api/public/v1/summit/${currentSummit.id}/orders/reserve`,
+                billing_address_1: order.billing_address,
+                billing_address_2: order.billing_address_two,
+                billing_address_zip_code: order.billing_zipcode,
+                billing_address_city: order.billing_city,
+                billing_address_state: order.billing_state,
+                billing_address_country: order.billing_country
+            };            
+            return putRequest(
+                null,
+                createAction(PAY_RESERVATION),
+                `${window.API_BASE_URL}/api/public/v1/summit/${currentSummit.id}/orders/${reservation.hash}/checkout`,
                 normalizedEntity,
                 authErrorHandler,
                 // entity
@@ -146,17 +149,17 @@ export const payReservation = (card, stripe, clientSecret) => (dispatch, getStat
                 .then((payload) => {
                     dispatch(stopLoading());
                     console.log('success', payload);
-                }), (error) => {
-                    dispatch(stopLoading());
-                    console.log('error', error);
-                }             
-            dispatch(showMessage(
-                 success_message,
-                 history.push(stepDefs[3])
-            ));
+                    return (payload);
+                })
+                .catch(e => {
+                    dispatch(stopLoading());                    
+                    console.log('error', e);
+                    return (e);
+                });
             // The payment has succeeded. Display a success message.
         }
-    });
+    })
+    .catch(e => console.log('error', e));
 }
 
 

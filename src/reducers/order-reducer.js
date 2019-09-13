@@ -19,7 +19,8 @@ import {
     VALIDATE_STRIPE, 
     CREATE_RESERVATION, 
     CREATE_RESERVATION_SUCCESS,
-    CREATE_RESERVATION_ERROR
+    CREATE_RESERVATION_ERROR,
+    PAY_RESERVATION
 } from "../actions/order-actions";
 
 
@@ -77,6 +78,10 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
         }
         case CREATE_RESERVATION_ERROR: {          
           return {...state};
+        }
+        case PAY_RESERVATION: {
+            console.log('reservation ok', payload);
+            return DEFAULT_STATE;
         }
             break;
         default:

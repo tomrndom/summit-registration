@@ -59,11 +59,10 @@ class SubmitButtons extends React.Component {
     }
 
     payClick(ev) {
-        let {dirty, errors, stripe, token, order, step} = this.props;
+        let {dirty, errors, stripe, card} = this.props;
         ev.preventDefault();
         if((Object.keys(errors.errors).length === 0) && errors.stripeForm) {
-            // stepDefs start on 0 so next step is the same as step
-            history.push(stepDefs[step]);
+            this.props.payReservation(card, stripe);
         } else {
             return dirty.call();
         }

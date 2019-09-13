@@ -82,8 +82,8 @@ class StepThreePage extends React.Component {
     async handleStripe(ev, stripe) {        
         let stripeErrors = Object.values(ev).filter(x => x.required === true && x.message === '');
         if(stripeErrors.length === 3) { 
-            let {token} = await stripe.createToken({name: "Name"});
-            this.setState({token, stripe}, () => this.props.validateStripe(true));
+            let {card} = await stripe.createToken({name: "Name"});
+            this.setState({card, stripe}, () => this.props.validateStripe(true));
         } else {
             this.props.validateStripe(false);         
         }
@@ -95,7 +95,7 @@ class StepThreePage extends React.Component {
 
     render(){
         let {summit, order, errors, stripeForm} = this.props;
-        let {token, stripe, dirty} = this.state;
+        let {card, stripe, dirty} = this.state;
         return (
             <div className="step-three">
                 <StepRow step={this.step} />
@@ -123,7 +123,7 @@ class StepThreePage extends React.Component {
                 <SubmitButtons 
                     step={this.step} 
                     stripe={stripe} 
-                    token={token}
+                    card={card}
                     errors={{errors, stripeForm}}
                     dirty={this.handleShowErrors} />
             </div>

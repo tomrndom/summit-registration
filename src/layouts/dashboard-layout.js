@@ -26,9 +26,9 @@ class DashboardLayout extends React.Component {
             <div className="dashboard-layout">
                 <main id="page-wrap">
                     <Switch>
-                        <Route exact path="/a/orders" component={OrdersListPage}/>
-                        <Route exact path="/a/orders/detail" component={OrderDetailPage}/>                        
-                        <Route exact path="/a/tickets" component={TicketsListPage}/>
+                        <Route exact path={`${match.url}/orders`} component={OrdersListPage}/>
+                        <Route exact path={`${match.url}/orders/detail`} component={OrderDetailPage}/>                        
+                        <Route exact path={`${match.url}/tickets`} component={TicketsListPage}/>
                         <Route render={props => (<Redirect to={`${match.url}/orders`} />)}/>
                     </Switch>
                 </main>

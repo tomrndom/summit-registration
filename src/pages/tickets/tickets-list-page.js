@@ -12,13 +12,22 @@
  **/
 
 import React from 'react'
+import { connect } from 'react-redux';
 import T from "i18n-react/dist/i18n-react";
 
 import '../../styles/tickets-list-page.less';
 import TicketList from '../../components/ticket-list';
 
+import { getUserTickets } from '../../actions/member-actions';
+
 class TicketsListPage extends React.Component {
+
+    componentWillMount() {    
+        this.props.getUserTickets();
+    }
+
     render() {
+        let {tickets} = this.props;
         return (
             <div>
                 <TicketList />
@@ -27,4 +36,14 @@ class TicketsListPage extends React.Component {
     }
 }
 
-export default TicketsListPage;
+const mapStateToProps = ({ memberState }) => ({
+    tickets: memberState.tickets
+})
+  
+export default connect (
+    mapStateToProps,
+    {
+      getUserTickets
+    }
+)(TicketsListPage);
+  

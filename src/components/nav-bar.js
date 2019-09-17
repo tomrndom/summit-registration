@@ -30,8 +30,8 @@ class NavBar extends React.Component {
 
         return (
           <nav className="row dashboard-menu">
-            <NavLink to={'/a/orders'} activeClassName="active">{T.translate("nav_bar.my-orders")}</NavLink>
-            <NavLink to={'/a/tickets'} activeClassName="active">{T.translate("nav_bar.my-tickets")}</NavLink>
+            <NavLink to={'/a/member/orders'} activeClassName="active">{T.translate("nav_bar.my-orders")}</NavLink>
+            <NavLink to={'/a/member/tickets'} activeClassName="active">{T.translate("nav_bar.my-tickets")}</NavLink>
           </nav>
         );
     }

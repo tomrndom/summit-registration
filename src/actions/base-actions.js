@@ -25,7 +25,7 @@ import {
 
 
 export const REQUEST_SUMMITS           = 'REQUEST_SUMMITS';
-export const RECEIVE_SUMMIT           = 'RECEIVE_SUMMIT';
+export const RECEIVE_SUMMIT            = 'RECEIVE_SUMMIT';
 
 export const getSummits = () => (dispatch, getState) => {
   

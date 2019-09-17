@@ -31,19 +31,23 @@ import {
 
 export const GET_ORDERS  = 'GET_ORDERS';
 export const GET_TICKETS  = 'GET_TICKETS';
+export const GET_TICKET_BY_HASH  = 'GET_TICKET_BY_HASH';
 export const SELECT_ORDER  = 'SELECT_ORDER';
 
 
 export const getUserOders = () => (dispatch, getState) => {
   
+  let { loggedUserState } = getState();
+  let { accessToken }     = loggedUserState;
+  
+  dispatch(startLoading());
+
   let params = {
-      expand: ''
+      access_token : accessToken
   };
   
-  console.log('get order by user');  
-
   return getRequest(
-      dispatch(startLoading()),
+      null,
       createAction(GET_ORDERS),
       `${window.API_BASE_URL}/api/v1/summits/all/orders/me`,
       authErrorHandler
@@ -54,15 +58,17 @@ export const getUserOders = () => (dispatch, getState) => {
 
 }
 
-export const getTicketsByUser = () => (dispatch, getState) => {
+export const getUserTickets = () => (dispatch, getState) => {
   
   let params = {
       expand: ''
   };
 
+  dispatch(startLoading());
+
   return getRequest(
-      dispatch(startLoading()),
-      createAction(REQUEST_SUMMITS),
+      null,
+      createAction(GET_TICKETS),
       `${window.API_BASE_URL}/api/public/v1/summits/`,
       authErrorHandler
   )(params)(dispatch).then(() => {
@@ -70,6 +76,21 @@ export const getTicketsByUser = () => (dispatch, getState) => {
     }
   );
 
+}
+
+export const getTicketByHash = (hash) => (dispatch, getState) => {
+
+  dispatch(startLoading());
+
+  return getRequest(
+      null,
+      createAction(GET_TICKET_BY_HASH),
+      `${window.API_BASE_URL}/api/public/v1/summits/all/orders/orders/all/tickets/${hash}`,
+      authErrorHandler
+  )()(dispatch).then(() => {
+      dispatch(stopLoading());
+    }
+  );
 }
 
 export const handleOrderSelect = (order) => (dispatch, getState) => {

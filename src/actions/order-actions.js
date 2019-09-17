@@ -97,7 +97,6 @@ export const createReservation = (owner_email, owner_first_name, owner_last_name
     )()(dispatch)
         .then((payload) => {
             dispatch(stopLoading());
-            console.log(payload);
             history.push(stepDefs[2]);
             return (payload)
         })
@@ -117,8 +116,6 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
     };
 
     dispatch(startLoading());
-
-    console.log('card', card);
     
     stripe.handleCardPayment(
       reservation.payment_gateway_client_token, card, {
@@ -153,6 +150,7 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
                 .then((payload) => {
                     dispatch(stopLoading());
                     console.log('success', payload);
+                    history.push(stepDefs[3]);
                     return (payload);
                 })
                 .catch(e => {

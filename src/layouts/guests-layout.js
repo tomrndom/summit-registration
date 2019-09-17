@@ -11,13 +11,37 @@
  * limitations under the License.
  **/
 
-import React from 'react'
+import React from 'react';
+import { connect } from 'react-redux';
 import T from "i18n-react/dist/i18n-react";
 
 import TicketAssignForm from '../components/ticket-assign-form';
 import TicketOptions from '../components/ticket-options';
 
+import { getTicketByHash } from '../actions/member-actions'
+
 class GuestsLayout extends React.Component {
+    componentDidMount() {
+      let { getTicketByHash } = this.props;
+
+      let ticketHash = this.props.match.params.ticket_hash;
+
+      if (ticketHash) {
+          getTicketByHash(ticketHash);
+      }
+    }
+
+    componentWillReceiveProps(newProps) {
+      let oldHash = this.props.match.params.ticket_hash;
+      let newHash = newProps.match.params.ticket_hash;
+
+      if (newHash != oldHash) {
+          if (newHash) {
+              this.props.getTicketByHash(newHash);
+          }
+      }
+    }
+    
     render() {
         return (
             <div>
@@ -32,4 +56,12 @@ class GuestsLayout extends React.Component {
     }
 }
 
-export default GuestsLayout;
+const mapStateToProps = () => ({
+})
+
+export default connect(
+  mapStateToProps,
+  {
+    getTicketByHash
+  }
+)(GuestsLayout);

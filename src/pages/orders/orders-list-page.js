@@ -18,13 +18,11 @@ import T from "i18n-react/dist/i18n-react";
 import '../../styles/orders-list-page.less';
 import OrderList from '../../components/order-list';
 
-import getUserOders from '../../actions/member-actions';
+import { getUserOders } from '../../actions/member-actions';
 
 class OrdersListPage extends React.Component {
 
-  componentWillMount() {
-    console.log('order list did mount?');
-    
+  componentWillMount() {    
     this.props.getUserOders();
   }
 
@@ -33,7 +31,7 @@ class OrdersListPage extends React.Component {
 
         return (
           <div>
-            <p>order lsit...</p>
+            <p>order list...</p>
             <OrderList orders={orders} />
           </div>
         );
@@ -45,8 +43,8 @@ const mapStateToProps = ({ memberState }) => ({
 })
 
 export default connect (
-  mapStateToProps, 
-    {
-      getUserOders
-    }
+  mapStateToProps,
+  {
+    getUserOders
+  }
 )(OrdersListPage);

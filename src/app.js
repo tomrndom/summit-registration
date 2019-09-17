@@ -77,9 +77,9 @@ class App extends React.PureComponent {
                         </div>
                     </div>
                     <Switch>
-                        <Route path="/a/:summit_slug" component={PrimaryLayout}/>
-                        <Route path="/a/guests" component={GuestsLayout}/>
-                        <AuthorizedRoute isLoggedUser={isLoggedUser} backUrl={backUrl} path="/a" component={DashboardLayout} />
+                        <Route path="/a/:summit_slug/register" component={PrimaryLayout}/>
+                        <Route path="/a/guests/:ticket_hash" component={GuestsLayout}/>
+                        <AuthorizedRoute isLoggedUser={isLoggedUser} backUrl={backUrl} path="/a/member" component={DashboardLayout} />
                         <AuthorizationCallbackRoute onUserAuth={onUserAuth} path='/auth/callback' getUserInfo={getUserInfo} />
                         <LogOutCallbackRoute doLogout={doLogout}  path='/auth/logout'/>
                         <Route path="/logout" component={NotFoundPage} />

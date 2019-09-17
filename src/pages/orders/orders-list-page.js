@@ -18,19 +18,35 @@ import T from "i18n-react/dist/i18n-react";
 import '../../styles/orders-list-page.less';
 import OrderList from '../../components/order-list';
 
-class OrdersListPage extends React.Component {    
+import getUserOders from '../../actions/member-actions';
+
+class OrdersListPage extends React.Component {
+
+  componentWillMount() {
+    console.log('order list did mount?');
+    
+    this.props.getUserOders();
+  }
+
     render() {
       let {orders} = this.props;
 
         return (
+          <div>
+            <p>order lsit...</p>
             <OrderList orders={orders} />
+          </div>
         );
     }
 }
 
-const mapStateToProps = ({ userState, orderState }) => ({
-  orders: userState.orders,
-  errors: orderState.errors
+const mapStateToProps = ({ memberState }) => ({
+  orders: memberState.orders
 })
 
-export default connect (mapStateToProps)(OrdersListPage);
+export default connect (
+  mapStateToProps, 
+    {
+      getUserOders
+    }
+)(OrdersListPage);

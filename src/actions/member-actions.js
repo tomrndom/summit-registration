@@ -34,16 +34,18 @@ export const GET_TICKETS  = 'GET_TICKETS';
 export const SELECT_ORDER  = 'SELECT_ORDER';
 
 
-export const getOrdersByUser = () => (dispatch, getState) => {
+export const getUserOders = () => (dispatch, getState) => {
   
   let params = {
       expand: ''
   };
+  
+  console.log('get order by user');  
 
   return getRequest(
       dispatch(startLoading()),
-      createAction(REQUEST_SUMMITS),
-      `${window.API_BASE_URL}/api/public/v1/summits/`,
+      createAction(GET_ORDERS),
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/me`,
       authErrorHandler
   )(params)(dispatch).then(() => {
       dispatch(stopLoading());

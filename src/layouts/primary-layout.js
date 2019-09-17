@@ -21,13 +21,7 @@ import StepThreePage from '../pages/step-three-page'
 import StepFourPage from '../pages/step-four-page'
 
 class PrimaryLayout extends React.Component {
-
-    componentWillMount() {
-        let { getSummits } = this.props;
-        getSummits();
-    }
-
-    
+  
     componentDidMount() {
       let { getSummitBySlug } = this.props;
 

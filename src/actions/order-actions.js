@@ -117,6 +117,8 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
     };
 
     dispatch(startLoading());
+
+    console.log('card', card);
     
     stripe.handleCardPayment(
       reservation.payment_gateway_client_token, card, {
@@ -130,6 +132,8 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
             dispatch(stopLoading());
             console.log('error', error);
         } else {
+            console.log('result', result);
+            console.log('checking order', order);
             let normalizedEntity = {
                 billing_address_1: order.billing_address,
                 billing_address_2: order.billing_address_two,
@@ -141,7 +145,7 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
             return putRequest(
                 null,
                 createAction(PAY_RESERVATION),
-                `${window.API_BASE_URL}/api/public/v1/summit/${currentSummit.id}/orders/${reservation.hash}/checkout`,
+                `${window.API_BASE_URL}/api/public/v1/summits/${currentSummit.id}/orders/${reservation.hash}/checkout`,
                 normalizedEntity,
                 authErrorHandler,
                 // entity

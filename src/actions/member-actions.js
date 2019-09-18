@@ -93,8 +93,9 @@ export const getTicketByHash = (hash) => (dispatch, getState) => {
   );
 }
 
-export const handleOrderSelect = (order) => (dispatch, getState) => {
+export const selectOrder = (order) => (dispatch, getState) => {
 
+    console.log('selected', order);
     
     dispatch(startLoading());
 

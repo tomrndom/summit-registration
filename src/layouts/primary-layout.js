@@ -14,7 +14,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { getSummits, getSummitBySlug } from '../actions/base-actions';
+import { getSummitBySlug } from '../actions/base-actions';
 import StepOnePage from '../pages/step-one-page'
 import StepTwoPage from '../pages/step-two-page'
 import StepThreePage from '../pages/step-three-page'
@@ -73,7 +73,6 @@ const mapStateToProps = ({ summitState  }) => ({
 export default connect(
     mapStateToProps,
     {
-        getSummits,
         getSummitBySlug
     }
 )(PrimaryLayout);

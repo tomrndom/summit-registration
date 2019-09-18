@@ -11,8 +11,10 @@
  * limitations under the License.
  **/
 
-import React from 'react'
+import React from 'react';
+import { connect } from 'react-redux';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
+import { getSummits } from '../actions/base-actions';
 import OrdersListPage from '../pages/orders/orders-list-page';
 import OrderDetailPage from '../pages/orders/order-detail-page'
 import TicketsListPage from '../pages/tickets/tickets-list-page';
@@ -20,6 +22,12 @@ import TicketsListPage from '../pages/tickets/tickets-list-page';
 import '../styles/dashboard.less';
 
 class DashboardLayout extends React.Component {
+
+    componentWillMount() {      
+      let { getSummits } = this.props;
+      getSummits();
+    }
+
     render() {
         let { match } = this.props;
         return(
@@ -37,4 +45,14 @@ class DashboardLayout extends React.Component {
     }
 }
 
-export default DashboardLayout;
+const mapStateToProps = ({ summitState  }) => ({
+  summits: summitState.summits
+})
+
+export default connect(
+  mapStateToProps,
+  {
+      getSummits
+  }
+)(DashboardLayout);
+

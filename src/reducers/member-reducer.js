@@ -102,8 +102,8 @@ const memberReducer = (state = DEFAULT_STATE, action) => {
             return {...state, loading: false};
             break;
         case GET_ORDERS:
-            console.log('get orders', payload);
-            return {...state, orders: payload};
+            let orders = payload.response.data;
+            return {...state, orders};
         case GET_TICKETS:            
             return {...state, tickets: payload};
         case SELECT_ORDER:

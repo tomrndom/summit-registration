@@ -24,7 +24,7 @@ import {
 } from 'openstack-uicore-foundation/lib/methods';
 
 
-export const REQUEST_SUMMITS           = 'REQUEST_SUMMITS';
+export const GET_SUMMITS           = 'GET_SUMMITS';
 export const RECEIVE_SUMMIT            = 'RECEIVE_SUMMIT';
 
 export const getSummits = () => (dispatch, getState) => {
@@ -35,7 +35,7 @@ export const getSummits = () => (dispatch, getState) => {
 
   return getRequest(
       dispatch(startLoading()),
-      createAction(REQUEST_SUMMITS),
+      createAction(GET_SUMMITS),
       `${window.API_BASE_URL}/api/public/v1/summits/`,
       authErrorHandler
   )(params)(dispatch).then(() => {

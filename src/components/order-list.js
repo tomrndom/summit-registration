@@ -16,6 +16,7 @@ import T from 'i18n-react/dist/i18n-react'
 import { Link } from 'react-router-dom'
 
 import '../styles/orders-list-page.less';
+import { getDayNumberFromDate, getFormatedDate, getFormatedTime } from '../utils/helpers'
 
 class OrderList extends React.Component {
     constructor(props) {
@@ -26,6 +27,9 @@ class OrderList extends React.Component {
         };
 
         this.handleTicketCount = this.handleTicketCount.bind(this);
+        this.handleOrderSelect = this.handleOrderSelect.bind(this);
+        this.getSummitDate = this.getSummitDate.bind(this);
+        this.getSummitName = this.getSummitName.bind(this);
 
     }
 
@@ -47,6 +51,28 @@ class OrderList extends React.Component {
       return quantity;
     }
 
+    handleOrderSelect(order) {
+      this.props.selectOrder(order);
+    }
+
+    getSummitName(order) {
+      let {summits} = this.props;
+
+      let name = summits.find(s => s.id === order.summit_id).name;      
+      return name;
+
+    }
+
+    getSummitDate(order) {
+      let {summits} = this.props;
+      
+      let summit = summits.find(s => s.id === order.summit_id);      
+      let date = getFormatedDate(summit.start_date, summit.time_zone_id);
+      return date;
+    }
+
+
+
 
     render() {
 
@@ -61,11 +87,11 @@ class OrderList extends React.Component {
                       <div className="row">
                           <div className="order complete p-2 col-sm-8 col-sm-offset-2">
                               <div className="col-sm-6">
-                                  <h4>{o.title}</h4>
+                                  <h4>{this.getSummitName(o)}</h4>
                                   <p className="status">Ready to Use</p>
                               </div>
                               <div className="col-sm-4">
-                                  <h5>On March 20th</h5>
+                                  <h5>On {this.getSummitDate(o)}</h5>
                                   <ul>
                                     {this.handleTicketCount(o.tickets).map(t => {
                                       return (
@@ -77,7 +103,7 @@ class OrderList extends React.Component {
                                   </ul>
                               </div>
                               <div className="col-sm-2">
-                                  <h4>$ {o.total}</h4>
+                                  <h4>$ {o.amount}</h4>
                               </div>
                           </div>
                       </div>

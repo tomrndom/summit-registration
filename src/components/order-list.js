@@ -13,7 +13,6 @@
 
 import React from 'react'
 import T from 'i18n-react/dist/i18n-react'
-import { Link } from 'react-router-dom'
 
 import '../styles/orders-list-page.less';
 import { getDayNumberFromDate, getFormatedDate, getFormatedTime } from '../utils/helpers'
@@ -33,18 +32,22 @@ class OrderList extends React.Component {
 
     }
 
-    handleTicketCount(tickets) {
+    handleTicketCount(tickets, summitId) {
       let quantity = [];
+      let { summits } = this.props;
+      let summit = summits.find(s => s.id === summitId);
+      
       tickets.map(t => {
-        if(quantity.some(q => q.type_id === t.type_id)) {          
+        if(quantity.some(q => q.ticket_type_id === t.ticket_type_id)) {          
           quantity.map(q => {
-            if (q.type_id === t.type_id) {
+            if (q.ticket_type_id === t.ticket_type_id) {
               q.quantity++;
               return q
             }
           });
         } else {
-          let addTicket = { quantity : 1, ...t};
+          let name = summit.ticket_types.find(q => q.id === t.ticket_type_id).name;          
+          let addTicket = { quantity : 1, name, ...t};
           quantity.push(addTicket);
         }
       });      
@@ -52,7 +55,7 @@ class OrderList extends React.Component {
     }
 
     handleOrderSelect(order) {
-      this.props.selectOrder(order);
+      this.props.selectOrder(order);      
     }
 
     getSummitName(order) {
@@ -82,32 +85,30 @@ class OrderList extends React.Component {
           return (
             <div className="orders-list">
                 {orders.map(o => {
-                  return (
-                    <Link to="/a/orders/detail" key={o.id}>
-                      <div className="row">
-                          <div className="order complete p-2 col-sm-8 col-sm-offset-2">
-                              <div className="col-sm-6">
-                                  <h4>{this.getSummitName(o)}</h4>
-                                  <p className="status">Ready to Use</p>
-                              </div>
-                              <div className="col-sm-4">
-                                  <h5>On {this.getSummitDate(o)}</h5>
-                                  <ul>
-                                    {this.handleTicketCount(o.tickets).map(t => {
-                                      return (
-                                        <li key={t.type_id}>
-                                          x{t.quantity} {t.name}
-                                        </li>                                      
-                                      )
-                                    })}                                      
-                                  </ul>
-                              </div>
-                              <div className="col-sm-2">
-                                  <h4>$ {o.amount}</h4>
-                              </div>
-                          </div>
-                      </div>
-                    </Link>
+                  return (                    
+                    <div className="row" key={o.id}>
+                        <div className="order complete p-2 col-sm-8 col-sm-offset-2">
+                            <div className="col-sm-6">
+                                <h4>{this.getSummitName(o)}</h4>
+                                <p className="status">Ready to Use</p>
+                            </div>
+                            <div className="col-sm-4">
+                                <h5>On {this.getSummitDate(o)}</h5>
+                                <ul>
+                                  {this.handleTicketCount(o.tickets, o.summit_id).map(t => {
+                                    return (
+                                      <li key={t.ticket_type_id}>
+                                        x{t.quantity} {t.name}
+                                      </li>                                      
+                                    )
+                                  })}                                      
+                                </ul>
+                            </div>
+                            <div className="col-sm-2">
+                                <h4>$ {o.amount}</h4>
+                            </div>
+                        </div>
+                    </div>
                   )
                 })}
             </div>

@@ -18,7 +18,7 @@ import T from "i18n-react/dist/i18n-react";
 import '../../styles/orders-list-page.less';
 import OrderList from '../../components/order-list';
 
-import { getUserOders } from '../../actions/member-actions';
+import { getUserOders, selectOrder } from '../../actions/member-actions';
 
 class OrdersListPage extends React.Component {
 
@@ -27,12 +27,11 @@ class OrdersListPage extends React.Component {
   }
 
     render() {
-      let {orders, summits} = this.props;
+      let {orders, summits, selectOrder} = this.props;
       
         return (
           <div>
-            <p>order list...</p>
-            <OrderList orders={orders} summits={summits} />
+            <OrderList orders={orders} summits={summits} selectOrder={selectOrder}/>
           </div>
         );
     }
@@ -46,6 +45,7 @@ const mapStateToProps = ({ memberState, summitState }) => ({
 export default connect (
   mapStateToProps,
   {
-    getUserOders
+    getUserOders,
+    selectOrder
   }
 )(OrdersListPage);

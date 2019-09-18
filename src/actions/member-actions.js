@@ -43,7 +43,8 @@ export const getUserOders = () => (dispatch, getState) => {
   dispatch(startLoading());
 
   let params = {
-      access_token : accessToken
+      access_token : accessToken,
+      expand       : 'tickets',
   };
   
   return getRequest(

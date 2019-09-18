@@ -11,11 +11,12 @@
  * limitations under the License.
  **/
 
-import React from 'react'
-import T from 'i18n-react/dist/i18n-react'
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+import T from 'i18n-react/dist/i18n-react';
 
 import '../styles/orders-list-page.less';
-import { getDayNumberFromDate, getFormatedDate, getFormatedTime } from '../utils/helpers'
+import { getDayNumberFromDate, getFormatedDate, getFormatedTime } from '../utils/helpers';
 
 class OrderList extends React.Component {
     constructor(props) {
@@ -46,7 +47,7 @@ class OrderList extends React.Component {
             }
           });
         } else {
-          let name = summit.ticket_types.find(q => q.id === t.ticket_type_id).name;          
+          let name = summit.ticket_types.find(q => q.id === t.ticket_type_id).name;
           let addTicket = { quantity : 1, name, ...t};
           quantity.push(addTicket);
         }
@@ -55,7 +56,9 @@ class OrderList extends React.Component {
     }
 
     handleOrderSelect(order) {
-      this.props.selectOrder(order);      
+      let {history} = this.props;
+      this.props.selectOrder(order);
+      history.push('/a/member/orders/detail');
     }
 
     getSummitName(order) {
@@ -86,7 +89,7 @@ class OrderList extends React.Component {
             <div className="orders-list">
                 {orders.map(o => {
                   return (                    
-                    <div className="row" key={o.id}>
+                    <div className="row" key={o.id} onClick={() => this.handleOrderSelect(o)}>
                         <div className="order complete p-2 col-sm-8 col-sm-offset-2">
                             <div className="col-sm-6">
                                 <h4>{this.getSummitName(o)}</h4>
@@ -128,4 +131,4 @@ class OrderList extends React.Component {
     }
 }
 
-export default OrderList;
+export default withRouter(OrderList);

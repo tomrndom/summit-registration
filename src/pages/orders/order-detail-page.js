@@ -32,7 +32,6 @@ class OrderDetailPage extends React.Component {
   }
 
   togglePopup() {
-    console.log('abrir-cerrar');
     this.setState({
       showPopup: !this.state.showPopup  
     });  
@@ -40,7 +39,7 @@ class OrderDetailPage extends React.Component {
 
     render() {
         let {order} = this.props;
-        let {showPopup} = this.state;
+        let {showPopup} = this.state;        
 
         return (
             <div className="order-detail">
@@ -154,7 +153,7 @@ class OrderDetailPage extends React.Component {
 
 const mapStateToProps = ({ loggedUserState, memberState }) => ({
     member: loggedUserState.member,
-    order: memberState.orders
+    order: memberState.selectedOrder
 })
 
 export default connect(

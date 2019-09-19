@@ -25,7 +25,8 @@ import {
 
 
 export const GET_SUMMITS               = 'GET_SUMMITS';
-export const RECEIVE_SUMMIT            = 'RECEIVE_SUMMIT';
+export const GET_SUMMIT_BY_SLUG        = 'GET_SUMMIT_BY_SLUG';
+export const GET_SUMMIT_BY_ID          = 'GET_SUMMIT_BY_ID';
 
 export const getSummits = () => (dispatch, getState) => {
   
@@ -51,13 +52,28 @@ export const getSummitBySlug = (slug) => (dispatch, getState) => {
     
     return getRequest(
         dispatch(startLoading()),
-        createAction(RECEIVE_SUMMIT),
+        createAction(GET_SUMMIT_BY_SLUG),
         `${window.API_BASE_URL}/api/public/v1/summits/all/${slug}`,
         authErrorHandler
     )()(dispatch).then(() => {
           dispatch(stopLoading());
         }
     );    
+}
+
+export const getSummitById = (id) => (dispatch, getState) => {
+    
+  dispatch(startLoading());    
+  
+  return getRequest(
+      dispatch(startLoading()),
+      createAction(GET_SUMMIT_BY_ID),
+      `${window.API_BASE_URL}/api/public/v1/summits/all/${id}`,
+      authErrorHandler
+  )()(dispatch).then(() => {
+        dispatch(stopLoading());
+      }
+  );    
 }
 
 

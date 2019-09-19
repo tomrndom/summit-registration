@@ -27,7 +27,7 @@ class OrderSummary extends React.Component {
 
     render() {
         // TODO: replace the order[0] with selected order
-        let {order, summit, summits} = this.props;        
+        let {order, summit} = this.props;        
         let ticket_types = summit ? summit.ticket_types : order.tickets;
 
         let ticketTotal = 0;
@@ -39,8 +39,8 @@ class OrderSummary extends React.Component {
 
             if (idx >= 0) {
                 ticketSummary[idx].qty++;
-            } else {
-                let name = summits.ticket_types.find(q => q.id === t.ticket_type_id).name;
+            } else {                
+                let name = ticket_types.find(q => q.ticket_type_id === tix.ticket_type_id).name;
                 ticketSummary.push({ticket_type_id: tix.ticket_type_id, tix_type: tixType, name, qty: 1})
             }
 

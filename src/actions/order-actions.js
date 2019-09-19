@@ -29,14 +29,16 @@ import {
 } from 'openstack-uicore-foundation/lib/methods';
 
 
-export const RESET_ORDER  = 'RESET_ORDER';
-export const RECEIVE_ORDER  = 'RECEIVE_ORDER';
-export const CHANGE_ORDER  = 'CHANGE_ORDER';
-export const VALIDATE_STRIPE  = 'VALIDATE_STRIPE';
-export const CREATE_RESERVATION = 'CREATE_RESERVATION';
-export const CREATE_RESERVATION_SUCCESS = 'CREATE_RESERVATION_SUCCESS';
-export const CREATE_RESERVATION_ERROR = 'CREATE_RESERVATION_ERROR';
-export const PAY_RESERVATION = 'PAY_RESERVATION';
+export const RESET_ORDER                    = 'RESET_ORDER';
+export const RECEIVE_ORDER                  = 'RECEIVE_ORDER';
+export const CHANGE_ORDER                   = 'CHANGE_ORDER';
+export const VALIDATE_STRIPE                = 'VALIDATE_STRIPE';
+export const CREATE_RESERVATION             = 'CREATE_RESERVATION';
+export const CREATE_RESERVATION_SUCCESS     = 'CREATE_RESERVATION_SUCCESS';
+export const CREATE_RESERVATION_ERROR       = 'CREATE_RESERVATION_ERROR';
+export const PAY_RESERVATION                = 'PAY_RESERVATION';
+export const GET_USER_ORDERS                = 'GET_ORDERS';
+export const SELECT_ORDER                   = 'SELECT_ORDER';
 
 export const handleResetOrder = () => (dispatch, getState) => {
     dispatch(createAction(RESET_ORDER)({}));
@@ -163,6 +165,41 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
     })
     .catch(e => console.log('error', e));
 }
+
+export const getUserOders = () => (dispatch, getState) => {
+  
+  let { loggedUserState } = getState();
+  let { accessToken }     = loggedUserState;
+  
+  dispatch(startLoading());
+
+  let params = {
+      access_token : accessToken,
+      expand       : 'tickets',
+  };
+  
+  return getRequest(
+      null,
+      createAction(GET_USER_ORDERS),
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/me`,
+      authErrorHandler
+  )(params)(dispatch).then(() => {
+      dispatch(stopLoading());
+    }
+  );
+
+}
+
+export const selectOrder = (order) => (dispatch, getState) => {
+    
+  dispatch(startLoading());
+
+  dispatch(createAction(SELECT_ORDER)(order));
+
+  dispatch(stopLoading());
+
+}
+
 
 
 

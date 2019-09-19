@@ -14,7 +14,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Switch, Route, Redirect, Link } from 'react-router-dom';
-import { getSummits } from '../actions/base-actions';
+import { getSummits } from '../actions/summit-actions';
 import OrdersListPage from '../pages/orders/orders-list-page';
 import OrderDetailPage from '../pages/orders/order-detail-page'
 import TicketsListPage from '../pages/tickets/tickets-list-page';

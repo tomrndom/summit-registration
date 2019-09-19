@@ -18,7 +18,7 @@ import T from "i18n-react/dist/i18n-react";
 import '../../styles/tickets-list-page.less';
 import TicketList from '../../components/ticket-list';
 
-import { getUserTickets } from '../../actions/member-actions';
+import { getUserTickets } from '../../actions/ticket-actions';
 
 class TicketsListPage extends React.Component {
 
@@ -36,8 +36,8 @@ class TicketsListPage extends React.Component {
     }
 }
 
-const mapStateToProps = ({ memberState }) => ({
-    tickets: memberState.tickets
+const mapStateToProps = ({ ticketState }) => ({
+    tickets: ticketState.memberTickets
 })
   
 export default connect (

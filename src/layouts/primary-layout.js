@@ -14,7 +14,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { getSummitBySlug } from '../actions/base-actions';
+import { getSummitBySlug } from '../actions/summit-actions';
 import StepOnePage from '../pages/step-one-page'
 import StepTwoPage from '../pages/step-two-page'
 import StepThreePage from '../pages/step-three-page'

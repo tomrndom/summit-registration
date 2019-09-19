@@ -12,7 +12,7 @@
  **/
 
 import { LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
-import { RECEIVE_SUMMIT, GET_SUMMITS } from "../actions/base-actions";
+import { RECEIVE_SUMMIT, GET_SUMMITS } from "../actions/summit-actions";
 
 
 const DEFAULT_STATE = {

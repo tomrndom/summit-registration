@@ -20,7 +20,9 @@ import {
     CREATE_RESERVATION, 
     CREATE_RESERVATION_SUCCESS,
     CREATE_RESERVATION_ERROR,
-    PAY_RESERVATION
+    PAY_RESERVATION,
+    GET_USER_ORDERS,
+    SELECT_ORDER
 } from "../actions/order-actions";
 
 
@@ -42,10 +44,12 @@ const DEFAULT_ENTITY = {
 
 const DEFAULT_STATE = {
     order: DEFAULT_ENTITY,
+    memberOrders: [],
+    selectedOrder: {},
     errors: {},
     stripeForm: false,
     loaded: false,
-	loading: false
+	  loading: false
 }
 
 const orderReducer = (state = DEFAULT_STATE, action) => {
@@ -66,23 +70,28 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             break;
         case VALIDATE_STRIPE:
             let {value} = payload
-            return {...state, stripeForm: value}
-        case CREATE_RESERVATION: {
-            return state
-        }
+            return {...state, stripeForm: value};
             break;
-        case CREATE_RESERVATION_SUCCESS: {
+        case CREATE_RESERVATION:
+            return state
+            break;
+        case CREATE_RESERVATION_SUCCESS:
             let entity = {...payload.response};
             console.log(payload);
             return {...state, reservation: entity, errors: {}, loading: false, loaded: true};
-        }
-        case CREATE_RESERVATION_ERROR: {          
-          return {...state};
-        }
-        case PAY_RESERVATION: {
+            break
+        case CREATE_RESERVATION_ERROR:
+            return {...state};
+            break;
+        case PAY_RESERVATION:
             console.log('reservation ok', payload);
-            return DEFAULT_STATE;
-        }
+            return DEFAULT_STATE;        
+            break;
+        case GET_USER_ORDERS:
+            return {...state, memberOrders: payload.response.data};
+            break;
+        case SELECT_ORDER:
+            return {...state, selectedOrder: payload};
             break;
         default:
             return state;

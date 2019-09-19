@@ -18,7 +18,7 @@ import T from "i18n-react/dist/i18n-react";
 import TicketAssignForm from '../components/ticket-assign-form';
 import TicketOptions from '../components/ticket-options';
 
-import { getTicketByHash } from '../actions/member-actions'
+import { getTicketByHash } from '../actions/ticket-actions'
 
 class GuestsLayout extends React.Component {
     componentDidMount() {

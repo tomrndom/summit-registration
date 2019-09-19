@@ -18,7 +18,7 @@ import T from "i18n-react/dist/i18n-react";
 import '../../styles/orders-list-page.less';
 import OrderList from '../../components/order-list';
 
-import { getUserOders, selectOrder } from '../../actions/member-actions';
+import { getUserOders, selectOrder } from '../../actions/order-actions';
 
 class OrdersListPage extends React.Component {
 
@@ -37,8 +37,8 @@ class OrdersListPage extends React.Component {
     }
 }
 
-const mapStateToProps = ({ memberState, summitState }) => ({
-  orders: memberState.orders,
+const mapStateToProps = ({ orderState, summitState }) => ({
+  orders: orderState.memberOrders,
   summits: summitState.summits
 })
 

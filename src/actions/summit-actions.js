@@ -24,7 +24,7 @@ import {
 } from 'openstack-uicore-foundation/lib/methods';
 
 
-export const GET_SUMMITS           = 'GET_SUMMITS';
+export const GET_SUMMITS               = 'GET_SUMMITS';
 export const RECEIVE_SUMMIT            = 'RECEIVE_SUMMIT';
 
 export const getSummits = () => (dispatch, getState) => {
@@ -58,7 +58,6 @@ export const getSummitBySlug = (slug) => (dispatch, getState) => {
           dispatch(stopLoading());
         }
     );    
-
 }
 
 

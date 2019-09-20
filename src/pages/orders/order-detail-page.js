@@ -153,7 +153,7 @@ class OrderDetailPage extends React.Component {
 
 const mapStateToProps = ({ loggedUserState, orderState }) => ({
     member: loggedUserState.member,
-    order: orderState.selectedOrder
+    order: orderState.currentOrder
 })
 
 export default connect(

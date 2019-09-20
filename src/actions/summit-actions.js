@@ -27,6 +27,7 @@ import {
 export const GET_SUMMITS               = 'GET_SUMMITS';
 export const GET_SUMMIT_BY_SLUG        = 'GET_SUMMIT_BY_SLUG';
 export const GET_SUMMIT_BY_ID          = 'GET_SUMMIT_BY_ID';
+export const SELECT_SUMMIT             = 'SELECT_SUMMIT';
 
 export const getSummits = () => (dispatch, getState) => {
   
@@ -61,6 +62,14 @@ export const getSummitBySlug = (slug) => (dispatch, getState) => {
     );    
 }
 
+export const getUserSummits = () => (dispatch, getState) => {
+
+  let { orderState: {memberOrders} } = getState();
+  
+  const summitsId = [... new Set(memberOrders.map(p => p.summit_id))];
+
+}
+
 export const getSummitById = (id) => (dispatch, getState) => {
     
   dispatch(startLoading());    
@@ -76,5 +85,13 @@ export const getSummitById = (id) => (dispatch, getState) => {
   );    
 }
 
+export const selectSummit = (summit) => (dispatch, getState) => {
+    
+  dispatch(startLoading());
 
+  dispatch(createAction(SELECT_SUMMIT)(summit));
+
+  dispatch(stopLoading());
+
+}
 

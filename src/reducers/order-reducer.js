@@ -45,7 +45,7 @@ const DEFAULT_ENTITY = {
 const DEFAULT_STATE = {
     order: DEFAULT_ENTITY,
     memberOrders: [],
-    selectedOrder: {},
+    currentOrder: {},
     errors: {},
     stripeForm: false,
     loaded: false,
@@ -77,21 +77,19 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             break;
         case CREATE_RESERVATION_SUCCESS:
             let entity = {...payload.response};
-            console.log(payload);
             return {...state, reservation: entity, errors: {}, loading: false, loaded: true};
             break
         case CREATE_RESERVATION_ERROR:
             return {...state};
             break;
-        case PAY_RESERVATION:
-            console.log('reservation ok', payload);
-            return DEFAULT_STATE;        
+        case PAY_RESERVATION:                        
+            return {...state, order : { ...state.order, reservation : payload.response}};
             break;
         case GET_USER_ORDERS:
             return {...state, memberOrders: payload.response.data};
             break;
         case SELECT_ORDER:
-            return {...state, selectedOrder: payload};
+            return {...state, currentOrder: payload};
             break;
         default:
             return state;

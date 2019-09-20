@@ -30,7 +30,7 @@ const summitReducer = (state = DEFAULT_STATE, action) => {
             let summits =  payload.response.data;
             return {...state, summits};
             break;
-        case GET_SUMMIT_BY_SLUG: {
+        case GET_SUMMIT_BY_SLUG:
             let entity = {...payload.response};
 
             for(var key in entity) {
@@ -39,9 +39,11 @@ const summitReducer = (state = DEFAULT_STATE, action) => {
                 }
             }
 
-            return {...state, currentSummit: entity};
-        }
-        break;
+            return {...state, currentSummit: entity};      
+            break;
+        case GET_SUMMIT_BY_ID:
+            let summit = payload.response;
+            return {...state, summits: { summit , ...state.summits}}
         default:
             return state;
             break;

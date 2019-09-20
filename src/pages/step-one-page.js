@@ -71,8 +71,6 @@ class StepOnePage extends React.Component {
 
         let {summit, order} = this.props;
 
-        console.log('render step 1');
-
         return (
             <div className="step-one">
                 <StepRow step={this.step} />

@@ -128,11 +128,8 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
     ).then((result) => {
         if (result.error) {
             // Display error.message in your UI.
-            dispatch(stopLoading());
-            console.log('error', error);
-        } else {
-            console.log('result', result);
-            console.log('checking order', order);
+            dispatch(stopLoading());            
+        } else {            
             let normalizedEntity = {
                 billing_address_1: order.billing_address,
                 billing_address_2: order.billing_address_two,
@@ -151,13 +148,11 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
             )()(dispatch)
                 .then((payload) => {
                     dispatch(stopLoading());
-                    console.log('success', payload);
                     history.push(stepDefs[3]);
                     return (payload);
                 })
                 .catch(e => {
-                    dispatch(stopLoading());                    
-                    console.log('error', e);
+                    dispatch(stopLoading());
                     return (e);
                 });
             // The payment has succeeded. Display a success message.

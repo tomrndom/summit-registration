@@ -27,11 +27,11 @@ class OrdersListPage extends React.Component {
   }
 
     render() {
-      let {orders, selectOrder} = this.props;
+      let {orders, summits, selectOrder} = this.props;
       
         return (
           <div>
-            <OrderList orders={orders} selectOrder={selectOrder}/>
+            <OrderList orders={orders} summits={summits} selectOrder={selectOrder}/>
           </div>
         );
     }
@@ -39,7 +39,7 @@ class OrdersListPage extends React.Component {
 
 const mapStateToProps = ({ orderState, summitState }) => ({
   orders: orderState.memberOrders,
-  summit: summitState.selectedSummit
+  summits: summitState.summits
 })
 
 export default connect (

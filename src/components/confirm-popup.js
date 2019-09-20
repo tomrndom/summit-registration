@@ -28,9 +28,6 @@ class ConfirmPopup extends React.Component {
 
 
     render() {
-
-      console.log('confirm');
-
         return (  
           <div className="confirm-popup-bg">
             <div className="confirm-popup">

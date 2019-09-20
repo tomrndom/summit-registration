@@ -39,7 +39,7 @@ class StepFourPage extends React.Component {
 
 
     render(){
-        let {summit, order, errors} = this.props;
+        let {summit, order: {reservation}, errors} = this.props;
 
         return (
             <div className="step-four">
@@ -50,7 +50,7 @@ class StepFourPage extends React.Component {
                         <p className="text">{T.translate("step_four.text")}</p>
                         <div className="order-no-box">
                             <p>{T.translate("step_four.order_no")}</p>
-                            <div className="order-no">12341234</div>
+                            <div className="order-no">{reservation.number}</div>
                         </div>
                         <button className="btn btn-primary manage-btn">
                             {T.translate("step_four.manage")}

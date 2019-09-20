@@ -24,28 +24,10 @@ import {
 } from 'openstack-uicore-foundation/lib/methods';
 
 
-export const GET_SUMMITS               = 'GET_SUMMITS';
 export const GET_SUMMIT_BY_SLUG        = 'GET_SUMMIT_BY_SLUG';
 export const GET_SUMMIT_BY_ID          = 'GET_SUMMIT_BY_ID';
+export const GET_USER_SUMMITS          = 'GET_USER_SUMMITS';
 export const SELECT_SUMMIT             = 'SELECT_SUMMIT';
-
-export const getSummits = () => (dispatch, getState) => {
-  
-  let params = {
-      expand: ''
-  };
-
-  return getRequest(
-      dispatch(startLoading()),
-      createAction(GET_SUMMITS),
-      `${window.API_BASE_URL}/api/public/v1/summits/`,
-      authErrorHandler
-  )(params)(dispatch).then(() => {
-      dispatch(stopLoading());
-    }
-  );
-
-}
 
 export const getSummitBySlug = (slug) => (dispatch, getState) => {
     
@@ -64,9 +46,16 @@ export const getSummitBySlug = (slug) => (dispatch, getState) => {
 
 export const getUserSummits = () => (dispatch, getState) => {
 
-  let { orderState: {memberOrders} } = getState();
+  let { orderState: {memberOrders}, summitState: {summits} } = getState();
   
   const summitsId = [... new Set(memberOrders.map(p => p.summit_id))];
+  
+  let summitCall = summitsId.map(s => dispatch(getSummitById(s)));
+
+  Promise.all([...summitCall]).then(() => {
+    dispatch(stopLoading());
+    }
+  );
 
 }
 

@@ -12,7 +12,7 @@
  **/
 
 import { LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
-import { GET_SUMMITS, GET_SUMMIT_BY_ID, GET_SUMMIT_BY_SLUG } from "../actions/summit-actions";
+import { GET_SUMMIT_BY_ID, GET_SUMMIT_BY_SLUG } from "../actions/summit-actions";
 
 
 const DEFAULT_STATE = {
@@ -26,10 +26,6 @@ const summitReducer = (state = DEFAULT_STATE, action) => {
     switch(type){
         case LOGOUT_USER:
             return DEFAULT_STATE;
-        case GET_SUMMITS:
-            let summits =  payload.response.data;
-            return {...state, summits};
-            break;
         case GET_SUMMIT_BY_SLUG:
             let entity = {...payload.response};
 
@@ -43,7 +39,7 @@ const summitReducer = (state = DEFAULT_STATE, action) => {
             break;
         case GET_SUMMIT_BY_ID:
             let summit = payload.response;
-            return {...state, summits: { summit , ...state.summits}}
+            return {...state, summits: [ ...state.summits, summit ]}
         default:
             return state;
             break;

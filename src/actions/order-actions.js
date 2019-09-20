@@ -28,6 +28,7 @@ import {
     showSuccessMessage,    
 } from 'openstack-uicore-foundation/lib/methods';
 
+import { getUserSummits } from '../actions/summit-actions';
 
 export const RESET_ORDER                    = 'RESET_ORDER';
 export const RECEIVE_ORDER                  = 'RECEIVE_ORDER';
@@ -179,10 +180,9 @@ export const getUserOders = () => (dispatch, getState) => {
       `${window.API_BASE_URL}/api/v1/summits/all/orders/me`,
       authErrorHandler
   )(params)(dispatch).then(() => {
-      dispatch(stopLoading());
+      dispatch(getUserSummits());
     }
   );
-
 }
 
 export const selectOrder = (order) => (dispatch, getState) => {

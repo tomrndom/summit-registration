@@ -17,6 +17,8 @@ import OrderSummary from "../../components/order-summary";
 import TicketPopup from "../../components/ticket-popup";
 import TicketOptions from "../../components/ticket-options";
 
+import { selectTicket } from '../../actions/ticket-actions';
+
 import '../../styles/order-detail-page.less';
 
 class OrderDetailPage extends React.Component {
@@ -31,132 +33,89 @@ class OrderDetailPage extends React.Component {
       this.togglePopup = this.togglePopup.bind(this);
   }
 
-  togglePopup() {
+  togglePopup(ticket) {
+    this.props.selectTicket(ticket);
     this.setState({
       showPopup: !this.state.showPopup  
     });  
   }
 
-    render() {
-        let {order, summit} = this.props;
-        let {showPopup} = this.state;        
+  render() {
+      let {order, summit, ticket} = this.props;
+      let {showPopup} = this.state;
 
-        return (
-            <div className="order-detail">
-                <div className="row" style={showPopup? {overflow: 'hidden'} : {overflow: 'auto'}}>
-                    <div className="col-md-8">
-                      <div className="order-detail__title">
-                        <h4><b>Google I/O 2019</b></h4>
-                        California, US / September 18, 2019
-                      </div>
-                      <div className="ticket-list">
-                        <div className="ticket-type">
-                          Full Pass Tickets x3
-                        </div>
-                        <div className="row" onClick={() => this.togglePopup()}>
-                            <div className="ticket complete p-2 col-sm-12 col-sm-offset-1">
-                                <div className="col-sm-6">
-                                    <h4>Speaker</h4>
-                                    100% Discount
-                                    <p className="status">Ready to Use</p>
-                                </div>
-                                <div className="col-sm-5">
-                                    ned.stark@winterfell.com
-                                </div>
-                                <div className="col-sm-1">
-                                    <h4>&#10095;</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="ticket complete p-2 col-sm-12 col-sm-offset-1">
-                                <div className="col-sm-6">
-                                    <h4>Speaker</h4>
-                                    100% Discount
-                                    <p className="status">Ready to Use</p>
-                                </div>
-                                <div className="col-sm-5">
-                                    ned.stark@winterfell.com
-                                </div>
-                                <div className="col-sm-1">
-                                    <h4>&#10095;</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="ticket complete p-2 col-sm-12 col-sm-offset-1">
-                                <div className="col-sm-6">
-                                    <h4>Speaker</h4>
-                                    100% Discount
-                                    <p className="status">Ready to Use</p>
-                                </div>
-                                <div className="col-sm-5">
-                                    ned.stark@winterfell.com
-                                </div>
-                                <div className="col-sm-1">
-                                    <h4>&#10095;</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="separator"></div>
-                        <div className="ticket-type">
-                          One Day Pass Tickets x2
-                        </div>
-                        <div className="row">
-                            <div className="ticket complete p-2 col-sm-12 col-sm-offset-1">
-                                <div className="col-sm-6">
-                                    <h4>Speaker</h4>
-                                    100% Discount
-                                    <p className="status">Ready to Use</p>
-                                </div>
-                                <div className="col-sm-5">
-                                    ned.stark@winterfell.com
-                                </div>
-                                <div className="col-sm-1">
-                                    <h4>&#10095;</h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="ticket complete p-2 col-sm-12 col-sm-offset-1">
-                                <div className="col-sm-6">
-                                    <h4>Speaker</h4>
-                                    100% Discount
-                                    <p className="status">Ready to Use</p>
-                                </div>
-                                <div className="col-sm-5">
-                                    ned.stark@winterfell.com
-                                </div>
-                                <div className="col-sm-1">
-                                    <h4>&#10095;</h4>
-                                </div>
-                            </div>
-                        </div>
-                      </div>                      
+      console.log(order);
+      console.log(summit);
+
+      return (
+          <div className="order-detail">
+              <div className="row" style={showPopup? {overflow: 'hidden'} : {overflow: 'auto'}}>
+                  <div className="col-md-8">
+                    <div className="order-detail__title">
+                      <h4><b>{summit.name}</b></h4>
+                      California, US / September 18, 2019
                     </div>
-                    <div className="col-md-4">
-                        <OrderSummary order={order} summit={summit}/>
-                        <TicketOptions />
-                    </div>
-                </div>
-                {showPopup ?  
-                  <TicketPopup  
-                    text='Click "Close Button" to hide popup'  
-                    closePopup={this.togglePopup.bind(this)}  
-                  />  
-                : null  
-                }
-            </div>
-        );
+                    <div className="ticket-list">
+                      {summit.ticket_types.map(s => {
+                        return (
+                          <React.Fragment key={s.id}>
+                            <div className="ticket-type">
+                              {s.name} Tickets x3
+                            </div>
+                            {order.tickets.map(t => {
+                              return (
+                                s.id === t.ticket_type_id ?                                
+                                <div className="row" key={t.id} onClick={() => this.togglePopup(t)}>
+                                  <div className="ticket complete p-2 col-sm-12 col-sm-offset-1">
+                                      <div className="col-sm-6">
+                                          <h4>Speaker</h4>
+                                          100% Discount
+                                          <p className="status">Ready to Use</p>
+                                      </div>
+                                      <div className="col-sm-5">
+                                          ned.stark@winterfell.com
+                                      </div>
+                                      <div className="col-sm-1">
+                                          <h4>&#10095;</h4>
+                                      </div>
+                                  </div>
+                                </div> 
+                                : null  
+                              )
+                            })}
+                          <div className="separator"></div>
+                          </React.Fragment>                   
+                        )
+                      })}                                                
+                    </div>                      
+                  </div>
+                  <div className="col-md-4">
+                      <OrderSummary order={order} summit={summit}/>
+                      <TicketOptions />
+                  </div>
+              </div>
+              {showPopup ?  
+                <TicketPopup  
+                  ticket={ticket}
+                  closePopup={this.togglePopup.bind(this)}  
+                />  
+              : null  
+              }
+          </div>
+      );
     }
 }
 
-const mapStateToProps = ({ loggedUserState, orderState, summitState }) => ({
+const mapStateToProps = ({ loggedUserState, orderState, summitState, ticketState }) => ({
     member: loggedUserState.member,
     order: orderState.selectedOrder,
-    summit: summitState.selectedSummit
+    summit: summitState.selectedSummit,
+    ticket: ticketState.selectedTicket
 })
 
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    {
+      selectTicket
+    }
 )(OrderDetailPage);

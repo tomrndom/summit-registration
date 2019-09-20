@@ -70,3 +70,13 @@ export const getTicketByHash = (hash) => (dispatch, getState) => {
   );
 }
 
+export const selectTicket = (ticket) => (dispatch, getState) => {
+    
+  dispatch(startLoading());
+
+  dispatch(createAction(SELECT_TICKET)(ticket));
+
+  dispatch(stopLoading());
+
+}
+

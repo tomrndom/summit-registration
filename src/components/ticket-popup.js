@@ -41,6 +41,7 @@ class TicketPopup extends React.Component {
 
     render() {
 
+      let {ticket} = this.props;
       let {showPopup} = this.state;
 
         return (  

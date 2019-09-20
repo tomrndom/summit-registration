@@ -127,6 +127,9 @@ class StepTwoPage extends React.Component {
         let {summit, order, errors} = this.props;
         let {dirty} = this.state;        
 
+
+        console.log(order);
+
         return (
             <div className="step-two">
                 <StepRow step={this.step} />
@@ -135,7 +138,7 @@ class StepTwoPage extends React.Component {
                         <BasicInfoForm order={order} errors={dirty? errors : {}} onChange={this.handleChange}/>
                         {summit.ticket_types.map((t,i) => (
                             <TicketInfoForm
-                                key={`tixinfo_${t.id}_${i}`}
+                                key={`tixinfo_${t.ticket_type_id}_${i}`}
                                 ticketType={t}
                                 order={order}
                                 errors={errors}

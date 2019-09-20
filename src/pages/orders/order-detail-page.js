@@ -56,13 +56,15 @@ class OrderDetailPage extends React.Component {
                       California, US / September 18, 2019
                     </div>
                     <div className="ticket-list">
-                      {summit.ticket_types.map(s => {
+                      {summit.ticket_types.map((s, index) => {
                         return (
                           <React.Fragment key={s.id}>
+                            {order.tickets.some(t => t.ticket_type_id === s.id) &&
                             <div className="ticket-type">
                               {s.name} Tickets x3
                             </div>
-                            {order.tickets.map(t => {
+                            &&      
+                            order.tickets.map(t => {
                               return (
                                 s.id === t.ticket_type_id ?                                
                                 <div className="row" key={t.id} onClick={() => this.togglePopup(t)}>
@@ -82,8 +84,9 @@ class OrderDetailPage extends React.Component {
                                 </div> 
                                 : null  
                               )
-                            })}
-                          <div className="separator"></div>
+                            })                           
+                            }             
+                          {index ? <div className="separator"></div> : null}
                           </React.Fragment>                   
                         )
                       })}                                                

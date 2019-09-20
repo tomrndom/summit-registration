@@ -33,14 +33,14 @@ class OrderSummary extends React.Component {
         let ticketSummary = [];        
 
         order.tickets.forEach(tix => {            
-            let idx = ticketSummary.findIndex(o => o.ticket_type_id == tix.ticket_type_id);
-            let tixType = ticket_types.find(tt => tt.id == tix.ticket_type_id);            
+            let idx = ticketSummary.findIndex(o => o.ticket_type_id == tix.type_id || tix.ticket_type_id);
+            let tixType = ticket_types.find(tt => tt.id == tix.type_id || tix.ticket_type_id);            
 
             if (idx >= 0) {
                 ticketSummary[idx].qty++;
             } else {                
-                let name = ticket_types.find(q => q.id === tix.ticket_type_id).name;                
-                ticketSummary.push({ticket_type_id: tix.ticket_type_id, tix_type: tixType, name, qty: 1})
+                let name = ticket_types.find(q => q.id === tix.type_id || tix.ticket_type_id).name;                
+                ticketSummary.push({ticket_type_id: tix.type_id || tix.ticket_type_id, tix_type: tixType, name, qty: 1})
             }
 
             ticketTotal = ticketTotal + tixType.cost;
@@ -49,7 +49,7 @@ class OrderSummary extends React.Component {
         
         let discountTotal = 0;
         let discounts = order.tickets.filter(tix => tix.coupon).map(tix => {
-            let tixType = ticket_types.find(tt => tt.id == tix.ticket_type_id);
+            let tixType = ticket_types.find(tt => tt.id == tix.type_id || tix.ticket_type_id);
 
             let discountTmp = (tix.coupon.percentage / 100) * tixType.cost;
             discountTotal = discountTotal + discountTmp;
@@ -68,8 +68,9 @@ class OrderSummary extends React.Component {
                 </div>
                 {ticketSummary.map(tix => {
                     let total = tix.qty * tix.tix_type.cost;
+                    console.log(tix);
                     return (
-                        <div className="row order-row" key={`tixorder_${tix.tix_type.ticket_type_id}`}>
+                        <div className="row order-row" key={`tixorder_${tix.tix_type.created}`}>
                             <div className="col-xs-6">
                                 {tix.tix_type.name}
                             </div>

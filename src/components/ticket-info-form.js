@@ -58,7 +58,9 @@ class TicketInfoForm extends React.Component {
 
     render() {
         let {order, onChange, ticketType} = this.props;
-        let orderedTickets = order.tickets.filter(tix => tix.ticket_type_id == ticketType.id);
+        let orderedTickets = order.tickets.filter(tix => tix.type_id == ticketType.id);
+
+        console.log(ticketType);
 
         return (
             <div className="ticket-info-wrapper">
@@ -76,20 +78,20 @@ class TicketInfoForm extends React.Component {
                             <Input
                                 className="form-control"
                                 placeholder={T.translate("step_two.placeholders.coupon")}
-                                error={this.hasErrors(`tix_coupon_${tix.id}`)}
-                                onChange={this.ticketInfoChange.bind(this, tix.id, 'coupon')}
+                                error={this.hasErrors(`tix_coupon_${tix.created}`)}
+                                onChange={this.ticketInfoChange.bind(this, tix.created, 'coupon')}
                                 value={tix.coupon ? tix.coupon.code : ''}
                             />
                             <Input
                                 className="form-control email"
                                 placeholder={T.translate("step_two.placeholders.email")}
-                                error={this.hasErrors(`tix_email_${tix.id}`)}
-                                onChange={this.ticketInfoChange.bind(this, tix.id, 'email')}
+                                error={this.hasErrors(`tix_email_${tix.created}`)}
+                                onChange={this.ticketInfoChange.bind(this, tix.created, 'email')}
                                 value={tix.email ? tix.email : ''}
                             />
                         </div>
                         <div className="col-md-2">
-                            <a href="" onClick={this.removeTicket.bind(this, tix.id)}>
+                            <a href="" onClick={this.removeTicket.bind(this, tix.created)}>
                                 <i className="fa fa-trash-o" aria-hidden="true"></i>
                             </a>
                         </div>

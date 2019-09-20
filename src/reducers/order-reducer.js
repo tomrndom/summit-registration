@@ -30,8 +30,7 @@ const DEFAULT_ENTITY = {
     first_name: '',
     last_name: '',
     email: '',
-    company: '',
-    tickets: [],
+    company: '',    
     billing_country: '',
     billing_address: '',
     billing_address_two: '',
@@ -39,6 +38,7 @@ const DEFAULT_ENTITY = {
     billing_state: '',
     billing_zipcode: '',
     currentStep: null,
+    tickets: [],
     reservation: {},
 }
 
@@ -83,7 +83,7 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             return {...state};
             break;
         case PAY_RESERVATION:                        
-            return {...state, order : { ...state.order, reservation : payload.response}};
+            return { DEFAULT_STATE, order : { reservation : payload.response}};
             break;
         case GET_USER_ORDERS:
             return {...state, memberOrders: payload.response.data};

@@ -30,9 +30,16 @@ import {
 
 
 
-export const GET_TICKETS          = 'GET_TICKETS';
-export const GET_TICKET_BY_HASH   = 'GET_TICKET_BY_HASH';
-export const SELECT_TICKET        = 'SELECT_TICKET';
+export const GET_TICKETS              = 'GET_TICKETS';
+export const SELECT_TICKET            = 'SELECT_TICKET';
+export const ASSIGN_TICKET            = 'ASSIGN_TICKET';
+export const REMOVE_TICKET_ATTENDEE   = 'REMOVE_TICKET_ATTENDEE';
+export const GET_TICKET_PDF           = 'GET_TICKET_PDF';
+export const REFUND_TICKET            = 'REFUND_TICKET';
+export const GET_TICKET_BY_HASH       = 'GET_TICKET_BY_HASH';
+export const ASSIGN_TICKET_BY_HASH    = 'ASSIGN_TICKET_BY_HASH';
+export const REGENERATE_TICKET_HASH   = 'REGENERATE_TICKET_HASH';
+export const GET_TICKET_PDF_BY_HASH   = 'GET_TICKET_PDF_BY_HASH';
 
 
 export const getUserTickets = () => (dispatch, getState) => {
@@ -47,6 +54,112 @@ export const getUserTickets = () => (dispatch, getState) => {
       null,
       createAction(GET_TICKETS),
       `${window.API_BASE_URL}/api/public/v1/summits/`,
+      authErrorHandler
+  )(params)(dispatch).then(() => {
+      dispatch(stopLoading());
+    }
+  );
+
+}
+
+export const selectTicket = (ticket) => (dispatch, getState) => {
+    
+  dispatch(startLoading());
+
+  dispatch(createAction(SELECT_TICKET)(ticket));
+
+  dispatch(stopLoading());
+
+}
+
+export const assignAtendee = (attendee_first_name, attendee_last_name, attendee_email, extra_questions) => (dispatch, getState) => {
+
+  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectTicket } } = getState();
+  let { accessToken }     = loggedUserState;
+
+  dispatch(startLoading());
+
+  let params = {
+    access_token : accessToken
+  };
+
+  let normalizedEntity = { attendee_first_name, attendee_last_name, attendee_email, extra_questions };
+
+
+  return getRequest(
+      null,
+      createAction(ASSIGN_TICKET),
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectTicket.id}/attendee`,
+      normalizedEntity,
+      authErrorHandler
+  )(params)(dispatch).then(() => {
+      dispatch(stopLoading());
+    }
+  );
+
+}
+
+export const removeAttendee = () => (dispatch, getState) => {
+
+  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectTicket } } = getState();
+  let { accessToken }     = loggedUserState;
+
+  dispatch(startLoading());
+
+  let params = {
+    access_token : accessToken
+  };
+
+  return getRequest(
+      null,
+      createAction(REMOVE_TICKET_ATTENDEE),
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectTicket.id}/attendee`,
+      authErrorHandler
+  )(params)(dispatch).then(() => {
+      dispatch(stopLoading());
+    }
+  );
+
+}
+
+export const getTicketPDF = () => (dispatch, getState) => {
+
+  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectTicket } } = getState();
+  let { accessToken }     = loggedUserState;
+
+  dispatch(startLoading());
+
+  let params = {
+    access_token : accessToken
+  };
+
+  return getRequest(
+      null,
+      createAction(GET_TICKET_PDF),
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectTicket.id}/pdf`,
+      authErrorHandler
+  )(params)(dispatch).then(() => {
+      dispatch(stopLoading());
+    }
+  );
+  
+}
+
+export const refundTicket = () => (dispatch, getState) => {
+
+  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectTicket } } = getState();
+  let { accessToken }     = loggedUserState;
+
+  dispatch(startLoading());
+
+  let params = {
+    access_token : accessToken
+  };
+
+  return getRequest(
+      null,
+      createAction(REFUND_TICKET),
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectTicket.id}/refund`,
       authErrorHandler
   )(params)(dispatch).then(() => {
       dispatch(stopLoading());
@@ -70,13 +183,48 @@ export const getTicketByHash = (hash) => (dispatch, getState) => {
   );
 }
 
-export const selectTicket = (ticket) => (dispatch, getState) => {
-    
+export const assignTicketByHash = (attendee_first_name, attendee_last_name, disclaimer_accepted, share_contact_info, extra_questions, hash) => (dispatch, getState) => {
+
   dispatch(startLoading());
 
-  dispatch(createAction(SELECT_TICKET)(ticket));
+  let normalizedEntity = {attendee_first_name, attendee_last_name, disclaimer_accepted, share_contact_info, extra_questions};
 
-  dispatch(stopLoading());
-
+  return putRequest(
+    null,
+    createAction(ASSIGN_TICKET_BY_HASH),
+    `${window.API_BASE_URL}/api/public/v1/summits/all/orders/orders/all/tickets/${hash}`,
+    normalizedEntity,
+    authErrorHandler
+  )()(dispatch).then(() => {
+    dispatch(stopLoading());
+  });
 }
 
+export const regenerateTicketHash = (formerHash) => (dispatch, getState) => {
+  dispatch(startLoading());
+
+  return putRequest(
+      null,
+      createAction(REGENERATE_TICKET_HASH),
+      `${window.API_BASE_URL}/api/public/v1/summits/all/orders/orders/all/tickets/${formerHash}/regenerate`,
+      authErrorHandler
+  )()(dispatch).then(() => {
+      dispatch(stopLoading());
+    }
+  );
+}
+
+export const getTicketPDFByHash = (hash) => (dispatch, getState) => {
+  
+  dispatch(startLoading());
+
+  return getRequest(
+      null,
+      createAction(GET_TICKET_PDF_BY_HASH),
+      `${window.API_BASE_URL}/api/public/v1/summits/all/orders/orders/all/tickets/${hash}/pdf`,
+      authErrorHandler
+  )()(dispatch).then(() => {
+      dispatch(stopLoading());
+    }
+  );
+}

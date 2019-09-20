@@ -45,7 +45,7 @@ export default class TicketInput extends React.Component {
             ticketTypes && 
             <div className="ticket-input-box">
                 {ticketTypes.map(t => {
-                    let quantity = selection.filter(sel => sel.ticket_type_id == t.id).length;
+                    let quantity = selection.filter(sel => sel.type_id == t.id).length;
 
                     return (
                         <div className="ticket-wrapper" key={`ttype_${t.id}`}>

@@ -51,7 +51,7 @@ class TicketOptions extends React.Component {
                         <a>{T.translate("order_info.download")}</a><br/>
                         {guest && <a>{T.translate("order_info.directions")}<br/></a>}
                         {guest && <a>{T.translate("order_info.calendar")}<br/></a>}
-                        {!guest && <a className="cancel-order">{T.translate("order_info.cancel_order")}</a>}
+                        {!guest && <a className="cancel">{T.translate("order_info.cancel_order")}</a>}
                         {guest && <a className="cancel">{T.translate("order_info.cancel_ticket")}</a>}
                     </div>
                 </div>

@@ -19,7 +19,7 @@ import EventInfo from "../components/event-info";
 import TicketInput from "../components/ticket-input";
 import StepRow from '../components/step-row';
 import SubmitButtons from "../components/submit-buttons";
-import { handleOrderChange } from '../actions/order-actions'
+import { handleOrderChange, handleResetOrder } from '../actions/order-actions'
 
 
 import '../styles/step-one-page.less';
@@ -40,7 +40,9 @@ class StepOnePage extends React.Component {
     }
 
     componentWillMount() {
-        let order = {...this.props.order};        
+        let order = {...this.props.order};   
+        
+        this.props.handleResetOrder();
         
         order = {
             ...order,
@@ -53,13 +55,13 @@ class StepOnePage extends React.Component {
     handleAddTicket(ticketTypeId) {
         let order = {...this.props.order};        
 
-        order.tickets.push({ ticket_type_id: ticketTypeId });
+        order.tickets.push({ type_id: ticketTypeId });
         this.props.handleOrderChange(order)
     }
 
     handleSubstractTicket(ticketTypeId) {
         let order = {...this.props.order};
-        let idx = order.tickets.findIndex(t => t.ticket_type_id == ticketTypeId);
+        let idx = order.tickets.findIndex(t => t.type_id == ticketTypeId);
 
         if (idx !== -1) {
             order.tickets.splice(idx,1);
@@ -114,7 +116,8 @@ const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
 export default connect (
     mapStateToProps,
     {
-        handleOrderChange
+        handleOrderChange,
+        handleResetOrder
     }
 )(StepOnePage);
 

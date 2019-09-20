@@ -48,10 +48,12 @@ export const getUserSummits = () => (dispatch, getState) => {
 
   let { orderState: {memberOrders}, summitState: {summits} } = getState();
   
-  const summitsId = [... new Set(memberOrders.map(p => p.summit_id))];
-  
-  let summitCall = summitsId.map(s => dispatch(getSummitById(s)));
+  let summitsId = [... new Set(memberOrders.map(p => p.summit_id))];
+  const storedSummits = [... new Set(summits.map(p => p.id))];
 
+  summitsId = summitsId.filter(s => storedSummits.indexOf(s) == -1);
+  const summitCall = summitsId.map(s => dispatch(getSummitById(s)));
+  
   Promise.all([...summitCall]).then(() => {
     dispatch(stopLoading());
     }

@@ -56,7 +56,9 @@ class OrderList extends React.Component {
     }
 
     handleOrderSelect(order) {
-      let {history} = this.props;
+      let {history, summits} = this.props;
+      let summit = summits.find(s => s.id === order.summit_id);      
+      this.props.selectSummit(summit);
       this.props.selectOrder(order);
       history.push('/a/member/orders/detail');
     }
@@ -82,9 +84,9 @@ class OrderList extends React.Component {
 
     render() {
 
-      let { orders } = this.props;         
+      let { orders, summits } = this.props;           
 
-      if (orders) {      
+      if (orders && summits) {      
           return (
             <div className="orders-list">
                 {orders.map(o => {

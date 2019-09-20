@@ -45,7 +45,7 @@ const DEFAULT_ENTITY = {
 const DEFAULT_STATE = {
     order: DEFAULT_ENTITY,
     memberOrders: [],
-    currentOrder: {},
+    selectedOrder: {},
     errors: {},
     stripeForm: false,
     loaded: false,
@@ -89,7 +89,7 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             return {...state, memberOrders: payload.response.data};
             break;
         case SELECT_ORDER:
-            return {...state, currentOrder: payload};
+            return {...state, selectedOrder: payload};
             break;
         default:
             return state;

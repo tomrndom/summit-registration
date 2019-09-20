@@ -19,6 +19,7 @@ import '../../styles/orders-list-page.less';
 import OrderList from '../../components/order-list';
 
 import { getUserOders, selectOrder } from '../../actions/order-actions';
+import { selectSummit } from '../../actions/summit-actions';
 
 class OrdersListPage extends React.Component {
 
@@ -27,11 +28,11 @@ class OrdersListPage extends React.Component {
   }
 
     render() {
-      let {orders, summits, selectOrder} = this.props;
+      let {orders, summits, selectOrder, selectSummit} = this.props;
       
         return (
           <div>
-            <OrderList orders={orders} summits={summits} selectOrder={selectOrder}/>
+            <OrderList orders={orders} summits={summits} selectOrder={selectOrder} selectSummit={selectSummit}/>
           </div>
         );
     }
@@ -46,6 +47,7 @@ export default connect (
   mapStateToProps,
   {
     getUserOders,
-    selectOrder
+    selectOrder,
+    selectSummit
   }
 )(OrdersListPage);

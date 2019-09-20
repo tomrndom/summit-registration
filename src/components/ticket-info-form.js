@@ -58,7 +58,7 @@ class TicketInfoForm extends React.Component {
 
     render() {
         let {order, onChange, ticketType} = this.props;
-        let orderedTickets = order.tickets.filter(tix => tix.type_id == ticketType.id);
+        let orderedTickets = order.tickets.filter(tix => tix.ticket_type_id == ticketType.id);
 
         return (
             <div className="ticket-info-wrapper">

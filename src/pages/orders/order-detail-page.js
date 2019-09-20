@@ -38,7 +38,7 @@ class OrderDetailPage extends React.Component {
   }
 
     render() {
-        let {order} = this.props;
+        let {order, summit} = this.props;
         let {showPopup} = this.state;        
 
         return (
@@ -135,7 +135,7 @@ class OrderDetailPage extends React.Component {
                       </div>                      
                     </div>
                     <div className="col-md-4">
-                        <OrderSummary order={order} />
+                        <OrderSummary order={order} summit={summit}/>
                         <TicketOptions />
                     </div>
                 </div>
@@ -151,9 +151,10 @@ class OrderDetailPage extends React.Component {
     }
 }
 
-const mapStateToProps = ({ loggedUserState, orderState }) => ({
+const mapStateToProps = ({ loggedUserState, orderState, summitState }) => ({
     member: loggedUserState.member,
-    order: orderState.currentOrder
+    order: orderState.selectedOrder,
+    summit: summitState.selectedSummit
 })
 
 export default connect(

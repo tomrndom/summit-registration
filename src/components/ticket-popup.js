@@ -13,6 +13,7 @@
 
 import React from 'react'
 import T from 'i18n-react/dist/i18n-react'
+import cloneDeep from "lodash.clonedeep";
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { Input, Dropdown, CheckboxList, TextArea } from 'openstack-uicore-foundation/lib/components'
 
@@ -26,23 +27,47 @@ class TicketPopup extends React.Component {
         super(props);
 
         this.state = {
-          showPopup: false
+          showPopup: false,
+          tempTicket: {
+            attendee_email: '',
+            attendee_first_name: '',
+            attendee_last_name: ''
+          }
         };
   
         this.togglePopup = this.togglePopup.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
   
-    togglePopup() {
-      this.setState({
-        showPopup: !this.state.showPopup  
-      });  
+    togglePopup(confirm) {
+      console.log(confirm);
+      this.setState((prevState, props) => {
+        return {
+          showPopup: !prevState.showPopup
+        }
+      })
+      if(confirm) {
+        let ticket = cloneDeep(this.props.ticket);
+        ticket = {...ticket, ...this.state.tempTicket}
+        this.props.updateTicket(ticket);
+      }
     }
+
+    handleChange(ev) {
+      const {id, value} = ev.target;
+
+      this.setState(() => ({
+        tempTicket: {...this.state.tempTicket, [id]: value }        
+      }));
+
+      //      this.props.handleOrderChange(order, errors);
+    }    
 
 
     render() {
 
       let {ticket} = this.props;
-      let {showPopup} = this.state;
+      let {showPopup, tempTicket, tempTicket: {attendee_email}} = this.state;
 
         return (  
         <div className='popup-bg'>
@@ -56,7 +81,7 @@ class TicketPopup extends React.Component {
                   </div>
                   <div className="col-sm-3 popup-icons">
                     <i className="fa fa-print"></i>
-                    <i className="fa fa-file-pdf-o"></i>
+                    <i onClick={this.props.downloadTicket} className="fa fa-file-pdf-o"></i>
                     <i onClick={this.props.closePopup} className="fa fa-times"></i>                    
                   </div>
                 </div>
@@ -79,21 +104,21 @@ class TicketPopup extends React.Component {
                           <div><hr/></div>
                         </div>
                         <Input
-                            id="email"
+                            id="attendee_email"
                             className="form-control"
                             placeholder="Email"
                             //error={this.hasErrors('email')}
-                            //onChange={onChange}
-                            //value={order.email}
+                            onChange={this.handleChange}
+                            value={attendee_email}
                         />
                         <button className="btn btn-primary">
                           {T.translate("ticket_popup.assign_someone")}
                         </button>
                     </TabPanel>
                     <TabPanel className="popup-panel popup-panel--edit">
-                        <TicketAssignForm />
+                        <TicketAssignForm ticket={tempTicket} onChange={this.handleChange}/>
                         <div className="popup-footer-save">
-                          <button className="btn btn-primary" onClick={this.props.closePopup}>{T.translate("ticket_popup.save_changes")}</button>  
+                          <button className="btn btn-primary" onClick={() => this.togglePopup()}>{T.translate("ticket_popup.save_changes")}</button>  
                         </div>
                     </TabPanel>
                     <TabPanel className="popup-panel popup-panel--reassign">
@@ -103,19 +128,19 @@ class TicketPopup extends React.Component {
                             {T.translate("ticket_popup.reassign_check")} <i className="fa fa-question-circle"></i>
                         </label>
                         <br />
-                        <button className="btn btn-primary" onClick={this.props.closePopup}>{T.translate("ticket_popup.reassign_me")}</button>  
+                        <button className="btn btn-primary" onClick={() => this.props.closePopup}>{T.translate("ticket_popup.reassign_me")}</button>  
                         <div className="popup-separator">
                           <div><hr/></div>
                           <span>{T.translate("ticket_popup.assign_or")}</span>
                           <div><hr/></div>
                         </div>
                         <Input
-                            id="email"
+                            id="attendee_email"
                             className="form-control"
                             placeholder="Email"
                             //error={this.hasErrors('email')}
-                            //onChange={onChange}
-                            //value={order.email}
+                            onChange={this.handleChange}
+                            value={attendee_email}
                         />
                         <button className="btn btn-primary" onClick={() => this.togglePopup()}>
                           {T.translate("ticket_popup.reassign_someone")}
@@ -130,7 +155,7 @@ class TicketPopup extends React.Component {
             </div>
             {showPopup ?  
               <ConfirmPopup
-                closePopup={this.togglePopup.bind(this)}  
+                closePopup={this.togglePopup.bind(this)}
               />  
             : null  
             }  

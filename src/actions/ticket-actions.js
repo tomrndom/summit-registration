@@ -124,7 +124,7 @@ export const removeAttendee = () => (dispatch, getState) => {
 
 export const getTicketPDF = () => (dispatch, getState) => {
 
-  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectTicket } } = getState();
+  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
 
   dispatch(startLoading());
@@ -136,7 +136,7 @@ export const getTicketPDF = () => (dispatch, getState) => {
   return getRequest(
       null,
       createAction(GET_TICKET_PDF),
-      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectTicket.id}/pdf`,
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectedTicket.id}/pdf`,
       authErrorHandler
   )(params)(dispatch).then(() => {
       dispatch(stopLoading());
@@ -147,7 +147,7 @@ export const getTicketPDF = () => (dispatch, getState) => {
 
 export const refundTicket = () => (dispatch, getState) => {
 
-  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectTicket } } = getState();
+  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
 
   dispatch(startLoading());
@@ -159,7 +159,7 @@ export const refundTicket = () => (dispatch, getState) => {
   return getRequest(
       null,
       createAction(REFUND_TICKET),
-      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectTicket.id}/refund`,
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectedTicket.id}/refund`,
       authErrorHandler
   )(params)(dispatch).then(() => {
       dispatch(stopLoading());

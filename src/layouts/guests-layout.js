@@ -18,9 +18,17 @@ import T from "i18n-react/dist/i18n-react";
 import TicketAssignForm from '../components/ticket-assign-form';
 import TicketOptions from '../components/ticket-options';
 
-import { getTicketByHash } from '../actions/ticket-actions'
+import { getTicketByHash, getTicketPDFByHash, refundTicket } from '../actions/ticket-actions'
 
 class GuestsLayout extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.handleTicketDownload = this.handleTicketDownload.bind(this);
+    this.handleTicketCancel = this.handleTicketCancel.bind(this);
+  }
+
     componentDidMount() {
       let { getTicketByHash } = this.props;
 
@@ -41,27 +49,45 @@ class GuestsLayout extends React.Component {
           }
       }
     }
+
+    handleTicketDownload() {
+      let ticketHash = this.props.match.params.ticket_hash;
+      this.props.getTicketPDFByHash(ticketHash);
+    }
+
+    handleTicketCancel() {
+      let ticketHash = this.props.match.params.ticket_hash;
+      this.props.refundTicket(ticketHash);
+    }
     
     render() {
+      let {ticket} = this.props;
         return (
             <div>
               <div className="col-sm-8">
-                <TicketAssignForm />
+                <TicketAssignForm ticket={ticket}/>
               </div>
               <div className="col-sm-4">
-                <TicketOptions guest={true}/>
+                <TicketOptions 
+                  guest={true} 
+                  downloadTicket={this.handleTicketDownload} 
+                  cancelTicket={this.handleTicketCancel}
+                />
               </div>
             </div>
         );
     }
 }
 
-const mapStateToProps = () => ({
+const mapStateToProps = ({ ticketState }) => ({
+  ticket: ticketState.selectedTicket
 })
 
 export default connect(
   mapStateToProps,
   {
-    getTicketByHash
+    getTicketByHash,
+    getTicketPDFByHash,
+    refundTicket
   }
 )(GuestsLayout);

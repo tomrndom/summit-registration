@@ -20,7 +20,7 @@ import '../styles/ticket-assign-form.less';
 class TicketAssignForm extends React.Component {    
 
     render() {
-      let {guest} = this.props;
+      let {guest, ticket, onChange} = this.props;
 
         return (
           <div>
@@ -36,11 +36,11 @@ class TicketAssignForm extends React.Component {
               <div className="col-sm-4">{T.translate("ticket_popup.edit_first_name")}</div>
               <div className="col-sm-6">
                 <Input
-                  id="first_name"
+                  id="attendee_first_name"
                   className="form-control"                              
                   //error={this.hasErrors('email')}
-                  //onChange={onChange}
-                  value="John"
+                  onChange={onChange}
+                  value={ticket.attendee_first_name}
                 />
               </div>
             </div>
@@ -48,12 +48,12 @@ class TicketAssignForm extends React.Component {
               <div className="col-sm-4">{T.translate("ticket_popup.edit_last_name")}</div>
               <div className="col-sm-6">
                 <Input
-                  id="last_name"
+                  id="attendee_last_name"
                   className="form-control"
                   placeholder="Email"
                   //error={this.hasErrors('email')}
-                  //onChange={onChange}
-                  value="Snow"
+                  onChange={onChange}
+                  value={ticket.attendee_last_name}
                 />
               </div>
             </div>

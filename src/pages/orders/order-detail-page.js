@@ -17,27 +17,48 @@ import OrderSummary from "../../components/order-summary";
 import TicketPopup from "../../components/ticket-popup";
 import TicketOptions from "../../components/ticket-options";
 
-import { selectTicket } from '../../actions/ticket-actions';
+import { selectTicket, getTicketPDF } from '../../actions/ticket-actions';
+import { cancelOrder } from '../../actions/order-actions';
 
 import '../../styles/order-detail-page.less';
 
 class OrderDetailPage extends React.Component {
 
-    constructor(props) {
-      super(props);
+  constructor(props) {
+    super(props);
 
-      this.state = {
-        showPopup: false
-      };
+    this.state = {
+      showPopup: false
+    };
 
-      this.togglePopup = this.togglePopup.bind(this);
+    this.togglePopup = this.togglePopup.bind(this);
+    this.handleTicketDownload = this.handleTicketDownload.bind(this);
+    this.handleOrderCancel = this.handleOrderCancel.bind(this);
   }
 
   togglePopup(ticket) {
-    this.props.selectTicket(ticket);
-    this.setState({
-      showPopup: !this.state.showPopup  
-    });  
+    ticket ? this.props.selectTicket(ticket) : this.props.selectTicket({});
+
+    this.setState((prevState, props) => {
+      return {
+        showPopup: !prevState.showPopup
+      }
+    })
+  }
+
+  handleTicketDownload() {    
+    this.props.getTicketPDF();
+  }
+
+  handleOrderCancel(){
+    let {order} = this.props;
+    this.props.cancelOrder(order);
+  }
+
+  handleTicketUpdate(ticket){
+    console.log('en el detail, aca mandar data', ticket);
+
+    
   }
 
   render() {
@@ -94,13 +115,15 @@ class OrderDetailPage extends React.Component {
                   </div>
                   <div className="col-md-4">
                       <OrderSummary order={order} summit={summit}/>
-                      <TicketOptions />
+                      <TicketOptions cancelOrder={this.handleOrderCancel}/>
                   </div>
               </div>
               {showPopup ?  
                 <TicketPopup  
                   ticket={ticket}
-                  closePopup={this.togglePopup.bind(this)}  
+                  downloadTicket={this.handleTicketDownload}
+                  closePopup={this.togglePopup.bind(this)}
+                  updateTicket={this.handleTicketUpdate}
                 />  
               : null  
               }
@@ -119,6 +142,9 @@ const mapStateToProps = ({ loggedUserState, orderState, summitState, ticketState
 export default connect(
     mapStateToProps,
     {
-      selectTicket
+      selectTicket,
+      getTicketPDF,
+      cancelOrder,
+      assignAtendee
     }
 )(OrderDetailPage);

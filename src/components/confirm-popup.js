@@ -28,14 +28,15 @@ class ConfirmPopup extends React.Component {
 
 
     render() {
+      let {closePopup} = this.props;
         return (  
           <div className="confirm-popup-bg">
             <div className="confirm-popup">
               <h4>{T.translate("confirm_popup.question_title")}</h4>            
               <p>{T.translate("confirm_popup.question_text")}</p>
               <div className="buttons">
-                <span onClick={this.props.closePopup}>{T.translate("confirm_popup.cancel")}</span>
-                <span onClick={this.props.closePopup}>{T.translate("confirm_popup.accept")}</span>
+                <span onClick={() => closePopup(false)}>{T.translate("confirm_popup.cancel")}</span>
+                <span onClick={() => closePopup(true)}>{T.translate("confirm_popup.accept")}</span>
               </div>              
             </div>
           </div>

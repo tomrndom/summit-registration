@@ -25,18 +25,29 @@ class GuestsLayout extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      tempTicket: {
+        attendee_email: '',
+        attendee_first_name: '',
+        attendee_last_name: ''
+      }
+    };
+
     this.handleTicketDownload = this.handleTicketDownload.bind(this);
     this.handleTicketCancel = this.handleTicketCancel.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
     componentDidMount() {
-      let { getTicketByHash } = this.props;
+      let { getTicketByHash, ticket } = this.props;
 
       let ticketHash = this.props.match.params.ticket_hash;
 
       if (ticketHash) {
           getTicketByHash(ticketHash);
       }
+
+      this.setState({tempTicket: ticket});
     }
 
     componentWillReceiveProps(newProps) {
@@ -59,13 +70,24 @@ class GuestsLayout extends React.Component {
       let ticketHash = this.props.match.params.ticket_hash;
       this.props.refundTicket(ticketHash);
     }
+
+    handleChange(ev) {
+      const {id, value} = ev.target;
+
+      this.setState(() => ({
+        tempTicket: {...this.state.tempTicket, [id]: value }        
+      }));
+
+      //      this.props.handleOrderChange(order, errors);
+    }   
     
     render() {
-      let {ticket} = this.props;
+      let {extraQuestions} = this.props;
+      let {tempTicket} = this.state;
         return (
             <div>
-              <div className="col-sm-8">
-                <TicketAssignForm ticket={ticket}/>
+              <div className="col-sm-8">                
+                <TicketAssignForm ticket={tempTicket} onChange={this.handleChange} extraQuestions={extraQuestions}/>
               </div>
               <div className="col-sm-4">
                 <TicketOptions 
@@ -79,8 +101,9 @@ class GuestsLayout extends React.Component {
     }
 }
 
-const mapStateToProps = ({ ticketState }) => ({
-  ticket: ticketState.selectedTicket
+const mapStateToProps = ({ ticketState, summitState }) => ({
+  ticket: ticketState.selectedTicket,
+  extraQuestions: summitState.selectedSummit.order_extra_questions,
 })
 
 export default connect(

@@ -172,7 +172,7 @@ export const getUserOders = () => (dispatch, getState) => {
 
   let params = {
       access_token : accessToken,
-      expand       : 'tickets',
+      expand       : 'extra_question_answers, tickets',
   };
   
   return getRequest(

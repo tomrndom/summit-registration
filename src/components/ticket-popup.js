@@ -35,8 +35,7 @@ class TicketPopup extends React.Component {
           }
         };
   
-        this.togglePopup = this.togglePopup.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        this.togglePopup = this.togglePopup.bind(this);        
     }
   
     togglePopup(confirm) {
@@ -53,20 +52,18 @@ class TicketPopup extends React.Component {
       }
     }
 
-    handleChange(ev) {
-      const {id, value} = ev.target;
+    hasErrors(field) {
+      let {errors} = this.props;
+      if(field in errors) {
+          return errors[field];
+      }
 
-      this.setState(() => ({
-        tempTicket: {...this.state.tempTicket, [id]: value }        
-      }));
-
-      //      this.props.handleOrderChange(order, errors);
-    }    
-
+      return '';
+    }
 
     render() {
 
-      let {ticket} = this.props;
+      let {ticket, extraQuestions, onChange, errors} = this.props;
       let {showPopup, tempTicket, tempTicket: {attendee_email}} = this.state;
 
         return (  
@@ -107,8 +104,8 @@ class TicketPopup extends React.Component {
                             id="attendee_email"
                             className="form-control"
                             placeholder="Email"
-                            //error={this.hasErrors('email')}
-                            onChange={this.handleChange}
+                            error={this.hasErrors('email')}
+                            onChange={onChange}
                             value={attendee_email}
                         />
                         <button className="btn btn-primary">
@@ -116,7 +113,7 @@ class TicketPopup extends React.Component {
                         </button>
                     </TabPanel>
                     <TabPanel className="popup-panel popup-panel--edit">
-                        <TicketAssignForm ticket={tempTicket} onChange={this.handleChange}/>
+                        <TicketAssignForm ticket={tempTicket} onChange={onChange} extraQuestions={extraQuestions} errors={errors}/>
                         <div className="popup-footer-save">
                           <button className="btn btn-primary" onClick={() => this.togglePopup()}>{T.translate("ticket_popup.save_changes")}</button>  
                         </div>
@@ -138,8 +135,8 @@ class TicketPopup extends React.Component {
                             id="attendee_email"
                             className="form-control"
                             placeholder="Email"
-                            //error={this.hasErrors('email')}
-                            onChange={this.handleChange}
+                            error={this.hasErrors('email')}
+                            onChange={onChange}
                             value={attendee_email}
                         />
                         <button className="btn btn-primary" onClick={() => this.togglePopup()}>

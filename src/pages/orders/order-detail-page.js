@@ -13,11 +13,12 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
+import cloneDeep from "lodash.clonedeep";
 import OrderSummary from "../../components/order-summary";
 import TicketPopup from "../../components/ticket-popup";
 import TicketOptions from "../../components/ticket-options";
 
-import { selectTicket, getTicketPDF } from '../../actions/ticket-actions';
+import { selectTicket, getTicketPDF, assignAtendee, handleTicketChange } from '../../actions/ticket-actions';
 import { cancelOrder } from '../../actions/order-actions';
 
 import '../../styles/order-detail-page.less';
@@ -30,6 +31,8 @@ class OrderDetailPage extends React.Component {
     this.state = {
       showPopup: false
     };
+    
+    console.log(this.props);
 
     this.togglePopup = this.togglePopup.bind(this);
     this.handleTicketDownload = this.handleTicketDownload.bind(this);
@@ -46,6 +49,26 @@ class OrderDetailPage extends React.Component {
     })
   }
 
+  handleTicketStatus(ticket){
+    const status = [
+      { 
+        text: 'UNASSIGNED',
+        icon: 'exclamation-circle',
+        class: 'icon-unset'
+      },
+      { 
+        text: 'REQUIRED DETAILS NEEDED',
+        icon: 'exclamation-circle',
+        class: 'icon-warning'
+      },
+      { 
+        text: 'READY TO USE',
+        icon: 'check-circle',
+        class: 'icon-complete'
+      },
+    ];
+  }
+
   handleTicketDownload() {    
     this.props.getTicketPDF();
   }
@@ -56,17 +79,23 @@ class OrderDetailPage extends React.Component {
   }
 
   handleTicketUpdate(ticket){
-    console.log('en el detail, aca mandar data', ticket);
+    console.log('en el detail, aca mandar data', ticket);    
+  }
 
-    
+  handleChange(ev) {    
+    let ticket = cloneDeep(this.props.ticket);
+    let errors = cloneDeep(this.props.errors);
+    let {value, id} = ev.target;
+
+    delete(errors[id]);
+    ticket[id] = value;
+
+    this.props.handleTicketChange(ticket, errors);
   }
 
   render() {
-      let {order, summit, ticket} = this.props;
+      let {order, summit, ticket, errors, extraQuestions} = this.props;
       let {showPopup} = this.state;
-
-      console.log(order);
-      console.log(summit);
 
       return (
           <div className="order-detail">
@@ -88,9 +117,12 @@ class OrderDetailPage extends React.Component {
                             order.tickets.map(t => {
                               return (
                                 s.id === t.ticket_type_id ?                                
-                                <div className="row" key={t.id} onClick={() => this.togglePopup(t)}>
-                                  <div className="ticket complete p-2 col-sm-12 col-sm-offset-1">
-                                      <div className="col-sm-6">
+                                <div className="row" key={t.id} onClick={() => this.togglePopup(t)}>                                  
+                                  <div className="ticket complete p-2 col-sm-12 col-sm-offset-1">        
+                                      <div className="col-sm-1">
+                                        <i className="fa fa-2x fa-check-circle icon-complete"></i>                             
+                                      </div>
+                                      <div className="col-sm-5">
                                           <h4>Speaker</h4>
                                           100% Discount
                                           <p className="status">Ready to Use</p>
@@ -121,9 +153,12 @@ class OrderDetailPage extends React.Component {
               {showPopup ?  
                 <TicketPopup  
                   ticket={ticket}
+                  onChange={this.handleChange}
+                  extraQuestions={extraQuestions}
                   downloadTicket={this.handleTicketDownload}
                   closePopup={this.togglePopup.bind(this)}
                   updateTicket={this.handleTicketUpdate}
+                  errors={errors}
                 />  
               : null  
               }
@@ -136,7 +171,9 @@ const mapStateToProps = ({ loggedUserState, orderState, summitState, ticketState
     member: loggedUserState.member,
     order: orderState.selectedOrder,
     summit: summitState.selectedSummit,
-    ticket: ticketState.selectedTicket
+    extraQuestions: summitState.selectedSummit.order_extra_questions,
+    ticket: ticketState.selectedTicket,
+    errors: ticketState.errors
 })
 
 export default connect(
@@ -145,6 +182,7 @@ export default connect(
       selectTicket,
       getTicketPDF,
       cancelOrder,
-      assignAtendee
+      assignAtendee,
+      handleTicketChange
     }
 )(OrderDetailPage);

@@ -40,10 +40,10 @@ class StepOnePage extends React.Component {
     }
 
     componentWillMount() {
-        let order = {...this.props.order};   
-        
         this.props.handleResetOrder();
         
+        let {order} = this.props;
+                
         order = {
             ...order,
             currentStep: this.step

@@ -13,14 +13,56 @@
 
 import React from 'react'
 import T from "i18n-react/dist/i18n-react";
-import { Input, Dropdown, CheckboxList, TextArea } from 'openstack-uicore-foundation/lib/components'
+import { Input, Dropdown, CheckboxList, TextArea, CheckBox, RadioList  } from 'openstack-uicore-foundation/lib/components'
 
 import '../styles/ticket-assign-form.less';
 
-class TicketAssignForm extends React.Component {    
+class TicketAssignForm extends React.Component {
+
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        extraQuestionsTemp : []
+      };
+
+      this.handleChange = this.handleChange.bind(this);
+
+    }  
+
+    handleChange(ev) {
+      const {id, value} = ev.target;
+
+      console.log(id, value);
+
+      this.setState(() => ({
+        extraQuestionsTemp: {...this.state.extraQuestionsTemp, [id]: value }
+      }));
+    }    
+
+    hasErrors(field) {
+      let {errors} = this.props;
+      if(field in errors) {
+          return errors[field];
+      }
+
+      return '';
+    }
+
 
     render() {
-      let {guest, ticket, onChange} = this.props;
+
+      const extraQuestionsComponents = {
+        "Text": Input,
+        "TextArea": TextArea,
+        "CheckBox": Input,
+        "ComboBox": Dropdown,
+        "CheckBoxList": Input,
+        "RadioButtonList": Input,
+      }
+
+      let {guest, ticket, onChange, extraQuestions} = this.props;
+      let {extraQuestionsTemp} = this.state;
 
         return (
           <div>
@@ -38,7 +80,7 @@ class TicketAssignForm extends React.Component {
                 <Input
                   id="attendee_first_name"
                   className="form-control"                              
-                  //error={this.hasErrors('email')}
+                  error={this.hasErrors('attendee_first_name')}
                   onChange={onChange}
                   value={ticket.attendee_first_name}
                 />
@@ -51,7 +93,7 @@ class TicketAssignForm extends React.Component {
                   id="attendee_last_name"
                   className="form-control"
                   placeholder="Email"
-                  //error={this.hasErrors('email')}
+                  error={this.hasErrors('attendee_last_name')}
                   onChange={onChange}
                   value={ticket.attendee_last_name}
                 />
@@ -62,33 +104,24 @@ class TicketAssignForm extends React.Component {
               <div className="col-sm-6">{T.translate("ticket_popup.edit_preferences")}</div>
               <div className="col-sm-6"></div>
             </div>
-            <div className="row field-wrapper">
-              <div className="col-sm-4">Small Select*</div>
-              <div className="col-sm-6">
-                <Dropdown />
-              </div>
-            </div>
-            <div className="row field-wrapper">
-              <div className="col-sm-4">Small Select*</div>
-              <div className="col-sm-6">
-                <Dropdown />
-              </div>
-            </div>
-            <div className="row field-wrapper">
-              <div className="col-sm-4">Checkbox List</div>
-              <div className="col-sm-6">                
-              </div>
-            </div>
-            <div className="row field-wrapper">
-              <div className="col-sm-4">Checkbox List</div>
-              <div className="col-sm-6"></div>
-            </div>
-            <div className="row field-wrapper">
-              <div className="col-sm-4">TextArea *</div>
-              <div className="col-sm-6">
-                <TextArea />
-              </div>
-            </div>                        
+            {extraQuestions.map(q => {
+              console.log(q);
+              const QuestionComponent = extraQuestionsComponents[q.type];
+              return(
+                <div className="row field-wrapper" key={q.id}>
+                  <div className="col-sm-4">{q.label}{q.mandatory?'*':''}</div>
+                  <div className="col-sm-6">
+                    <QuestionComponent 
+                      name={q.name}
+                      placeholder={q.placeholder}
+                      value={extraQuestionsTemp[q.id]}
+                      onChange={this.handleChange}
+                      options={q.values ? q.values : undefined}                      
+                    />
+                  </div>
+                </div>
+              )
+            })}                     
             {!guest &&
               <div className="row field-wrapper">
                 <div className="col-sm-4"></div>

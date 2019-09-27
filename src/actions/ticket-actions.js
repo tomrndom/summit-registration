@@ -26,12 +26,14 @@ import {
     startLoading,
     showMessage,
     showSuccessMessage,    
+    objectToQueryString,
+    fetchErrorHandler,
 } from 'openstack-uicore-foundation/lib/methods';
-
 
 
 export const GET_TICKETS              = 'GET_TICKETS';
 export const SELECT_TICKET            = 'SELECT_TICKET';
+export const CHANGE_TICKET            = 'CHANGE_TICKET';
 export const ASSIGN_TICKET            = 'ASSIGN_TICKET';
 export const REMOVE_TICKET_ATTENDEE   = 'REMOVE_TICKET_ATTENDEE';
 export const GET_TICKET_PDF           = 'GET_TICKET_PDF';
@@ -69,6 +71,24 @@ export const selectTicket = (ticket) => (dispatch, getState) => {
   dispatch(createAction(SELECT_TICKET)(ticket));
 
   dispatch(stopLoading());
+
+}
+
+export const handleTicketChange = (ticket, errors = {}) => (dispatch, getState) => {  
+
+  
+    if (validator.isEmpty(ticket.attendee_first_name)) errors.attendee_first_name = 'Please enter your First Name.';
+    if (validator.isEmpty(ticket.attendee_last_name)) errors.attendee_last_name = 'Please enter your Last Name.';
+    if (!validator.isEmail(ticket.attendee_email)) errors.attendee_email = 'Please enter a valid Email.';    
+
+    /*ticket.tickets.forEach(tix => {
+        if (tix.coupon && tix.coupon.code == 'NOTACOUPON') errors[`tix_coupon_${tix.id}`] = 'Coupon not valid.';
+        else delete(errors[`tix_coupon_${tix.id}`]);
+
+        if (tix.email && !validator.isEmail(tix.email)) errors[`tix_email_${tix.id}`] = 'Please enter a valid Email.';
+        else delete(errors[`tix_email_${tix.id}`]);
+    });*/        
+    dispatch(createAction(CHANGE_TICKET)({ticket, errors}));      
 
 }
 
@@ -133,17 +153,53 @@ export const getTicketPDF = () => (dispatch, getState) => {
     access_token : accessToken
   };
 
-  return getRequest(
-      null,
-      createAction(GET_TICKET_PDF),
-      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectedTicket.id}/pdf`,
-      authErrorHandler
-  )(params)(dispatch).then(() => {
-      dispatch(stopLoading());
-    }
-  );
-  
-}
+  let queryString = objectToQueryString(params);
+  let apiUrl = `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectedTicket.id}/pdf?${queryString}`;
+
+    dispatch(startLoading());
+
+    return fetch(apiUrl)
+        .then((response) => {
+            console.log(response)
+            if (!response.ok) {
+                dispatch(stopLoading());
+                throw response;
+            } else {
+                return response;
+            }
+        })
+        .then((pdf) => {
+            console.log(pdf.data);
+            dispatch(stopLoading());
+            const blob = new Blob([pdf.data], {type: pdf.data.type});
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            const contentDisposition = pdf.headers['content-disposition'];
+            let fileName = 'ticket';
+            if (contentDisposition) {
+                const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+                if (fileNameMatch.length === 2)
+                    fileName = fileNameMatch[1];
+            }
+            link.setAttribute('download', fileName);
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(link);
+
+            /*let link = document.createElement('a');
+            link.textContent = 'download';
+            link.download = filename;
+            link.href = 'data:text/csv;charset=utf-8,'+ encodeURI(pdf);
+            document.body.appendChild(link); // Required for FF
+            link.click();
+            document.body.removeChild(link);
+            */
+        })
+        .catch(fetchErrorHandler);
+};
 
 export const refundTicket = () => (dispatch, getState) => {
 

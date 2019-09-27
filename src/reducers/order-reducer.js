@@ -83,7 +83,7 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             return {...state};
             break;
         case PAY_RESERVATION:                        
-            return { DEFAULT_STATE, order : { reservation : payload.response}};
+            return { ...state, order : { ...state.order, checkout : payload.response}};
             break;
         case GET_USER_ORDERS:
             return {...state, memberOrders: payload.response.data};

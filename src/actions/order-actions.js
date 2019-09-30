@@ -89,6 +89,11 @@ export const createReservation = (owner_email, owner_first_name, owner_last_name
 
     dispatch(startLoading());
 
+    tickets = tickets.map(t => {
+      delete t.tempId;
+      return t;      
+    });
+
     let params = {
       expand       : 'tickets',
     };

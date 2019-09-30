@@ -34,13 +34,13 @@
       div:first-of-type {
         margin-top: 10px;
         margin-left: -30px;
-        .icon-warning {
+        .ticket-warning {
           color: #cc9933;
         }
-        .icon-complete {
+        .ticket-complete {
           color: #669933;
         }
-        .icon-unset {
+        .ticket-unset {
           color: #000
         }        
       }
@@ -61,7 +61,16 @@
           font-size: 0.7em;
           color: #000;
           text-transform: uppercase;
-      }
+        &.ticket-warning {
+          color: #cc9933;
+        }
+        &.ticket-complete {
+          color: #669933;
+        }
+        &.ticket-unset {
+          color: #000
+        }
+      }      
       &:hover {
           background-color: #eee;
           cursor: pointer;

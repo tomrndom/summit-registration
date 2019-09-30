@@ -37,6 +37,7 @@ class OrderDetailPage extends React.Component {
     this.togglePopup = this.togglePopup.bind(this);
     this.handleTicketDownload = this.handleTicketDownload.bind(this);
     this.handleOrderCancel = this.handleOrderCancel.bind(this);
+    this.handleTicketStatus = this.handleTicketStatus.bind(this);
   }
 
   togglePopup(ticket) {
@@ -53,20 +54,27 @@ class OrderDetailPage extends React.Component {
     const status = [
       { 
         text: 'UNASSIGNED',
-        icon: 'exclamation-circle',
-        class: 'icon-unset'
+        icon: 'fa-exclamation-circle',
+        class: 'ticket-unset'
       },
       { 
         text: 'REQUIRED DETAILS NEEDED',
-        icon: 'exclamation-circle',
-        class: 'icon-warning'
+        icon: 'fa-exclamation-circle',
+        class: 'ticket-warning'
       },
       { 
         text: 'READY TO USE',
-        icon: 'check-circle',
-        class: 'icon-complete'
+        icon: 'fa-check-circle',
+        class: 'ticket-complete'
       },
     ];
+    if(!ticket.attendee_mail || ticket.attendee_mail === "") {
+      return status[0];
+    } else if (!ticket.extra_questions) {
+      return status[1];
+    } else if (ticket.extra_questions) {
+      return status[2];
+    }
   }
 
   handleTicketDownload() {    
@@ -120,12 +128,12 @@ class OrderDetailPage extends React.Component {
                                 <div className="row" key={t.id} onClick={() => this.togglePopup(t)}>                                  
                                   <div className="ticket complete p-2 col-sm-12 col-sm-offset-1">        
                                       <div className="col-sm-1">
-                                        <i className="fa fa-2x fa-check-circle icon-complete"></i>                             
+                                        <i className={`fa fa-2x ${this.handleTicketStatus(t).icon} ${this.handleTicketStatus(t).class}`}></i>                             
                                       </div>
                                       <div className="col-sm-5">
                                           <h4>Speaker</h4>
                                           100% Discount
-                                          <p className="status">Ready to Use</p>
+                                          <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
                                       </div>
                                       <div className="col-sm-5">
                                           ned.stark@winterfell.com

@@ -55,7 +55,15 @@ class StepTwoPage extends React.Component {
         order = {
             ...order,
             currentStep: this.step
-        };
+        };        
+
+        order.tickets.map(t => {
+          if(!t.tempId) {
+            const randomNumber = Math.floor(Math.random() * 10000) + 1; 
+            t.tempId = randomNumber;
+            return t;
+          }
+        });
         
         this.props.handleOrderChange(order);
     }

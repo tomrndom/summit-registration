@@ -38,6 +38,9 @@ export const VALIDATE_STRIPE                = 'VALIDATE_STRIPE';
 export const CREATE_RESERVATION             = 'CREATE_RESERVATION';
 export const CREATE_RESERVATION_SUCCESS     = 'CREATE_RESERVATION_SUCCESS';
 export const CREATE_RESERVATION_ERROR       = 'CREATE_RESERVATION_ERROR';
+export const DELETE_RESERVATION             = 'DELETE_RESERVATION';
+export const DELETE_RESERVATION_SUCCESS     = 'DELETE_RESERVATION_SUCCESS';
+export const DELETE_RESERVATION_ERROR       = 'DELETE_RESERVATION_ERROR';
 export const PAY_RESERVATION                = 'PAY_RESERVATION';
 export const GET_USER_ORDERS                = 'GET_ORDERS';
 export const SELECT_ORDER                   = 'SELECT_ORDER';
@@ -117,6 +120,31 @@ export const createReservation = (owner_email, owner_first_name, owner_last_name
             dispatch(createAction(CREATE_RESERVATION_ERROR)(e));
             return (e);
         })
+}
+
+export const deleteReservation = () => (dispatch, getState) => {
+  
+  let { summitState, orderState } = getState();    
+  let { currentSummit: { id } } = summitState;
+  let { reservation: { hash } } = orderState;
+
+  return deleteRequest(
+    createAction(DELETE_RESERVATION),
+    createAction(DELETE_RESERVATION_SUCCESS),    
+    `${window.API_BASE_URL}/api/public/v1/summits/${id}/orders/${hash}`,
+    authErrorHandler,
+    // entity
+  )({})(dispatch)
+    .then((payload) => {
+        console.log('payload', payload)
+        dispatch(stopLoading());        
+        return (payload)
+    })
+    .catch(e => {
+        console.log('eerr', e)
+        dispatch(createAction(DELETE_RESERVATION_ERROR)(e));
+        return (e);
+    })
 }
 
 export const payReservation = (card, stripe) => (dispatch, getState) => {

@@ -22,7 +22,10 @@ import {
     CREATE_RESERVATION_ERROR,
     PAY_RESERVATION,
     GET_USER_ORDERS,
-    SELECT_ORDER
+    SELECT_ORDER,
+    DELETE_RESERVATION,
+    DELETE_RESERVATION_SUCCESS,
+    DELETE_RESERVATION_ERROR
 } from "../actions/order-actions";
 
 
@@ -90,6 +93,11 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             });
             return {...state, order: {...state.order, tickets}};
             break;
+        case DELETE_RESERVATION:
+            return state
+            break;
+        case DELETE_RESERVATION_SUCCESS:
+            return {...state, order: {...state.order, reservation: {}}}
         case PAY_RESERVATION:                        
             return { ...state, order : { ...state.order, checkout : payload.response}};
             break;

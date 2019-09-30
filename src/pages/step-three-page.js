@@ -89,7 +89,7 @@ class StepThreePage extends React.Component {
         }
     }
 
-    handleShowErrors() {        
+    handleShowErrors() {
         this.setState({dirty: true});
     }
 

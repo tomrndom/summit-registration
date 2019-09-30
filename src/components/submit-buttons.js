@@ -15,7 +15,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import T from 'i18n-react/dist/i18n-react'
 import history from '../history'
-import { createReservation, payReservation } from '../actions/order-actions'
+import { createReservation, payReservation, deleteReservation } from '../actions/order-actions'
 
 const stepDefs = ['start', 'details', 'checkout', 'done'];
 
@@ -53,6 +53,9 @@ class SubmitButtons extends React.Component {
 
     backClick(ev) {
         let {step} = this.props;
+        if(step === 3) {
+          this.props.deleteReservation();
+        }
         let backStep = step - 2; // step is one plus the stepDef index
         ev.preventDefault();
         history.push(stepDefs[backStep]);
@@ -117,7 +120,8 @@ export default connect (
     mapStateToProps,
     {
         createReservation,
-        payReservation
+        payReservation,
+        deleteReservation
     }
 )(SubmitButtons);
 

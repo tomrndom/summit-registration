@@ -68,7 +68,6 @@ class OrderSummary extends React.Component {
                 </div>
                 {ticketSummary.map(tix => {
                     let total = tix.qty * tix.tix_type.cost;
-                    console.log(tix);
                     return (
                         <div className="row order-row" key={`tixorder_${tix.tix_type.created}`}>
                             <div className="col-xs-6">
@@ -89,7 +88,7 @@ class OrderSummary extends React.Component {
                         {T.translate("order_summary.discounts")}
                         <p className="discount-desc">
                             {discounts.map(dis => (
-                                <div key={dis.code}>x1 {dis.tix_type.name} / {dis.percentage}%</div>
+                                <span key={dis.code}>x1 {dis.tix_type.name} / {dis.percentage}%</span>
                             ))}
                         </p>
                     </div>

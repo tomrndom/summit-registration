@@ -55,7 +55,9 @@ class StepOnePage extends React.Component {
     handleAddTicket(ticketTypeId) {
         let order = {...this.props.order};        
 
-        order.tickets.push({ type_id: ticketTypeId });
+        let randomNumber = moment().valueOf();
+        order.tickets.push({ type_id: ticketTypeId, tempId: randomNumber });
+        
         this.props.handleOrderChange(order)
     }
 

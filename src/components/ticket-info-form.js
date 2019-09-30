@@ -60,8 +60,6 @@ class TicketInfoForm extends React.Component {
         let {order, onChange, ticketType} = this.props;
         let orderedTickets = order.tickets.filter(tix => tix.type_id == ticketType.id);
 
-        console.log(ticketType);
-
         return (
             <div className="ticket-info-wrapper">
                 <div className="row">
@@ -69,8 +67,8 @@ class TicketInfoForm extends React.Component {
                         <h3>{ticketType.name} {T.translate("step_two.tickets")}</h3>
                     </div>
                 </div>
-                { orderedTickets.map((tix, i) => (
-                    <div className="row field-wrapper" key={`tix_${ticketType.id}_${i}`}>
+                { orderedTickets.map((tix, i) => (                  
+                    <div className="row field-wrapper" key={`tix_${ticketType.id}_${i}`}>                                          
                         <div className="col-md-4">
                             <label>{T.translate("step_two.ticket")} #{i+1}</label>
                         </div>
@@ -78,20 +76,20 @@ class TicketInfoForm extends React.Component {
                             <Input
                                 className="form-control"
                                 placeholder={T.translate("step_two.placeholders.coupon")}
-                                error={this.hasErrors(`tix_coupon_${tix.created}`)}
-                                onChange={this.ticketInfoChange.bind(this, tix.created, 'coupon')}
-                                value={tix.coupon ? tix.coupon.code : ''}
+                                error={this.hasErrors(`tix_coupon_${tix.tempId}`)}
+                                onChange={this.ticketInfoChange.bind(this, tix.tempId, 'promo_code')}
+                                value={tix.promo_code ? tix.promo_code : ''}
                             />
                             <Input
                                 className="form-control email"
                                 placeholder={T.translate("step_two.placeholders.email")}
-                                error={this.hasErrors(`tix_email_${tix.created}`)}
-                                onChange={this.ticketInfoChange.bind(this, tix.created, 'email')}
-                                value={tix.email ? tix.email : ''}
+                                error={this.hasErrors(`tix_email_${tix.tempId}`)}
+                                onChange={this.ticketInfoChange.bind(this, tix.tempId, 'attendee_email')}
+                                value={tix.attendee_email ? tix.attendee_email : ''}
                             />
                         </div>
                         <div className="col-md-2">
-                            <a href="" onClick={this.removeTicket.bind(this, tix.created)}>
+                            <a href="" onClick={this.removeTicket.bind(this, tix.tempId)}>
                                 <i className="fa fa-trash-o" aria-hidden="true"></i>
                             </a>
                         </div>

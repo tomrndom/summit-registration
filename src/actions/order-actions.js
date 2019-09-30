@@ -59,11 +59,11 @@ export const handleOrderChange = (order, errors = {}) => (dispatch, getState) =>
         if (validator.isEmpty(order.company)) errors.company = 'Please enter your Company.';
 
         order.tickets.forEach(tix => {
-           if (tix.coupon && tix.coupon.code == 'NOTACOUPON') errors[`tix_coupon_${tix.id}`] = 'Coupon not valid.';
-           else delete(errors[`tix_coupon_${tix.id}`]);
+           if (tix.promo_code && tix.promo_code == 'NOTACOUPON') errors[`tix_coupon_${tix.tempId}`] = 'Coupon not valid.';
+           else delete(errors[`tix_coupon_${tix.tempId}`]);
 
-           if (tix.email && !validator.isEmail(tix.email)) errors[`tix_email_${tix.id}`] = 'Please enter a valid Email.';
-           else delete(errors[`tix_email_${tix.id}`]);
+           if (tix.attendee_email && !validator.isEmail(tix.attendee_email)) errors[`tix_email_${tix.tempId}`] = 'Please enter a valid Email.';
+           else delete(errors[`tix_email_${tix.tempId}`]);
         });        
         dispatch(createAction(CHANGE_ORDER)({order, errors}));
     } else if(currentStep === 3) {     
@@ -88,7 +88,11 @@ export const createReservation = (owner_email, owner_first_name, owner_last_name
     let { currentSummit }   = summitState;
 
     dispatch(startLoading());
-    
+
+    let params = {
+      expand       : 'tickets',
+    };
+
     let normalizedEntity = {owner_email, owner_first_name, owner_last_name, owner_company, tickets };
 
     return postRequest(
@@ -98,7 +102,7 @@ export const createReservation = (owner_email, owner_first_name, owner_last_name
         normalizedEntity,
         authErrorHandler,
         // entity
-    )()(dispatch)
+    )(params)(dispatch)
         .then((payload) => {
             dispatch(stopLoading());
             history.push(stepDefs[2]);

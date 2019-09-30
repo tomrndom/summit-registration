@@ -71,16 +71,11 @@ class StepTwoPage extends React.Component {
 
     handleTicketInfoChange(ticketId, field, value) {
         let order = cloneDeep(this.props.order);
-        let errors = cloneDeep(this.props.errors);
-        let randomNumber = moment().valueOf();
+        let errors = cloneDeep(this.props.errors);        
 
         order.tickets.forEach(tix => {
-            if (tix.id == ticketId) {
-                if (field == 'coupon') {
-                    tix.coupon = {id: randomNumber, code: value, percentage: 100};
-                } else {
-                    tix[field] = value;
-                }
+            if (tix.tempId == ticketId) {
+                tix[field] = value;
             }
         });
 
@@ -100,9 +95,10 @@ class StepTwoPage extends React.Component {
 
     handleAddTicket(ticketTypeId) {
         let order = cloneDeep(this.props.order);
-        let errors = cloneDeep(this.props.errors);
+        let errors = cloneDeep(this.props.errors);        
+        let randomNumber = moment().valueOf();
 
-        order.tickets.push({type_id: ticketTypeId});
+        order.tickets.push({type_id: ticketTypeId, tempId: randomNumber});
         this.props.handleOrderChange(order, errors);
     }
 
@@ -110,7 +106,7 @@ class StepTwoPage extends React.Component {
         let order = cloneDeep(this.props.order);
         let errors = cloneDeep(this.props.errors);
 
-        order.tickets = order.tickets.filter(t => t.id != ticketId);
+        order.tickets = order.tickets.filter(t => t.tempId != ticketId);
         this.props.handleOrderChange(order, errors);
     }
 
@@ -126,9 +122,6 @@ class StepTwoPage extends React.Component {
     render(){
         let {summit, order, errors} = this.props;
         let {dirty} = this.state;        
-
-
-        console.log(order);
 
         return (
             <div className="step-two">

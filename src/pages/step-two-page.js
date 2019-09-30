@@ -50,7 +50,7 @@ class StepTwoPage extends React.Component {
     }
 
     componentWillMount() {
-        let order = {...this.props.order};   
+        let order = {...this.props.order};
         
         order = {
             ...order,

@@ -46,6 +46,7 @@ class StepOnePage extends React.Component {
                 
         order = {
             ...order,
+            tickets: [],
             currentStep: this.step
         };
         

@@ -80,7 +80,15 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             return {...state, reservation: entity, errors: {}, loading: false, loaded: true};
             break
         case CREATE_RESERVATION_ERROR:
-            return {...state};
+            let {tickets} = state.order;            
+            tickets.map(t => {
+              if(!t.tempId) {
+                const randomNumber = Math.floor(Math.random() * 10000) + 1; 
+                t.tempId = randomNumber;
+                return t;
+              }
+            });
+            return {...state, order: {...state.order, tickets}};
             break;
         case PAY_RESERVATION:                        
             return { ...state, order : { ...state.order, checkout : payload.response}};

@@ -31,15 +31,16 @@ class TicketPopup extends React.Component {
           tempTicket: {
             attendee_email: '',
             attendee_first_name: '',
-            attendee_last_name: ''
+            attendee_last_name: '',
+            extra_questions: []
           }
         };
   
-        this.togglePopup = this.togglePopup.bind(this);        
+        this.togglePopup = this.togglePopup.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
   
     togglePopup(confirm) {
-      console.log(confirm);
       this.setState((prevState, props) => {
         return {
           showPopup: !prevState.showPopup
@@ -49,6 +50,7 @@ class TicketPopup extends React.Component {
         let ticket = cloneDeep(this.props.ticket);
         ticket = {...ticket, ...this.state.tempTicket}
         this.props.updateTicket(ticket);
+        this.props.closePopup();
       }
     }
 
@@ -61,10 +63,46 @@ class TicketPopup extends React.Component {
       return '';
     }
 
+    handleTicketAssign(self) {
+      if(self){
+
+      } else {
+        let { tempTicket } = this.state;
+        this.props.updateTicket(tempTicket);
+      }           
+    }
+
+    handleChange(ev) {
+      
+      let ticket = this.state.tempTicket;
+
+      if (ev.target.type == 'checkbox') {
+        value = ev.target.checked;
+      }
+
+      if (ev.target.type == 'datetime') {
+          value = value.valueOf() / 1000;
+      }
+      
+      let {value, id} = ev.target;
+
+      ticket[id] = value;
+
+      this.setState({tempTicket: ticket});      
+  
+      //this.props.handleTicketChange(ticket, errors);
+    }
+
+    handleStatus(status) {
+      
+    }
+
     render() {
 
-      let {ticket, extraQuestions, onChange, errors} = this.props;
+      let {extraQuestions, status, errors} = this.props;
       let {showPopup, tempTicket, tempTicket: {attendee_email}} = this.state;
+
+      console.log(status);
 
         return (  
         <div className='popup-bg'>
@@ -78,21 +116,22 @@ class TicketPopup extends React.Component {
                   </div>
                   <div className="col-sm-3 popup-icons">
                     <i className="fa fa-print"></i>
-                    <i onClick={this.props.downloadTicket} className="fa fa-file-pdf-o"></i>
-                    <i onClick={this.props.closePopup} className="fa fa-times"></i>                    
+                    <i onClick={() => this.props.downloadTicket()} className="fa fa-file-pdf-o"></i>
+                    <i onClick={() => this.props.closePopup()} className="fa fa-times"></i>                    
                   </div>
                 </div>
               </div>
                 <Tabs selectedTabClassName="popup-tabs--active" >
                     <TabList className="popup-tabs">
-                        <Tab>{T.translate("ticket_popup.tab_assign")}</Tab>      
+                        {status === 'UNASSIGNED' && <Tab>{T.translate("ticket_popup.tab_assign")}</Tab>}
                         <Tab>{T.translate("ticket_popup.tab_edit")}</Tab>
-                        <Tab>{T.translate("ticket_popup.tab_reassign")}</Tab>
-                        <Tab>{T.translate("ticket_popup.tab_notify")}</Tab>
+                        {status !== 'UNASSIGNED' && <Tab>{T.translate("ticket_popup.tab_reassign")}</Tab>}
+                        {status !== 'UNASSIGNED' && <Tab>{T.translate("ticket_popup.tab_notify")}</Tab>}
                     </TabList>
-                    <TabPanel className="popup-panel popup-panel--assign">
+                    {status === 'UNASSIGNED' && 
+                      <TabPanel className="popup-panel popup-panel--assign">
                         <p>{T.translate("ticket_popup.assign_text")} September 29</p>
-                        <button className="btn btn-primary">
+                        <button className="btn btn-primary" onClick={() => this.handleTicketAssign(true)}>
                           {T.translate("ticket_popup.assign_me")}
                         </button>
                         <div className="popup-separator">
@@ -105,49 +144,54 @@ class TicketPopup extends React.Component {
                             className="form-control"
                             placeholder="Email"
                             error={this.hasErrors('email')}
-                            onChange={onChange}
+                            onChange={this.handleChange}
                             value={attendee_email}
                         />
-                        <button className="btn btn-primary">
+                        <button className="btn btn-primary" onClick={() => this.handleTicketAssign(false)}>
                           {T.translate("ticket_popup.assign_someone")}
                         </button>
-                    </TabPanel>
+                      </TabPanel>
+                    }
                     <TabPanel className="popup-panel popup-panel--edit">
-                        <TicketAssignForm ticket={tempTicket} onChange={onChange} extraQuestions={extraQuestions} errors={errors}/>
+                        <TicketAssignForm ticket={tempTicket} status={status} onChange={this.handleChange} extraQuestions={extraQuestions} errors={errors}/>
                         <div className="popup-footer-save">
                           <button className="btn btn-primary" onClick={() => this.togglePopup()}>{T.translate("ticket_popup.save_changes")}</button>  
                         </div>
                     </TabPanel>
-                    <TabPanel className="popup-panel popup-panel--reassign">
-                        <p>{T.translate("ticket_popup.reassign_text")} <br/> <b>jon.snow@thewall.com</b></p>                        
-                        <label>
-                          <input type="checkbox" className="popup-clean" /> &nbsp;
-                            {T.translate("ticket_popup.reassign_check")} <i className="fa fa-question-circle"></i>
-                        </label>
-                        <br />
-                        <button className="btn btn-primary" onClick={() => this.props.closePopup}>{T.translate("ticket_popup.reassign_me")}</button>  
-                        <div className="popup-separator">
-                          <div><hr/></div>
-                          <span>{T.translate("ticket_popup.assign_or")}</span>
-                          <div><hr/></div>
-                        </div>
-                        <Input
-                            id="attendee_email"
-                            className="form-control"
-                            placeholder="Email"
-                            error={this.hasErrors('email')}
-                            onChange={onChange}
-                            value={attendee_email}
-                        />
-                        <button className="btn btn-primary" onClick={() => this.togglePopup()}>
-                          {T.translate("ticket_popup.reassign_someone")}
-                        </button>
-                    </TabPanel>
-                    <TabPanel className="popup-panel popup-panel--notify">
-                        <p>{T.translate("ticket_popup.notify_text_1")} September 29.</p>                                                
-                        <p>{T.translate("ticket_popup.notify_text_2")} <b>jon.snow@thewall.com</b></p>
-                        <button className="btn btn-primary">{T.translate("ticket_popup.notify_button")}</button>  
-                    </TabPanel>
+                    {status !== 'UNASSIGNED' && 
+                      <TabPanel className="popup-panel popup-panel--reassign">
+                          <p>{T.translate("ticket_popup.reassign_text")} <br/> <b>jon.snow@thewall.com</b></p>                        
+                          <label>
+                            <input type="checkbox" className="popup-clean" /> &nbsp;
+                              {T.translate("ticket_popup.reassign_check")} <i className="fa fa-question-circle"></i>
+                          </label>
+                          <br />
+                          <button className="btn btn-primary" onClick={() => this.props.closePopup}>{T.translate("ticket_popup.reassign_me")}</button>  
+                          <div className="popup-separator">
+                            <div><hr/></div>
+                            <span>{T.translate("ticket_popup.assign_or")}</span>
+                            <div><hr/></div>
+                          </div>
+                          <Input
+                              id="attendee_email"
+                              className="form-control"
+                              placeholder="Email"
+                              error={this.hasErrors('email')}
+                              onChange={this.handleChange}
+                              value={attendee_email}
+                          />
+                          <button className="btn btn-primary" onClick={() => this.togglePopup()}>
+                            {T.translate("ticket_popup.reassign_someone")}
+                          </button>
+                      </TabPanel>
+                    }
+                    {status !== 'UNASSIGNED' && 
+                      <TabPanel className="popup-panel popup-panel--notify">
+                          <p>{T.translate("ticket_popup.notify_text_1")} September 29.</p>                                                
+                          <p>{T.translate("ticket_popup.notify_text_2")} <b>jon.snow@thewall.com</b></p>
+                          <button className="btn btn-primary">{T.translate("ticket_popup.notify_button")}</button>  
+                      </TabPanel>
+                    }
                 </Tabs>
             </div>
             {showPopup ?  

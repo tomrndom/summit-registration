@@ -92,9 +92,9 @@ export const handleTicketChange = (ticket, errors = {}) => (dispatch, getState) 
 
 }
 
-export const assignAtendee = (attendee_first_name, attendee_last_name, attendee_email, extra_questions) => (dispatch, getState) => {
+export const assignAtendee = (attendee_email, attendee_first_name, attendee_last_name, extra_questions) => (dispatch, getState) => {  
 
-  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectTicket } } = getState();
+  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
 
   dispatch(startLoading());
@@ -103,13 +103,12 @@ export const assignAtendee = (attendee_first_name, attendee_last_name, attendee_
     access_token : accessToken
   };
 
-  let normalizedEntity = { attendee_first_name, attendee_last_name, attendee_email, extra_questions };
+  let normalizedEntity = { attendee_email, attendee_first_name, attendee_last_name, extra_questions };
 
-
-  return getRequest(
+  return putRequest(
       null,
       createAction(ASSIGN_TICKET),
-      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectTicket.id}/attendee`,
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectedTicket.id}/attendee`,
       normalizedEntity,
       authErrorHandler
   )(params)(dispatch).then(() => {
@@ -121,7 +120,7 @@ export const assignAtendee = (attendee_first_name, attendee_last_name, attendee_
 
 export const removeAttendee = () => (dispatch, getState) => {
 
-  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectTicket } } = getState();
+  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
 
   dispatch(startLoading());
@@ -133,7 +132,7 @@ export const removeAttendee = () => (dispatch, getState) => {
   return getRequest(
       null,
       createAction(REMOVE_TICKET_ATTENDEE),
-      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectTicket.id}/attendee`,
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectedTicket.id}/attendee`,
       authErrorHandler
   )(params)(dispatch).then(() => {
       dispatch(stopLoading());

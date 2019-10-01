@@ -30,14 +30,13 @@ class OrderDetailPage extends React.Component {
 
     this.state = {
       showPopup: false
-    };
-    
-    console.log(this.props);
+    };  
 
     this.togglePopup = this.togglePopup.bind(this);
     this.handleTicketDownload = this.handleTicketDownload.bind(this);
     this.handleOrderCancel = this.handleOrderCancel.bind(this);
     this.handleTicketStatus = this.handleTicketStatus.bind(this);
+    this.handleTicketUpdate = this.handleTicketUpdate.bind(this);
   }
 
   togglePopup(ticket) {
@@ -87,10 +86,11 @@ class OrderDetailPage extends React.Component {
   }
 
   handleTicketUpdate(ticket){
-    console.log('en el detail, aca mandar data', ticket);    
+    let { attendee_first_name, attendee_last_name, attendee_email, extra_questions } = ticket;    
+    this.props.assignAtendee(attendee_email, attendee_first_name, attendee_last_name, extra_questions);
   }
 
-  handleChange(ev) {    
+  handleChange(ev) {
     let ticket = cloneDeep(this.props.ticket);
     let errors = cloneDeep(this.props.errors);
     let {value, id} = ev.target;
@@ -161,6 +161,7 @@ class OrderDetailPage extends React.Component {
               {showPopup ?  
                 <TicketPopup  
                   ticket={ticket}
+                  status={this.handleTicketStatus(ticket).text}
                   onChange={this.handleChange}
                   extraQuestions={extraQuestions}
                   downloadTicket={this.handleTicketDownload}

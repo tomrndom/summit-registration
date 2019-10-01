@@ -14,6 +14,7 @@
 import React from 'react'
 import T from "i18n-react/dist/i18n-react";
 import { Input, Dropdown, CheckboxList, TextArea, CheckBox, RadioList  } from 'openstack-uicore-foundation/lib/components'
+import QuestionAnswersInput from './questions-answer-input';
 
 import '../styles/ticket-assign-form.less';
 
@@ -22,23 +23,29 @@ class TicketAssignForm extends React.Component {
     constructor(props) {
       super(props);
 
-      this.state = {
-        extraQuestionsTemp : []
+      this.state = {        
+        extra_questions : []
       };
 
-      this.handleChange = this.handleChange.bind(this);
-
-    }  
-
-    handleChange(ev) {
-      const {id, value} = ev.target;
-
-      console.log(id, value);
-
-      this.setState(() => ({
-        extraQuestionsTemp: {...this.state.extraQuestionsTemp, [id]: value }
-      }));
-    }    
+      this.handleExtraQuestions = this.handleExtraQuestions.bind(this);
+    }
+    
+    handleExtraQuestions(ticket){
+      let {extra_questions} = this.state;
+      
+      if(!ticket.extra_questions && extra_questions.length === 0) {        
+        
+        let {extraQuestions} = this.props;
+        
+        extraQuestions.map((q, index) => {
+          extra_questions[index] = { question_id: q.id, answer: ''};
+        })
+  
+        this.setState(() => ({
+          extra_questions: extra_questions
+        }));
+      }
+    }
 
     hasErrors(field) {
       let {errors} = this.props;
@@ -52,17 +59,10 @@ class TicketAssignForm extends React.Component {
 
     render() {
 
-      const extraQuestionsComponents = {
-        "Text": Input,
-        "TextArea": TextArea,
-        "CheckBox": Input,
-        "ComboBox": Dropdown,
-        "CheckBoxList": Input,
-        "RadioButtonList": Input,
-      }
+      let {guest, ticket, onChange, extraQuestions, status} = this.props;
+      let {extra_questions} = this.state;
 
-      let {guest, ticket, onChange, extraQuestions} = this.props;
-      let {extraQuestionsTemp} = this.state;
+      this.handleExtraQuestions(ticket);
 
         return (
           <div>
@@ -72,7 +72,18 @@ class TicketAssignForm extends React.Component {
             </div>
             <div className="row field-wrapper">
               <div className="col-sm-4">{T.translate("ticket_popup.edit_email")}</div>
-              <div className="col-sm-6">john.snow@thewall.com</div>
+              <div className="col-sm-6">
+                {status === 'UNASSIGNED' ?
+                  <span>
+                    <button className="btn btn-primary" onClick={() => this.handleTicketAssign(true)}>
+                      {T.translate("ticket_popup.assign_this")}
+                    </button>                    
+                    <p>{T.translate("ticket_popup.assign_expire")} 15 {T.translate("ticket_popup.assign_days")} (September 19)</p>
+                  </span>
+                  :
+                  <span>john.snow@thewall.com</span>
+                }
+              </div>
             </div>
             <div className="row field-wrapper">
               <div className="col-sm-4">{T.translate("ticket_popup.edit_first_name")}</div>
@@ -104,7 +115,15 @@ class TicketAssignForm extends React.Component {
               <div className="col-sm-6">{T.translate("ticket_popup.edit_preferences")}</div>
               <div className="col-sm-6"></div>
             </div>
-            {extraQuestions.map(q => {
+            <QuestionAnswersInput
+                id="extra_questions"
+                answers={extra_questions}
+                questions={extraQuestions}
+                onChange={onChange}                
+            />
+            
+            <hr/>
+            {/*extraQuestions.map(q => {
               console.log(q);
               const QuestionComponent = extraQuestionsComponents[q.type];
               return(
@@ -121,7 +140,7 @@ class TicketAssignForm extends React.Component {
                   </div>
                 </div>
               )
-            })}                     
+            })*/}                     
             {!guest &&
               <div className="row field-wrapper">
                 <div className="col-sm-4"></div>

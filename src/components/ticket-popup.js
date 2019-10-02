@@ -163,7 +163,9 @@ class TicketPopup extends React.Component {
                       </TabPanel>
                     }
                     <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--edit">
-                        <TicketAssignForm ticket={tempTicket} status={status} onChange={this.handleChange} extraQuestions={extraQuestions} errors={errors}/>
+                        <div className="popup-scroll">
+                          <TicketAssignForm ticket={tempTicket} status={status} onChange={this.handleChange} extraQuestions={extraQuestions} errors={errors}/>
+                        </div>
                         <div className="popup-footer-save">
                           <button className="btn btn-primary" onClick={() => this.togglePopup()}>{T.translate("ticket_popup.save_changes")}</button>  
                         </div>

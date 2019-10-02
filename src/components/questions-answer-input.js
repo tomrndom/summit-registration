@@ -159,10 +159,10 @@ export default class QuestionAnswersInput extends React.Component {
 
         return (
             <div>
-                {questions.map( q => {
+                {questions.filter(q => q.usage === "Both" || q.usage === "Ticket").map( q => {
                     let answer = answers.find(ans => ans.question_id == q.id);
                     let answerValue = answer ? answer.answer : null;
-                    return (
+                    return (                      
                         <div className="row form-group" key={`question_answer_${q.id}`}>
                             <div className="col-md-12">
                                 {this.getInput(q, answerValue)}

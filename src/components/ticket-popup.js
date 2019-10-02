@@ -35,9 +35,20 @@ class TicketPopup extends React.Component {
             extra_questions: []
           }
         };
+
+        this.popUpPanelRef = React.createRef();
   
         this.togglePopup = this.togglePopup.bind(this);
         this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentWillMount() {      
+      document.body.style.overflow = "hidden";      
+      this.popUpRef.style.background = 'red'; 
+    }
+
+    componentWillUnmount() {      
+      document.body.style.overflow = "visible";
     }
   
     togglePopup(confirm) {
@@ -130,7 +141,7 @@ class TicketPopup extends React.Component {
                         {status !== 'UNASSIGNED' && <Tab>{T.translate("ticket_popup.tab_notify")}</Tab>}
                     </TabList>
                     {status === 'UNASSIGNED' && 
-                      <TabPanel className="popup-panel popup-panel--assign">
+                      <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--assign">
                         <p>{T.translate("ticket_popup.assign_text")} September 29</p>
                         <button className="btn btn-primary" onClick={() => this.handleTicketAssign(true)}>
                           {T.translate("ticket_popup.assign_me")}
@@ -153,14 +164,14 @@ class TicketPopup extends React.Component {
                         </button>
                       </TabPanel>
                     }
-                    <TabPanel className="popup-panel popup-panel--edit">
+                    <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--edit">
                         <TicketAssignForm ticket={tempTicket} status={status} onChange={this.handleChange} extraQuestions={extraQuestions} errors={errors}/>
                         <div className="popup-footer-save">
                           <button className="btn btn-primary" onClick={() => this.togglePopup()}>{T.translate("ticket_popup.save_changes")}</button>  
                         </div>
                     </TabPanel>
                     {status !== 'UNASSIGNED' && 
-                      <TabPanel className="popup-panel popup-panel--reassign">
+                      <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--reassign">
                           <p>{T.translate("ticket_popup.reassign_text")} <br/> <b>jon.snow@thewall.com</b></p>                        
                           <label>
                             <input type="checkbox" className="popup-clean" /> &nbsp;
@@ -187,7 +198,7 @@ class TicketPopup extends React.Component {
                       </TabPanel>
                     }
                     {status !== 'UNASSIGNED' && 
-                      <TabPanel className="popup-panel popup-panel--notify">
+                      <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--notify">
                           <p>{T.translate("ticket_popup.notify_text_1")} September 29.</p>                                                
                           <p>{T.translate("ticket_popup.notify_text_2")} <b>jon.snow@thewall.com</b></p>
                           <button className="btn btn-primary">{T.translate("ticket_popup.notify_button")}</button>  

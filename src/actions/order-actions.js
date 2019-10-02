@@ -207,7 +207,7 @@ export const getUserOders = () => (dispatch, getState) => {
 
   let params = {
       access_token : accessToken,
-      expand       : 'extra_question_answers, tickets',
+      expand       : 'extra_questions, tickets, tickets.owner, tickets.owner.extra_questions',
   };
   
   return getRequest(

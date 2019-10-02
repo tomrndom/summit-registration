@@ -67,7 +67,7 @@ class OrderDetailPage extends React.Component {
         class: 'ticket-complete'
       },
     ];
-    if(!ticket.attendee_mail || ticket.attendee_mail === "") {
+    if(ticket.owner_id === 0) {
       return status[0];
     } else if (!ticket.extra_questions) {
       return status[1];
@@ -136,7 +136,7 @@ class OrderDetailPage extends React.Component {
                                           <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
                                       </div>
                                       <div className="col-sm-5">
-                                        {t.attendee_email}
+                                        {t.owner ? t.owner.email : ''}
                                       </div>
                                       <div className="col-sm-1">
                                           <h4>&#10095;</h4>

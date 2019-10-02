@@ -48,7 +48,7 @@ class TicketPopup extends React.Component {
       })
       if(confirm) {
         let ticket = cloneDeep(this.props.ticket);
-        ticket = {...ticket, ...this.state.tempTicket}
+        ticket = {...ticket, ...this.state.tempTicket};
         this.props.updateTicket(ticket);
         this.props.closePopup();
       }
@@ -65,7 +65,8 @@ class TicketPopup extends React.Component {
 
     handleTicketAssign(self) {
       if(self){
-
+        const { email } = this.props.member;
+        this.props.updateTicket(email);
       } else {
         let { tempTicket } = this.state;
         this.props.updateTicket(tempTicket);

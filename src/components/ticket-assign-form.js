@@ -24,7 +24,8 @@ class TicketAssignForm extends React.Component {
       super(props);
 
       this.state = {        
-        extra_questions : []
+        extra_questions : [],
+        input_email: false,
       };
 
       this.handleExtraQuestions = this.handleExtraQuestions.bind(this);
@@ -60,7 +61,7 @@ class TicketAssignForm extends React.Component {
     render() {
 
       let {guest, ticket, onChange, extraQuestions, status} = this.props;
-      let {extra_questions} = this.state;
+      let {extra_questions, input_email} = this.state;
 
       this.handleExtraQuestions(ticket);
 
@@ -75,13 +76,28 @@ class TicketAssignForm extends React.Component {
               <div className="col-sm-6">
                 {status === 'UNASSIGNED' ?
                   <span>
-                    <button className="btn btn-primary" onClick={() => this.handleTicketAssign(true)}>
-                      {T.translate("ticket_popup.assign_this")}
-                    </button>                    
-                    <p>{T.translate("ticket_popup.assign_expire")} 15 {T.translate("ticket_popup.assign_days")} (September 19)</p>
+                    {input_email ?
+                    <React.Fragment>
+                      <Input
+                        id="attendee_email"
+                        className="form-control"                              
+                        error={this.hasErrors('attendee_email')}
+                        onChange={onChange}
+                        value={ticket.email}
+                      />
+                    </React.Fragment>
+                    :
+                    <React.Fragment>
+                      <button className="btn btn-primary" onClick={() => this.setState({input_email: true})}>
+                        {T.translate("ticket_popup.assign_this")}
+                      </button>                    
+                      <p>{T.translate("ticket_popup.assign_expire")} 15 {T.translate("ticket_popup.assign_days")} (September 19)</p>
+                    </React.Fragment>
+                    }
+                    
                   </span>
                   :
-                  <span>john.snow@thewall.com</span>
+                  <span>{ticket.attendee_email}</span>
                 }
               </div>
             </div>

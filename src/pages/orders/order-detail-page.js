@@ -102,7 +102,7 @@ class OrderDetailPage extends React.Component {
   }
 
   render() {
-      let {order, summit, ticket, errors, extraQuestions} = this.props;
+      let {order, summit, ticket, errors, extraQuestions, member} = this.props;
       let {showPopup} = this.state;
 
       return (
@@ -161,6 +161,7 @@ class OrderDetailPage extends React.Component {
               {showPopup ?  
                 <TicketPopup  
                   ticket={ticket}
+                  member={member}
                   status={this.handleTicketStatus(ticket).text}
                   onChange={this.handleChange}
                   extraQuestions={extraQuestions}

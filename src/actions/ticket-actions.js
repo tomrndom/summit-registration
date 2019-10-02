@@ -164,13 +164,13 @@ export const getTicketPDF = () => (dispatch, getState) => {
                 dispatch(stopLoading());
                 throw response;
             } else {
-                return response;
+                return response.text();
             }
         })
         .then((pdf) => {
-            console.log(pdf.data);
+            console.log(pdf);
             dispatch(stopLoading());
-            const blob = new Blob([pdf.data], {type: pdf.data.type});
+            const blob = new Blob([pdf], {type: 'application/pdf'});
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;

@@ -11,7 +11,7 @@
  * limitations under the License.
  **/
 
-import { LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
+import { START_LOADING, STOP_LOADING, LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
 import { 
     RESET_ORDER, 
     RECEIVE_ORDER, 
@@ -61,6 +61,14 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
     switch(type){
         case LOGOUT_USER:
             return DEFAULT_STATE;
+        case START_LOADING:
+            console.log('START_LOADING')
+            return {...state, loading: true};
+            break;
+        case STOP_LOADING:
+            console.log('STOP_LOADING')
+            return {...state, loading: false};
+            break;
         case RESET_ORDER:
             return DEFAULT_STATE;
             break;

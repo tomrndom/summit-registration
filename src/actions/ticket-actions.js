@@ -157,7 +157,7 @@ export const getTicketPDF = () => (dispatch, getState) => {
 
     dispatch(startLoading());
 
-    return fetch(apiUrl)
+    return fetch(apiUrl, { responseType: 'arraybuffer' })
         .then((response) => {
             console.log(response)
             if (!response.ok) {
@@ -232,7 +232,8 @@ export const getTicketByHash = (hash) => (dispatch, getState) => {
       createAction(GET_TICKET_BY_HASH),
       `${window.API_BASE_URL}/api/public/v1/summits/all/orders/orders/all/tickets/${hash}`,
       authErrorHandler
-  )()(dispatch).then(() => {
+  )()(dispatch).then((ticket) => {
+      console.log(ticket);
       dispatch(stopLoading());
     }
   );

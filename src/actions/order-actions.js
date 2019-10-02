@@ -135,13 +135,11 @@ export const deleteReservation = () => (dispatch, getState) => {
     authErrorHandler,
     // entity
   )({})(dispatch)
-    .then((payload) => {
-        console.log('payload', payload)
+    .then((payload) => {        
         dispatch(stopLoading());        
         return (payload)
     })
     .catch(e => {
-        console.log('eerr', e)
         dispatch(createAction(DELETE_RESERVATION_ERROR)(e));
         return (e);
     })

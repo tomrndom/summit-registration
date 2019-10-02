@@ -29,7 +29,8 @@ class GuestsLayout extends React.Component {
       tempTicket: {
         attendee_email: '',
         attendee_first_name: '',
-        attendee_last_name: ''
+        attendee_last_name: '',
+        extra_questions: []
       }
     };
 
@@ -72,14 +73,25 @@ class GuestsLayout extends React.Component {
     }
 
     handleChange(ev) {
-      const {id, value} = ev.target;
+      
+      let ticket = this.state.tempTicket;
 
-      this.setState(() => ({
-        tempTicket: {...this.state.tempTicket, [id]: value }        
-      }));
+      if (ev.target.type == 'checkbox') {
+        value = ev.target.checked;
+      }
 
-      //      this.props.handleOrderChange(order, errors);
-    }   
+      if (ev.target.type == 'datetime') {
+          value = value.valueOf() / 1000;
+      }
+      
+      let {value, id} = ev.target;
+
+      ticket[id] = value;
+
+      this.setState({tempTicket: ticket});      
+  
+      //this.props.handleTicketChange(ticket, errors);
+    }
     
     render() {
       let {extraQuestions} = this.props;

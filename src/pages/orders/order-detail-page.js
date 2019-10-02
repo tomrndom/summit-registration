@@ -132,11 +132,11 @@ class OrderDetailPage extends React.Component {
                                       </div>
                                       <div className="col-sm-5">
                                           <h4>Speaker</h4>
-                                          100% Discount
+                                          {t.discount > 0 && `${t.discount}% Discount`}
                                           <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
                                       </div>
                                       <div className="col-sm-5">
-                                          ned.stark@winterfell.com
+                                        {t.attendee_email}
                                       </div>
                                       <div className="col-sm-1">
                                           <h4>&#10095;</h4>

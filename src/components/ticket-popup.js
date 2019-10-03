@@ -47,7 +47,12 @@ class TicketPopup extends React.Component {
       let {owner} = this.props.ticket;
       if(owner) {
         let {email, first_name, surname, extra_questions} = owner;
-        this.setState({tempTicket: { attendee_email: email, attendee_first_name: first_name, attendee_last_name: surname, extra_questions}});        
+        let formattedQuestions = [];
+        extra_questions.map(q => {
+          let question = {question_id: q.id, answer: q.value};
+          formattedQuestions.push(question);
+        })        
+        this.setState({tempTicket: { attendee_email: email, attendee_first_name: first_name, attendee_last_name: surname, extra_questions: formattedQuestions}});        
       }
     }
 

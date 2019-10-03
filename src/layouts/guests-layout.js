@@ -18,7 +18,7 @@ import T from "i18n-react/dist/i18n-react";
 import TicketAssignForm from '../components/ticket-assign-form';
 import TicketOptions from '../components/ticket-options';
 
-import { getTicketByHash, getTicketPDFByHash, refundTicket } from '../actions/ticket-actions'
+import { getTicketByHash, getTicketPDFByHash, refundTicket, regenerateTicketHash } from '../actions/ticket-actions'
 
 class GuestsLayout extends React.Component {
 
@@ -44,7 +44,7 @@ class GuestsLayout extends React.Component {
 
       let ticketHash = this.props.match.params.ticket_hash;
 
-      if (ticketHash) {
+      if (ticketHash) {          
           getTicketByHash(ticketHash);
       }
 
@@ -123,6 +123,7 @@ export default connect(
   {
     getTicketByHash,
     getTicketPDFByHash,
-    refundTicket
+    refundTicket,
+    regenerateTicketHash
   }
 )(GuestsLayout);

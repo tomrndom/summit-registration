@@ -45,17 +45,21 @@ export const GET_TICKET_PDF_BY_HASH   = 'GET_TICKET_PDF_BY_HASH';
 
 
 export const getUserTickets = () => (dispatch, getState) => {
+
+  let { loggedUserState } = getState();
+  let { accessToken } = loggedUserState;
   
   let params = {
-      expand: ''
-  };
+      access_token : accessToken,
+      expand: 'order, owner, owner.extra_questions, order.summit'
+  };    
 
   dispatch(startLoading());
 
   return getRequest(
       null,
-      createAction(GET_TICKETS),
-      `${window.API_BASE_URL}/api/public/v1/summits/`,
+      createAction(GET_TICKETS),      
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/all/tickets/me`,
       authErrorHandler
   )(params)(dispatch).then(() => {
       dispatch(stopLoading());

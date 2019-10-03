@@ -56,11 +56,13 @@ class OrderList extends React.Component {
     }
 
     handleOrderSelect(order) {
-      let {history, summits} = this.props;
-      let summit = summits.find(s => s.id === order.summit_id);      
-      this.props.selectSummit(summit);
-      this.props.selectOrder(order);
-      history.push('/a/member/orders/detail');
+      let {history, summits} = this.props;      
+      if(order.status !== 'Cancelled') {
+        let summit = summits.find(s => s.id === order.summit_id);      
+        this.props.selectSummit(summit);
+        this.props.selectOrder(order);
+        history.push('/a/member/orders/detail');
+      }      
     }
 
     getSummitName(order) {

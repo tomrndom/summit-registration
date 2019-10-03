@@ -40,7 +40,7 @@ const memberReducer = (state = DEFAULT_STATE, action) => {
             return {...state, selectedTicket: ticket, errors: errors};
             break;
         case GET_TICKETS:            
-            return {...state, tickets: payload};
+            return {...state, memberTickets: payload.response.data};
         case GET_TICKET_BY_HASH:
             return {...state, selectedTicket: payload};
         case SELECT_TICKET:

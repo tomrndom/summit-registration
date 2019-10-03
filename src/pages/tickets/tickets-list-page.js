@@ -18,7 +18,7 @@ import T from "i18n-react/dist/i18n-react";
 import '../../styles/tickets-list-page.less';
 import TicketList from '../../components/ticket-list';
 
-import { getUserTickets } from '../../actions/ticket-actions';
+import { getUserTickets, selectTicket, getTicketPDF, assignAtendee, handleTicketChange } from '../../actions/ticket-actions';
 
 class TicketsListPage extends React.Component {
 
@@ -27,10 +27,17 @@ class TicketsListPage extends React.Component {
     }
 
     render() {
-        let {tickets} = this.props;
+        let {tickets, selectTicket, getTicketPDF, assignAtendee, handleTicketChange} = this.props;
+        console.log(tickets);
         return (
             <div>
-                <TicketList />
+                <TicketList 
+                  tickets={tickets}
+                  selectTicket={selectTicket}
+                  getTicketPDF={getTicketPDF}                  
+                  assignAtendee={assignAtendee}
+                  handleTicketChange={handleTicketChange}
+                />
             </div>
         );
     }
@@ -43,7 +50,11 @@ const mapStateToProps = ({ ticketState }) => ({
 export default connect (
     mapStateToProps,
     {
-      getUserTickets
+      getUserTickets,
+      selectTicket,
+      getTicketPDF,
+      assignAtendee,
+      handleTicketChange
     }
 )(TicketsListPage);
   

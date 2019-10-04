@@ -30,6 +30,7 @@ class OrderList extends React.Component {
         this.handleOrderSelect = this.handleOrderSelect.bind(this);
         this.getSummitDate = this.getSummitDate.bind(this);
         this.getSummitName = this.getSummitName.bind(this);
+        this.handleOrderStatus = this.handleOrderStatus.bind(this);
 
     }
 
@@ -65,6 +66,49 @@ class OrderList extends React.Component {
       }      
     }
 
+    handleOrderStatus(order){
+      const status = [
+        { 
+          text: 'READY TO USE',
+          icon: 'fa-check-circle',
+          class: 'complete'
+        },
+        { 
+          text: 'REQUIRED DETAILS NEEDED',
+          icon: 'fa-exclamation-circle',
+          class: 'warning'
+        },
+        { 
+          text: 'PENDING CONFIRMATION',          
+          class: 'pending'
+        },
+        { 
+          text: 'CANCELLED',          
+          class: 'cancel'
+        },
+      ];
+      switch(order.status) {
+        case "Paid":
+          return status[0];
+        case "Reserved":
+          return status[2];
+        case "Cancelled":
+          return status[3];        
+          return;
+        default:
+          return null;
+      }
+
+      // TODO: Check posible cases
+      const ReservedStatus        = 'Reserved';
+      const CancelledStatus       = 'Cancelled';
+      const RefundRequestedStatus = 'RefundRequested';
+      const RefundedStatus        = 'Refunded';
+      const ConfirmedStatus       = 'Confirmed';
+      const PaidStatus            = 'Paid';
+      const ErrorStatus           = 'Error';
+    }
+
     getSummitName(order) {
       let {summits} = this.props;
 
@@ -94,10 +138,10 @@ class OrderList extends React.Component {
                 {orders.map(o => {
                   return (                    
                     <div className="row" key={o.id} onClick={() => this.handleOrderSelect(o)}>
-                        <div className="order complete p-2 col-sm-8 col-sm-offset-2">
+                        <div className={`order ${this.handleOrderStatus(o).class} p-2 col-sm-8 col-sm-offset-2`}>                        
                             <div className="col-sm-6">
                                 <h4>{this.getSummitName(o)}</h4>
-                                <p className="status">Ready to Use</p>
+                                <p className="status">{this.handleOrderStatus(o).text}</p>
                             </div>
                             <div className="col-sm-4">
                                 <h5>On {this.getSummitDate(o)}</h5>

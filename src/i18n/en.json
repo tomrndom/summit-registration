@@ -122,12 +122,20 @@
     "save_changes"          : "Save Changes"
   },
   "confirm_popup": {
-    "question_title"        : "Re-Assign Request",
-    "question_text"         : "Are you sure you want to clean all the fields?",
-    "cancel"                : "Cancel",
-    "accept"                : "Yeah",
-    "success_title"         : "Request Submitted",
-    "success_text"          : "An email notification has been sent to",
-    "success_button"        : "Got it"
+    "question_title_cancel"           : "Cancel Request",
+    "question_text_cancel"            : "Are you sure you want to clean all the fields?",
+    "question_title_assign"           : "Assign Request",
+    "question_text_assign"            : "Are you sure you want to clean all the fields?",
+    "question_title_reassign"         : "Re-Assign Request",
+    "question_text_reassign"          : "Are you sure you want to clean all the fields?",
+    "question_title_save"             : "Save Request",
+    "question_text_save"              : "Are you sure you want to clean all the fields?",
+    "question_title_notification"     : "Notification Request",
+    "question_text_notification"      : "Are you sure you want to clean all the fields?",
+    "cancel"                          : "Cancel",
+    "accept"                          : "Yeah",
+    "success_title"                   : "Request Submitted",
+    "success_text"                    : "An email notification has been sent to",
+    "success_button"                  : "Got it"
   }
 }

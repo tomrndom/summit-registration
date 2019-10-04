@@ -28,6 +28,7 @@ class TicketPopup extends React.Component {
 
         this.state = {
           showPopup: false,
+          popupCase: '',
           tempTicket: {
             attendee_email: '',
             attendee_first_name: '',
@@ -40,6 +41,7 @@ class TicketPopup extends React.Component {
   
         this.togglePopup = this.togglePopup.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleTicketCancel = this.handleTicketCancel.bind(this);
     }
 
     componentWillMount() {      
@@ -49,7 +51,7 @@ class TicketPopup extends React.Component {
         let {email, first_name, surname, extra_questions} = owner;
         let formattedQuestions = [];
         extra_questions.map(q => {
-          let question = {question_id: q.id, answer: q.value};
+          let question = {question_id: q.question_id, answer: q.value};
           formattedQuestions.push(question);
         })        
         this.setState({tempTicket: { attendee_email: email, attendee_first_name: first_name, attendee_last_name: surname, extra_questions: formattedQuestions}});        
@@ -60,10 +62,11 @@ class TicketPopup extends React.Component {
       document.body.style.overflow = "visible";      
     }
   
-    togglePopup(confirm) {
+    togglePopup(confirm, popupCase) {
       this.setState((prevState, props) => {
         return {
-          showPopup: !prevState.showPopup
+          showPopup: !prevState.showPopup,
+          popupCase
         }
       })
       if(confirm) {
@@ -93,6 +96,11 @@ class TicketPopup extends React.Component {
       }           
     }
 
+    handleTicketCancel() {      
+      this.togglePopup(null, 'cancel');
+      //this.props.cancelTicket(ticket);
+    }
+
     handleChange(ev) {
       
       let ticket = this.state.tempTicket;
@@ -109,7 +117,7 @@ class TicketPopup extends React.Component {
 
       ticket[id] = value;
 
-      this.setState({tempTicket: ticket});      
+      this.setState({tempTicket: ticket});
   
       //this.props.handleTicketChange(ticket, errors);
     }
@@ -117,7 +125,7 @@ class TicketPopup extends React.Component {
     render() {
 
       let {extraQuestions, status, errors, ticket: {owner}} = this.props;
-      let {showPopup, tempTicket, tempTicket: {attendee_email}} = this.state;
+      let {showPopup, tempTicket, tempTicket: {attendee_email}, popupCase} = this.state;
 
         return (
         <div className='popup-bg'>
@@ -169,10 +177,16 @@ class TicketPopup extends React.Component {
                     }
                     <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--edit">
                         <div className="popup-scroll">
-                          <TicketAssignForm ticket={tempTicket} status={status} onChange={this.handleChange} extraQuestions={extraQuestions} errors={errors}/>
+                          <TicketAssignForm 
+                            ticket={tempTicket} 
+                            status={status} 
+                            extraQuestions={extraQuestions} 
+                            onChange={this.handleChange} 
+                            cancelTicket={this.handleTicketCancel} 
+                            errors={errors}/>
                         </div>
                         <div className="popup-footer-save">
-                          <button className="btn btn-primary" onClick={() => this.togglePopup()}>{T.translate("ticket_popup.save_changes")}</button>  
+                          <button className="btn btn-primary" onClick={() => this.togglePopup(null, 'save')}>{T.translate("ticket_popup.save_changes")}</button>  
                         </div>
                     </TabPanel>
                     {status !== 'UNASSIGNED' && 
@@ -183,7 +197,7 @@ class TicketPopup extends React.Component {
                               {T.translate("ticket_popup.reassign_check")} <i className="fa fa-question-circle"></i>
                           </label>
                           <br />
-                          <button className="btn btn-primary" onClick={() => this.props.closePopup}>{T.translate("ticket_popup.reassign_me")}</button>  
+                          <button className="btn btn-primary" onClick={() => this.togglePopup(null, 'reassign')}>{T.translate("ticket_popup.reassign_me")}</button>  
                           <div className="popup-separator">
                             <div><hr/></div>
                             <span>{T.translate("ticket_popup.assign_or")}</span>
@@ -197,7 +211,7 @@ class TicketPopup extends React.Component {
                               onChange={this.handleChange}
                               value={attendee_email}
                           />
-                          <button className="btn btn-primary" onClick={() => this.togglePopup()}>
+                          <button className="btn btn-primary" onClick={() => this.togglePopup(null, 'reassign')}>
                             {T.translate("ticket_popup.reassign_someone")}
                           </button>
                       </TabPanel>
@@ -213,6 +227,7 @@ class TicketPopup extends React.Component {
             </div>
             {showPopup ?  
               <ConfirmPopup
+                popupCase={popupCase}
                 closePopup={this.togglePopup.bind(this)}
               />  
             : null  

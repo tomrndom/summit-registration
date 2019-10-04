@@ -98,8 +98,9 @@ class GuestsLayout extends React.Component {
       let {tempTicket} = this.state;
         return (
             <div>
-              <div className="col-sm-8">                
-                <TicketAssignForm ticket={tempTicket} onChange={this.handleChange} extraQuestions={extraQuestions}/>
+              <div className="col-sm-8">
+                {!extraQuestions &&
+                  <TicketAssignForm ticket={tempTicket} onChange={this.handleChange} extraQuestions={extraQuestions}/>}
               </div>
               <div className="col-sm-4">
                 <TicketOptions 

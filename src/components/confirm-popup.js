@@ -26,14 +26,52 @@ class ConfirmPopup extends React.Component {
 
     }
 
-
     render() {
-      let {closePopup} = this.props;
+      let {closePopup, popupCase} = this.props;
         return (  
           <div className="confirm-popup-bg">
             <div className="confirm-popup">
-              <h4>{T.translate("confirm_popup.question_title")}</h4>            
-              <p>{T.translate("confirm_popup.question_text")}</p>
+              {(() => {
+                switch(popupCase) {
+                  case 'cancel':
+                      return (
+                        <React.Fragment>
+                            <h4>{T.translate("confirm_popup.question_title_cancel")}</h4>            
+                            <p>{T.translate("confirm_popup.question_text_cancel")}</p>    
+                        </React.Fragment>
+                      );                 
+                  case 'assign':
+                      return (
+                        <React.Fragment>
+                            <h4>{T.translate("confirm_popup.question_title_assign")}</h4>            
+                            <p>{T.translate("confirm_popup.question_text_assign")}</p>    
+                        </React.Fragment>
+                      );                   
+                  case 'reassign':
+                      return (
+                        <React.Fragment>
+                            <h4>{T.translate("confirm_popup.question_title_reassign")}</h4>            
+                            <p>{T.translate("confirm_popup.question_text_reassign")}</p>    
+                        </React.Fragment>
+                      );    
+                  case 'save':
+                      return (
+                        <React.Fragment>
+                            <h4>{T.translate("confirm_popup.question_title_save")}</h4>            
+                            <p>{T.translate("confirm_popup.question_text_save")}</p>    
+                        </React.Fragment>
+                      );
+                  case 'notification':
+                      return (
+                        <React.Fragment>
+                            <h4>{T.translate("confirm_popup.question_title_notification")}</h4>            
+                            <p>{T.translate("confirm_popup.question_text_notification")}</p>    
+                        </React.Fragment>
+                      );  
+                  default:
+                    return null;
+                }
+              })()}
               <div className="buttons">
                 <span onClick={() => closePopup(false)}>{T.translate("confirm_popup.cancel")}</span>
                 <span onClick={() => closePopup(true)}>{T.translate("confirm_popup.accept")}</span>

@@ -28,13 +28,13 @@ class TicketAssignForm extends React.Component {
         input_email: false,
       };
 
-      this.handleExtraQuestions = this.handleExtraQuestions.bind(this);
     }
-    
-    handleExtraQuestions(ticket){
+
+    componentDidMount() {
       let {extra_questions} = this.state;
+      let {ticket} = this.props;
       
-      if(!ticket.extra_questions && extra_questions.length === 0) {        
+      if(!ticket.extra_questions && extra_questions.length === 0) {
         
         let {extraQuestions} = this.props;
         
@@ -45,7 +45,7 @@ class TicketAssignForm extends React.Component {
         this.setState(() => ({
           extra_questions: extra_questions
         }));
-      }
+      } 
     }
 
     hasErrors(field) {
@@ -63,7 +63,6 @@ class TicketAssignForm extends React.Component {
       let {guest, ticket, onChange, extraQuestions, status} = this.props;
       let {extra_questions, input_email} = this.state;
 
-      this.handleExtraQuestions(ticket);
 
         return (
           <div>
@@ -133,7 +132,7 @@ class TicketAssignForm extends React.Component {
             </div>
             <QuestionAnswersInput
                 id="extra_questions"
-                answers={extra_questions}
+                answers={ticket.extra_questions}
                 questions={extraQuestions}
                 onChange={onChange}                
             />
@@ -161,7 +160,7 @@ class TicketAssignForm extends React.Component {
               <div className="row field-wrapper">
                 <div className="col-sm-4"></div>
                 <div className="col-sm-6">
-                  <h4 className="popup-cancel-ticket">Cancel Ticket</h4>
+                  <h4 className="popup-cancel-ticket" onClick={this.props.cancelTicket}>Cancel Ticket</h4>
                   <p>Description about the refund policy lorem ipsum dolor sit amet.</p>
                   learn more
                 </div>

@@ -44,14 +44,14 @@ const summitReducer = (state = DEFAULT_STATE, action) => {
                     entity[key] = (entity[key] == null) ? '' : entity[key] ;
                 }
             }
-            return {...state, currentSummit: entity};      
+            return {...state, currentSummit: entity, summits: [ ...state.summits, entity ]};
             break;
         case GET_SUMMIT_BY_ID:
             let summit = payload.response;
             return {...state, summits: [ ...state.summits, summit ]}
         case SELECT_SUMMIT:
             return {...state, selectedSummit: payload};
-            break;
+            break;        
         case GET_EXTRA_QUESTIONS:
             console.log(payload);
             return {...state, selectedSummit: { extra_questions: payload }}

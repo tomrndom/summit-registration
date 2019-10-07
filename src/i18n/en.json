@@ -74,6 +74,10 @@
     "order_no"            : "ORDER NO",
     "manage"              : "Manage Your Tickets"
   },
+  "guests": {
+    "cancel"              : "Cancel",
+    "send"                : "Send"
+  },
   "orders": {
     "empty"               : "There are no active orders so far"
   },

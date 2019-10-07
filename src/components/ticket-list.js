@@ -16,6 +16,8 @@ import T from 'i18n-react/dist/i18n-react'
 
 import TicketPopup from "../components/ticket-popup";
 
+import { getFormatedDate, getFormatedTime } from '../utils/helpers';
+
 class TicketList extends React.Component {
     constructor(props) {
         super(props);
@@ -29,7 +31,11 @@ class TicketList extends React.Component {
         this.handleTicketDownload = this.handleTicketDownload.bind(this);
         this.handleTicketUpdate = this.handleTicketUpdate.bind(this);
         this.handleChange = this.handleChange.bind(this);
-
+        this.handleTicketLocation = this.handleTicketLocation.bind(this);
+        this.handleTicketName = this.handleTicketName.bind(this);        
+        this.handleEventName = this.handleEventName.bind(this);
+        this.handleTicketDate = this.handleTicketDate.bind(this);
+        
     }
 
     togglePopup(ticket) {
@@ -68,7 +74,35 @@ class TicketList extends React.Component {
 
     handleTicketUpdate(ticket){
       let { attendee_first_name, attendee_last_name, attendee_email, extra_questions } = ticket;    
-      this.props.assignAtendee(attendee_email, attendee_first_name, attendee_last_name, extra_questions);
+      this.props.assignAttendee(attendee_email, attendee_first_name, attendee_last_name, extra_questions);
+    }
+
+    handleTicketLocation(ticket) {
+      let {summits} = this.props;
+      let summit = summits.find(s => s.id === ticket.owner.summit_id);
+      if(summit.locations.length === 1) {        
+        return `${summit.locations[0].city}, ${summit.locations[0].country}`
+      }
+    }
+
+    handleTicketName(ticket) {
+      let {summits} = this.props;
+      let summit = summits.find(s => s.id === ticket.owner.summit_id);
+      let ticketName = summit.ticket_types.find(t => t.id === ticket.ticket_type_id).name;      
+      return ticketName;      
+    }
+
+    handleTicketDate(ticket) {
+      let {summits} = this.props;
+      let summit = summits.find(s => s.id === ticket.owner.summit_id);
+      let summitDate = getFormatedDate(summit.start_date);      
+      return summitDate;      
+    }
+
+    handleEventName(ticket) {
+      let {summits} = this.props;
+      let event = summits.find(s => s.id === ticket.owner.summit_id).name;
+      return event;
     }
   
     handleChange(ev) {
@@ -84,7 +118,7 @@ class TicketList extends React.Component {
 
 
     render() {
-      let { tickets } = this.props;
+      let { tickets, selectedTicket } = this.props;
       let {showPopup} = this.state;
 
       if (tickets) {
@@ -95,12 +129,12 @@ class TicketList extends React.Component {
                 return (
                   <div className="ticket complete p-2 col-sm-8 col-sm-offset-2" key={t.id} onClick={() => this.togglePopup(t)}>
                       <div className="col-sm-5">
-                          <h4>Equinoccio Summit 2020</h4>
+                          <h4>{this.handleEventName(t)}</h4>
                           <p className="status">Ready to Use</p>
                       </div>
                       <div className="col-sm-5">
-                          <h5>One Day Pass</h5>
-                          <p>California, US / December 22nd 2020</p>
+                          <h5>{this.handleTicketName(t)}</h5>
+                          <p>{this.handleTicketLocation(t)} / {this.handleTicketDate(t)}</p>
                       </div>
                       <div className="arrow col-sm-2">
                           <i className="fa fa-angle-right"></i>
@@ -111,14 +145,15 @@ class TicketList extends React.Component {
             </div>
             {showPopup ?  
                 <TicketPopup  
-                  ticket={ticket}
-                  member={member}
-                  status={this.handleTicketStatus(ticket).text}
+                  ticket={selectedTicket}
+                  member={null}
+                  status={this.handleTicketStatus(selectedTicket).text}
                   onChange={this.handleChange}
                   extraQuestions={extraQuestions}
                   downloadTicket={this.handleTicketDownload}
                   closePopup={this.togglePopup.bind(this)}
                   updateTicket={this.handleTicketUpdate}
+                  fromTicket={true}                  
                   errors={errors}
                 />  
               : null  

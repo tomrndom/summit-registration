@@ -124,7 +124,7 @@ class TicketPopup extends React.Component {
 
     render() {
 
-      let {extraQuestions, status, errors, ticket: {owner}} = this.props;
+      let {extraQuestions, status, errors, ticket: {owner}, fromTicket} = this.props;
       let {showPopup, tempTicket, tempTicket: {attendee_email}, popupCase} = this.state;
 
         return (
@@ -132,11 +132,19 @@ class TicketPopup extends React.Component {
             <div className='popup-form'>
               <div className="popup-header">
                 <div className="row">
-                  <div className="col-sm-9 popup-title">
-                    <h4><b>Full Day Pass</b></h4>
-                    <p>Speaker</p>
-                    <p>Ready to use</p>
-                  </div>
+                  {fromTicket ? 
+                    <div className="col-sm-9 popup-title">
+                      <h4><b>Full Day Pass</b></h4>
+                      <p>Speaker</p>
+                      <p>Ready to use</p>
+                    </div>
+                    : 
+                    <div className="col-sm-9 popup-title">
+                      <h4><b>Full Day Pass</b></h4>
+                      <p>Speaker</p>
+                      <p>Ready to use</p>
+                    </div>
+                    }                  
                   <div className="col-sm-3 popup-icons">
                     <i className="fa fa-print"></i>
                     <i onClick={() => this.props.downloadTicket()} className="fa fa-file-pdf-o"></i>

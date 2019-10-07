@@ -27,9 +27,9 @@ export const getFormatedDate = (datetime, time_zone = false) => {
 	
 	if(time_zone){
 		let formattedTime = moment.unix(datetime)
-		return moment.tz(datetime * 1000, time_zone).format('MMM Do YYYY')
+		return moment.tz(datetime * 1000, time_zone).format('MMMM Do YYYY')
 	}
-	return moment.unix(datetime).format('MMM Do YYYY')
+	return moment.unix(datetime).format('MMMM Do YYYY')
 }
 
 export const getFormatedTime = (datetime, time_zone = false) => {

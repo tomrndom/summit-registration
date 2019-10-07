@@ -22,12 +22,37 @@ class TicketOptions extends React.Component {
 
         };
 
+        this.handleTicketName = this.handleTicketName.bind(this);
+        this.handleSummitLocation = this.handleSummitLocation.bind(this);
+        this.handleTicketDate = this.handleTicketDate.bind(this);
+    }
+
+    handleTicketName(ticket) {
+      let {summit} = this.props;
+      let ticketName = summit.ticket_types.find(t => t.id === ticket.ticket_type_id).name;      
+      return ticketName;
+    }
+
+    handleTicketDate(ticket) {
+      let {summit} = this.props;
+      let summitDate = getFormatedDate(summit.start_date);      
+      return summitDate;      
+    }
+
+    handleSummitLocation(summit) {
+      if(summit.locations.length === 1) {
+        let location = `${summit.locations[0].city}, ${summit.locations[0].country}`;
+        return location;
+      }
     }
 
 
     render() {
 
-      let {guest, summit} = this.props;
+      let {guest, summit, ticket} = this.props;
+
+      console.log('summit optuions', summit);
+      console.log('ticket optuions', ticket);
 
         return (
             <div className="order-info-wrapper">
@@ -35,9 +60,9 @@ class TicketOptions extends React.Component {
                 <React.Fragment>
                   <div className="row">
                     <div className="col-md-12 info">
-                      <h4>Google I/O 2019</h4>
-                      <p>Full Day Pass</p>
-                      <p>Shangai, US / November 25-31, 2019</p>
+                      <h4>{summit.name}</h4>
+                      <p>{this.handleTicketName(ticket)}</p>
+                      <p>{this.handleSummitLocation(summit)} / November 25-31, 2019</p>
                       <p><i className="fa fa-shield"></i> Staff Ticket</p>
                     </div>
                   </div>

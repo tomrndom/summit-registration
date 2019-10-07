@@ -18,7 +18,7 @@ import OrderSummary from "../../components/order-summary";
 import TicketPopup from "../../components/ticket-popup";
 import TicketOptions from "../../components/ticket-options";
 
-import { selectTicket, getTicketPDF, assignAtendee, handleTicketChange, refundTicket } from '../../actions/ticket-actions';
+import { selectTicket, getTicketPDF, assignAttendee, handleTicketChange, refundTicket } from '../../actions/ticket-actions';
 import { cancelOrder } from '../../actions/order-actions';
 
 import '../../styles/order-detail-page.less';
@@ -92,7 +92,7 @@ class OrderDetailPage extends React.Component {
 
   handleTicketUpdate(ticket){
     let { attendee_first_name, attendee_last_name, attendee_email, extra_questions } = ticket;    
-    this.props.assignAtendee(attendee_email, attendee_first_name, attendee_last_name, extra_questions);
+    this.props.assignAttendee(attendee_email, attendee_first_name, attendee_last_name, extra_questions);
   }
 
   handleChange(ev) {
@@ -198,7 +198,7 @@ export default connect(
       selectTicket,
       getTicketPDF,
       cancelOrder,
-      assignAtendee,
+      assignAttendee,
       handleTicketChange,
       refundTicket
     }

@@ -29,8 +29,10 @@ import {
     objectToQueryString,
     fetchErrorHandler,
 } from 'openstack-uicore-foundation/lib/methods';
+import { selectSummitById } from "./summit-actions";
+import { getUserSummits } from '../actions/summit-actions';
 
-
+export const RESET_TICKET             = 'RESET_TICKET';
 export const GET_TICKETS              = 'GET_TICKETS';
 export const SELECT_TICKET            = 'SELECT_TICKET';
 export const CHANGE_TICKET            = 'CHANGE_TICKET';
@@ -42,6 +44,11 @@ export const GET_TICKET_BY_HASH       = 'GET_TICKET_BY_HASH';
 export const ASSIGN_TICKET_BY_HASH    = 'ASSIGN_TICKET_BY_HASH';
 export const REGENERATE_TICKET_HASH   = 'REGENERATE_TICKET_HASH';
 export const GET_TICKET_PDF_BY_HASH   = 'GET_TICKET_PDF_BY_HASH';
+
+export const handleResetTicket = () => (dispatch, getState) => {
+  dispatch(createAction(RESET_TICKET)({}));
+}
+
 
 
 export const getUserTickets = () => (dispatch, getState) => {
@@ -62,18 +69,22 @@ export const getUserTickets = () => (dispatch, getState) => {
       `${window.API_BASE_URL}/api/v1/summits/all/orders/all/tickets/me`,
       authErrorHandler
   )(params)(dispatch).then(() => {
-      dispatch(stopLoading());
+      dispatch(getUserSummits('tickets'));
     }
   );
 
 }
 
-export const selectTicket = (ticket) => (dispatch, getState) => {
+export const selectTicket = (ticket, ticketList = false) => (dispatch, getState) => {
     
   dispatch(startLoading());
 
-  dispatch(createAction(SELECT_TICKET)(ticket));
-
+  if(ticketList){
+    dispatch(selectSummitById(ticket.order.summitId));
+    dispatch(createAction(SELECT_TICKET)(ticket));    
+  } else {
+    dispatch(createAction(SELECT_TICKET)(ticket));
+  }
   dispatch(stopLoading());
 
 }
@@ -96,7 +107,7 @@ export const handleTicketChange = (ticket, errors = {}) => (dispatch, getState) 
 
 }
 
-export const assignAtendee = (attendee_email, attendee_first_name, attendee_last_name, extra_questions) => (dispatch, getState) => {  
+export const assignAttendee = (attendee_email, attendee_first_name, attendee_last_name, extra_questions) => (dispatch, getState) => {  
 
   let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
@@ -231,16 +242,22 @@ export const getTicketByHash = (hash) => (dispatch, getState) => {
 
   dispatch(startLoading());
 
+  let params = {
+    expand : 'order_extra_questions.values, owner, owner.extra_questions'
+  };
+
   return getRequest(
       null,
       createAction(GET_TICKET_BY_HASH),
       `${window.API_BASE_URL}/api/public/v1/summits/all/orders/orders/all/tickets/${hash}`,
       authErrorHandler
-  )()(dispatch).then((ticket) => {
-      console.log(ticket);
+  )(params)(dispatch).then((ticket) => {     
+      dispatch(selectSummitById(ticket.response.owner.summit_id, true));      
+    }).catch(() => {      
+      dispatch(handleResetTicket());
       dispatch(stopLoading());
-    }
-  );
+    });
+      
 }
 
 export const assignTicketByHash = (attendee_first_name, attendee_last_name, disclaimer_accepted, share_contact_info, extra_questions, hash) => (dispatch, getState) => {

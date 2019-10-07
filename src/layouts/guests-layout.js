@@ -14,11 +14,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import T from "i18n-react/dist/i18n-react";
+import cloneDeep from "lodash.clonedeep";
 
 import TicketAssignForm from '../components/ticket-assign-form';
 import TicketOptions from '../components/ticket-options';
 
-import { getTicketByHash, getTicketPDFByHash, refundTicket, regenerateTicketHash } from '../actions/ticket-actions'
+import { getTicketByHash, getTicketPDFByHash, refundTicket, regenerateTicketHash, handleTicketChange } from '../actions/ticket-actions'
 
 class GuestsLayout extends React.Component {
 
@@ -35,20 +36,33 @@ class GuestsLayout extends React.Component {
     };
 
     this.handleTicketDownload = this.handleTicketDownload.bind(this);
-    this.handleTicketCancel = this.handleTicketCancel.bind(this);
+    this.handleTicketCancel = this.handleTicketCancel.bind(this);    
     this.handleChange = this.handleChange.bind(this);
   }
 
     componentDidMount() {
-      let { getTicketByHash, ticket } = this.props;
+      let { getTicketByHash } = this.props;
 
       let ticketHash = this.props.match.params.ticket_hash;
 
-      if (ticketHash) {          
+      if (ticketHash) {                    
           getTicketByHash(ticketHash);
-      }
+      }      
+    }
 
-      this.setState({tempTicket: ticket});
+    componentDidUpdate() {
+      let {attendee_email, attendee_first_name, attendee_last_name, extra_questions} = this.state.tempTicket;
+      let {owner} = this.props.ticket;
+      console.log('owner', owner);
+      if(owner && (!attendee_email || !attendee_first_name || !attendee_last_name || !extra_questions)) {
+        let {email, first_name, surname, extra_questions} = owner;
+        let formattedQuestions = [];
+        extra_questions.map(q => {
+          let question = {question_id: q.question_id, answer: q.value};
+          formattedQuestions.push(question);
+        })        
+        this.setState({tempTicket: { attendee_email: email, attendee_first_name: first_name, attendee_last_name: surname, extra_questions: formattedQuestions}});                        
+      }
     }
 
     componentWillReceiveProps(newProps) {
@@ -72,51 +86,79 @@ class GuestsLayout extends React.Component {
       this.props.refundTicket(ticketHash);
     }
 
-    handleChange(ev) {
-      
-      let ticket = this.state.tempTicket;
-
-      if (ev.target.type == 'checkbox') {
-        value = ev.target.checked;
-      }
-
-      if (ev.target.type == 'datetime') {
-          value = value.valueOf() / 1000;
-      }
-      
-      let {value, id} = ev.target;
-
-      ticket[id] = value;
-
-      this.setState({tempTicket: ticket});      
+    handleTicketUpdate(ticket){
+      let { attendee_first_name, attendee_last_name, attendee_email, extra_questions } = ticket;    
+      this.props.assignAttendee(attendee_email, attendee_first_name, attendee_last_name, extra_questions);
+    }
   
-      //this.props.handleTicketChange(ticket, errors);
+    handleChange(ev) {
+      let ticket = cloneDeep(this.props.ticket);
+      let errors = cloneDeep(this.props.errors);
+      let {value, id} = ev.target;
+  
+      delete(errors[id]);
+      ticket[id] = value;
+  
+      this.props.handleTicketChange(ticket, errors);
+    }
+
+    cancelClick() {
+
+    }
+
+    sendClick() {
+      
     }
     
     render() {
-      let {extraQuestions} = this.props;
+      let {ticket: {owner, order_extra_questions}, ticket, errors, loading, summit} = this.props;
       let {tempTicket} = this.state;
+
+      if(!owner) {
         return (
+          <div>
+            Ticket not found
+          </div>
+        )
+      } else {
+        return (
+          !loading &&
             <div>
-              <div className="col-sm-8">
-                {!extraQuestions &&
-                  <TicketAssignForm ticket={tempTicket} onChange={this.handleChange} extraQuestions={extraQuestions}/>}
+              <div className="col-sm-8 guest-layout">                
+                <TicketAssignForm ticket={tempTicket} onChange={this.handleChange} extraQuestions={order_extra_questions} errors={errors} guest={true}/>
               </div>
               <div className="col-sm-4">
                 <TicketOptions 
                   guest={true} 
                   downloadTicket={this.handleTicketDownload} 
                   cancelTicket={this.handleTicketCancel}
+                  ticket={ticket}
+                  summit={summit}
                 />
               </div>
+              <div className="row submit-buttons-wrapper">
+                  <div className="col-md-12">  
+                      <a href="" className="back-btn" onClick={this.cancelClick}>                        
+                          {T.translate("guests.cancel")}
+                      </a>
+                      <button className="btn btn-primary continue-btn" onClick={this.sendClick}>
+                          {T.translate("guests.send")}
+                      </button>
+                  </div>
+              </div>
             </div>
-        );
+        )
+      }
+      
+                          
     }
 }
 
 const mapStateToProps = ({ ticketState, summitState }) => ({
+  loading: ticketState.loading,
   ticket: ticketState.selectedTicket,
-  extraQuestions: summitState.selectedSummit.order_extra_questions,
+  errors: ticketState.errors,
+  summit: summitState.selectedSummit
 })
 
 export default connect(
@@ -125,6 +167,7 @@ export default connect(
     getTicketByHash,
     getTicketPDFByHash,
     refundTicket,
-    regenerateTicketHash
+    regenerateTicketHash,
+    handleTicketChange
   }
 )(GuestsLayout);

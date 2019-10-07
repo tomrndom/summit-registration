@@ -216,7 +216,7 @@ export const getUserOders = () => (dispatch, getState) => {
       `${window.API_BASE_URL}/api/v1/summits/all/orders/me`,
       authErrorHandler
   )(params)(dispatch).then(() => {
-      dispatch(getUserSummits());
+      dispatch(getUserSummits('orders'));
     }
   );
 }

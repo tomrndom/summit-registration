@@ -74,6 +74,10 @@
     "order_no"            : "ORDER NO",
     "manage"              : "Manage Your Tickets"
   },
+  "guests": {
+    "cancel"              : "Cancel",
+    "send"                : "Send"
+  },
   "orders": {
     "empty"               : "There are no active orders so far"
   },
@@ -130,7 +134,7 @@
     "question_text_reassign"          : "Are you sure you want to clean all the fields?",
     "question_title_save"             : "Save Request",
     "question_text_save"              : "Are you sure you want to clean all the fields?",
-    "question_title_notification"     : "Cancel Request",
+    "question_title_notification"     : "Notification Request",
     "question_text_notification"      : "Are you sure you want to clean all the fields?",
     "cancel"                          : "Cancel",
     "accept"                          : "Yeah",

@@ -44,11 +44,18 @@ export const getSummitBySlug = (slug) => (dispatch, getState) => {
     );    
 }
 
-export const getUserSummits = () => (dispatch, getState) => {
+export const getUserSummits = (from) => (dispatch, getState) => {  
 
-  let { orderState: {memberOrders}, summitState: {summits} } = getState();
-  
-  let summitsId = [... new Set(memberOrders.map(p => p.summit_id))];
+  let { orderState: {memberOrders}, ticketState: {memberTickets}, summitState: {summits} } = getState();
+
+  let summitsId;
+
+  if(from === 'tickets') {    
+    summitsId = [... new Set(memberTickets.map(p => p.owner.summit_id))];
+  } else {
+    summitsId = [... new Set(memberOrders.map(p => p.summit_id))];
+  }
+    
   const storedSummits = [... new Set(summits.map(p => p.id))];
 
   summitsId = summitsId.filter(s => storedSummits.indexOf(s) == -1);
@@ -61,7 +68,7 @@ export const getUserSummits = () => (dispatch, getState) => {
 
 }
 
-export const getSummitById = (id) => (dispatch, getState) => {
+export const getSummitById = (id, select = false) => (dispatch, getState) => {
     
   dispatch(startLoading());    
   
@@ -71,18 +78,35 @@ export const getSummitById = (id) => (dispatch, getState) => {
       `${window.API_BASE_URL}/api/public/v1/summits/all/${id}`,
       authErrorHandler
   )()(dispatch).then(() => {
-        dispatch(stopLoading());
+        select ? dispatch(selectSummitById(id)) : dispatch(stopLoading());
       }
   );    
 }
 
-export const selectSummit = (summit) => (dispatch, getState) => {
+export const selectSummit = (summit) => (dispatch, getState) => {  
     
   dispatch(startLoading());
 
   dispatch(createAction(SELECT_SUMMIT)(summit));
 
   dispatch(stopLoading());
+
+}
+
+export const selectSummitById = (id) => (dispatch, getState) => {
+
+  let { summitState: {summits} } = getState();
+  
+  let selectedSummit = summits.filter(s => s.id === id)[0];
+  
+  dispatch(startLoading());
+
+  if(selectedSummit) {  
+    dispatch(selectSummit(selectedSummit));
+  } else {
+    dispatch(getSummitById(id, true));
+  }
+  
 
 }
 

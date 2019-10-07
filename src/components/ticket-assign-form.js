@@ -33,10 +33,14 @@ class TicketAssignForm extends React.Component {
     componentDidMount() {
       let {extra_questions} = this.state;
       let {ticket} = this.props;
+
+      console.log(ticket);
       
       if(!ticket.extra_questions && extra_questions.length === 0) {
         
         let {extraQuestions} = this.props;
+
+        console.log(extraQuestions);
         
         extraQuestions.map((q, index) => {
           extra_questions[index] = { question_id: q.id, answer: ''};
@@ -130,12 +134,14 @@ class TicketAssignForm extends React.Component {
               <div className="col-sm-6">{T.translate("ticket_popup.edit_preferences")}</div>
               <div className="col-sm-6"></div>
             </div>
+            {extraQuestions && 
             <QuestionAnswersInput
                 id="extra_questions"
                 answers={ticket.extra_questions}
                 questions={extraQuestions}
                 onChange={onChange}                
-            />
+            />}
+            
             
             <hr/>
             {/*extraQuestions.map(q => {

@@ -18,7 +18,7 @@ import T from "i18n-react/dist/i18n-react";
 import '../../styles/tickets-list-page.less';
 import TicketList from '../../components/ticket-list';
 
-import { getUserTickets, selectTicket, getTicketPDF, assignAtendee, handleTicketChange } from '../../actions/ticket-actions';
+import { getUserTickets, selectTicket, getTicketPDF, assignAttendee, handleTicketChange } from '../../actions/ticket-actions';
 
 class TicketsListPage extends React.Component {
 
@@ -27,7 +27,7 @@ class TicketsListPage extends React.Component {
     }
 
     render() {
-        let {tickets, selectTicket, getTicketPDF, assignAtendee, handleTicketChange} = this.props;
+        let {tickets, selectTicket, getTicketPDF, assignAttendee, handleTicketChange, summits} = this.props;
         console.log(tickets);
         return (
             <div>
@@ -35,16 +35,18 @@ class TicketsListPage extends React.Component {
                   tickets={tickets}
                   selectTicket={selectTicket}
                   getTicketPDF={getTicketPDF}                  
-                  assignAtendee={assignAtendee}
+                  assignAttendee={assignAttendee}
                   handleTicketChange={handleTicketChange}
+                  summits={summits}                  
                 />
             </div>
         );
     }
 }
 
-const mapStateToProps = ({ ticketState }) => ({
-    tickets: ticketState.memberTickets
+const mapStateToProps = ({ ticketState, summitState }) => ({
+    tickets: ticketState.memberTickets,
+    summits: summitState.summits
 })
   
 export default connect (
@@ -53,7 +55,7 @@ export default connect (
       getUserTickets,
       selectTicket,
       getTicketPDF,
-      assignAtendee,
+      assignAttendee,
       handleTicketChange
     }
 )(TicketsListPage);

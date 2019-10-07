@@ -34,9 +34,17 @@ class TicketOptions extends React.Component {
     }
 
     handleTicketDate(ticket) {
-      let {summit} = this.props;
-      let summitDate = getFormatedDate(summit.start_date);      
-      return summitDate;      
+      let {summits} = this.props;
+      let summit = summits.find(s => s.id === ticket.owner.summit_id);
+      let dateRange = daysBetweenDates(summit.start_date, summit.end_date, summit.time_zone_id);
+      
+      if(dateRange.length > 1) {        
+        let summitDate = `${getFormatedDate(dateRange[0])}, ${getFormatedDate(dateRange[dateRange.length-1])}`;
+        return summitDate;
+      } else {
+        let summitDate = getFormatedDate(summit.start_date);
+        return summitDate;
+      }          
     }
 
     handleSummitLocation(summit) {

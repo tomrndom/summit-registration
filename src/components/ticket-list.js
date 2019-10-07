@@ -16,7 +16,7 @@ import T from 'i18n-react/dist/i18n-react'
 
 import TicketPopup from "../components/ticket-popup";
 
-import { getFormatedDate, getFormatedTime } from '../utils/helpers';
+import { daysBetweenDates, getDayNumberFromDate, getFormatedDate, getFormatedTime } from '../utils/helpers';
 
 class TicketList extends React.Component {
     constructor(props) {
@@ -95,8 +95,15 @@ class TicketList extends React.Component {
     handleTicketDate(ticket) {
       let {summits} = this.props;
       let summit = summits.find(s => s.id === ticket.owner.summit_id);
-      let summitDate = getFormatedDate(summit.start_date);      
-      return summitDate;      
+      let dateRange = daysBetweenDates(summit.start_date, summit.end_date, summit.time_zone_id);
+      
+      if(dateRange.length > 1) {        
+        let summitDate = `${getFormatedDate(dateRange[0])}, ${getFormatedDate(dateRange[dateRange.length-1])}`;
+        return summitDate;
+      } else {
+        let summitDate = getFormatedDate(summit.start_date);
+        return summitDate;
+      }          
     }
 
     handleEventName(ticket) {

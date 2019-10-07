@@ -16,7 +16,7 @@ import { withRouter } from 'react-router-dom';
 import T from 'i18n-react/dist/i18n-react';
 
 import '../styles/orders-list-page.less';
-import { getDayNumberFromDate, getFormatedDate, getFormatedTime } from '../utils/helpers';
+import { daysBetweenDates, getFormatedDate } from '../utils/helpers';
 
 class OrderList extends React.Component {
     constructor(props) {
@@ -119,7 +119,7 @@ class OrderList extends React.Component {
 
     getSummitDate(order) {
       let {summits} = this.props;
-      let summit = summits.find(s => s.id === order.owner.summit_id);
+      let summit = summits.find(s => s.id === order.summit_id);
       let dateRange = daysBetweenDates(summit.start_date, summit.end_date, summit.time_zone_id);
       
       if(dateRange.length > 1) {        

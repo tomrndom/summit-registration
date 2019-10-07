@@ -27,17 +27,20 @@ class TicketsListPage extends React.Component {
     }
 
     render() {
-        let {tickets, selectTicket, getTicketPDF, assignAttendee, handleTicketChange, summits} = this.props;
-        console.log(tickets);
+        let {tickets, extraQuestions, selectedTicket, selectTicket, getTicketPDF, assignAttendee, handleTicketChange, summits, loadingTickets, loadingSummits, errors} = this.props;        
         return (
             <div>
                 <TicketList 
                   tickets={tickets}
+                  selectedTicket={selectedTicket}
                   selectTicket={selectTicket}
                   getTicketPDF={getTicketPDF}                  
                   assignAttendee={assignAttendee}
                   handleTicketChange={handleTicketChange}
-                  summits={summits}                  
+                  summits={summits}
+                  extraQuestions={extraQuestions}
+                  loading={loadingTickets && loadingSummits}
+                  errors={errors}
                 />
             </div>
         );
@@ -46,7 +49,12 @@ class TicketsListPage extends React.Component {
 
 const mapStateToProps = ({ ticketState, summitState }) => ({
     tickets: ticketState.memberTickets,
-    summits: summitState.summits
+    selectedTicket: ticketState.selectedTicket,
+    loadingTickets: ticketState.loading,
+    errors: ticketState.errors,
+    summits: summitState.summits,
+    loadingSummits: summitState.loading,
+    extraQuestions: summitState.selectedSummit.order_extra_questions
 })
   
 export default connect (

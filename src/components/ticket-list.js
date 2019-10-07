@@ -61,9 +61,9 @@ class TicketList extends React.Component {
           class: 'ticket-complete'
         },
       ];
-      if (!ticket.extra_questions) {
+      if (!ticket.owner.extra_questions) {
         return status[0];
-      } else if (ticket.extra_questions) {
+      } else if (ticket.owner.extra_questions) {
         return status[1];
       }
     }
@@ -125,8 +125,8 @@ class TicketList extends React.Component {
 
 
     render() {
-      let { tickets, selectedTicket } = this.props;
-      let {showPopup} = this.state;
+      let { tickets, selectedTicket, extraQuestions, loading, errors } = this.props;
+      let { showPopup } = this.state;
 
       if (tickets) {
         return (

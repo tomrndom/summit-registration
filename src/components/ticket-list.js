@@ -64,7 +64,12 @@ class TicketList extends React.Component {
       if (!ticket.owner.extra_questions) {
         return status[0];
       } else if (ticket.owner.extra_questions) {
-        return status[1];
+        let answers = ticket.owner.extra_questions.some((q) => q.value == '');      
+        if(answers) {
+          return status[0];
+        } else {
+          return status[1];
+        }
       }
     }
 
@@ -135,11 +140,14 @@ class TicketList extends React.Component {
               {tickets.map((t) => {
                 return (
                   <div className="ticket complete p-2 col-sm-8 col-sm-offset-2" key={t.id} onClick={() => this.togglePopup(t)}>
-                      <div className="col-sm-5">
-                          <h4>{this.handleEventName(t)}</h4>
-                          <p className="status">Ready to Use</p>
+                      <div className="col-sm-1">
+                          <i className={`fa fa-2x ${this.handleTicketStatus(t).icon} ${this.handleTicketStatus(t).class}`}></i>                             
                       </div>
                       <div className="col-sm-5">
+                          <h4>{this.handleEventName(t)}</h4>
+                          <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
+                      </div>
+                      <div className="col-sm-4">
                           <h5>{this.handleTicketName(t)}</h5>
                           <p>{this.handleTicketLocation(t)} / {this.handleTicketDate(t)}</p>
                       </div>
@@ -160,7 +168,7 @@ class TicketList extends React.Component {
                   downloadTicket={this.handleTicketDownload}
                   closePopup={this.togglePopup.bind(this)}
                   updateTicket={this.handleTicketUpdate}
-                  fromTicket={true}                  
+                  fromTicketList={true}                  
                   errors={errors}
                 />  
               : null  

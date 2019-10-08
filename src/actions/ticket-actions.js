@@ -20,6 +20,7 @@ import validator from "validator"
 import {
     getRequest,
     putRequest,
+    deleteRequest,
     postRequest,
     createAction,
     stopLoading,
@@ -44,6 +45,7 @@ export const GET_TICKET_BY_HASH       = 'GET_TICKET_BY_HASH';
 export const ASSIGN_TICKET_BY_HASH    = 'ASSIGN_TICKET_BY_HASH';
 export const REGENERATE_TICKET_HASH   = 'REGENERATE_TICKET_HASH';
 export const GET_TICKET_PDF_BY_HASH   = 'GET_TICKET_PDF_BY_HASH';
+export const RESEND_NOTIFICATION      = 'RESEND_NOTIFICATION';
 
 export const handleResetTicket = () => (dispatch, getState) => {
   dispatch(createAction(RESET_TICKET)({}));
@@ -133,7 +135,30 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
 
 }
 
-export const removeAttendee = () => (dispatch, getState) => {
+export const resendNotification = () => (dispatch, getState) => {
+  
+  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
+  let { accessToken }     = loggedUserState;
+
+  dispatch(startLoading());
+
+  let params = {
+    access_token : accessToken
+  };
+
+  return putRequest(
+    null,
+    createAction(RESEND_NOTIFICATION),
+    `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectedTicket.id}/attendee/reinvite`,
+    authErrorHandler
+  )(params)(dispatch).then(() => {
+    dispatch(stopLoading());
+  }
+);
+  
+}
+
+export const removeAttendee = (tempTicket) => (dispatch, getState) => {
 
   let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
@@ -144,15 +169,16 @@ export const removeAttendee = () => (dispatch, getState) => {
     access_token : accessToken
   };
 
-  return getRequest(
+  let {attendee_email, attendee_first_name, attendee_last_name, extra_questions} = tempTicket;
+
+  return deleteRequest(
       null,
-      createAction(REMOVE_TICKET_ATTENDEE),
+      createAction(REMOVE_TICKET_ATTENDEE),        
       `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectedTicket.id}/attendee`,
       authErrorHandler
   )(params)(dispatch).then(() => {
-      dispatch(stopLoading());
-    }
-  );
+      dispatch(assignAttendee(attendee_email, attendee_first_name, attendee_last_name, extra_questions));
+    }).catch((e) => console.log('error', e));
 
 }
 

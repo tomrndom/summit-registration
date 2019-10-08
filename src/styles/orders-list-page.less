@@ -15,6 +15,19 @@
             list-style-type: none;
         }
         div:first-of-type {
+          margin-top: 10px;
+          margin-left: -30px;
+          .order-warning {
+            color: #cc9933;
+          }
+          .order-complete {
+            color: #669933;
+          }
+          .order-unset {
+            color: #000
+          }        
+        }
+        div:nth-child(2) {
             display: flex;
             flex-direction: column;
         }
@@ -23,6 +36,18 @@
             font-size: 0.7em;
             color: #000;
             text-transform: uppercase;
+            &.order-warning {
+              color: #cc9933;
+            }
+            &.order-complete {
+              color: #669933;
+            }
+            &.order-unset {
+              color: #000
+            }
+            &.order-cancel {
+              color: #da0000;
+            }
         }
         &:hover {
             background-color: #eee;

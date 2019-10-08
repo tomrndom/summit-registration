@@ -18,8 +18,10 @@ import OrderSummary from "../../components/order-summary";
 import TicketPopup from "../../components/ticket-popup";
 import TicketOptions from "../../components/ticket-options";
 
-import { selectTicket, getTicketPDF, assignAttendee, handleTicketChange, refundTicket } from '../../actions/ticket-actions';
+import { selectTicket, getTicketPDF, assignAttendee, handleTicketChange, refundTicket, removeAttendee, resendNotification } from '../../actions/ticket-actions';
 import { cancelOrder } from '../../actions/order-actions';
+
+import { daysBetweenDates, getFormatedDate } from '../../utils/helpers';
 
 import '../../styles/order-detail-page.less';
 
@@ -37,6 +39,12 @@ class OrderDetailPage extends React.Component {
     this.handleOrderCancel = this.handleOrderCancel.bind(this);
     this.handleTicketStatus = this.handleTicketStatus.bind(this);
     this.handleTicketUpdate = this.handleTicketUpdate.bind(this);
+    this.handleSummitLocation = this.handleSummitLocation.bind(this);
+    this.handleTicketDate = this.handleTicketDate.bind(this);
+    this.handleTicketRemoveAttendee = this.handleTicketRemoveAttendee.bind(this);
+    this.handleResendNotification = this.handleResendNotification.bind(this);
+    this.handleTicketCancel = this.handleTicketCancel.bind(this);
+
   }
 
   togglePopup(ticket) {
@@ -69,10 +77,15 @@ class OrderDetailPage extends React.Component {
     ];
     if(ticket.owner_id === 0) {
       return status[0];
-    } else if (!ticket.extra_questions) {
+    } else if (!ticket.owner.extra_questions) {
       return status[1];
-    } else if (ticket.extra_questions) {
-      return status[2];
+    } else if (ticket.owner.extra_questions) {
+      let answers = ticket.owner.extra_questions.some((q) => q.value == '');      
+      if(answers) {
+        return status[1];
+      } else {
+        return status[2];
+      }
     }
   }
 
@@ -85,14 +98,21 @@ class OrderDetailPage extends React.Component {
     this.props.cancelOrder(order);
   }
 
-  handleTicketCancel() {
-    let {ticket} = this.props;
+  handleTicketCancel(ticket) {
     this.props.refundTicket(ticket);
   }
 
   handleTicketUpdate(ticket){
     let { attendee_first_name, attendee_last_name, attendee_email, extra_questions } = ticket;    
     this.props.assignAttendee(attendee_email, attendee_first_name, attendee_last_name, extra_questions);
+  }
+
+  handleTicketRemoveAttendee(ticket) {
+    this.props.removeAttendee(ticket);
+  }
+
+  handleResendNotification() {
+    this.props.resendNotification();
   }
 
   handleChange(ev) {
@@ -106,6 +126,27 @@ class OrderDetailPage extends React.Component {
     this.props.handleTicketChange(ticket, errors);
   }
 
+  handleTicketDate() {
+    let {summit} = this.props;
+    let dateRange = daysBetweenDates(summit.start_date, summit.end_date, summit.time_zone_id);
+    
+    if(dateRange.length > 1) {        
+      let summitDate = `${getFormatedDate(dateRange[0])}, ${getFormatedDate(dateRange[dateRange.length-1])}`;
+      return summitDate;
+    } else {
+      let summitDate = getFormatedDate(summit.start_date);
+      return summitDate;
+    }          
+  }
+
+  handleSummitLocation() {
+    let {summit} = this.props;
+    if(summit.locations.length === 1) {
+      let location = `${summit.locations[0].city}, ${summit.locations[0].country}`;
+      return location;
+    }
+  }
+
   render() {
       let {order, summit, ticket, errors, extraQuestions, member} = this.props;
       let {showPopup} = this.state;
@@ -116,7 +157,7 @@ class OrderDetailPage extends React.Component {
                   <div className="col-md-8">
                     <div className="order-detail__title">
                       <h4><b>{summit.name}</b></h4>
-                      California, US / September 18, 2019
+                      {this.handleSummitLocation()} / {this.handleTicketDate()}
                     </div>
                     <div className="ticket-list">
                       {summit.ticket_types.map((s, index) => {
@@ -126,7 +167,7 @@ class OrderDetailPage extends React.Component {
                             <div className="ticket-type">
                               {s.name} Tickets x3
                             </div>
-                            &&      
+                            &&
                             order.tickets.map(t => {
                               return (
                                 s.id === t.ticket_type_id ?                                
@@ -174,6 +215,8 @@ class OrderDetailPage extends React.Component {
                   closePopup={this.togglePopup.bind(this)}
                   cancelTicket={this.handleTicketCancel}
                   updateTicket={this.handleTicketUpdate}
+                  resendNotification={this.handleResendNotification}
+                  removeAttendee={this.handleTicketRemoveAttendee}                  
                   errors={errors}
                 />  
               : null  
@@ -200,6 +243,8 @@ export default connect(
       cancelOrder,
       assignAttendee,
       handleTicketChange,
-      refundTicket
+      refundTicket,
+      removeAttendee,
+      resendNotification
     }
 )(OrderDetailPage);

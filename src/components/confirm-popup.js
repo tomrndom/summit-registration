@@ -73,8 +73,8 @@ class ConfirmPopup extends React.Component {
                 }
               })()}
               <div className="buttons">
-                <span onClick={() => closePopup(false)}>{T.translate("confirm_popup.cancel")}</span>
-                <span onClick={() => closePopup(true)}>{T.translate("confirm_popup.accept")}</span>
+                <span onClick={() => closePopup(false, popupCase)}>{T.translate("confirm_popup.cancel")}</span>
+                <span onClick={() => closePopup(true, popupCase)}>{T.translate("confirm_popup.accept")}</span>
               </div>              
             </div>
           </div>

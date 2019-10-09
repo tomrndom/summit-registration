@@ -12,7 +12,7 @@
  **/
 
 import { START_LOADING, STOP_LOADING, LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
-import { RESET_TICKET, GET_TICKETS, GET_TICKET_BY_HASH, SELECT_TICKET, CHANGE_TICKET } from "../actions/ticket-actions";
+import { RESET_TICKET, GET_TICKETS, GET_TICKET_BY_HASH, SELECT_TICKET, CHANGE_TICKET, REMOVE_TICKET_ATTENDEE, ASSIGN_TICKET } from "../actions/ticket-actions";
 
 const DEFAULT_STATE = {
     loading: false,
@@ -47,6 +47,10 @@ const memberReducer = (state = DEFAULT_STATE, action) => {
             return {...state, selectedTicket: payload.response};
         case SELECT_TICKET:
             return {...state, selectedTicket: payload};
+        case ASSIGN_TICKET:
+            return {...state, selectedTicket: payload.response};
+        case REMOVE_TICKET_ATTENDEE:
+            return {...state, selectedTicket: payload.response};
         default:
             return state;
             break;

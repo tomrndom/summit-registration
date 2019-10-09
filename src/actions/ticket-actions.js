@@ -32,6 +32,7 @@ import {
 } from 'openstack-uicore-foundation/lib/methods';
 import { selectSummitById } from "./summit-actions";
 import { getUserSummits } from '../actions/summit-actions';
+import { getUserOders } from "./order-actions";
 
 export const RESET_TICKET             = 'RESET_TICKET';
 export const GET_TICKETS              = 'GET_TICKETS';
@@ -109,7 +110,7 @@ export const handleTicketChange = (ticket, errors = {}) => (dispatch, getState) 
 
 }
 
-export const assignAttendee = (attendee_email, attendee_first_name, attendee_last_name, extra_questions) => (dispatch, getState) => {  
+export const assignAttendee = (attendee_email, attendee_first_name, attendee_last_name, extra_questions, fromTicket) => (dispatch, getState) => {  
 
   let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
@@ -117,7 +118,8 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
   dispatch(startLoading());
 
   let params = {
-    access_token : accessToken
+    access_token : accessToken,
+    expand: 'owner, owner.extra_questions'
   };
 
   let normalizedEntity = { attendee_email, attendee_first_name, attendee_last_name, extra_questions };
@@ -129,7 +131,11 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
       normalizedEntity,
       authErrorHandler
   )(params)(dispatch).then(() => {
-      dispatch(stopLoading());
+      if(fromTicket){
+        dispatch(getUserTickets());
+      } else {
+        dispatch(getUserOders(selectedOrder.id));            
+      }
     }
   );
 
@@ -166,7 +172,8 @@ export const removeAttendee = (tempTicket) => (dispatch, getState) => {
   dispatch(startLoading());
 
   let params = {
-    access_token : accessToken
+    access_token : accessToken,
+    expand: 'order, owner, owner.extra_questions, order.summit'
   };
 
   let {attendee_email, attendee_first_name, attendee_last_name, extra_questions} = tempTicket;

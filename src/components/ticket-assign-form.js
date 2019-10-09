@@ -130,39 +130,22 @@ class TicketAssignForm extends React.Component {
               </div>
             </div>
             <hr/>
-            <div className="row popup-basic-info">
-              <div className="col-sm-6">{T.translate("ticket_popup.edit_preferences")}</div>
-              <div className="col-sm-6"></div>
-            </div>
             {extraQuestions && 
-            <QuestionAnswersInput
-                id="extra_questions"
-                answers={ticket.extra_questions}
-                questions={extraQuestions}
-                questions_type={'Ticket'}
-                onChange={onChange}
-            />}
-            
-            
-            <hr/>
-            {/*extraQuestions.map(q => {
-              console.log(q);
-              const QuestionComponent = extraQuestionsComponents[q.type];
-              return(
-                <div className="row field-wrapper" key={q.id}>
-                  <div className="col-sm-4">{q.label}{q.mandatory?'*':''}</div>
-                  <div className="col-sm-6">
-                    <QuestionComponent 
-                      name={q.name}
-                      placeholder={q.placeholder}
-                      value={extraQuestionsTemp[q.id]}
-                      onChange={this.handleChange}
-                      options={q.values ? q.values : undefined}                      
-                    />
-                  </div>
-                </div>
-              )
-            })*/}                     
+            <React.Fragment>
+              <div className="row popup-basic-info">
+                <div className="col-sm-6">{T.translate("ticket_popup.edit_preferences")}</div>
+                <div className="col-sm-6"></div>
+              </div>
+              <QuestionAnswersInput
+                  id="extra_questions"
+                  answers={ticket.extra_questions}
+                  questions={extraQuestions}
+                  questions_type={'Ticket'}
+                  onChange={onChange}
+              />                        
+              <hr/>
+            </React.Fragment>
+            }            
             {!guest &&
               <div className="row field-wrapper">
                 <div className="col-sm-4"></div>

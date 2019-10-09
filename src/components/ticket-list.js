@@ -79,7 +79,8 @@ class TicketList extends React.Component {
 
     handleTicketUpdate(ticket){
       let { attendee_first_name, attendee_last_name, attendee_email, extra_questions } = ticket;    
-      this.props.assignAttendee(attendee_email, attendee_first_name, attendee_last_name, extra_questions);
+      let fromTicket = true;
+      this.props.assignAttendee(attendee_email, attendee_first_name, attendee_last_name, extra_questions, fromTicket);
     }
 
     handleTicketLocation(ticket) {

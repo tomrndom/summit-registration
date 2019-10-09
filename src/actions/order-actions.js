@@ -198,7 +198,7 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
     .catch(e => console.log('error', e));
 }
 
-export const getUserOders = () => (dispatch, getState) => {
+export const getUserOders = (updateId) => (dispatch, getState) => {
   
   let { loggedUserState } = getState();
   let { accessToken }     = loggedUserState;
@@ -216,16 +216,27 @@ export const getUserOders = () => (dispatch, getState) => {
       `${window.API_BASE_URL}/api/v1/summits/all/orders/me`,
       authErrorHandler
   )(params)(dispatch).then(() => {
-      dispatch(getUserSummits('orders'));
+      if(updateId){
+        dispatch(selectOrder({}, updateId))
+      } else {
+        dispatch(getUserSummits('orders'));
+      }
     }
   );
 }
 
-export const selectOrder = (order) => (dispatch, getState) => {
+export const selectOrder = (order, updateId = null) => (dispatch, getState) => {    
     
   dispatch(startLoading());
 
-  dispatch(createAction(SELECT_ORDER)(order));
+  if(updateId) {
+    let {orderState: {memberOrders}} = getState();
+    let updatedOrder = memberOrders.find(o => o.id === updateId);
+    dispatch(createAction(SELECT_ORDER)(updatedOrder));
+  } else {      
+    dispatch(createAction(SELECT_ORDER)(order));
+  }
+
 
   dispatch(stopLoading());
 

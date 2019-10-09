@@ -115,9 +115,11 @@ class TicketPopup extends React.Component {
       if(self){
         const { email } = this.props.member;
         this.props.updateTicket({attendee_email: email});
+        this.props.closePopup();
       } else {
         let { tempTicket } = this.state;
         this.props.updateTicket(tempTicket);
+        this.props.closePopup();
       }           
     }
 

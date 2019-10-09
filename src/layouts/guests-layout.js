@@ -52,9 +52,8 @@ class GuestsLayout extends React.Component {
 
     componentDidUpdate() {
       let {attendee_email, attendee_first_name, attendee_last_name, extra_questions} = this.state.tempTicket;
-      let {owner} = this.props.ticket;
-      console.log('owner', owner);
-      if(owner && (!attendee_email || !attendee_first_name || !attendee_last_name || !extra_questions)) {
+      let {owner} = this.props.ticket;      
+      if(owner && !attendee_email && (!attendee_first_name || !attendee_last_name || !extra_questions)) {
         let {email, first_name, surname, extra_questions} = owner;
         let formattedQuestions = [];
         extra_questions.map(q => {

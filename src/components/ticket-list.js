@@ -169,6 +169,8 @@ class TicketList extends React.Component {
                   downloadTicket={this.handleTicketDownload}
                   closePopup={this.togglePopup.bind(this)}
                   updateTicket={this.handleTicketUpdate}
+                  resendNotification={this.props.resendNotification}
+                  removeAttendee={this.props.removeAttendee}  
                   fromTicketList={true}                  
                   errors={errors}
                 />  

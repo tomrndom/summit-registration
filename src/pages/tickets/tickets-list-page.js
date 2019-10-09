@@ -18,16 +18,46 @@ import T from "i18n-react/dist/i18n-react";
 import '../../styles/tickets-list-page.less';
 import TicketList from '../../components/ticket-list';
 
-import { getUserTickets, selectTicket, getTicketPDF, assignAttendee, handleTicketChange } from '../../actions/ticket-actions';
+import { getUserTickets, selectTicket, getTicketPDF, assignAttendee, handleTicketChange, resendNotification, removeAttendee } from '../../actions/ticket-actions';
 
 class TicketsListPage extends React.Component {
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+    };
+
+    this.handleTicketRemoveAttendee = this.handleTicketRemoveAttendee.bind(this);
+    this.handleResendNotification = this.handleResendNotification.bind(this);
+
+  }
 
     componentWillMount() {    
         this.props.getUserTickets();
     }
 
+    handleTicketRemoveAttendee(ticket) {
+      this.props.removeAttendee(ticket);
+    }
+  
+    handleResendNotification() {
+      this.props.resendNotification();
+    }
+
     render() {
-        let {tickets, extraQuestions, selectedTicket, selectTicket, getTicketPDF, assignAttendee, handleTicketChange, summits, loadingTickets, loadingSummits, errors} = this.props;        
+        let { 
+          tickets, 
+          extraQuestions, 
+          selectedTicket, 
+          selectTicket, 
+          getTicketPDF, 
+          assignAttendee, 
+          handleTicketChange, 
+          summits, 
+          loadingTickets, 
+          loadingSummits, 
+          errors} = this.props;        
         return (
             <div>
                 <TicketList 
@@ -37,6 +67,8 @@ class TicketsListPage extends React.Component {
                   getTicketPDF={getTicketPDF}                  
                   assignAttendee={assignAttendee}
                   handleTicketChange={handleTicketChange}
+                  removeAttendee={this.handleTicketRemoveAttendee}
+                  resendNotification={this.handleResendNotification}
                   summits={summits}
                   extraQuestions={extraQuestions}
                   loading={loadingTickets && loadingSummits}
@@ -64,7 +96,9 @@ export default connect (
       selectTicket,
       getTicketPDF,
       assignAttendee,
-      handleTicketChange
+      handleTicketChange,
+      removeAttendee,
+      resendNotification
     }
 )(TicketsListPage);
   

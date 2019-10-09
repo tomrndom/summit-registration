@@ -117,6 +117,8 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
 
   dispatch(startLoading());
 
+  let orderId = selectedTicket.order ? selectedTicket.order.id : selectedTicket.order_id;
+
   let params = {
     access_token : accessToken,
     expand: 'owner, owner.extra_questions'
@@ -127,7 +129,7 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
   return putRequest(
       null,
       createAction(ASSIGN_TICKET),
-      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectedTicket.id}/attendee`,
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/${orderId}/tickets/${selectedTicket.id}/attendee`,
       normalizedEntity,
       authErrorHandler
   )(params)(dispatch).then(() => {
@@ -143,7 +145,7 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
 
 export const resendNotification = () => (dispatch, getState) => {
   
-  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
+  let { loggedUserState, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
 
   dispatch(startLoading());
@@ -155,7 +157,7 @@ export const resendNotification = () => (dispatch, getState) => {
   return putRequest(
     null,
     createAction(RESEND_NOTIFICATION),
-    `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectedTicket.id}/attendee/reinvite`,
+    `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedTicket.order.id}/tickets/${selectedTicket.id}/attendee/reinvite`,
     authErrorHandler
   )(params)(dispatch).then(() => {
     dispatch(stopLoading());
@@ -166,7 +168,7 @@ export const resendNotification = () => (dispatch, getState) => {
 
 export const removeAttendee = (tempTicket) => (dispatch, getState) => {
 
-  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
+  let { loggedUserState, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
 
   dispatch(startLoading());
@@ -181,7 +183,7 @@ export const removeAttendee = (tempTicket) => (dispatch, getState) => {
   return deleteRequest(
       null,
       createAction(REMOVE_TICKET_ATTENDEE),        
-      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectedTicket.id}/attendee`,
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedTicket.order.id}/tickets/${selectedTicket.id}/attendee`,
       authErrorHandler
   )(params)(dispatch).then(() => {
       dispatch(assignAttendee(attendee_email, attendee_first_name, attendee_last_name, extra_questions));
@@ -191,8 +193,10 @@ export const removeAttendee = (tempTicket) => (dispatch, getState) => {
 
 export const getTicketPDF = () => (dispatch, getState) => {
 
-  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
+  let { loggedUserState, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
+
+  console.log(selectedTicket.order.id);
 
   dispatch(startLoading());
 
@@ -201,7 +205,7 @@ export const getTicketPDF = () => (dispatch, getState) => {
   };
 
   let queryString = objectToQueryString(params);
-  let apiUrl = `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectedTicket.id}/pdf?${queryString}`;
+  let apiUrl = `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedTicket.order.id}/tickets/${selectedTicket.id}/pdf?${queryString}`;
 
     dispatch(startLoading());
 

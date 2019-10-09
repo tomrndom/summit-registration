@@ -12,7 +12,7 @@
  **/
 
 import { START_LOADING, STOP_LOADING, LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
-import { GET_SUMMIT_BY_ID, GET_SUMMIT_BY_SLUG, SELECT_SUMMIT, GET_EXTRA_QUESTIONS } from "../actions/summit-actions";
+import { GET_SUMMIT_BY_ID, GET_SUMMIT_BY_SLUG, SELECT_SUMMIT } from "../actions/summit-actions";
 
 
 const DEFAULT_STATE = {
@@ -51,10 +51,7 @@ const summitReducer = (state = DEFAULT_STATE, action) => {
             return {...state, summits: [ ...state.summits, summit ]}
         case SELECT_SUMMIT:
             return {...state, selectedSummit: payload};
-            break;        
-        case GET_EXTRA_QUESTIONS:
-            console.log(payload);
-            return {...state, selectedSummit: { extra_questions: payload }}
+            break;
         default:
             return state;
             break;

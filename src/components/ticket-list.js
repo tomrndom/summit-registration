@@ -53,15 +53,25 @@ class TicketList extends React.Component {
         { 
           text: 'REQUIRED DETAILS NEEDED',
           icon: 'fa-exclamation-circle',
+          ticketClass: 'warning',
           class: 'ticket-warning'
         },
         { 
           text: 'READY TO USE',
           icon: 'fa-check-circle',
+          ticketClass: 'complete',
           class: 'ticket-complete'
         },
+        { 
+          text: 'CANCELLED',         
+          ticketClass: 'cancel', 
+          class: 'ticket-cancel'
+        },
       ];
-      if (!ticket.owner.extra_questions) {
+      if(ticket.status === 'Cancelled') {
+        return status[2];
+      }
+      else if (!ticket.owner.extra_questions) {
         return status[0];
       } else if (ticket.owner.extra_questions) {
         let answers = ticket.owner.extra_questions.some((q) => q.value == '');      
@@ -140,7 +150,8 @@ class TicketList extends React.Component {
             <div className="row">
               {tickets.map((t) => {
                 return (
-                  <div className="ticket complete p-2 col-sm-8 col-sm-offset-2" key={t.id} onClick={() => this.togglePopup(t)}>
+                  <div className={`ticket ${this.handleTicketStatus(t).ticketClass} p-2 col-sm-8 col-sm-offset-2`} key={t.id} 
+                    onClick={() => {t.status === "Cancelled" ? null: this.togglePopup(t)}}>
                       <div className="col-sm-1">
                           <i className={`fa fa-2x ${this.handleTicketStatus(t).icon} ${this.handleTicketStatus(t).class}`}></i>                             
                       </div>

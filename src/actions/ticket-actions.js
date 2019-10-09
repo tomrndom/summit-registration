@@ -196,8 +196,6 @@ export const getTicketPDF = () => (dispatch, getState) => {
   let { loggedUserState, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
 
-  console.log(selectedTicket.order.id);
-
   dispatch(startLoading());
 
   let params = {
@@ -209,20 +207,19 @@ export const getTicketPDF = () => (dispatch, getState) => {
 
     dispatch(startLoading());
 
-    return fetch(apiUrl, { responseType: 'arraybuffer' })
-        .then((response) => {
-            console.log(response)
+    return fetch(apiUrl, { responseType: 'arraybuffer', headers: {'Content-Type': 'application/pdf'}})
+        .then((response) => {            
             if (!response.ok) {
                 dispatch(stopLoading());
                 throw response;
             } else {
-                return response.text();
+                return response;
             }
         })
         .then((pdf) => {
             console.log(pdf);
             dispatch(stopLoading());
-            const blob = new Blob([pdf], {type: 'application/pdf'});
+            const blob = new Blob([pdf.body], {type: 'application/pdf'});
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;

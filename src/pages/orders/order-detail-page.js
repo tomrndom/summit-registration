@@ -62,20 +62,31 @@ class OrderDetailPage extends React.Component {
       { 
         text: 'UNASSIGNED',
         icon: 'fa-exclamation-circle',
+        orderClass: 'unset',
         class: 'ticket-unset'
       },
       { 
         text: 'REQUIRED DETAILS NEEDED',
         icon: 'fa-exclamation-circle',
+        orderClass: 'warning',
         class: 'ticket-warning'
       },
       { 
         text: 'READY TO USE',
         icon: 'fa-check-circle',
+        orderClass: 'complete',
         class: 'ticket-complete'
       },
+      { 
+        text: 'CANCELLED',        
+        orderClass: 'cancel',
+        class: 'ticket-cancel'
+      },
     ];
-    if(ticket.owner_id === 0) {
+    if(ticket.status === "Cancelled") {
+      return status[3];
+    }
+    else if(ticket.owner_id === 0) {
       return status[0];
     } else if (!ticket.owner.extra_questions) {
       return status[1];
@@ -172,8 +183,8 @@ class OrderDetailPage extends React.Component {
                             order.tickets.map(t => {
                               return (
                                 s.id === t.ticket_type_id ?                                
-                                <div className="row" key={t.id} onClick={() => this.togglePopup(t)}>                                  
-                                  <div className="ticket complete p-2 col-sm-12 col-sm-offset-1">        
+                                <div className="row" key={t.id} onClick={() => {t.status === "Cancelled" ? null: this.togglePopup(t)}}>
+                                  <div className={`ticket ${this.handleTicketStatus(t).orderClass} p-2 col-sm-12 col-sm-offset-1`}>        
                                       <div className="col-sm-1">
                                         <i className={`fa fa-2x ${this.handleTicketStatus(t).icon} ${this.handleTicketStatus(t).class}`}></i>                             
                                       </div>

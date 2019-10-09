@@ -71,19 +71,23 @@ class OrderList extends React.Component {
         { 
           text: 'READY TO USE',
           icon: 'fa-check-circle',
+          orderClass: 'complete',
           class: 'order-complete'
         },
         { 
           text: 'REQUIRED DETAILS NEEDED',
           icon: 'fa-exclamation-circle',
+          orderClass: 'warning',
           class: 'order-warning'
         },
         { 
           text: 'PENDING CONFIRMATION',          
+          orderClass: 'pending',
           class: 'order-pending'
         },
         { 
-          text: 'CANCELLED',          
+          text: 'CANCELLED',
+          orderClass: 'cancelled',
           class: 'order-cancel'
         },
       ];
@@ -144,7 +148,7 @@ class OrderList extends React.Component {
                 {orders.map(o => {
                   return (                    
                     <div className="row" key={o.id} onClick={() => this.handleOrderSelect(o)}>
-                        <div className={`order ${this.handleOrderStatus(o).class} p-2 col-sm-8 col-sm-offset-2`}>                   
+                        <div className={`order ${this.handleOrderStatus(o).orderClass} p-2 col-sm-8 col-sm-offset-2`}>                   
                             <div className="col-sm-1">
                                 <i className={`fa fa-2x ${this.handleOrderStatus(o).icon} ${this.handleOrderStatus(o).class}`}></i>                             
                             </div>

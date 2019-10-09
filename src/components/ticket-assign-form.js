@@ -139,7 +139,8 @@ class TicketAssignForm extends React.Component {
                 id="extra_questions"
                 answers={ticket.extra_questions}
                 questions={extraQuestions}
-                onChange={onChange}                
+                questions_type={'Ticket'}
+                onChange={onChange}
             />}
             
             

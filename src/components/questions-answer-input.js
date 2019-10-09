@@ -155,11 +155,11 @@ export default class QuestionAnswersInput extends React.Component {
 
     render() {
         let { answers } = this.state;
-        let { questions } = this.props;
+        let { questions, questions_type } = this.props;
 
         return (
             <div>
-                {questions.filter(q => q.usage === "Both" || q.usage === "Ticket").map( q => {
+                {questions.filter(q => q.usage === "Both" || q.usage === questions_type).map( q => {
                     let answer = answers.find(ans => ans.question_id == q.id);
                     let answerValue = answer ? answer.answer : null;
                     return (                      

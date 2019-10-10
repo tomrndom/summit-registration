@@ -209,48 +209,24 @@ export const getTicketPDF = () => (dispatch, getState) => {
   let orderId = selectedTicket.order ? selectedTicket.order.id : selectedTicket.order_id;
 
   let queryString = objectToQueryString(params);
-  let apiUrl = `${window.API_BASE_URL}/api/v1/summits/all/orders/${orderId}/tickets/${selectedTicket.id}/pdf?${queryString}`;
+  let apiUrl = `${window.API_BASE_URL}/api/v1/summits/all/orders/${orderId}/tickets/${selectedTicket.id}/pdf?${queryString}`;  
 
     dispatch(startLoading());
 
-    return fetch(apiUrl, { responseType: 'arraybuffer', headers: {'Content-Type': 'application/pdf'}})
+    return fetch(apiUrl, { responseType: 'Blob', headers: {'Content-Type': 'application/pdf'}})
         .then((response) => {            
             if (!response.ok) {
                 dispatch(stopLoading());
                 throw response;
             } else {
-                return response;
+                return response.blob();
             }
         })
         .then((pdf) => {
-            console.log(pdf);
             dispatch(stopLoading());
-            const blob = new Blob([pdf.body], {type: 'application/pdf'});
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            const contentDisposition = pdf.headers['content-disposition'];
-            let fileName = 'ticket';
-            if (contentDisposition) {
-                const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
-                if (fileNameMatch.length === 2)
-                    fileName = fileNameMatch[1];
-            }
-            link.setAttribute('download', fileName);
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
-            window.URL.revokeObjectURL(url);
-            document.body.removeChild(link);
-
-            /*let link = document.createElement('a');
-            link.textContent = 'download';
-            link.download = filename;
-            link.href = 'data:text/csv;charset=utf-8,'+ encodeURI(pdf);
-            document.body.appendChild(link); // Required for FF
-            link.click();
-            document.body.removeChild(link);
-            */
+            const blob = new Blob([pdf], {type: 'application/pdf'});
+            const url = window.URL.createObjectURL(pdf);
+            window.open(url);            
         })
         .catch(fetchErrorHandler);
 };
@@ -335,13 +311,10 @@ export const getTicketPDFByHash = (hash) => (dispatch, getState) => {
   
   dispatch(startLoading());
 
-  return getRequest(
-      null,
-      createAction(GET_TICKET_PDF_BY_HASH),
-      `${window.API_BASE_URL}/api/public/v1/summits/all/orders/orders/all/tickets/${hash}/pdf`,
-      authErrorHandler
-  )()(dispatch).then(() => {
-      dispatch(stopLoading());
-    }
-  );
+  const apiUrl = `${window.API_BASE_URL}/api/public/v1/summits/all/orders/orders/all/tickets/${hash}/pdf`;
+
+  window.open(apiUrl);
+
+  dispatch(stopLoading());
+  
 }

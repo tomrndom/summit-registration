@@ -48,13 +48,15 @@ class OrderSummary extends React.Component {
         });
         
         let discountTotal = 0;
-        let discounts = order.tickets.filter(tix => tix.coupon).map(tix => {
+        console.log(order.tickets);
+        let discounts = order.tickets.filter(tix => tix.discount).map(tix => {
             let tixType = ticket_types.find(tt => tt.id == tix.type_id || tix.ticket_type_id);
 
-            let discountTmp = (tix.coupon.percentage / 100) * tixType.cost;
+            let discountPercentageTmp = (tix.discount * 100) / tixType.raw_cost;
+            let discountTmp = (discountPercentageTmp / 100) * tixType.raw_cost;
             discountTotal = discountTotal + discountTmp;
 
-            return {tix_type: tixType, percentage: tix.coupon.percentage, code: tix.coupon.code};
+            return {tix_type: tixType, percentage: discountPercentageTmp, code: tix.coupon.code};
         });
 
         let total = ticketTotal - discountTotal;

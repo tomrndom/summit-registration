@@ -150,6 +150,8 @@ export const resendNotification = () => (dispatch, getState) => {
 
   dispatch(startLoading());
 
+  let orderId = selectedTicket.order ? selectedTicket.order.id : selectedTicket.order_id;
+
   let params = {
     access_token : accessToken
   };
@@ -157,7 +159,7 @@ export const resendNotification = () => (dispatch, getState) => {
   return putRequest(
     null,
     createAction(RESEND_NOTIFICATION),
-    `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedTicket.order.id}/tickets/${selectedTicket.id}/attendee/reinvite`,
+    `${window.API_BASE_URL}/api/v1/summits/all/orders/${orderId}/tickets/${selectedTicket.id}/attendee/reinvite`,
     authErrorHandler
   )(params)(dispatch).then(() => {
     dispatch(stopLoading());
@@ -178,12 +180,14 @@ export const removeAttendee = (tempTicket) => (dispatch, getState) => {
     expand: 'order, owner, owner.extra_questions, order.summit'
   };
 
+  let orderId = selectedTicket.order ? selectedTicket.order.id : selectedTicket.order_id;
+
   let {attendee_email, attendee_first_name, attendee_last_name, extra_questions} = tempTicket;
 
   return deleteRequest(
       null,
       createAction(REMOVE_TICKET_ATTENDEE),        
-      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedTicket.order.id}/tickets/${selectedTicket.id}/attendee`,
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/${orderId}/tickets/${selectedTicket.id}/attendee`,
       authErrorHandler
   )(params)(dispatch).then(() => {
       dispatch(assignAttendee(attendee_email, attendee_first_name, attendee_last_name, extra_questions));
@@ -202,8 +206,10 @@ export const getTicketPDF = () => (dispatch, getState) => {
     access_token : accessToken
   };
 
+  let orderId = selectedTicket.order ? selectedTicket.order.id : selectedTicket.order_id;
+
   let queryString = objectToQueryString(params);
-  let apiUrl = `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedTicket.order.id}/tickets/${selectedTicket.id}/pdf?${queryString}`;
+  let apiUrl = `${window.API_BASE_URL}/api/v1/summits/all/orders/${orderId}/tickets/${selectedTicket.id}/pdf?${queryString}`;
 
     dispatch(startLoading());
 

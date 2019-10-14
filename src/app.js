@@ -60,18 +60,18 @@ class App extends React.PureComponent {
     }
 
     render() {
-        let {isLoggedUser, onUserAuth, doLogout, getUserInfo, member, backUrl} = this.props;        
+        let {isLoggedUser, onUserAuth, doLogout, getUserInfo, member, backUrl, summit} = this.props;
         return (
             <Router history={history}>
                 <div className="container">
                     <AjaxLoader show={ this.props.loading } size={ 120 }/>
                     <div className="header row">
-                        <div className="header-logo col-md-2">LOGO</div>
-                        <div className="header-title col-md-8">
-                            <h3>Summit Registration</h3>
+                        <div className="header-logo">LOGO</div>
+                        <div className="header-title">
+                            <h3>{summit && summit.name ? summit.name : 'Summit Registration'}</h3>
                             {isLoggedUser && <NavBar />}
                         </div>
-                        <div className="col-md-2">
+                        <div className="header-user">
                             <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut}/>
                             <a onClick={this.props.handleResetOrder}>x</a>
                         </div>
@@ -92,10 +92,11 @@ class App extends React.PureComponent {
     }
 }
 
-const mapStateToProps = ({ loggedUserState, baseState }) => ({
+const mapStateToProps = ({ loggedUserState, summitState, baseState }) => ({
     isLoggedUser: loggedUserState.isLoggedUser,
     backUrl: loggedUserState.backUrl,
     member: loggedUserState.member,
+    summit: summitState.currentSummit,
     loading : baseState.loading,
 })
 

@@ -39,10 +39,11 @@ export default class AuthButton extends React.Component {
         if (isLoggedUser) {
             return (
                 <div className="user-menu" onMouseEnter={this.toggleLogOut} onMouseLeave={this.toggleLogOut}>
-                    {member ? `Hi ${member.first_name}` : 'Hi'}&nbsp;
+                    <span className="user-greeting">{member ? `Hi ${member.first_name}` : 'Hi'}&nbsp;</span>
                     <div className="profile-pic">
                         <img src={profile_pic} />
                     </div>
+                    <br/>
                     {showLogOut &&
                     <button className="btn btn-default btn-xs logout" onClick={() => { initLogOut(); }}>
                         {T.translate("landing.sign_out")}

@@ -55,18 +55,21 @@ input {
 }
 
 .header {
-  padding: 13px 0 10px 0;
+  padding: 13px 0 0 0;
   height: 125px;
   background-color: @header_lblue_color;
   color: @font_blue_1;
   margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .header-title {
   font-size: 23px;
   text-align: center;
   height: 100%;
-  padding-top: 20px;
+  width: 100%; 
+  position: relative;
 }
 
 .header-title.center {
@@ -212,5 +215,11 @@ input {
   .total {
     font-weight: bold;
     font-size: 16px;
+  }
+}
+
+@media(max-width: 768px) {
+  .user-greeting {
+    display: none;
   }
 }

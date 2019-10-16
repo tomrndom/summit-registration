@@ -142,7 +142,7 @@ class OrderList extends React.Component {
 
       let { orders, summits } = this.props;           
 
-      if (orders && summits) {      
+      if (orders.length && summits) {      
           return (
             <div className="orders-list">
                 {orders.map(o => {

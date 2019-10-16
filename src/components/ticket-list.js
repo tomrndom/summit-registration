@@ -144,7 +144,7 @@ class TicketList extends React.Component {
       let { tickets, selectedTicket, extraQuestions, loading, errors } = this.props;
       let { showPopup } = this.state;
 
-      if (tickets) {
+      if (tickets.length) {
         return (
           <div className="tickets-list">            
             <div className="row">

@@ -147,7 +147,7 @@ class OrderList extends React.Component {
             <div className="orders-list">
                 {orders.map(o => {
                   return (                    
-                    <div className="row" key={o.id} onClick={() => this.handleOrderSelect(o)}>
+                    <div key={o.id} onClick={() => this.handleOrderSelect(o)}>
                         <div className={`order ${this.handleOrderStatus(o).orderClass} p-2 col-sm-8 col-sm-offset-2`}>                   
                             <div className="col-sm-1">
                                 <i className={`fa fa-2x ${this.handleOrderStatus(o).icon} ${this.handleOrderStatus(o).class}`}></i>                             

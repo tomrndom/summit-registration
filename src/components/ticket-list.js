@@ -147,7 +147,7 @@ class TicketList extends React.Component {
       if (tickets.length) {
         return (
           <div className="tickets-list">            
-            <div className="row">
+            <div>
               {tickets.map((t) => {
                 return (
                   <div className={`ticket ${this.handleTicketStatus(t).ticketClass} p-2 col-sm-8 col-sm-offset-2`} key={t.id} 

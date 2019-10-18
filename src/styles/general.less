@@ -71,6 +71,7 @@ input {
   display: flex;
   justify-content: center;
   position: relative;
+  text-align: center;
 }
 
 .header-title.center {
@@ -187,6 +188,70 @@ input {
   }
 }
 
+.order-summary-mobile {
+  background-color: #337ab7;
+  color: white;      
+  margin: 0 -15px;
+  &.open {
+    position: fixed;
+    top: 145px;
+    height: 100%;
+    width: 100%;
+    z-index: 50;
+  }
+  .closed {
+    display: none;
+  }
+  &--title {
+    display: flex;
+    justify-content: space-between;
+    line-height: 40px;    
+    font-weight: bold;    
+    padding: 0 15px;
+    cursor: pointer;
+  }
+  &--close-text {
+    text-align: center;    
+    margin: 15px;
+    padding: 0 0 15px;
+    cursor: pointer;
+  }
+  .order-summary-wrapper {
+    border: 1px solid lightgray;
+    margin-top: 20px;
+    padding: 0 15px 15px 15px;
+    background-color: white;
+    color: @font_blue_2;
+    margin: 15px;
+    h4 {
+      font-weight: bold;
+      margin: 15px 0 20px 0;
+    }
+    .order-row {
+      border-bottom: 1px solid lightgray;
+      padding: 10px 0;
+      margin: 0 5px;
+    }
+    .total-row {
+      padding: 10px 0;
+      margin: 0 5px;
+    }
+    .order-discounts {
+      color: green;
+      .discount-desc {
+        font-size: 12px;
+      }
+    }
+    .subtotal {
+      font-weight: bold;
+    }
+    .total {
+      font-weight: bold;
+      font-size: 16px;
+    }
+  }
+}
+
 .order-summary-wrapper {
   border: 1px solid lightgray;
   margin-top: 20px;
@@ -220,7 +285,42 @@ input {
 }
 
 @media(max-width: 768px) {
+
+  .header {
+    height: 145px;
+    margin-top: 0;
+    position: absolute;
+    width: 100%;
+  }
+
+  .primary-layout{
+    margin: 145px 0;
+  }
+
+  .step-row{
+    margin-top: 15px;
+  }
+
   .user-greeting {
+    display: none;
+  }
+  .user-menu {
+    flex-direction: column;
+  }
+
+  .order-summary-mobile{
+    .order-summary-wrapper{
+      display: block;
+    }
+  }
+
+  .order-summary-wrapper{
+    display: none;
+  }
+}
+
+@media(min-width: 768px) {
+  .order-summary-mobile {
     display: none;
   }
 }

@@ -98,6 +98,7 @@ class StepThreePage extends React.Component {
         let {card, stripe, dirty} = this.state;
         return (
             <div className="step-three">
+                <OrderSummary order={order} summit={summit} type={'mobile'} />
                 <StepRow step={this.step} />
                     <div className="row">
                         <div className="col-md-8">
@@ -116,7 +117,7 @@ class StepThreePage extends React.Component {
                                 errors={dirty ? errors : {}} />
                         </div>
                         <div className="col-md-4">
-                            <OrderSummary order={order} summit={summit} />
+                            <OrderSummary order={order} summit={summit} type={'desktop'} />
                             <EventInfo />
                         </div>
                     </div>

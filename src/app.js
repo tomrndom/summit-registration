@@ -24,10 +24,11 @@ import NavBar from './components/nav-bar'
 import NotFoundPage from './pages/not-found-page'
 import { connect } from 'react-redux'
 import { AjaxLoader } from "openstack-uicore-foundation/lib/components";
-import { getBackURL, onUserAuth, doLogin, doLogout, initLogOut, getUserInfo } from "openstack-uicore-foundation/lib/methods";
+import { onUserAuth, doLogin, doLogout, initLogOut, getUserInfo } from "openstack-uicore-foundation/lib/methods";
 import { handleResetOrder } from './actions/order-actions'
 import T from 'i18n-react';
 import history from './history'
+import URI from "urijs";
 
 
 // here is set by default user lang as en
@@ -55,53 +56,65 @@ window.STRIPE_PRIVATE_KEY  = process.env['STRIPE_PRIVATE_KEY'];
 
 class App extends React.PureComponent {
 
+    getBackURL() {
+      let url      = URI(window.location.href);      
+      let location = url.pathname();
+      let query    = url.search(true);
+      let fragment = url.fragment();      
+      let backUrl  = query.hasOwnProperty('BackUrl') ? query['BackUrl'] : location;
+      if(fragment != null && fragment != ''){
+          backUrl += `#${fragment}`;
+      }      
+      return backUrl;
+    }
+
     onClickLogin() {
-        doLogin(getBackURL());
+        doLogin(this.getBackURL());        
     }
 
     render() {
-        let {isLoggedUser, onUserAuth, doLogout, getUserInfo, member, backUrl} = this.props;        
-        return (
-            <Router history={history}>
-                <div className="container">
-                    <AjaxLoader show={ this.props.loading } size={ 120 }/>
-                    <div className="header row">
-                        <div className="header-logo col-md-2">LOGO</div>
-                        <div className="header-title col-md-8">
-                            <h3>Summit Registration</h3>
-                            {isLoggedUser && <NavBar />}
-                        </div>
-                        <div className="col-md-2">
-                            <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut}/>
-                            <a onClick={this.props.handleResetOrder}>x</a>
-                        </div>
-                    </div>
-                    <Switch>
-                        <Route path="/a/:summit_slug/register" component={PrimaryLayout}/>
-                        <Route path="/a/guests/:ticket_hash" component={GuestsLayout}/>
-                        <AuthorizedRoute isLoggedUser={isLoggedUser} backUrl={backUrl} path="/a/member" component={DashboardLayout} />
-                        <AuthorizationCallbackRoute onUserAuth={onUserAuth} path='/auth/callback' getUserInfo={getUserInfo} />
-                        <LogOutCallbackRoute doLogout={doLogout}  path='/auth/logout'/>
-                        <Route path="/logout" component={NotFoundPage} />
-                        <Route path="/404" component={NotFoundPage} />
-                        <Route component={NotFoundPage} />
-                    </Switch>
-                </div>
-            </Router>
-        );
-    }
+      let {isLoggedUser, onUserAuth, doLogout, getUserInfo, member, backUrl} = this.props;        
+      return (
+          <Router history={history}>
+              <div className="container">
+                  <AjaxLoader show={ this.props.loading } size={ 120 }/>
+                  <div className="header row">
+                      <div className="header-logo col-md-2">LOGO</div>
+                      <div className="header-title col-md-8">
+                          <h3>Summit Registration</h3>
+                          {isLoggedUser && <NavBar />}
+                      </div>
+                      <div className="col-md-2">
+                          <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut}/>
+                          <a onClick={this.props.handleResetOrder}>x</a>
+                      </div>
+                  </div>
+                  <Switch>
+                      <Route path="/a/:summit_slug/register" component={PrimaryLayout}/>
+                      <Route path="/a/guests/:ticket_hash" component={GuestsLayout}/>
+                      <AuthorizedRoute isLoggedUser={isLoggedUser} backUrl={backUrl} path="/a/member" component={DashboardLayout} />
+                      <AuthorizationCallbackRoute onUserAuth={onUserAuth} path='/auth/callback' getUserInfo={getUserInfo} />
+                      <LogOutCallbackRoute doLogout={doLogout}  path='/auth/logout'/>
+                      <Route path="/logout" component={NotFoundPage} />
+                      <Route path="/404" component={NotFoundPage} />
+                      <Route component={NotFoundPage} />
+                  </Switch>
+              </div>
+          </Router>
+      );
+  }
 }
 
 const mapStateToProps = ({ loggedUserState, baseState }) => ({
-    isLoggedUser: loggedUserState.isLoggedUser,
-    backUrl: loggedUserState.backUrl,
-    member: loggedUserState.member,
-    loading : baseState.loading,
+  isLoggedUser: loggedUserState.isLoggedUser,
+  backUrl: loggedUserState.backUrl,
+  member: loggedUserState.member,
+  loading : baseState.loading,
 })
 
 export default connect(mapStateToProps, {
-    onUserAuth,
-    doLogout,
-    getUserInfo,
-    handleResetOrder
+  onUserAuth,
+  doLogout,
+  getUserInfo,
+  handleResetOrder
 })(App)

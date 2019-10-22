@@ -16,7 +16,10 @@ import T from "i18n-react/dist/i18n-react";
 import { Input, Dropdown, CheckboxList, TextArea, CheckBox, RadioList  } from 'openstack-uicore-foundation/lib/components'
 import QuestionAnswersInput from './questions-answer-input';
 
+import { daysBetweenDates, getFormatedDate } from '../utils/helpers';
+
 import '../styles/ticket-assign-form.less';
+import moment from 'moment';
 
 class TicketAssignForm extends React.Component {
 
@@ -28,19 +31,17 @@ class TicketAssignForm extends React.Component {
         input_email: false,
       };
 
+      this.handleFormatExpirationDate = this.handleFormatExpirationDate.bind(this);
+
     }
 
     componentDidMount() {
       let {extra_questions} = this.state;
       let {ticket} = this.props;
-
-      console.log(ticket);
       
       if(!ticket.extra_questions && extra_questions.length === 0) {
         
         let {extraQuestions} = this.props;
-
-        console.log(extraQuestions);
         
         extraQuestions.map((q, index) => {
           extra_questions[index] = { question_id: q.id, answer: ''};
@@ -61,10 +62,21 @@ class TicketAssignForm extends React.Component {
       return '';
     }
 
+    handleFormatExpirationDate(days) {
+      let {expirationDate, summit} = this.props;
+      if(days) {
+        let now = parseInt((new Date().getTime() / 1000).toFixed(0));
+        return daysBetweenDates(now, expirationDate, summit.time_zone.name).length;        
+      } else {
+        return getFormatedDate(expirationDate);
+      }      
+
+    }
+
 
     render() {
 
-      let {guest, ticket, onChange, extraQuestions, status} = this.props;
+      let {guest, ticket, onChange, extraQuestions, status, expirationDate} = this.props;
       let {extra_questions, input_email} = this.state;
 
 
@@ -94,7 +106,7 @@ class TicketAssignForm extends React.Component {
                       <button className="btn btn-primary" onClick={() => this.setState({input_email: true})}>
                         {T.translate("ticket_popup.assign_this")}
                       </button>                    
-                      <p>{T.translate("ticket_popup.assign_expire")} 15 {T.translate("ticket_popup.assign_days")} (September 19)</p>
+                      <p>{T.translate("ticket_popup.assign_expire")} {this.handleFormatExpirationDate(true)} {T.translate("ticket_popup.assign_days")} ({this.handleFormatExpirationDate(false)})</p>
                     </React.Fragment>
                     }
                     

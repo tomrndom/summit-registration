@@ -37,6 +37,7 @@ class GuestsLayout extends React.Component {
 
     this.handleTicketDownload = this.handleTicketDownload.bind(this);
     this.handleTicketCancel = this.handleTicketCancel.bind(this);    
+    this.handleExpirationDate = this.handleExpirationDate.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -101,6 +102,11 @@ class GuestsLayout extends React.Component {
       this.props.handleTicketChange(ticket, errors);
     }
 
+    handleExpirationDate() {
+      let {summit} = this.props;      
+      return summit.registration_end_date;
+    }
+
     cancelClick() {
 
     }
@@ -124,11 +130,12 @@ class GuestsLayout extends React.Component {
           !loading &&
             <div>
               <div className="col-sm-8 guest-layout">                
-                <TicketAssignForm ticket={tempTicket} onChange={this.handleChange} extraQuestions={order_extra_questions} errors={errors} guest={true}/>
+                <TicketAssignForm ticket={tempTicket} onChange={this.handleChange} extraQuestions={order_extra_questions} errors={errors} guest={true} summit={summit}/>
               </div>
               <div className="col-sm-4">
                 <TicketOptions 
-                  guest={true} 
+                  guest={true}
+                  expirationDate={this.handleExpirationDate()} 
                   downloadTicket={this.handleTicketDownload} 
                   cancelTicket={this.handleTicketCancel}
                   ticket={ticket}

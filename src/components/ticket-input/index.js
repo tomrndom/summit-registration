@@ -13,6 +13,7 @@
 
 import React from 'react'
 import T from 'i18n-react/dist/i18n-react'
+import { getFormatedDate } from '../../utils/helpers';
 import './ticket-input.less'
 
 
@@ -45,7 +46,7 @@ export default class TicketInput extends React.Component {
             ticketTypes && 
             <div className="ticket-input-box">
                 {ticketTypes.map(t => {
-                    let quantity = selection.filter(sel => sel.type_id == t.id).length;
+                    let quantity = selection.filter(sel => sel.type_id == t.id).length;                    
 
                     return (
                         <div className="ticket-wrapper" key={`ttype_${t.id}`}>
@@ -56,7 +57,7 @@ export default class TicketInput extends React.Component {
                                         {t.cost > 0 ? `$ ${t.cost}` : T.translate("step_one.free")}
                                     </div>
                                     <div className="ticket-expiration">
-                                        {T.translate("step_one.expiration")} July 15, 2019
+                                        {T.translate("step_one.expiration")} {getFormatedDate(t.sales_end_date)}
                                     </div>
                                 </div>
                                 <div className="col-md-4">

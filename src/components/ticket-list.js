@@ -35,6 +35,7 @@ class TicketList extends React.Component {
         this.handleTicketName = this.handleTicketName.bind(this);        
         this.handleEventName = this.handleEventName.bind(this);
         this.handleTicketDate = this.handleTicketDate.bind(this);
+        this.handleExpirationDate = this.handleExpirationDate.bind(this);
         
     }
 
@@ -122,6 +123,12 @@ class TicketList extends React.Component {
       }          
     }
 
+    handleExpirationDate(ticket) {
+      let {summits} = this.props;
+      let summit = summits.find(s => s.id === ticket.owner.summit_id);      
+      return summit.registration_end_date;
+    }
+
     handleEventName(ticket) {
       let {summits} = this.props;
       let event = summits.find(s => s.id === ticket.owner.summit_id).name;
@@ -141,7 +148,7 @@ class TicketList extends React.Component {
 
 
     render() {
-      let { tickets, selectedTicket, extraQuestions, loading, errors } = this.props;
+      let { tickets, selectedTicket, extraQuestions, loading, errors, summits } = this.props;
       let { showPopup } = this.state;
 
       if (tickets.length) {
@@ -173,6 +180,7 @@ class TicketList extends React.Component {
             {showPopup ?  
                 <TicketPopup  
                   ticket={selectedTicket}
+                  expirationDate={this.handleExpirationDate(selectedTicket)}
                   member={null}
                   status={this.handleTicketStatus(selectedTicket).text}
                   onChange={this.handleChange}
@@ -182,7 +190,8 @@ class TicketList extends React.Component {
                   updateTicket={this.handleTicketUpdate}
                   resendNotification={this.props.resendNotification}
                   removeAttendee={this.props.removeAttendee}  
-                  fromTicketList={true}                  
+                  fromTicketList={true}
+                  summit={summits.find(s => s.id === selectedTicket.owner.summit_id)}
                   errors={errors}
                 />  
               : null  

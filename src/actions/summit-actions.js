@@ -30,18 +30,28 @@ export const GET_USER_SUMMITS          = 'GET_USER_SUMMITS';
 export const SELECT_SUMMIT             = 'SELECT_SUMMIT';
 
 export const getSummitBySlug = (slug) => (dispatch, getState) => {
+
+    let { summitState: {summits} } = getState();
     
-    dispatch(startLoading());    
-    
-    return getRequest(
-        dispatch(startLoading()),
-        createAction(GET_SUMMIT_BY_SLUG),
-        `${window.API_BASE_URL}/api/public/v1/summits/all/${slug}`,
-        authErrorHandler
-    )()(dispatch).then(() => {
-          dispatch(stopLoading());
-        }
-    );    
+    let selectedSummit = summits.find(s => s.slug === slug);  
+
+    dispatch(startLoading());
+
+    if(selectedSummit) {        
+        dispatch(stopLoading());
+        dispatch(createAction(GET_SUMMIT_BY_SLUG)(selectedSummit));
+    } else {
+        return getRequest(
+          dispatch(startLoading()),
+          createAction(GET_SUMMIT_BY_SLUG),
+          `${window.API_BASE_URL}/api/public/v1/summits/all/${slug}`,
+          authErrorHandler
+      )()(dispatch).then(() => {
+            dispatch(stopLoading());
+          }
+      );   
+    }            
+     
 }
 
 export const getUserSummits = (from) => (dispatch, getState) => {  

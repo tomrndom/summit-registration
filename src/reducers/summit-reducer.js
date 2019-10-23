@@ -37,14 +37,19 @@ const summitReducer = (state = DEFAULT_STATE, action) => {
             return {...state, loading: false};
             break;
         case GET_SUMMIT_BY_SLUG:
-            let entity = {...payload.response};
+            let entity = payload.response ? {...payload.response} : {...payload};
 
             for(var key in entity) {
                 if(entity.hasOwnProperty(key)) {
                     entity[key] = (entity[key] == null) ? '' : entity[key] ;
                 }
             }
-            return {...state, currentSummit: entity, summits: [ ...state.summits, entity ]};
+
+            if(payload.response) {
+              return {...state, currentSummit: entity, summits: [ ...state.summits, entity ]};
+            } else {
+              return {...state, currentSummit: entity, summits: [ ...state.summits ]};
+            }
             break;
         case GET_SUMMIT_BY_ID:
             let summit = payload.response;

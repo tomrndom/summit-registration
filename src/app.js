@@ -57,11 +57,12 @@ window.STRIPE_PRIVATE_KEY  = process.env['STRIPE_PRIVATE_KEY'];
 class App extends React.PureComponent {
 
     getBackURL() {
+      let defaultLocation = '/a/member/orders'
       let url      = URI(window.location.href);      
       let location = url.pathname();
       let query    = url.search(true);
       let fragment = url.fragment();      
-      let backUrl  = query.hasOwnProperty('BackUrl') ? query['BackUrl'] : location;
+      let backUrl  = query.hasOwnProperty('BackUrl') ? query['BackUrl'] : defaultLocation;
       if(fragment != null && fragment != ''){
           backUrl += `#${fragment}`;
       }      

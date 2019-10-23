@@ -189,10 +189,9 @@ class TicketPopup extends React.Component {
     }
 
     handleChange(ev) {
-
-      console.log(ev.target);
       
       let ticket = this.state.tempTicket;
+      let {value, id} = ev.target;
 
       if (ev.target.type == 'checkbox') {
         value = ev.target.checked;        
@@ -202,7 +201,6 @@ class TicketPopup extends React.Component {
           value = value.valueOf() / 1000;
       }
       
-      let {value, id} = ev.target;
 
       ticket[id] = value;
 

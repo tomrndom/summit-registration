@@ -81,11 +81,6 @@ class TicketAssignForm extends React.Component {
       let {guest, ownedTicket, ticket, onChange, extraQuestions, status, summit } = this.props;
       let {extra_questions, input_email} = this.state;
 
-      console.log(guest, ownedTicket);
-
-      console.log(ticket);
-
-
         return (
           <div>
             <div className="row popup-basic-info">
@@ -151,7 +146,7 @@ class TicketAssignForm extends React.Component {
               <div className="row field-wrapper">
                 <div className="col-sm-12">
                     <div className="form-check abc-checkbox">
-                        <input type="checkbox" id="disclaimer_accepted" value={ticket.disclaimer_accepted}
+                        <input type="checkbox" id="disclaimer_accepted" checked={ticket.disclaimer_accepted}
                                 onChange={onChange} className="form-check-input" />
                         <label className="form-check-label" htmlFor="disclaimer_accepted">
                             {summit.registration_disclaimer_content}

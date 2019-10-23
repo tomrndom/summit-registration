@@ -31,12 +31,14 @@ class GuestsLayout extends React.Component {
         attendee_email: '',
         attendee_first_name: '',
         attendee_last_name: '',
+        disclaimer_accepted: null,
         extra_questions: []
       }
     };
 
     this.handleTicketDownload = this.handleTicketDownload.bind(this);
     this.handleTicketCancel = this.handleTicketCancel.bind(this);    
+    this.handleExpirationDate = this.handleExpirationDate.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -51,16 +53,21 @@ class GuestsLayout extends React.Component {
     }
 
     componentDidUpdate() {
-      let {attendee_email, attendee_first_name, attendee_last_name, extra_questions} = this.state.tempTicket;
+      let {attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions} = this.state.tempTicket;
       let {owner} = this.props.ticket;      
-      if(owner && !attendee_email && (!attendee_first_name || !attendee_last_name || !extra_questions)) {
-        let {email, first_name, last_name, extra_questions} = owner;
+      if(owner && !attendee_email && (!attendee_first_name || !attendee_last_name || !disclaimer_accepted || !extra_questions)) {
+        let {email, first_name, last_name, disclaimer_accepted_date, extra_questions} = owner;
         let formattedQuestions = [];
         extra_questions.map(q => {
           let question = {question_id: q.question_id, answer: q.value};
           formattedQuestions.push(question);
         })        
-        this.setState({tempTicket: { attendee_email: email, attendee_first_name: first_name, attendee_last_name: last_name, extra_questions: formattedQuestions}});                        
+        this.setState({tempTicket: { 
+          attendee_email: email, 
+          attendee_first_name: first_name, 
+          attendee_last_name: last_name, 
+          disclaimer_accepted: disclaimer_accepted_date ? true : false,
+          extra_questions: formattedQuestions}});                        
       }
     }
 
@@ -86,8 +93,8 @@ class GuestsLayout extends React.Component {
     }
 
     handleTicketUpdate(ticket){
-      let { attendee_first_name, attendee_last_name, attendee_email, extra_questions } = ticket;
-      this.props.assignAttendee(attendee_email, attendee_first_name, attendee_last_name, extra_questions);
+      let { attendee_first_name, attendee_last_name, attendee_email, disclaimer_accepted, extra_questions } = ticket;
+      this.props.assignAttendee(attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions);
     }
   
     handleChange(ev) {
@@ -101,12 +108,9 @@ class GuestsLayout extends React.Component {
       this.props.handleTicketChange(ticket, errors);
     }
 
-    cancelClick() {
-
-    }
-
-    sendClick() {
-      
+    handleExpirationDate() {
+      let {summit} = this.props;      
+      return summit.registration_end_date;
     }
     
     render() {
@@ -124,11 +128,12 @@ class GuestsLayout extends React.Component {
           !loading &&
             <div>
               <div className="col-sm-8 guest-layout">                
-                <TicketAssignForm ticket={tempTicket} onChange={this.handleChange} extraQuestions={order_extra_questions} errors={errors} guest={true}/>
+                <TicketAssignForm ticket={tempTicket} onChange={this.handleChange} extraQuestions={order_extra_questions} errors={errors} guest={true} summit={summit}/>
               </div>
               <div className="col-sm-4">
                 <TicketOptions 
-                  guest={true} 
+                  guest={true}
+                  expirationDate={this.handleExpirationDate()} 
                   downloadTicket={this.handleTicketDownload} 
                   cancelTicket={this.handleTicketCancel}
                   ticket={ticket}

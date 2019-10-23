@@ -20,6 +20,8 @@ import { Input, Dropdown, CheckboxList, TextArea } from 'openstack-uicore-founda
 import TicketAssignForm from '../components/ticket-assign-form';
 import ConfirmPopup from '../components/confirm-popup';
 
+import { getFormatedDate } from '../utils/helpers';
+
 import '../styles/popup-form.less';
 
 class TicketPopup extends React.Component {
@@ -35,6 +37,7 @@ class TicketPopup extends React.Component {
             attendee_email: '',
             attendee_first_name: '',
             attendee_last_name: '',
+            disclaimer_accepted: null,
             extra_questions: []
           }
         };
@@ -46,19 +49,26 @@ class TicketPopup extends React.Component {
         this.handleTicketCancel = this.handleTicketCancel.bind(this);
         this.handleTicketReassign = this.handleTicketReassign.bind(this);
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
+        this.handleFormatExpirationDate = this.handleFormatExpirationDate.bind(this);
     }
 
     componentWillMount() {      
       document.body.style.overflow = "hidden";
       let {owner} = this.props.ticket;
       if(owner) {
-        let {email, first_name, last_name, extra_questions} = owner;
+        let {email, first_name, last_name, disclaimer_accepted_date, extra_questions} = owner;
         let formattedQuestions = [];
         extra_questions.map(q => {
           let question = {question_id: q.question_id, answer: q.value};
           formattedQuestions.push(question);
         })        
-        this.setState({tempTicket: { attendee_email: email, attendee_first_name: first_name, attendee_last_name: last_name, extra_questions: formattedQuestions}});        
+        this.setState({tempTicket: { 
+          attendee_email: email, 
+          attendee_first_name: first_name, 
+          attendee_last_name: last_name,
+          disclaimer_accepted: disclaimer_accepted_date ? true : false, 
+          extra_questions: formattedQuestions
+        }});        
       }
     }
 
@@ -179,11 +189,13 @@ class TicketPopup extends React.Component {
     }
 
     handleChange(ev) {
+
+      console.log(ev.target);
       
       let ticket = this.state.tempTicket;
 
       if (ev.target.type == 'checkbox') {
-        value = ev.target.checked;
+        value = ev.target.checked;        
       }
 
       if (ev.target.type == 'datetime') {
@@ -203,13 +215,13 @@ class TicketPopup extends React.Component {
       this.setState({reassignEmail: ev.target.value});
     }
 
-    handleTicketName(name) {
-
+    handleFormatExpirationDate(expirationDate) {
+      return getFormatedDate(expirationDate);
     }
 
     render() {
 
-      let {extraQuestions, status, errors, ticket: {owner}, fromTicketList} = this.props;
+      let {extraQuestions, status, errors, ticket: {owner}, fromTicketList, expirationDate, summit} = this.props;
       let {showPopup, tempTicket, tempTicket: {attendee_email}, popupCase, cleanFields, reassignEmail} = this.state;
 
         return (
@@ -244,7 +256,7 @@ class TicketPopup extends React.Component {
                     </TabList>
                     {status === 'UNASSIGNED' && 
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--assign">
-                        <p>{T.translate("ticket_popup.assign_text")} September 29</p>
+                        <p>{T.translate("ticket_popup.assign_text")} {this.handleFormatExpirationDate(expirationDate)}</p>
                         <button className="btn btn-primary" onClick={() => this.handleTicketAssign(true)}>
                           {T.translate("ticket_popup.assign_me")}
                         </button>
@@ -271,13 +283,21 @@ class TicketPopup extends React.Component {
                           <TicketAssignForm 
                             ticket={tempTicket} 
                             status={status} 
-                            extraQuestions={extraQuestions} 
+                            ownedTicket={fromTicketList}
+                            extraQuestions={extraQuestions}
+                            expirationDate={expirationDate}
                             onChange={this.handleChange} 
-                            cancelTicket={this.handleTicketCancel} 
+                            cancelTicket={this.handleTicketCancel}
+                            summit={summit}
                             errors={errors}/>
                         </div>
                         <div className="popup-footer-save">
-                          <button className="btn btn-primary" onClick={() => this.handleConfirmPopup('save')}>{T.translate("ticket_popup.save_changes")}</button>  
+                          <button 
+                              className="btn btn-primary" 
+                              disabled={summit.registration_disclaimer_content === true && tempTicket.disclaimer_accepted !== true} 
+                              onClick={() => this.handleConfirmPopup('save')}>
+                                  {T.translate("ticket_popup.save_changes")}
+                          </button>  
                         </div>
                     </TabPanel>
                     {status !== 'UNASSIGNED' && 
@@ -309,7 +329,7 @@ class TicketPopup extends React.Component {
                     }
                     {status !== 'UNASSIGNED' && 
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--notify">
-                          <p>{T.translate("ticket_popup.notify_text_1")} September 29.</p>                                                
+                          <p>{T.translate("ticket_popup.notify_text_1")} {this.handleFormatExpirationDate(expirationDate)}.</p>                                                
                           <p>{T.translate("ticket_popup.notify_text_2")} <b>{owner.email}</b></p>
                           <button className="btn btn-primary" onClick={this.props.resendNotification}>{T.translate("ticket_popup.notify_button")}</button>  
                       </TabPanel>

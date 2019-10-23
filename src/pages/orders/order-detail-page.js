@@ -44,6 +44,7 @@ class OrderDetailPage extends React.Component {
     this.handleTicketRemoveAttendee = this.handleTicketRemoveAttendee.bind(this);
     this.handleResendNotification = this.handleResendNotification.bind(this);
     this.handleTicketCancel = this.handleTicketCancel.bind(this);
+    this.handleExpirationDate = this.handleExpirationDate.bind(this);
 
   }
 
@@ -151,6 +152,11 @@ class OrderDetailPage extends React.Component {
     }          
   }
 
+  handleExpirationDate() {
+    let {summit} = this.props;    
+    return summit.registration_end_date;
+  }
+
   handleSummitLocation() {
     let {summit} = this.props;
     if(summit.locations.length === 1) {
@@ -221,6 +227,7 @@ class OrderDetailPage extends React.Component {
                   ticket={ticket}
                   member={member}
                   status={this.handleTicketStatus(ticket).text}
+                  expirationDate={this.handleExpirationDate()}
                   onChange={this.handleChange}
                   extraQuestions={extraQuestions}
                   downloadTicket={this.handleTicketDownload}
@@ -228,7 +235,8 @@ class OrderDetailPage extends React.Component {
                   cancelTicket={this.handleTicketCancel}
                   updateTicket={this.handleTicketUpdate}
                   resendNotification={this.handleResendNotification}
-                  removeAttendee={this.handleTicketRemoveAttendee}                  
+                  removeAttendee={this.handleTicketRemoveAttendee}
+                  summit={summit}
                   errors={errors}
                 />  
               : null  

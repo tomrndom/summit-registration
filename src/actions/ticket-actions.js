@@ -129,7 +129,7 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
   return putRequest(
       null,
       createAction(ASSIGN_TICKET),
-      `${window.API_BASE_URL}/api/v1/summits/all/orders/${orderId}/tickets/${selectedTicket.id}/attendee`,
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/orders/all/tickets/${selectedTicket.id}`,
       normalizedEntity,
       authErrorHandler
   )(params)(dispatch).then(() => {
@@ -209,7 +209,7 @@ export const getTicketPDF = () => (dispatch, getState) => {
   let orderId = selectedTicket.order ? selectedTicket.order.id : selectedTicket.order_id;
 
   let queryString = objectToQueryString(params);
-  let apiUrl = `${window.API_BASE_URL}/api/v1/summits/all/orders/${orderId}/tickets/${selectedTicket.id}/pdf?${queryString}`;  
+  let apiUrl = `${window.API_BASE_URL}/api/v1/summits/all/orders/orders/all/tickets/${selectedTicket.id}/pdf?${queryString}`;  
 
     dispatch(startLoading());
 

@@ -44,6 +44,7 @@ class StepFourPage extends React.Component {
 
         return (
             <div className="step-four">
+                <OrderSummary order={order} summit={summit} type={'mobile'} />
                 <div className="row">
                     <div className="order-result">
                         <h1>{T.translate("step_four.congratulations")} !</h1>

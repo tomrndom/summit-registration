@@ -133,6 +133,7 @@ class StepTwoPage extends React.Component {
 
         return (
             <div className="step-two">
+                <OrderSummary order={order} summit={summit} type={'mobile'} />
                 <StepRow step={this.step} />
                 <div className="row">
                     <div className="col-md-8">
@@ -150,7 +151,7 @@ class StepTwoPage extends React.Component {
                         ))}
                     </div>
                     <div className="col-md-4">
-                        <OrderSummary order={order} summit={summit} />
+                        <OrderSummary order={order} summit={summit} type={'desktop'} />
                         <EventInfo />
                     </div>
                 </div>

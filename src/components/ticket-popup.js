@@ -227,27 +227,25 @@ class TicketPopup extends React.Component {
         return (
         <div className='popup-bg'>
             <div className='popup-form'>
-              <div className="popup-header">
-                <div className="row">
+              <div className="popup-header">                
                   {fromTicketList ? 
-                    <div className="col-sm-9 popup-title">
+                    <div className="popup-title">
                       <h4><b>Full Day Pass</b></h4>
                       <p>Speaker</p>
                       <p>Ready to use</p>
                     </div>
                     : 
-                    <div className="col-sm-9 popup-title">
+                    <div className="popup-title">
                       <h4><b>Full Day Pass</b></h4>
                       <p>Speaker</p>
                       <p>Ready to use</p>
                     </div>
                     }                  
-                  <div className="col-sm-3 popup-icons">
+                  <div className="popup-icons">
                     <i className="fa fa-print"></i>
                     <i onClick={() => this.props.downloadTicket()} className="fa fa-file-pdf-o"></i>
                     <i onClick={() => this.props.closePopup()} className="fa fa-times"></i>                    
                   </div>
-                </div>
               </div>
                 <Tabs selectedTabClassName="popup-tabs--active" >
                     <TabList className="popup-tabs">

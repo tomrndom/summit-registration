@@ -58,13 +58,13 @@ class TicketInfoForm extends React.Component {
 
     render() {
         let {order, onChange, ticketType} = this.props;
-        let orderedTickets = order.tickets.filter(tix => tix.type_id == ticketType.id);
+        let orderedTickets = order.tickets.filter(tix => tix.type_id == ticketType.id);        
 
         return (
             <div className="ticket-info-wrapper">
                 <div className="row">
                     <div className="col-md-12">
-                        <h3>{ticketType.name} {T.translate("step_two.tickets")}</h3>
+                        <h3>{ticketType.name} {T.translate("step_two.tickets")} {orderedTickets.length > 0 ? `(${orderedTickets.length})` : ''}</h3>
                     </div>
                 </div>
                 { orderedTickets.map((tix, i) => (                  

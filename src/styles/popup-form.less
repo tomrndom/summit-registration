@@ -27,6 +27,8 @@
   background-color: #F9F9F9;
   font-weight: bold;
   padding: 25px;
+  display: flex;
+  justify-content: space-between;
   h4 {
     font-size: 20px;
   }
@@ -43,6 +45,7 @@
   .popup-icons {
     display: flex;
     justify-content: space-around;
+    width: 30%;
     i {
       font-size: 1.5em;
       cursor: pointer;      
@@ -60,6 +63,7 @@
   border-bottom: 2px solid #F9F9F9;
   line-height: 40px;
   margin-bottom: 0px;
+  padding-inline-start: 0px;
   li {
     list-style-type: none;
     cursor: pointer;
@@ -71,12 +75,11 @@
 
 .popup-panel {  
   &--assign {
-    margin-top: 50px;    
     text-align: center;
-    padding: 20px 25%;
+    padding: 0 25%;
     p {
       font-size: 22px;      
-      margin-bottom: 20px;
+      margin: 70px 0 20px;
     }
     .popup-separator {      
       display: table;    
@@ -162,4 +165,10 @@
       margin-bottom: 20px;
     }
   }
+}
+
+@media(max-width: 768px) {
+  .popup-form {      
+    left: 0%;      
+  }  
 }

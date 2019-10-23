@@ -1,12 +1,14 @@
 @import 'constants.less';
 
 .dashboard-menu {
-    background-color: @header_lblue_color;
+    font-size: 18px;
     color: @font_blue_1;
-    display: flex;
-    align-self: flex-end;
-    justify-content: center;  
-    margin: -15px;        
+    display: flex;  
+    position: absolute;
+    bottom: 0;
+    a {
+      margin: 0 40px 0 40px;
+    }
 }
 
 .dashboard-menu *:hover {
@@ -15,4 +17,10 @@
 
 .active {  
     border-bottom: 2px solid @font_blue_1;  
+}
+
+@media (max-width: 768px) {
+  .dashboard-layout{
+    margin: 165px 0;
+  }
 }

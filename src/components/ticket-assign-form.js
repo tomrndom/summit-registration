@@ -29,6 +29,7 @@ class TicketAssignForm extends React.Component {
       this.state = {        
         extra_questions : [],
         input_email: false,
+        disclaimer_checked: null,
       };
 
       this.handleFormatExpirationDate = this.handleFormatExpirationDate.bind(this);
@@ -48,7 +49,8 @@ class TicketAssignForm extends React.Component {
         })
   
         this.setState(() => ({
-          extra_questions: extra_questions
+          extra_questions: extra_questions,
+          disclaimer_checked: ticket.disclaimer_checked_date ? true : false
         }));
       } 
     }
@@ -76,8 +78,12 @@ class TicketAssignForm extends React.Component {
 
     render() {
 
-      let {guest, ticket, onChange, extraQuestions, status, expirationDate} = this.props;
+      let {guest, ownedTicket, ticket, onChange, extraQuestions, status, summit } = this.props;
       let {extra_questions, input_email} = this.state;
+
+      console.log(guest, ownedTicket);
+
+      console.log(ticket);
 
 
         return (
@@ -141,6 +147,19 @@ class TicketAssignForm extends React.Component {
                 />
               </div>
             </div>
+            {guest || ownedTicket &&
+              <div className="row field-wrapper">
+                <div className="col-sm-12">
+                    <div className="form-check abc-checkbox">
+                        <input type="checkbox" id="disclaimer_accepted" value={ticket.disclaimer_accepted}
+                                onChange={onChange} className="form-check-input" />
+                        <label className="form-check-label" htmlFor="disclaimer_accepted">
+                            {summit.registration_disclaimer_content}
+                        </label>
+                    </div>
+                </div>
+              </div>
+            }
             <hr/>
             {extraQuestions && 
             <React.Fragment>

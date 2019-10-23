@@ -37,6 +37,7 @@ class TicketPopup extends React.Component {
             attendee_email: '',
             attendee_first_name: '',
             attendee_last_name: '',
+            disclaimer_accepted: null,
             extra_questions: []
           }
         };
@@ -55,13 +56,19 @@ class TicketPopup extends React.Component {
       document.body.style.overflow = "hidden";
       let {owner} = this.props.ticket;
       if(owner) {
-        let {email, first_name, last_name, extra_questions} = owner;
+        let {email, first_name, last_name, disclaimer_accepted_date, extra_questions} = owner;
         let formattedQuestions = [];
         extra_questions.map(q => {
           let question = {question_id: q.question_id, answer: q.value};
           formattedQuestions.push(question);
         })        
-        this.setState({tempTicket: { attendee_email: email, attendee_first_name: first_name, attendee_last_name: last_name, extra_questions: formattedQuestions}});        
+        this.setState({tempTicket: { 
+          attendee_email: email, 
+          attendee_first_name: first_name, 
+          attendee_last_name: last_name,
+          disclaimer_accepted: disclaimer_accepted_date ? true : false, 
+          extra_questions: formattedQuestions
+        }});        
       }
     }
 
@@ -182,11 +189,13 @@ class TicketPopup extends React.Component {
     }
 
     handleChange(ev) {
+
+      console.log(ev.target);
       
       let ticket = this.state.tempTicket;
 
       if (ev.target.type == 'checkbox') {
-        value = ev.target.checked;
+        value = ev.target.checked;        
       }
 
       if (ev.target.type == 'datetime') {
@@ -276,6 +285,7 @@ class TicketPopup extends React.Component {
                           <TicketAssignForm 
                             ticket={tempTicket} 
                             status={status} 
+                            ownedTicket={fromTicketList}
                             extraQuestions={extraQuestions}
                             expirationDate={expirationDate}
                             onChange={this.handleChange} 
@@ -284,7 +294,12 @@ class TicketPopup extends React.Component {
                             errors={errors}/>
                         </div>
                         <div className="popup-footer-save">
-                          <button className="btn btn-primary" onClick={() => this.handleConfirmPopup('save')}>{T.translate("ticket_popup.save_changes")}</button>  
+                          <button 
+                              className="btn btn-primary" 
+                              disabled={summit.registration_disclaimer_content === true && tempTicket.disclaimer_accepted !== true} 
+                              onClick={() => this.handleConfirmPopup('save')}>
+                                  {T.translate("ticket_popup.save_changes")}
+                          </button>  
                         </div>
                     </TabPanel>
                     {status !== 'UNASSIGNED' && 

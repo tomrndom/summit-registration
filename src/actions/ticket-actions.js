@@ -110,26 +110,24 @@ export const handleTicketChange = (ticket, errors = {}) => (dispatch, getState) 
 
 }
 
-export const assignAttendee = (attendee_email, attendee_first_name, attendee_last_name, extra_questions, fromTicket) => (dispatch, getState) => {  
+export const assignAttendee = (attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions, fromTicket) => (dispatch, getState) => {  
 
   let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
 
   dispatch(startLoading());
 
-  let orderId = selectedTicket.order ? selectedTicket.order.id : selectedTicket.order_id;
-
   let params = {
     access_token : accessToken,
     expand: 'owner, owner.extra_questions'
   };
 
-  let normalizedEntity = { attendee_email, attendee_first_name, attendee_last_name, extra_questions };
+  let normalizedEntity = { attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions };
 
   return putRequest(
       null,
       createAction(ASSIGN_TICKET),
-      `${window.API_BASE_URL}/api/v1/summits/all/orders/orders/all/tickets/${selectedTicket.id}`,
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/all/tickets/${selectedTicket.id}`,
       normalizedEntity,
       authErrorHandler
   )(params)(dispatch).then(() => {
@@ -209,7 +207,7 @@ export const getTicketPDF = () => (dispatch, getState) => {
   let orderId = selectedTicket.order ? selectedTicket.order.id : selectedTicket.order_id;
 
   let queryString = objectToQueryString(params);
-  let apiUrl = `${window.API_BASE_URL}/api/v1/summits/all/orders/orders/all/tickets/${selectedTicket.id}/pdf?${queryString}`;  
+  let apiUrl = `${window.API_BASE_URL}/api/v1/summits/all/orders/all/tickets/${selectedTicket.id}/pdf?${queryString}`;  
 
     dispatch(startLoading());
 

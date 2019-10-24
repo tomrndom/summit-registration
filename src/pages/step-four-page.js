@@ -40,7 +40,7 @@ class StepFourPage extends React.Component {
 
 
     render(){
-        let {summit, order: {checkout}, errors, member} = this.props;
+        let {summit, order: {checkout}, order, errors, member} = this.props;
 
         return (
             <div className="step-four">

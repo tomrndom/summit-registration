@@ -65,7 +65,7 @@ class App extends React.PureComponent {
       let backUrl  = query.hasOwnProperty('BackUrl') ? query['BackUrl'] : defaultLocation;
       if(fragment != null && fragment != ''){
           backUrl += `#${fragment}`;
-      }      
+      }
       return backUrl;
     }
 

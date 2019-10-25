@@ -230,13 +230,13 @@ class TicketPopup extends React.Component {
                     <div className="popup-title">
                       <h4><b>Full Day Pass</b></h4>
                       <p>Speaker</p>
-                      <p>Ready to use</p>
+                      <p className={`status ${status.class}`}>{status.text}</p>
                     </div>
                     : 
                     <div className="popup-title">
                       <h4><b>Full Day Pass</b></h4>
                       <p>Speaker</p>
-                      <p>Ready to use</p>
+                      <p className={`status ${status.class}`}>{status.text}</p>
                     </div>
                     }                  
                   <div className="popup-icons">
@@ -247,12 +247,12 @@ class TicketPopup extends React.Component {
               </div>
                 <Tabs selectedTabClassName="popup-tabs--active" >
                     <TabList className="popup-tabs">
-                        {status === 'UNASSIGNED' && <Tab>{T.translate("ticket_popup.tab_assign")}</Tab>}
+                        {status.text === 'UNASSIGNED' && <Tab>{T.translate("ticket_popup.tab_assign")}</Tab>}
                         <Tab>{T.translate("ticket_popup.tab_edit")}</Tab>
-                        {status !== 'UNASSIGNED' && <Tab>{T.translate("ticket_popup.tab_reassign")}</Tab>}
-                        {status !== 'UNASSIGNED' && <Tab>{T.translate("ticket_popup.tab_notify")}</Tab>}
+                        {status.text !== 'UNASSIGNED' && <Tab>{T.translate("ticket_popup.tab_reassign")}</Tab>}
+                        {status.text !== 'UNASSIGNED' && <Tab>{T.translate("ticket_popup.tab_notify")}</Tab>}
                     </TabList>
-                    {status === 'UNASSIGNED' && 
+                    {status.text === 'UNASSIGNED' && 
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--assign">
                         <p>{T.translate("ticket_popup.assign_text")} {this.handleFormatExpirationDate(expirationDate)}</p>
                         <button className="btn btn-primary" onClick={() => this.handleTicketAssign(true)}>
@@ -280,7 +280,7 @@ class TicketPopup extends React.Component {
                         <div className="popup-scroll">
                           <TicketAssignForm 
                             ticket={tempTicket} 
-                            status={status} 
+                            status={status.text} 
                             ownedTicket={fromTicketList}
                             extraQuestions={extraQuestions}
                             expirationDate={expirationDate}
@@ -298,7 +298,7 @@ class TicketPopup extends React.Component {
                           </button>  
                         </div>
                     </TabPanel>
-                    {status !== 'UNASSIGNED' && 
+                    {status.text !== 'UNASSIGNED' && 
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--reassign">
                           <p>{T.translate("ticket_popup.reassign_text")} <br/> <b>{owner.email}</b></p>                        
                           <label>
@@ -325,7 +325,7 @@ class TicketPopup extends React.Component {
                           </button>
                       </TabPanel>
                     }
-                    {status !== 'UNASSIGNED' && 
+                    {status.text !== 'UNASSIGNED' && 
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--notify">
                           <p>{T.translate("ticket_popup.notify_text_1")} {this.handleFormatExpirationDate(expirationDate)}.</p>                                                
                           <p>{T.translate("ticket_popup.notify_text_2")} <b>{owner.email}</b></p>

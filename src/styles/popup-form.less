@@ -31,7 +31,7 @@
   justify-content: space-between;
   h4 {
     font-size: 20px;
-  }
+  }  
   p {
     margin: 2px 0;
     text-transform: uppercase;
@@ -52,6 +52,26 @@
     }
     :last-child {
       color: black;
+    }
+  }
+  .popup-title {
+    .status {
+      margin-top: auto;
+      font-size: 0.7em;
+      color: #000;
+      text-transform: uppercase;
+      &.ticket-warning {
+        color: #cc9933;
+      }
+      &.ticket-complete {
+        color: #669933;
+      }
+      &.ticket-unset {
+        color: #000
+      }
+      &.ticket-cancel {
+        color: #da0000;
+      }
     }
   }
 }

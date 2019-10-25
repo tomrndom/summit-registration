@@ -182,7 +182,7 @@ class TicketList extends React.Component {
                   ticket={selectedTicket}
                   expirationDate={this.handleExpirationDate(selectedTicket)}
                   member={null}
-                  status={this.handleTicketStatus(selectedTicket).text}
+                  status={this.handleTicketStatus(selectedTicket)}
                   onChange={this.handleChange}
                   extraQuestions={extraQuestions}
                   downloadTicket={this.handleTicketDownload}

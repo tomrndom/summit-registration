@@ -226,7 +226,7 @@ class OrderDetailPage extends React.Component {
                 <TicketPopup  
                   ticket={ticket}
                   member={member}
-                  status={this.handleTicketStatus(ticket).text}
+                  status={this.handleTicketStatus(ticket)}
                   expirationDate={this.handleExpirationDate()}
                   onChange={this.handleChange}
                   extraQuestions={extraQuestions}

@@ -28,6 +28,7 @@ export const GET_SUMMIT_BY_SLUG        = 'GET_SUMMIT_BY_SLUG';
 export const GET_SUMMIT_BY_ID          = 'GET_SUMMIT_BY_ID';
 export const GET_USER_SUMMITS          = 'GET_USER_SUMMITS';
 export const SELECT_SUMMIT             = 'SELECT_SUMMIT';
+export const GET_SUMMIT_REFUND_POLICY  = 'GET_SUMMIT_REFUND_POLICY';
 
 export const getSummitBySlug = (slug) => (dispatch, getState) => {
 
@@ -93,12 +94,34 @@ export const getSummitById = (id, select = false) => (dispatch, getState) => {
   );    
 }
 
+export const getSummitRefundPolicy = (id, select = false) => (dispatch, getState) => {
+
+  let { loggedUserState } = getState();
+  let { accessToken }     = loggedUserState;
+
+  let params = {
+    access_token : accessToken
+  };
+  
+  dispatch(startLoading());
+  
+  return getRequest(
+    dispatch(startLoading()),
+    createAction(GET_SUMMIT_REFUND_POLICY),
+    `${window.API_BASE_URL}/api/v1/summits/${id}/refund-policies`,
+    authErrorHandler
+  )(params)(dispatch).then((payload) => {
+    console.log(payload);
+    dispatch(stopLoading());
+  });  
+}
+
 export const selectSummit = (summit) => (dispatch, getState) => {  
     
   dispatch(startLoading());
 
   dispatch(createAction(SELECT_SUMMIT)(summit));
-
+  
   dispatch(stopLoading());
 
 }

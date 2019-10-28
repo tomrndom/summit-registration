@@ -36,6 +36,7 @@ class TicketList extends React.Component {
         this.handleEventName = this.handleEventName.bind(this);
         this.handleTicketDate = this.handleTicketDate.bind(this);
         this.handleExpirationDate = this.handleExpirationDate.bind(this);
+        this.handleTicketCancel = this.handleTicketCancel.bind(this);
         
     }
 
@@ -134,6 +135,11 @@ class TicketList extends React.Component {
       let event = summits.find(s => s.id === ticket.owner.summit_id).name;
       return event;
     }
+
+    handleTicketCancel() {
+      let {selectedTicket, refundTicket} = this.props;      
+      refundTicket(selectedTicket);
+    }
   
     handleChange(ev) {
       let ticket = cloneDeep(this.props.ticket);
@@ -149,7 +155,7 @@ class TicketList extends React.Component {
 
     render() {
       let { tickets, selectedTicket, extraQuestions, loading, errors, summits } = this.props;
-      let { showPopup } = this.state;
+      let { showPopup } = this.state;      
 
       if (tickets.length && !loading) {
         return (
@@ -184,10 +190,12 @@ class TicketList extends React.Component {
                   member={null}
                   status={this.handleTicketStatus(selectedTicket)}
                   onChange={this.handleChange}
+                  owned={selectedTicket.owner.member_id === selectedTicket.order.owner_id}
                   extraQuestions={extraQuestions}
                   downloadTicket={this.handleTicketDownload}
                   closePopup={this.togglePopup.bind(this)}
                   updateTicket={this.handleTicketUpdate}
+                  cancelTicket={this.handleTicketCancel}
                   resendNotification={this.props.resendNotification}
                   removeAttendee={this.props.removeAttendee}  
                   fromTicketList={true}

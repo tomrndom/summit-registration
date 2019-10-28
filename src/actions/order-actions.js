@@ -44,6 +44,7 @@ export const DELETE_RESERVATION_ERROR       = 'DELETE_RESERVATION_ERROR';
 export const PAY_RESERVATION                = 'PAY_RESERVATION';
 export const GET_USER_ORDERS                = 'GET_ORDERS';
 export const SELECT_ORDER                   = 'SELECT_ORDER';
+export const REFUND_ORDER                   = 'REFUND_ORDER';
 
 export const handleResetOrder = () => (dispatch, getState) => {
     dispatch(createAction(RESET_ORDER)({}));
@@ -260,7 +261,9 @@ export const cancelOrder = (order) => (dispatch, getState) => {
       authErrorHandler
   )(params)(dispatch).then((payload) => {
       console.log(payload);
+      dispatch(getUserOders());
       dispatch(stopLoading());
+      history.push('/a/member/orders');
     }
   );
 }

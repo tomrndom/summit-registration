@@ -23,6 +23,7 @@ import {
     PAY_RESERVATION,
     GET_USER_ORDERS,
     SELECT_ORDER,
+    REFUND_ORDER,
     DELETE_RESERVATION,
     DELETE_RESERVATION_SUCCESS,
     DELETE_RESERVATION_ERROR
@@ -115,6 +116,9 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
         case SELECT_ORDER:
             return {...state, selectedOrder: payload};
             break;
+        case REFUND_ORDER:
+            console.log(payload);
+            return {...state}
         default:
             return state;
             break;

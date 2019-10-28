@@ -108,7 +108,6 @@ class OrderDetailPage extends React.Component {
   handleOrderCancel(){
     let {order} = this.props;
     this.props.cancelOrder(order);
-    history.push('/a/member/orders');
   }
 
   handleTicketCancel(ticket) {

@@ -58,7 +58,7 @@ class OrderList extends React.Component {
 
     handleOrderSelect(order) {
       let {history, summits} = this.props;      
-      if(order.status !== 'Cancelled') {
+      if(order.status !== 'Cancelled' || order.status !== 'RefundRequested') {
         let summit = summits.find(s => s.id === order.summit_id);      
         this.props.selectSummit(summit);
         this.props.selectOrder(order);
@@ -87,7 +87,12 @@ class OrderList extends React.Component {
         },
         { 
           text: 'CANCELLED',
-          orderClass: 'cancelled',
+          orderClass: 'cancel',
+          class: 'order-cancel'
+        },
+        { 
+          text: 'REFUND REQUESTED',
+          orderClass: 'cancel',
           class: 'order-cancel'
         },
       ];
@@ -98,7 +103,8 @@ class OrderList extends React.Component {
           return status[2];
         case "Cancelled":
           return status[3];        
-          return;
+        case "RefundRequested":
+          return status[4];
         default:
           return null;
       }

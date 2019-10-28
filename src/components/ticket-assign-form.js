@@ -78,7 +78,7 @@ class TicketAssignForm extends React.Component {
 
     render() {
 
-      let {guest, ownedTicket, ticket, onChange, extraQuestions, status, summit } = this.props;
+      let {guest, ownedTicket, ticket, onChange, extraQuestions, status, summit, orderOwned } = this.props;
       let {extra_questions, input_email} = this.state;
 
         return (
@@ -172,7 +172,7 @@ class TicketAssignForm extends React.Component {
               <hr/>
             </React.Fragment>
             }            
-            {!guest &&
+            {!guest && orderOwned &&
               <div className="row field-wrapper">
                 <div className="col-sm-4"></div>
                 <div className="col-sm-6">

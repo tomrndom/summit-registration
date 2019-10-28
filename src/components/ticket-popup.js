@@ -219,8 +219,10 @@ class TicketPopup extends React.Component {
 
     render() {
 
-      let {extraQuestions, status, errors, ticket: {owner}, fromTicketList, expirationDate, summit} = this.props;
+      let {extraQuestions, status, errors, ticket: {owner}, fromTicketList, expirationDate, summit, owned} = this.props;
       let {showPopup, tempTicket, tempTicket: {attendee_email}, popupCase, cleanFields, reassignEmail} = this.state;
+
+      console.log(owner);
 
         return (
         <div className='popup-bg'>
@@ -282,6 +284,7 @@ class TicketPopup extends React.Component {
                             ticket={tempTicket} 
                             status={status.text} 
                             ownedTicket={fromTicketList}
+                            orderOwned={owned}
                             extraQuestions={extraQuestions}
                             expirationDate={expirationDate}
                             onChange={this.handleChange} 

@@ -240,12 +240,13 @@ export const refundTicket = (ticket) => (dispatch, getState) => {
     access_token : accessToken
   };
 
-  return getRequest(
+  return deleteRequest(
       null,
       createAction(REFUND_TICKET),
       `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${ticket.id}/refund`,
       authErrorHandler
-  )(params)(dispatch).then(() => {
+  )(params)(dispatch).then((payload) => {
+      history.push('/a/member/tickets/');
       dispatch(stopLoading());
     }
   );

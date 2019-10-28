@@ -37,6 +37,7 @@ class TicketList extends React.Component {
         this.handleTicketDate = this.handleTicketDate.bind(this);
         this.handleExpirationDate = this.handleExpirationDate.bind(this);
         this.handleTicketCancel = this.handleTicketCancel.bind(this);
+        this.handleTicketSortByDate = this.handleTicketSortByDate.bind(this);
         
     }
 
@@ -136,6 +137,12 @@ class TicketList extends React.Component {
       return event;
     }
 
+    handleTicketSortByDate() {
+      let {tickets} = this.props;
+      let sortedTickets = tickets.sort((a, b) => (a.last_edited < b.last_edited) ? 1 : ((b.last_edited < a.last_edited) ? -1 : 0));      
+      return sortedTickets;
+    }
+
     handleTicketCancel() {
       let {selectedTicket, refundTicket} = this.props;      
       refundTicket(selectedTicket);
@@ -161,7 +168,7 @@ class TicketList extends React.Component {
         return (
           <div className="tickets-list">            
             <div>
-              {tickets.map((t) => {
+              {this.handleTicketSortByDate().map((t) => {
                 return (
                   <div className={`ticket ${this.handleTicketStatus(t).ticketClass} p-2 col-sm-8 col-sm-offset-2`} key={t.id} 
                     onClick={() => {t.status === "Cancelled" ? null: this.togglePopup(t)}}>

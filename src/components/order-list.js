@@ -31,6 +31,7 @@ class OrderList extends React.Component {
         this.getSummitDate = this.getSummitDate.bind(this);
         this.getSummitName = this.getSummitName.bind(this);
         this.handleOrderStatus = this.handleOrderStatus.bind(this);
+        this.handleOrderSortByDate = this.handleOrderSortByDate.bind(this);
 
     }
 
@@ -70,6 +71,12 @@ class OrderList extends React.Component {
         this.props.selectOrder(order);
         history.push('/a/member/orders/detail');
       }           
+    }
+
+    handleOrderSortByDate() {
+      let {orders} = this.props;
+      let sortedOrders = orders.sort((a, b) => (a.last_edited < b.last_edited) ? 1 : ((b.last_edited < a.last_edited) ? -1 : 0));      
+      return sortedOrders;
     }
 
     handleOrderStatus(order){
@@ -130,7 +137,6 @@ class OrderList extends React.Component {
 
       let name = summits.find(s => s.id === order.summit_id).name;      
       return name;
-
     }
 
     getSummitDate(order) {
@@ -157,7 +163,7 @@ class OrderList extends React.Component {
       if (orders.length && summits) {      
           return (
             <div className="orders-list">
-                {orders.map(o => {
+                {this.handleOrderSortByDate().map(o => {
                   return (                    
                     <div key={o.id} onClick={() => this.handleOrderSelect(o)}>
                         <div className={`order ${this.handleOrderStatus(o).orderClass} p-2 col-sm-8 col-sm-offset-2`}>                   

@@ -45,6 +45,7 @@ class OrderDetailPage extends React.Component {
     this.handleResendNotification = this.handleResendNotification.bind(this);
     this.handleTicketCancel = this.handleTicketCancel.bind(this);
     this.handleExpirationDate = this.handleExpirationDate.bind(this);
+    this.handleTicketRole = this.handleTicketRole.bind(this);
 
   }
 
@@ -151,6 +152,18 @@ class OrderDetailPage extends React.Component {
     }          
   }
 
+  handleTicketRole(ticket) {
+    let roles = [];
+    ticket.badge.features.map(f => {
+      roles.push(f.name);
+    });
+    if(roles.length) {
+      return roles.join(', ');
+    } else {
+      return "Attendee";
+    }
+  }
+
   handleExpirationDate() {
     let {summit} = this.props;    
     return summit.registration_end_date;
@@ -194,7 +207,7 @@ class OrderDetailPage extends React.Component {
                                         <i className={`fa fa-2x ${this.handleTicketStatus(t).icon} ${this.handleTicketStatus(t).class}`}></i>                             
                                       </div>
                                       <div className="col-sm-5">
-                                          <h4>Attendee</h4>
+                                          <h4>{this.handleTicketRole(t)}</h4>
                                           {t.discount > 0 && `${(t.discount * 100) / t.raw_cost}% Discount`}
                                           <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
                                       </div>

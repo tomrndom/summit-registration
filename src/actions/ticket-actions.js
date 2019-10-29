@@ -61,7 +61,7 @@ export const getUserTickets = (page = 1, per_page = 5) => (dispatch, getState) =
   
   let params = {
       access_token : accessToken,
-      expand       : 'order, owner, owner.extra_questions, order.summit',
+      expand       : 'order, owner, owner.extra_questions, order.summit, badge, badge.features',
       page         : page,
       per_page     : per_page,
   };    

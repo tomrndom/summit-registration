@@ -50,6 +50,7 @@ class TicketPopup extends React.Component {
         this.handleTicketReassign = this.handleTicketReassign.bind(this);
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleFormatExpirationDate = this.handleFormatExpirationDate.bind(this);
+        this.handleTicketRole = this.handleTicketRole.bind(this);
     }
 
     componentWillMount() {      
@@ -207,7 +208,20 @@ class TicketPopup extends React.Component {
       this.setState({tempTicket: ticket});
   
       //this.props.handleTicketChange(ticket, errors);
-    }    
+    }
+    
+    handleTicketRole(badge) {
+      let roles = [];
+      badge.features.map(f => {
+        roles.push(f.name);
+      });
+      if(roles.length) {
+        return roles.join(', ');
+      } else {
+        return "Attendee";
+      }
+    }
+  
 
     handleChangeEmail(ev) {
       this.setState({reassignEmail: ev.target.value});
@@ -219,10 +233,8 @@ class TicketPopup extends React.Component {
 
     render() {
 
-      let {extraQuestions, status, errors, ticket: {owner}, fromTicketList, expirationDate, summit, owned} = this.props;
+      let {extraQuestions, status, errors, ticket: {owner, badge}, fromTicketList, expirationDate, summit, owned} = this.props;
       let {showPopup, tempTicket, tempTicket: {attendee_email}, popupCase, cleanFields, reassignEmail} = this.state;
-
-      console.log(owner);
 
         return (
         <div className='popup-bg'>
@@ -231,13 +243,13 @@ class TicketPopup extends React.Component {
                   {fromTicketList ? 
                     <div className="popup-title">
                       <h4><b>Full Day Pass</b></h4>
-                      <p>Attendee</p>
+                      <p>{this.handleTicketRole(badge)}</p>
                       <p className={`status ${status.class}`}>{status.text}</p>
                     </div>
                     : 
                     <div className="popup-title">
                       <h4><b>Full Day Pass</b></h4>
-                      <p>Attendee</p>
+                      <p>{this.handleTicketRole(badge)}</p>
                       <p className={`status ${status.class}`}>{status.text}</p>
                     </div>
                     }                  

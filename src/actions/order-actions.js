@@ -208,7 +208,7 @@ export const getUserOrders = (updateId, page = 1, per_page = 5) => (dispatch, ge
 
   let params = {
       access_token : accessToken,
-      expand       : 'extra_questions, tickets, tickets.owner, tickets.owner.extra_questions',      
+      expand       : 'extra_questions, tickets, tickets.owner, tickets.owner.extra_questions, tickets.badge, tickets.badge.features',      
       page         : page,
       per_page     : per_page 
   };

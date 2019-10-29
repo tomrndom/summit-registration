@@ -94,7 +94,7 @@ class GuestsLayout extends React.Component {
 
     handleTicketUpdate(ticket){
       let { attendee_first_name, attendee_last_name, attendee_email, disclaimer_accepted, extra_questions } = ticket;
-      this.props.assignAttendee(attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions);
+      this.props.editOwnedTicket(attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions);
     }
   
     handleChange(ev) {

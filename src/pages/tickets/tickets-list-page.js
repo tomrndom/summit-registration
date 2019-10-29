@@ -18,7 +18,7 @@ import T from "i18n-react/dist/i18n-react";
 import '../../styles/tickets-list-page.less';
 import TicketList from '../../components/ticket-list';
 
-import { getUserTickets, selectTicket, getTicketPDF, assignAttendee, handleTicketChange, refundTicket, resendNotification, removeAttendee } from '../../actions/ticket-actions';
+import { getUserTickets, selectTicket, getTicketPDF, editOwnedTicket, handleTicketChange, refundTicket, resendNotification, removeAttendee } from '../../actions/ticket-actions';
 
 class TicketsListPage extends React.Component {
 
@@ -57,7 +57,7 @@ class TicketsListPage extends React.Component {
           selectedTicket, 
           selectTicket, 
           getTicketPDF, 
-          assignAttendee, 
+          editOwnedTicket, 
           handleTicketChange, 
           refundTicket,
           summits,
@@ -73,7 +73,7 @@ class TicketsListPage extends React.Component {
                   selectedTicket={selectedTicket}
                   selectTicket={selectTicket}
                   getTicketPDF={getTicketPDF}                  
-                  assignAttendee={assignAttendee}
+                  editOwnedTicket={editOwnedTicket}
                   handleTicketChange={handleTicketChange}
                   refundTicket={refundTicket}
                   removeAttendee={this.handleTicketRemoveAttendee}
@@ -108,7 +108,7 @@ export default connect (
       getUserTickets,
       selectTicket,
       getTicketPDF,
-      assignAttendee,
+      editOwnedTicket,
       handleTicketChange,
       refundTicket,
       removeAttendee,

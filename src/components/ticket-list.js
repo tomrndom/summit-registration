@@ -37,6 +37,7 @@ class TicketList extends React.Component {
         this.handleEventName = this.handleEventName.bind(this);
         this.handleTicketDate = this.handleTicketDate.bind(this);
         this.handleExpirationDate = this.handleExpirationDate.bind(this);
+        this.handleReassignDate = this.handleReassignDate.bind(this);
         this.handleTicketCancel = this.handleTicketCancel.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);
         
@@ -98,7 +99,7 @@ class TicketList extends React.Component {
     handleTicketUpdate(ticket){
       let { attendee_first_name, attendee_last_name, attendee_email, disclaimer_accepted, extra_questions } = ticket;    
       let fromTicket = true;
-      this.props.assignAttendee(attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions, fromTicket);
+      this.props.editOwnedTicket(attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions, fromTicket);
     }
 
     handleTicketLocation(ticket) {
@@ -134,6 +135,12 @@ class TicketList extends React.Component {
       let {summits} = this.props;
       let summit = summits.find(s => s.id === ticket.owner.summit_id);      
       return summit.registration_end_date;
+    }
+
+    handleReassignDate(ticket) {
+      let {summits} = this.props;
+      let summit = summits.find(s => s.id === ticket.owner.summit_id);      
+      return summit.reassign_ticket_till_date;
     }
 
     handleEventName(ticket) {
@@ -208,6 +215,7 @@ class TicketList extends React.Component {
             {showPopup ?  
                 <TicketPopup  
                   ticket={selectedTicket}
+                  reassignDate={this.handleReassignDate(selectedTicket)}
                   expirationDate={this.handleExpirationDate(selectedTicket)}
                   member={null}
                   status={this.handleTicketStatus(selectedTicket)}

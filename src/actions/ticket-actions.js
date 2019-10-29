@@ -112,7 +112,38 @@ export const handleTicketChange = (ticket, errors = {}) => (dispatch, getState) 
 
 }
 
-export const assignAttendee = (attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions, fromTicket) => (dispatch, getState) => {  
+export const assignAttendee = (attendee_email, attendee_first_name, attendee_last_name, extra_questions, fromTicket) => (dispatch, getState) => {
+      
+  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
+  let { accessToken }     = loggedUserState;
+
+  dispatch(startLoading());
+
+  let params = {
+    access_token : accessToken,
+    expand: 'owner, owner.extra_questions'
+  };
+
+  let normalizedEntity = { attendee_email, attendee_first_name, attendee_last_name, extra_questions };
+      
+  
+  return putRequest(
+    null,
+    createAction(ASSIGN_TICKET),
+    `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectedTicket.id}/attendee`,
+    normalizedEntity,
+    authErrorHandler
+  )(params)(dispatch).then(() => {
+      if(fromTicket){
+        dispatch(getUserTickets());
+      } else {
+        dispatch(getUserOrders(selectedOrder.id));            
+      }
+    }
+  );
+}
+
+export const editOwnedTicket = (attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions, fromTicket) => (dispatch, getState) => {  
 
   let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;

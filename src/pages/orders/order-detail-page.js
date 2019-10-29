@@ -46,6 +46,7 @@ class OrderDetailPage extends React.Component {
     this.handleTicketCancel = this.handleTicketCancel.bind(this);
     this.handleExpirationDate = this.handleExpirationDate.bind(this);
     this.handleTicketRole = this.handleTicketRole.bind(this);
+    this.handleReassignDate = this.handleReassignDate.bind(this);
 
   }
 
@@ -116,8 +117,8 @@ class OrderDetailPage extends React.Component {
   }
 
   handleTicketUpdate(ticket){
-    let { attendee_first_name, attendee_last_name, attendee_email, disclaimer_accepted, extra_questions } = ticket;    
-    this.props.assignAttendee(attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions);
+    let { attendee_first_name, attendee_last_name, attendee_email, extra_questions } = ticket;    
+    this.props.assignAttendee(attendee_email, attendee_first_name, attendee_last_name, extra_questions);
   }
 
   handleTicketRemoveAttendee(ticket) {
@@ -165,8 +166,13 @@ class OrderDetailPage extends React.Component {
   }
 
   handleExpirationDate() {
-    let {summit} = this.props;    
+    let {summit} = this.props;        
     return summit.registration_end_date;
+  }
+
+  handleReassignDate() {
+    let {summit} = this.props;
+    return summit.reassign_ticket_till_date;
   }
 
   handleSummitLocation() {
@@ -239,6 +245,7 @@ class OrderDetailPage extends React.Component {
                   ticket={ticket}
                   member={member}
                   status={this.handleTicketStatus(ticket)}
+                  reassignDate={this.handleReassignDate()}
                   expirationDate={this.handleExpirationDate()}
                   onChange={this.handleChange}
                   extraQuestions={extraQuestions}

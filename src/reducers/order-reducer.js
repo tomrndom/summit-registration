@@ -53,7 +53,11 @@ const DEFAULT_STATE = {
     errors: {},
     stripeForm: false,
     loaded: false,
-	  loading: false
+    loading: false,
+    current_page: 1,
+    last_page: 1,
+    per_page: 5,
+    total: 0,
 }
 
 const orderReducer = (state = DEFAULT_STATE, action) => {
@@ -111,7 +115,8 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             return { ...state, order : { ...state.order, checkout : payload.response}};
             break;
         case GET_USER_ORDERS:
-            return {...state, memberOrders: payload.response.data};
+            let {data, current_page, total, last_page} = payload.response;
+            return {...state, memberOrders: data, current_page, total, last_page};
             break;
         case SELECT_ORDER:
             return {...state, selectedOrder: payload};

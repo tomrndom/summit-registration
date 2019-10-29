@@ -13,6 +13,7 @@
 
 import React from 'react'
 import T from 'i18n-react/dist/i18n-react'
+import { Pagination } from 'react-bootstrap';
 
 import TicketPopup from "../components/ticket-popup";
 
@@ -37,7 +38,7 @@ class TicketList extends React.Component {
         this.handleTicketDate = this.handleTicketDate.bind(this);
         this.handleExpirationDate = this.handleExpirationDate.bind(this);
         this.handleTicketCancel = this.handleTicketCancel.bind(this);
-        this.handleTicketSortByDate = this.handleTicketSortByDate.bind(this);
+        this.handlePageChange = this.handlePageChange.bind(this);
         
     }
 
@@ -90,6 +91,10 @@ class TicketList extends React.Component {
       this.props.getTicketPDF();
     }
 
+    handlePageChange(page) {      
+      this.props.pageChange(page);
+    }
+
     handleTicketUpdate(ticket){
       let { attendee_first_name, attendee_last_name, attendee_email, disclaimer_accepted, extra_questions } = ticket;    
       let fromTicket = true;
@@ -137,11 +142,6 @@ class TicketList extends React.Component {
       return event;
     }
 
-    handleTicketSortByDate() {
-      let {tickets} = this.props;
-      let sortedTickets = tickets.sort((a, b) => (a.last_edited < b.last_edited) ? 1 : ((b.last_edited < a.last_edited) ? -1 : 0));      
-      return sortedTickets;
-    }
 
     handleTicketCancel() {
       let {selectedTicket, refundTicket} = this.props;      
@@ -161,7 +161,7 @@ class TicketList extends React.Component {
 
 
     render() {
-      let { tickets, selectedTicket, extraQuestions, loading, errors, summits } = this.props;
+      let { tickets, selectedTicket, extraQuestions, loading, errors, summits, lastPage, currentPage } = this.props;
       let { showPopup } = this.state;      
 
       if (tickets.length && !loading) {
@@ -190,6 +190,19 @@ class TicketList extends React.Component {
                 )
               })}              
             </div>
+            <Pagination
+                bsSize="medium"
+                prev
+                next
+                first
+                last
+                ellipsis
+                boundaryLinks
+                maxButtons={10}
+                items={lastPage}
+                activePage={currentPage}
+                onSelect={this.handlePageChange}
+            />
             {showPopup ?  
                 <TicketPopup  
                   ticket={selectedTicket}

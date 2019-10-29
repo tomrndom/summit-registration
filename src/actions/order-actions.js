@@ -199,7 +199,7 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
     .catch(e => console.log('error', e));
 }
 
-export const getUserOders = (updateId) => (dispatch, getState) => {
+export const getUserOders = (updateId=null, page) => (dispatch, getState) => {
   
   let { loggedUserState } = getState();
   let { accessToken }     = loggedUserState;

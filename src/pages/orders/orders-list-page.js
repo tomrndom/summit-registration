@@ -23,17 +23,31 @@ import { selectSummit } from '../../actions/summit-actions';
 
 class OrdersListPage extends React.Component {
 
+
   componentWillMount() {    
     this.props.getUserOders();
   }
 
+  handlePageChange(page) {
+    console.log(page)
+    //let {order, orderDir, perPage} = this.props;
+    //this.props.getUserOders(page, perPage, order, orderDir);
+  }
+
     render() {
-      let {orders, summits, selectOrder, selectSummit, orderLoader, summitLoader} = this.props;
+      let {orders, summits, selectOrder, page, lastPage, selectSummit, orderLoader, summitLoader} = this.props;
       
         return (
           <div>
             {!orderLoader && !summitLoader &&
-            <OrderList orders={orders} summits={summits} selectOrder={selectOrder} selectSummit={selectSummit}/>}
+            <OrderList 
+                orders={orders} 
+                summits={summits}
+                currentPage={page}
+                lastPage={lastPage} 
+                selectSummit={selectSummit}
+                selectOrder={selectOrder} 
+                pageChange={this.handlePageChange} />}
           </div>
         );
     }
@@ -41,6 +55,8 @@ class OrdersListPage extends React.Component {
 
 const mapStateToProps = ({ orderState, summitState }) => ({
   orders: orderState.memberOrders,
+  page: orderState.current_page,
+  lastPage: orderState.last_page,
   summits: summitState.summits,
   orderLoader: orderState.loading,
   summitLoader: summitState.loading,

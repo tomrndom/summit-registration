@@ -177,17 +177,17 @@ class OrderDetailPage extends React.Component {
                       {this.handleSummitLocation()} / {this.handleTicketDate()}
                     </div>
                     <div className="ticket-list">
-                      {summit.ticket_types.map((s, index) => {
+                      {summit.ticket_types.map((s, index) => {                        
                         return (
                           <React.Fragment key={s.id}>
                             {order.tickets.some(t => t.ticket_type_id === s.id) &&
                             <div className="ticket-type">
-                              {s.name} Tickets x3
+                              {s.name} Tickets x{order.tickets.filter(t => t.ticket_type_id === s.id).length}
                             </div>
-                            &&
-                            order.tickets.map(t => {
+                            }                            
+                            {order.tickets.map(t => {
                               return (
-                                s.id === t.ticket_type_id ?                                
+                                s.id === t.ticket_type_id ?
                                 <div className="row" key={t.id} onClick={() => {t.status === "Cancelled" ? null: this.togglePopup(t)}}>
                                   <div className={`ticket ${this.handleTicketStatus(t).orderClass} p-2 col-sm-12 col-sm-offset-1`}>        
                                       <div className="col-sm-1">
@@ -210,7 +210,7 @@ class OrderDetailPage extends React.Component {
                               )
                             })                           
                             }             
-                          {index ? <div className="separator"></div> : null}
+                          {index < order.tickets.length -1 ? <div className="separator"></div> : null}
                           </React.Fragment>                   
                         )
                       })}                                                

@@ -168,7 +168,7 @@ class TicketList extends React.Component {
         return (
           <div className="tickets-list">            
             <div>
-              {this.handleTicketSortByDate().map((t) => {
+              {tickets.map((t) => {
                 return (
                   <div className={`ticket ${this.handleTicketStatus(t).ticketClass} p-2 col-sm-8 col-sm-offset-2`} key={t.id} 
                     onClick={() => {t.status === "Cancelled" ? null: this.togglePopup(t)}}>

@@ -190,19 +190,21 @@ class TicketList extends React.Component {
                 )
               })}              
             </div>
-            <Pagination
-                bsSize="medium"
-                prev
-                next
-                first
-                last
-                ellipsis
-                boundaryLinks
-                maxButtons={10}
-                items={lastPage}
-                activePage={currentPage}
-                onSelect={this.handlePageChange}
-            />
+            <div className="footer-pagination">
+                <Pagination
+                  bsSize="medium"
+                  prev
+                  next
+                  first
+                  last
+                  ellipsis
+                  boundaryLinks
+                  maxButtons={5}
+                  items={lastPage}
+                  activePage={currentPage}
+                  onSelect={this.handlePageChange}
+                />
+            </div>
             {showPopup ?  
                 <TicketPopup  
                   ticket={selectedTicket}

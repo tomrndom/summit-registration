@@ -65,6 +65,7 @@ class OrderList extends React.Component {
         case 'RefundRequested':
         case 'Error':
         case 'Refunded':
+        case 'Confirmed':
           break;
         default: 
         let summit = summits.find(s => s.id === order.summit_id);      
@@ -112,6 +113,16 @@ class OrderList extends React.Component {
           orderClass: 'cancel',
           class: 'order-cancel'
         },
+        { 
+          text: 'PAYMENT ERROR',
+          orderClass: 'cancel',
+          class: 'order-cancel'
+        },
+        { 
+          text: 'PAYMENT PROCESSING',
+          orderClass: 'pending',
+          class: 'order-pending'
+        },      
       ];
       switch(order.status) {
         case "Paid":
@@ -144,6 +155,10 @@ class OrderList extends React.Component {
           return status[4];
         case "Refunded":
           return status[5];
+        case "Error":
+          return status[6];
+        case "Confirmed":
+          return status[7];
         default:
           return null;
       }
@@ -188,53 +203,53 @@ class OrderList extends React.Component {
 
       if (orders.length && summits) {      
           return (
-            <React.Fragment>
-                <div className="orders-list">
-                    {orders.map(o => {
-                      return (                    
-                        <div key={o.id} onClick={() => this.handleOrderSelect(o)}>
-                            <div className={`order ${this.handleOrderStatus(o).orderClass} p-2 col-sm-8 col-sm-offset-2`}>                   
-                                <div className="col-sm-1">
-                                    <i className={`fa fa-2x ${this.handleOrderStatus(o).icon} ${this.handleOrderStatus(o).class}`}></i>                             
-                                </div>
-                                <div className="col-sm-5">
-                                    <h4>{this.getSummitName(o)}</h4>
-                                    <p className={`status ${this.handleOrderStatus(o).class}`}>{this.handleOrderStatus(o).text}</p>
-                                </div>
-                                <div className="col-sm-4">
-                                    <h5>On {this.getSummitDate(o)}</h5>
-                                    <ul>
-                                      {this.handleTicketCount(o.tickets, o.summit_id).map(t => {
-                                        return (
-                                          <li key={t.ticket_type_id}>
-                                            x{t.quantity} {t.name}
-                                          </li>                                      
-                                        )
-                                      })}                                      
-                                    </ul>
-                                </div>
-                                <div className="col-sm-2">
-                                    <h4>$ {o.amount}</h4>
-                                </div>
-                            </div>
-                        </div>
-                      )
-                    })}
-                </div>
-                <Pagination
-                    bsSize="medium"
-                    prev
-                    next
-                    first
-                    last
-                    ellipsis
-                    boundaryLinks
-                    maxButtons={10}
-                    items={lastPage}
-                    activePage={currentPage}
-                    onSelect={this.handlePageChange}
-                />
-            </React.Fragment>
+              <div className="orders-list">
+                  {orders.map(o => {
+                    return (                    
+                      <div key={o.id} onClick={() => this.handleOrderSelect(o)}>
+                          <div className={`order ${this.handleOrderStatus(o).orderClass} p-2 col-sm-8 col-sm-offset-2`}>                   
+                              <div className="col-sm-1">
+                                  <i className={`fa fa-2x ${this.handleOrderStatus(o).icon} ${this.handleOrderStatus(o).class}`}></i>                             
+                              </div>
+                              <div className="col-sm-5">
+                                  <h4>{this.getSummitName(o)}</h4>
+                                  <p className={`status ${this.handleOrderStatus(o).class}`}>{this.handleOrderStatus(o).text}</p>
+                              </div>
+                              <div className="col-sm-4">
+                                  <h5>On {this.getSummitDate(o)}</h5>
+                                  <ul>
+                                    {this.handleTicketCount(o.tickets, o.summit_id).map(t => {
+                                      return (
+                                        <li key={t.ticket_type_id}>
+                                          x{t.quantity} {t.name}
+                                        </li>                                      
+                                      )
+                                    })}                                      
+                                  </ul>
+                              </div>
+                              <div className="col-sm-2">
+                                  <h4>$ {o.amount}</h4>
+                              </div>
+                          </div>
+                      </div>
+                    )
+                  })}
+                  <div className="footer-pagination">
+                      <Pagination
+                        bsSize="medium"
+                        prev
+                        next
+                        first
+                        last
+                        ellipsis
+                        boundaryLinks
+                        maxButtons={5}
+                        items={lastPage}
+                        activePage={currentPage}
+                        onSelect={this.handlePageChange}
+                      />
+                  </div>
+              </div>                
           )          
       } else {
         return (

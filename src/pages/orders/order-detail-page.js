@@ -195,7 +195,7 @@ class OrderDetailPage extends React.Component {
                                       </div>
                                       <div className="col-sm-5">
                                           <h4>Speaker</h4>
-                                          {t.discount > 0 && `${t.discount}% Discount`}
+                                          {t.discount > 0 && `${(t.discount * 100) / t.raw_cost}% Discount`}
                                           <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
                                       </div>
                                       <div className="col-sm-5">
@@ -217,7 +217,7 @@ class OrderDetailPage extends React.Component {
                     </div>                      
                   </div>
                   <div className="col-md-4">
-                      <OrderSummary order={order} summit={summit}/>
+                      <OrderSummary order={order} summit={summit} type={'desktop'}/>
                       <TicketOptions cancelOrder={this.handleOrderCancel}/>
                   </div>
               </div>

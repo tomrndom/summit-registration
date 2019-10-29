@@ -42,15 +42,15 @@ class OrderSummary extends React.Component {
         let ticketTotal = 0;
         let ticketSummary = [];        
 
-        order.tickets.forEach(tix => {            
-            let idx = ticketSummary.findIndex(o => o.ticket_type_id == tix.type_id || tix.ticket_type_id);
-            let tixType = ticket_types.find(tt => tt.id == tix.type_id || tix.ticket_type_id);            
+        order.tickets.forEach(tix => {
+            let idx = ticketSummary.findIndex(o => o.ticket_type_id == (tix.type_id ? tix.type_id : tix.ticket_type_id));
+            let tixType = ticket_types.find(tt => tt.id == (tix.type_id ? tix.type_id : tix.ticket_type_id));
 
             if (idx >= 0) {
                 ticketSummary[idx].qty++;
             } else {                
-                let name = ticket_types.find(q => q.id === tix.type_id || tix.ticket_type_id).name;                
-                ticketSummary.push({ticket_type_id: tix.type_id || tix.ticket_type_id, tix_type: tixType, name, qty: 1})
+                let name = ticket_types.find(q => q.id === (tix.type_id ? tix.type_id : tix.ticket_type_id)).name;                
+                ticketSummary.push({ticket_type_id: (tix.type_id ? tix.type_id : tix.ticket_type_id), tix_type: tixType, name, qty: 1})
             }
 
             ticketTotal = ticketTotal + tixType.cost;
@@ -62,11 +62,11 @@ class OrderSummary extends React.Component {
         let discounts = order.tickets.filter(tix => tix.discount).map(tix => {
             let tixType = ticket_types.find(tt => tt.id == tix.type_id || tix.ticket_type_id);
 
-            let discountPercentageTmp = (tix.discount * 100) / tixType.raw_cost;
-            let discountTmp = (discountPercentageTmp / 100) * tixType.raw_cost;
+            let discountPercentageTmp = (tix.discount * 100) / tixType.cost;            
+            let discountTmp = (discountPercentageTmp / 100) * tixType.cost;            
             discountTotal = discountTotal + discountTmp;
 
-            return {tix_type: tixType, percentage: discountPercentageTmp, code: tix.coupon.code};
+            return {tix_type: tixType, percentage: discountPercentageTmp, code: tix.promo_code_id};
         });
 
         let total = ticketTotal - discountTotal;

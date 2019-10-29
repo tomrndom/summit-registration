@@ -40,6 +40,12 @@ class TicketsListPage extends React.Component {
     handleTicketRemoveAttendee(ticket) {
       this.props.removeAttendee(ticket);
     }
+
+    handlePageChange(page) {
+      console.log(page)
+      //let {order, orderDir, perPage} = this.props;
+      //this.props.getUserOders(page, perPage, order, orderDir);
+    }
   
     handleResendNotification() {
       this.props.resendNotification();
@@ -55,7 +61,9 @@ class TicketsListPage extends React.Component {
           assignAttendee, 
           handleTicketChange, 
           refundTicket,
-          summits, 
+          summits,
+          page,
+          lastPage, 
           loadingTickets, 
           loadingSummits, 
           errors} = this.props;        
@@ -71,6 +79,8 @@ class TicketsListPage extends React.Component {
                   refundTicket={refundTicket}
                   removeAttendee={this.handleTicketRemoveAttendee}
                   resendNotification={this.handleResendNotification}
+                  currentPage={page}
+                  lastPage={lastPage}
                   summits={summits}
                   extraQuestions={extraQuestions}
                   loading={loadingTickets && loadingSummits}
@@ -83,6 +93,8 @@ class TicketsListPage extends React.Component {
 
 const mapStateToProps = ({ ticketState, summitState }) => ({
     tickets: ticketState.memberTickets,
+    page: ticketState.current_page,
+    lastPage: ticketState.last_page,
     selectedTicket: ticketState.selectedTicket,
     loadingTickets: ticketState.loading,
     errors: ticketState.errors,

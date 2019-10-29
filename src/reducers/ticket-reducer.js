@@ -18,7 +18,11 @@ const DEFAULT_STATE = {
     loading: false,
     memberTickets: [],
     selectedTicket: {},
-    errors: {}
+    errors: {},
+    current_page: 1,
+    last_page: 1,
+    per_page: 5,
+    total: 0,
 }
 
 const memberReducer = (state = DEFAULT_STATE, action) => {
@@ -41,8 +45,9 @@ const memberReducer = (state = DEFAULT_STATE, action) => {
             let {ticket, errors} = payload;
             return {...state, selectedTicket: ticket, errors: errors};
             break;
-        case GET_TICKETS:            
-            return {...state, memberTickets: payload.response.data};
+        case GET_TICKETS:
+            let {data, current_page, total, last_page} = payload.response;
+            return {...state, memberTickets: data, current_page, total, last_page};
         case GET_TICKET_BY_HASH:
             return {...state, selectedTicket: payload.response};
         case SELECT_TICKET:

@@ -54,7 +54,7 @@ export const handleResetTicket = () => (dispatch, getState) => {
 
 
 
-export const getUserTickets = () => (dispatch, getState) => {
+export const getUserTickets = (page) => (dispatch, getState) => {
 
   let { loggedUserState } = getState();
   let { accessToken } = loggedUserState;

@@ -13,6 +13,7 @@
 
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { Pagination } from 'react-bootstrap';
 import T from 'i18n-react/dist/i18n-react';
 
 import '../styles/orders-list-page.less';
@@ -31,7 +32,7 @@ class OrderList extends React.Component {
         this.getSummitDate = this.getSummitDate.bind(this);
         this.getSummitName = this.getSummitName.bind(this);
         this.handleOrderStatus = this.handleOrderStatus.bind(this);
-        this.handleOrderSortByDate = this.handleOrderSortByDate.bind(this);
+        this.handlePageChange = this.handlePageChange.bind(this);
 
     }
 
@@ -73,10 +74,8 @@ class OrderList extends React.Component {
       }           
     }
 
-    handleOrderSortByDate() {
-      let {orders} = this.props;
-      let sortedOrders = orders.sort((a, b) => (a.last_edited < b.last_edited) ? 1 : ((b.last_edited < a.last_edited) ? -1 : 0));      
-      return sortedOrders;
+    handlePageChange(page) {      
+      this.props.pageChange(page);
     }
 
     handleOrderStatus(order){
@@ -111,7 +110,27 @@ class OrderList extends React.Component {
       ];
       switch(order.status) {
         case "Paid":
-          return status[0];
+          let incomplete = false;
+          order.tickets.map(t => {
+            if(t.owner && t.owner.extra_questions.length){
+              t.owner.extra_questions.map(eq => {
+                if(incomplete) {
+                  return status[1];
+                } else {
+                  if(!eq.answer && eq.answer.answer == ''){
+                    incomplete = true;
+                  }
+                }
+              });
+            } else {
+              incomplete = true;
+            }
+          });
+          if(incomplete === false) { 
+            return status[0];
+          } else {
+            return status[1];
+          };
         case "Reserved":
           return status[2];
         case "Cancelled":
@@ -158,42 +177,57 @@ class OrderList extends React.Component {
 
     render() {
 
-      let { orders, summits } = this.props;           
+      let { orders, summits, currentPage, lastPage } = this.props;           
 
       if (orders.length && summits) {      
           return (
-            <div className="orders-list">
-                {this.handleOrderSortByDate().map(o => {
-                  return (                    
-                    <div key={o.id} onClick={() => this.handleOrderSelect(o)}>
-                        <div className={`order ${this.handleOrderStatus(o).orderClass} p-2 col-sm-8 col-sm-offset-2`}>                   
-                            <div className="col-sm-1">
-                                <i className={`fa fa-2x ${this.handleOrderStatus(o).icon} ${this.handleOrderStatus(o).class}`}></i>                             
-                            </div>
-                            <div className="col-sm-5">
-                                <h4>{this.getSummitName(o)}</h4>
-                                <p className={`status ${this.handleOrderStatus(o).class}`}>{this.handleOrderStatus(o).text}</p>
-                            </div>
-                            <div className="col-sm-4">
-                                <h5>On {this.getSummitDate(o)}</h5>
-                                <ul>
-                                  {this.handleTicketCount(o.tickets, o.summit_id).map(t => {
-                                    return (
-                                      <li key={t.ticket_type_id}>
-                                        x{t.quantity} {t.name}
-                                      </li>                                      
-                                    )
-                                  })}                                      
-                                </ul>
-                            </div>
-                            <div className="col-sm-2">
-                                <h4>$ {o.amount}</h4>
+            <React.Fragment>
+                <div className="orders-list">
+                    {orders.map(o => {
+                      return (                    
+                        <div key={o.id} onClick={() => this.handleOrderSelect(o)}>
+                            <div className={`order ${this.handleOrderStatus(o).orderClass} p-2 col-sm-8 col-sm-offset-2`}>                   
+                                <div className="col-sm-1">
+                                    <i className={`fa fa-2x ${this.handleOrderStatus(o).icon} ${this.handleOrderStatus(o).class}`}></i>                             
+                                </div>
+                                <div className="col-sm-5">
+                                    <h4>{this.getSummitName(o)}</h4>
+                                    <p className={`status ${this.handleOrderStatus(o).class}`}>{this.handleOrderStatus(o).text}</p>
+                                </div>
+                                <div className="col-sm-4">
+                                    <h5>On {this.getSummitDate(o)}</h5>
+                                    <ul>
+                                      {this.handleTicketCount(o.tickets, o.summit_id).map(t => {
+                                        return (
+                                          <li key={t.ticket_type_id}>
+                                            x{t.quantity} {t.name}
+                                          </li>                                      
+                                        )
+                                      })}                                      
+                                    </ul>
+                                </div>
+                                <div className="col-sm-2">
+                                    <h4>$ {o.amount}</h4>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                  )
-                })}
-            </div>
+                      )
+                    })}
+                </div>
+                <Pagination
+                    bsSize="medium"
+                    prev
+                    next
+                    first
+                    last
+                    ellipsis
+                    boundaryLinks
+                    maxButtons={10}
+                    items={lastPage}
+                    activePage={currentPage}
+                    onSelect={this.handlePageChange}
+                />
+            </React.Fragment>
           )          
       } else {
         return (

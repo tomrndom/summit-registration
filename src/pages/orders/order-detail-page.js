@@ -182,7 +182,7 @@ class OrderDetailPage extends React.Component {
                           <React.Fragment key={s.id}>
                             {order.tickets.some(t => t.ticket_type_id === s.id) &&
                             <div className="ticket-type">
-                              {s.name} Tickets x{order.tickets.filter(t => t.ticket_type_id === s.id).length}
+                              {s.name} Tickets ({order.tickets.filter(t => t.ticket_type_id === s.id).length})
                             </div>
                             }                            
                             {order.tickets.map(t => {
@@ -194,7 +194,7 @@ class OrderDetailPage extends React.Component {
                                         <i className={`fa fa-2x ${this.handleTicketStatus(t).icon} ${this.handleTicketStatus(t).class}`}></i>                             
                                       </div>
                                       <div className="col-sm-5">
-                                          <h4>Speaker</h4>
+                                          <h4>Attendee</h4>
                                           {t.discount > 0 && `${(t.discount * 100) / t.raw_cost}% Discount`}
                                           <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
                                       </div>

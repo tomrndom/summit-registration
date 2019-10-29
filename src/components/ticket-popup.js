@@ -231,13 +231,13 @@ class TicketPopup extends React.Component {
                   {fromTicketList ? 
                     <div className="popup-title">
                       <h4><b>Full Day Pass</b></h4>
-                      <p>Speaker</p>
+                      <p>Attendee</p>
                       <p className={`status ${status.class}`}>{status.text}</p>
                     </div>
                     : 
                     <div className="popup-title">
                       <h4><b>Full Day Pass</b></h4>
-                      <p>Speaker</p>
+                      <p>Attendee</p>
                       <p className={`status ${status.class}`}>{status.text}</p>
                     </div>
                     }                  

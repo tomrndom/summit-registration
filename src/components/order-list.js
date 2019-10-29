@@ -111,7 +111,27 @@ class OrderList extends React.Component {
       ];
       switch(order.status) {
         case "Paid":
-          return status[0];
+          let incomplete = false;
+          order.tickets.map(t => {
+            if(t.owner && t.owner.extra_questions.length){
+              t.owner.extra_questions.map(eq => {
+                if(incomplete) {
+                  return status[1];
+                } else {
+                  if(!eq.answer && eq.answer.answer == ''){
+                    incomplete = true;
+                  }
+                }
+              });
+            } else {
+              incomplete = true;
+            }
+          });
+          if(incomplete === false) { 
+            return status[0];
+          } else {
+            return status[1];
+          };
         case "Reserved":
           return status[2];
         case "Cancelled":

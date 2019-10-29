@@ -133,7 +133,7 @@ class OrderList extends React.Component {
                 if(incomplete) {
                   return status[1];
                 } else {
-                  if(eq.answer && eq.answer == ''){
+                  if(!eq.answer){
                     incomplete = true;
                   }
                 }

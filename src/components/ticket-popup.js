@@ -220,8 +220,7 @@ class TicketPopup extends React.Component {
       } else {
         return "Attendee";
       }
-    }
-  
+    }  
 
     handleChangeEmail(ev) {
       this.setState({reassignEmail: ev.target.value});

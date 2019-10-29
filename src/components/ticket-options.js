@@ -47,6 +47,18 @@ class TicketOptions extends React.Component {
       }          
     }
 
+    handleTicketRole(badge) {
+      let roles = [];
+      badge.features.map(f => {
+        roles.push(f.name);
+      });
+      if(roles.length) {
+        return roles.join(', ');
+      } else {
+        return "Attendee";
+      }
+    }
+
     handleSummitLocation(summit) {
       if(summit.locations.length === 1) {
         let location = `${summit.locations[0].city}, ${summit.locations[0].country}`;
@@ -70,8 +82,8 @@ class TicketOptions extends React.Component {
                     <div className="col-md-12 info">
                       <h4>{summit.name}</h4>
                       <p>{this.handleTicketName(ticket)}</p>
-                      <p>{this.handleSummitLocation(summit)} / November 25-31, 2019</p>
-                      <p><i className="fa fa-shield"></i> Staff Ticket</p>
+                      <p>{this.handleSummitLocation(summit)} / {this.handleTicketDate(ticket)}</p>
+                      <p>{this.handleTicketRole(ticket.badge)}</p>
                     </div>
                   </div>
                   <hr />

@@ -41,10 +41,9 @@ class TicketsListPage extends React.Component {
       this.props.removeAttendee(ticket);
     }
 
-    handlePageChange(page) {
-      console.log(page)
-      //let {order, orderDir, perPage} = this.props;
-      //this.props.getUserOders(page, perPage, order, orderDir);
+    handlePageChange(page) {      
+      let {perPage} = this.props;
+      this.props.getUserOders(page, perPage);
     }
   
     handleResendNotification() {

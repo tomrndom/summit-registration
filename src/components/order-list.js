@@ -107,6 +107,11 @@ class OrderList extends React.Component {
           orderClass: 'cancel',
           class: 'order-cancel'
         },
+        { 
+          text: 'REFUNDED',
+          orderClass: 'cancel',
+          class: 'order-cancel'
+        },
       ];
       switch(order.status) {
         case "Paid":
@@ -117,7 +122,7 @@ class OrderList extends React.Component {
                 if(incomplete) {
                   return status[1];
                 } else {
-                  if(!eq.answer && eq.answer.answer == ''){
+                  if(eq.answer && eq.answer.answer == ''){
                     incomplete = true;
                   }
                 }
@@ -137,6 +142,8 @@ class OrderList extends React.Component {
           return status[3];        
         case "RefundRequested":
           return status[4];
+        case "Refunded":
+          return status[5];
         default:
           return null;
       }

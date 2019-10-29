@@ -199,7 +199,7 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
     .catch(e => console.log('error', e));
 }
 
-export const getUserOrders = (updateId) => (dispatch, getState) => {
+export const getUserOrders = (updateId, page = 1, per_page = 5) => (dispatch, getState) => {
   
   let { loggedUserState } = getState();
   let { accessToken }     = loggedUserState;
@@ -208,7 +208,9 @@ export const getUserOrders = (updateId) => (dispatch, getState) => {
 
   let params = {
       access_token : accessToken,
-      expand       : 'extra_questions, tickets, tickets.owner, tickets.owner.extra_questions',
+      expand       : 'extra_questions, tickets, tickets.owner, tickets.owner.extra_questions',      
+      page         : page,
+      per_page     : per_page 
   };
   
   return getRequest(

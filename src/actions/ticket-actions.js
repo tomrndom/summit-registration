@@ -32,7 +32,7 @@ import {
 } from 'openstack-uicore-foundation/lib/methods';
 import { selectSummitById } from "./summit-actions";
 import { getUserSummits } from '../actions/summit-actions';
-import { getUserOders } from "./order-actions";
+import { getUserOrders } from "./order-actions";
 
 export const RESET_TICKET             = 'RESET_TICKET';
 export const GET_TICKETS              = 'GET_TICKETS';
@@ -134,7 +134,7 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
       if(fromTicket){
         dispatch(getUserTickets());
       } else {
-        dispatch(getUserOders(selectedOrder.id));            
+        dispatch(getUserOrders(selectedOrder.id));            
       }
     }
   );

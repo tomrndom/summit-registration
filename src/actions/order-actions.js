@@ -199,7 +199,7 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
     .catch(e => console.log('error', e));
 }
 
-export const getUserOders = (updateId) => (dispatch, getState) => {
+export const getUserOrders = (updateId) => (dispatch, getState) => {
   
   let { loggedUserState } = getState();
   let { accessToken }     = loggedUserState;
@@ -261,7 +261,7 @@ export const cancelOrder = (order) => (dispatch, getState) => {
       authErrorHandler
   )(params)(dispatch).then((payload) => {
       console.log(payload);
-      dispatch(getUserOders());
+      dispatch(getUserOrders());
       dispatch(stopLoading());
       history.push('/a/member/orders');
     }

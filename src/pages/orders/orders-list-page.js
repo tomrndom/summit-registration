@@ -18,13 +18,13 @@ import T from "i18n-react/dist/i18n-react";
 import '../../styles/orders-list-page.less';
 import OrderList from '../../components/order-list';
 
-import { getUserOders, selectOrder } from '../../actions/order-actions';
+import { getUserOrders, selectOrder } from '../../actions/order-actions';
 import { selectSummit } from '../../actions/summit-actions';
 
 class OrdersListPage extends React.Component {
 
   componentWillMount() {    
-    this.props.getUserOders();
+    this.props.getUserOrders();
   }
 
     render() {
@@ -49,7 +49,7 @@ const mapStateToProps = ({ orderState, summitState }) => ({
 export default connect (
   mapStateToProps,
   {
-    getUserOders,
+    getUserOrders,
     selectOrder,
     selectSummit
   }

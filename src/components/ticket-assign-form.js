@@ -172,7 +172,7 @@ class TicketAssignForm extends React.Component {
               <hr/>
             </React.Fragment>
             }            
-            {!guest && !orderOwned &&
+            {!guest && orderOwned &&
               <div className="row field-wrapper">
                 <div className="col-sm-4"></div>
                 <div className="col-sm-6">

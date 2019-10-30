@@ -256,7 +256,7 @@ export const getTicketPDF = () => (dispatch, getState) => {
 
 export const refundTicket = (ticket) => (dispatch, getState) => {
 
-  let { loggedUserState, orderState: { selectedOrder } } = getState();
+  let { loggedUserState } = getState();
   let { accessToken }     = loggedUserState;
 
   dispatch(startLoading());
@@ -268,7 +268,7 @@ export const refundTicket = (ticket) => (dispatch, getState) => {
   return deleteRequest(
       null,
       createAction(REFUND_TICKET),
-      `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${ticket.id}/refund`,
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/${ticket.order.id}/tickets/${ticket.id}/refund`,
       authErrorHandler
   )(params)(dispatch).then((payload) => {
       history.push('/a/member/tickets/');

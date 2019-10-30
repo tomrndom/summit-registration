@@ -35,7 +35,8 @@ class OrdersListPage extends React.Component {
 
 
   componentWillMount() {    
-    this.props.getUserOrders();
+    let {page, perPage} = this.props;
+    this.props.getUserOrders(null, page, perPage);
   }
 
   handlePageChange(page) {

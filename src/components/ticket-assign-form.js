@@ -122,7 +122,8 @@ class TicketAssignForm extends React.Component {
               <div className="col-sm-6">
                 <Input
                   id="attendee_first_name"
-                  className="form-control"                              
+                  className="form-control"       
+                  placeholder="First Name"                       
                   error={this.hasErrors('attendee_first_name')}
                   onChange={onChange}
                   value={ticket.attendee_first_name}
@@ -135,26 +136,13 @@ class TicketAssignForm extends React.Component {
                 <Input
                   id="attendee_last_name"
                   className="form-control"
-                  placeholder="Email"
+                  placeholder="Last Name"
                   error={this.hasErrors('attendee_last_name')}
                   onChange={onChange}
                   value={ticket.attendee_last_name}
                 />
               </div>
-            </div>
-            {guest || ownedTicket &&
-              <div className="row field-wrapper">
-                <div className="col-sm-12">
-                    <div className="form-check abc-checkbox">
-                        <input type="checkbox" id="disclaimer_accepted" checked={ticket.disclaimer_accepted}
-                                onChange={onChange} className="form-check-input" />
-                        <label className="form-check-label" htmlFor="disclaimer_accepted">
-                            {summit.registration_disclaimer_content}
-                        </label>
-                    </div>
-                </div>
-              </div>
-            }
+            </div>            
             <hr/>
             {extraQuestions && 
             <React.Fragment>
@@ -171,7 +159,20 @@ class TicketAssignForm extends React.Component {
               />                        
               <hr/>
             </React.Fragment>
-            }            
+            }
+            {guest || ownedTicket &&
+              <div className="row field-wrapper">
+                <div className="col-sm-12">
+                    <div className="form-check abc-checkbox">
+                        <input type="checkbox" id="disclaimer_accepted" checked={ticket.disclaimer_accepted}
+                                onChange={onChange} className="form-check-input" />
+                        <label className="form-check-label" htmlFor="disclaimer_accepted">
+                            {summit.registration_disclaimer_content}
+                        </label>
+                    </div>
+                </div>
+              </div>
+            }
             {!guest && orderOwned &&
               <div className="row field-wrapper">
                 <div className="col-sm-4"></div>

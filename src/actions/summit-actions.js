@@ -33,6 +33,10 @@ export const GET_SUMMIT_REFUND_POLICY  = 'GET_SUMMIT_REFUND_POLICY';
 export const getSummitBySlug = (slug) => (dispatch, getState) => {
 
     let { summitState: {summits} } = getState();
+
+    let params = {
+      expand: 'order_extra_questions.values'
+    }
     
     let selectedSummit = summits.find(s => s.slug === slug);  
 
@@ -47,7 +51,7 @@ export const getSummitBySlug = (slug) => (dispatch, getState) => {
           createAction(GET_SUMMIT_BY_SLUG),
           `${window.API_BASE_URL}/api/public/v1/summits/all/${slug}`,
           authErrorHandler
-      )()(dispatch).then(() => {
+      )(params)(dispatch).then(() => {
             dispatch(stopLoading());
           }
       );   

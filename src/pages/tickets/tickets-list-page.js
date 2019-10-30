@@ -34,7 +34,8 @@ class TicketsListPage extends React.Component {
   }
 
     componentWillMount() {    
-        this.props.getUserTickets();
+        let {page, perPage} = this.props;
+        this.props.getUserTickets(page, perPage);
     }
 
     handleTicketRemoveAttendee(ticket) {

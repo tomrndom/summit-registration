@@ -85,14 +85,18 @@ export const getUserSummits = (from) => (dispatch, getState) => {
 
 export const getSummitById = (id, select = false) => (dispatch, getState) => {
     
-  dispatch(startLoading());    
+  dispatch(startLoading());
+  
+  let params = {
+    expand: 'order_extra_questions.values'
+  }
   
   return getRequest(
       dispatch(startLoading()),
       createAction(GET_SUMMIT_BY_ID),
       `${window.API_BASE_URL}/api/public/v1/summits/all/${id}`,
       authErrorHandler
-  )()(dispatch).then(() => {
+  )(params)(dispatch).then(() => {
         select ? dispatch(selectSummitById(id)) : dispatch(stopLoading());
       }
   );    

@@ -56,32 +56,40 @@ class TicketList extends React.Component {
     handleTicketStatus(ticket){
       const status = [
         { 
+          text: 'UNASSIGNED',
+          icon: 'fa-exclamation-circle',
+          orderClass: 'unset',
+          class: 'ticket-unset'
+        },
+        { 
           text: 'REQUIRED DETAILS NEEDED',
           icon: 'fa-exclamation-circle',
-          ticketClass: 'warning',
+          orderClass: 'warning',
           class: 'ticket-warning'
         },
         { 
           text: 'READY TO USE',
           icon: 'fa-check-circle',
-          ticketClass: 'complete',
+          orderClass: 'complete',
           class: 'ticket-complete'
         },
         { 
-          text: 'CANCELLED',         
-          ticketClass: 'cancel', 
+          text: 'CANCELLED',        
+          orderClass: 'cancel',
           class: 'ticket-cancel'
         },
       ];
-      if(ticket.status === 'Cancelled') {
-        return status[2];
+      if(ticket.status === "Cancelled") {
+        return status[3];
       }
-      else if (!ticket.owner.extra_questions) {
+      else if(ticket.owner_id === 0) {
         return status[0];
+      } else if (!ticket.owner.extra_questions) {
+        return status[1];
       } else if (ticket.owner.extra_questions) {
-        let answers = ticket.owner.extra_questions.some((q) => q.value == '');      
-        if(answers) {
-          return status[0];
+        let incomplete = ticket.owner.extra_questions.filter((q) => q.value == '');
+        if(incomplete.length === 0) {
+          return status[2];
         } else {
           return status[1];
         }

@@ -94,11 +94,11 @@ class OrderDetailPage extends React.Component {
     } else if (!ticket.owner.extra_questions) {
       return status[1];
     } else if (ticket.owner.extra_questions) {
-      let answers = ticket.owner.extra_questions.some((q) => q.value == '');      
-      if(answers) {
-        return status[1];
-      } else {
+      let incomplete = ticket.owner.extra_questions.filter((q) => q.value == '');
+      if(incomplete.length === 0) {
         return status[2];
+      } else {
+        return status[1];
       }
     }
   }

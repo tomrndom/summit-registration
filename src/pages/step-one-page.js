@@ -83,8 +83,7 @@ class StepOnePage extends React.Component {
                     <div className="col-md-8">
                         <div className="row">
                             <div className="col-md-12">
-                                <h3>{T.translate("step_one.choose_tickets")}</h3>
-                                <p>{T.translate("step_one.choose_tickets_desc")}</p>
+                                <h3>{T.translate("step_one.choose_tickets")}</h3>                                
                             </div>
                             <div className="col-md-12">                                                           
                               {(summit.timestamp < summit.start_date && summit.timestamp < summit.end_date) &&
@@ -99,8 +98,7 @@ class StepOnePage extends React.Component {
                         </div>
 
                     </div>
-                    <div className="col-md-4">
-                        <EventInfo />
+                    <div className="col-md-4">                        
                     </div>
                 </div>
                 <SubmitButtons step={this.step} canContinue={order.tickets.length > 0} />

@@ -49,7 +49,6 @@ class BillingInfoForm extends React.Component {
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        {T.translate("step_three.billing_subtitle")}
                     </div>
                 </div>
                 <div className="row field-wrapper">

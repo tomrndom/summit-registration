@@ -93,14 +93,9 @@ class TicketOptions extends React.Component {
                 </React.Fragment>
                 }                                
                 <div className="row">
-                    <div className="col-md-12">
-                        <a>{T.translate("order_info.print")}</a><br/>
-                        {!guest && <a>{T.translate("order_info.resend")}<br/></a>}
-                        <a onClick={this.props.downloadTicket}>{T.translate("order_info.download")}</a><br/>
-                        {guest && <a>{T.translate("order_info.directions")}<br/></a>}
-                        {guest && <a>{T.translate("order_info.calendar")}<br/></a>}
+                    <div className="col-md-12">                        
+                        {guest && <a onClick={this.props.downloadTicket}>{T.translate("order_info.download")}<br/></a>}
                         {!guest && <a onClick={this.props.cancelOrder} className="cancel">{T.translate("order_info.cancel_order")}</a>}
-                        {guest && <a onClick={this.props.cancelTicket} className="cancel">{T.translate("order_info.cancel_ticket")}</a>}
                     </div>
                 </div>
             </div>

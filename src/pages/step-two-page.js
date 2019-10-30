@@ -152,7 +152,6 @@ class StepTwoPage extends React.Component {
                     </div>
                     <div className="col-md-4">
                         <OrderSummary order={order} summit={summit} type={'desktop'} />
-                        <EventInfo />
                     </div>
                 </div>
                 <SubmitButtons step={this.step} errors={errors} dirty={this.handleShowErrors}/>

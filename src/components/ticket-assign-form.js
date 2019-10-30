@@ -155,21 +155,23 @@ class TicketAssignForm extends React.Component {
                   questions_type={'Ticket'}
                   onChange={onChange}
               />                        
-              <hr/>
             </React.Fragment>
             }
             {guest || ownedTicket &&
-              <div className="row field-wrapper">
-                <div className="col-sm-12">
-                    <div className="form-check abc-checkbox">
-                        <input type="checkbox" id="disclaimer_accepted" checked={ticket.disclaimer_accepted}
-                                onChange={onChange} className="form-check-input" />
-                        <label className="form-check-label" htmlFor="disclaimer_accepted">
-                            {summit.registration_disclaimer_content}
-                        </label>
-                    </div>
+              <React.Fragment>
+                <hr/>
+                <div className="row field-wrapper">
+                  <div className="col-sm-12">
+                      <div className="form-check abc-checkbox">
+                          <input type="checkbox" id="disclaimer_accepted" checked={ticket.disclaimer_accepted}
+                                  onChange={onChange} className="form-check-input" />
+                          <label className="form-check-label" htmlFor="disclaimer_accepted">
+                              {summit.registration_disclaimer_content}
+                          </label>
+                      </div>
+                  </div>
                 </div>
-              </div>
+              </React.Fragment>
             }
             {!guest && orderOwned &&
               <div className="row field-wrapper">

@@ -257,8 +257,7 @@ class TicketPopup extends React.Component {
                       <p className={`status ${status.class}`}>{status.text}</p>
                     </div>
                     }                  
-                  <div className="popup-icons">
-                    <i className="fa fa-print"></i>
+                  <div className="popup-icons">                     
                     <i onClick={() => this.props.downloadTicket()} className="fa fa-file-pdf-o"></i>
                     <i onClick={() => this.props.closePopup()} className="fa fa-times"></i>                    
                   </div>

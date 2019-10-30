@@ -122,8 +122,7 @@ class TicketAssignForm extends React.Component {
               <div className="col-sm-6">
                 <Input
                   id="attendee_first_name"
-                  className="form-control"       
-                  placeholder="First Name"                       
+                  className="form-control"              
                   error={this.hasErrors('attendee_first_name')}
                   onChange={onChange}
                   value={ticket.attendee_first_name}
@@ -136,7 +135,6 @@ class TicketAssignForm extends React.Component {
                 <Input
                   id="attendee_last_name"
                   className="form-control"
-                  placeholder="Last Name"
                   error={this.hasErrors('attendee_last_name')}
                   onChange={onChange}
                   value={ticket.attendee_last_name}

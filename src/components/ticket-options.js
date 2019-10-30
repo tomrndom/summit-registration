@@ -14,6 +14,8 @@
 import React from 'react'
 import T from 'i18n-react/dist/i18n-react'
 
+import { daysBetweenDates, getFormatedDate } from '../utils/helpers';
+
 class TicketOptions extends React.Component {
     constructor(props) {
         super(props);
@@ -25,6 +27,7 @@ class TicketOptions extends React.Component {
         this.handleTicketName = this.handleTicketName.bind(this);
         this.handleSummitLocation = this.handleSummitLocation.bind(this);
         this.handleTicketDate = this.handleTicketDate.bind(this);
+        this.handleTicketRole = this.handleTicketRole.bind(this);
     }
 
     handleTicketName(ticket) {

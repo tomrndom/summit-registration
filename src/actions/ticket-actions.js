@@ -283,7 +283,7 @@ export const getTicketByHash = (hash) => (dispatch, getState) => {
   dispatch(startLoading());
 
   let params = {
-    expand : 'order_extra_questions.values, owner, owner.extra_questions'
+    expand : 'order_extra_questions.values, owner, owner.extra_questions, badge, badge.features'
   };
 
   return getRequest(

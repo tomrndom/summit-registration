@@ -34,7 +34,7 @@ class AuthorizedRoute extends React.Component {
                 if (isLoggedUser) {
                     return (
                         <React.Fragment>
-                            {/* <OPSessionChecker clientId={window.OAUTH2_CLIENT_ID} idpBaseUrl={window.IDP_BASE_URL} /> */}
+                            <OPSessionChecker clientId={window.OAUTH2_CLIENT_ID} idpBaseUrl={window.IDP_BASE_URL} />
                             <Component currentSummit={currentSummit} {...props} />
                         </React.Fragment>
                     );

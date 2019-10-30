@@ -30,6 +30,7 @@ class TicketsListPage extends React.Component {
 
     this.handleTicketRemoveAttendee = this.handleTicketRemoveAttendee.bind(this);
     this.handleResendNotification = this.handleResendNotification.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
 
   }
 
@@ -44,7 +45,7 @@ class TicketsListPage extends React.Component {
 
     handlePageChange(page) {      
       let {perPage} = this.props;
-      this.props.getUserOders(page, perPage);
+      this.props.getUserTickets(page, perPage);
     }
   
     handleResendNotification() {
@@ -85,6 +86,7 @@ class TicketsListPage extends React.Component {
                   extraQuestions={extraQuestions}
                   loading={loadingTickets && loadingSummits}
                   errors={errors}
+                  pageChange={this.handlePageChange}
                 />
             </div>
         );

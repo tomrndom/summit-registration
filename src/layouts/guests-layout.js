@@ -114,7 +114,7 @@ class GuestsLayout extends React.Component {
     }
     
     render() {
-      let {ticket: {owner, order_extra_questions}, ticket, errors, loading, summit} = this.props;
+      let {ticket: {owner, order_extra_questions}, ticket, errors, loading, summit, summits} = this.props;
       let {tempTicket} = this.state;
 
       if(!owner) {
@@ -138,6 +138,7 @@ class GuestsLayout extends React.Component {
                   cancelTicket={this.handleTicketCancel}
                   ticket={ticket}
                   summit={summit}
+                  summits={summits}
                 />
               </div>
               <div className="row submit-buttons-wrapper">
@@ -162,7 +163,8 @@ const mapStateToProps = ({ ticketState, summitState }) => ({
   loading: ticketState.loading,
   ticket: ticketState.selectedTicket,
   errors: ticketState.errors,
-  summit: summitState.selectedSummit
+  summit: summitState.selectedSummit,
+  summits: summitState.summits
 })
 
 export default connect(

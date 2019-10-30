@@ -112,9 +112,9 @@ export const handleTicketChange = (ticket, errors = {}) => (dispatch, getState) 
 
 }
 
-export const assignAttendee = (attendee_email, attendee_first_name, attendee_last_name, extra_questions, fromTicket) => (dispatch, getState) => {
+export const assignAttendee = (attendee_email, attendee_first_name, attendee_last_name, extra_questions) => (dispatch, getState) => {
       
-  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
+  let { loggedUserState, orderState: { selectedOrder, current_page }, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
 
   dispatch(startLoading());
@@ -134,11 +134,7 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
     normalizedEntity,
     authErrorHandler
   )(params)(dispatch).then(() => {
-      if(fromTicket){
-        dispatch(getUserTickets());
-      } else {
-        dispatch(getUserOrders(selectedOrder.id));            
-      }
+      dispatch(getUserOrders(selectedOrder.id, current_page));
     }
   );
 }
@@ -164,11 +160,7 @@ export const editOwnedTicket = (attendee_email, attendee_first_name, attendee_la
       normalizedEntity,
       authErrorHandler
   )(params)(dispatch).then(() => {
-      if(fromTicket){
-        dispatch(getUserTickets());
-      } else {
-        dispatch(getUserOrders(selectedOrder.id));            
-      }
+      dispatch(getUserTickets());
     }
   );
 

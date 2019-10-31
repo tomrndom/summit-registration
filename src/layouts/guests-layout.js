@@ -19,7 +19,7 @@ import cloneDeep from "lodash.clonedeep";
 import TicketAssignForm from '../components/ticket-assign-form';
 import TicketOptions from '../components/ticket-options';
 
-import { getTicketByHash, getTicketPDFByHash, refundTicket, regenerateTicketHash, handleTicketChange } from '../actions/ticket-actions'
+import { getTicketByHash, getTicketPDFByHash, refundTicket, regenerateTicketHash, handleTicketChange, assignTicketByHash } from '../actions/ticket-actions'
 
 class GuestsLayout extends React.Component {
 
@@ -30,7 +30,7 @@ class GuestsLayout extends React.Component {
       tempTicket: {
         attendee_email: '',
         attendee_first_name: '',
-        attendee_last_name: '',
+        attendee_surname: '',
         disclaimer_accepted: null,
         extra_questions: []
       }
@@ -39,6 +39,7 @@ class GuestsLayout extends React.Component {
     this.handleTicketDownload = this.handleTicketDownload.bind(this);
     this.handleTicketCancel = this.handleTicketCancel.bind(this);    
     this.handleExpirationDate = this.handleExpirationDate.bind(this);
+    this.handleTicketUpdate = this.handleTicketUpdate.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -53,10 +54,10 @@ class GuestsLayout extends React.Component {
     }
 
     componentDidUpdate() {
-      let {attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions} = this.state.tempTicket;
+      let {attendee_email, attendee_first_name, attendee_surname, disclaimer_accepted, extra_questions} = this.state.tempTicket;
       let {owner} = this.props.ticket;      
-      if(owner && !attendee_email && (!attendee_first_name || !attendee_last_name || !disclaimer_accepted || !extra_questions)) {
-        let {email, first_name, last_name, disclaimer_accepted_date, extra_questions} = owner;
+      if(owner && !attendee_email && (!attendee_first_name || !attendee_surname || !disclaimer_accepted || !extra_questions)) {
+        let {email, first_name, surname, disclaimer_accepted_date, extra_questions} = owner;
         let formattedQuestions = [];
         extra_questions.map(q => {
           let question = {question_id: q.question_id, answer: q.value};
@@ -65,7 +66,7 @@ class GuestsLayout extends React.Component {
         this.setState({tempTicket: { 
           attendee_email: email, 
           attendee_first_name: first_name, 
-          attendee_last_name: last_name, 
+          attendee_surname: surname, 
           disclaimer_accepted: disclaimer_accepted_date ? true : false,
           extra_questions: formattedQuestions}});                        
       }
@@ -93,8 +94,9 @@ class GuestsLayout extends React.Component {
     }
 
     handleTicketUpdate(ticket){
-      let { attendee_first_name, attendee_last_name, attendee_email, disclaimer_accepted, extra_questions } = ticket;
-      this.props.editOwnedTicket(attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions);
+      let ticketHash = this.props.match.params.ticket_hash;
+      let { attendee_first_name, attendee_surname, disclaimer_accepted, share_contact_info, extra_questions } = ticket;
+      this.props.assignTicketByHash(attendee_first_name, attendee_surname, disclaimer_accepted, share_contact_info, extra_questions, ticketHash);
     }
   
     handleChange(ev) {
@@ -104,8 +106,10 @@ class GuestsLayout extends React.Component {
   
       delete(errors[id]);
       ticket[id] = value;
-  
-      this.props.handleTicketChange(ticket, errors);
+
+      this.setState((prevState) => {
+        return { tempTicket: { ...prevState.tempTicket, [id]: value }}
+      }, () => this.props.handleTicketChange(ticket, errors));        
     }
 
     handleExpirationDate() {
@@ -116,6 +120,8 @@ class GuestsLayout extends React.Component {
     render() {
       let {ticket: {owner, order_extra_questions}, ticket, errors, loading, summit, summits} = this.props;
       let {tempTicket} = this.state;
+
+      console.log(tempTicket)
 
       if(!owner) {
         return (
@@ -146,7 +152,7 @@ class GuestsLayout extends React.Component {
                       <a href="" className="back-btn" onClick={this.cancelClick}>                        
                           {T.translate("guests.cancel")}
                       </a>
-                      <button className="btn btn-primary continue-btn" onClick={this.sendClick}>
+                      <button className="btn btn-primary continue-btn" onClick={() =>this.handleTicketUpdate(tempTicket)}>
                           {T.translate("guests.send")}
                       </button>
                   </div>
@@ -174,6 +180,7 @@ export default connect(
     getTicketPDFByHash,
     refundTicket,
     regenerateTicketHash,
-    handleTicketChange
+    handleTicketChange,
+    assignTicketByHash
   }
 )(GuestsLayout);

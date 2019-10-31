@@ -137,7 +137,7 @@ class TicketAssignForm extends React.Component {
                   className="form-control"
                   error={this.hasErrors('attendee_last_name')}
                   onChange={onChange}
-                  value={ticket.attendee_last_name}
+                  value={ticket.attendee_surname}
                 />
               </div>
             </div>            
@@ -157,7 +157,7 @@ class TicketAssignForm extends React.Component {
               />                        
             </React.Fragment>
             }
-            {guest || ownedTicket &&
+            {(guest || ownedTicket) &&
               <React.Fragment>
                 <hr/>
                 <div className="row field-wrapper">

@@ -74,9 +74,6 @@ class TicketOptions extends React.Component {
 
       let {guest, summit, ticket} = this.props;
 
-      console.log('summit optuions', summit);
-      console.log('ticket optuions', ticket);
-
         return (
             <div className="order-info-wrapper">
                 {guest && 

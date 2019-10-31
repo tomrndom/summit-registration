@@ -94,12 +94,13 @@ export const selectTicket = (ticket, ticketList = false) => (dispatch, getState)
 
 }
 
-export const handleTicketChange = (ticket, errors = {}) => (dispatch, getState) => {  
+export const handleTicketChange = (ticket, errors = {}) => (dispatch, getState) => {
 
-  
-    if (validator.isEmpty(ticket.attendee_first_name)) errors.attendee_first_name = 'Please enter your First Name.';
-    if (validator.isEmpty(ticket.attendee_last_name)) errors.attendee_last_name = 'Please enter your Last Name.';
-    if (!validator.isEmail(ticket.attendee_email)) errors.attendee_email = 'Please enter a valid Email.';    
+    console.log(ticket)
+
+    // if (validator.isEmpty(ticket.attendee_first_name)) errors.attendee_first_name = 'Please enter your First Name.';
+    // if (validator.isEmpty(ticket.attendee_surname)) errors.attendee_surname = 'Please enter your Last Name.';
+    // if (!validator.isEmail(ticket.attendee_email)) errors.attendee_email = 'Please enter a valid Email.';    
 
     /*ticket.tickets.forEach(tix => {
         if (tix.coupon && tix.coupon.code == 'NOTACOUPON') errors[`tix_coupon_${tix.id}`] = 'Coupon not valid.';
@@ -205,7 +206,7 @@ export const removeAttendee = (tempTicket) => (dispatch, getState) => {
 
   let orderId = selectedTicket.order ? selectedTicket.order.id : selectedTicket.order_id;
 
-  let {attendee_email, attendee_first_name, attendee_last_name, extra_questions} = tempTicket;
+  let {attendee_email, attendee_first_name, attendee_surname, extra_questions} = tempTicket;
 
   return deleteRequest(
       null,
@@ -213,7 +214,7 @@ export const removeAttendee = (tempTicket) => (dispatch, getState) => {
       `${window.API_BASE_URL}/api/v1/summits/all/orders/${orderId}/tickets/${selectedTicket.id}/attendee`,
       authErrorHandler
   )(params)(dispatch).then(() => {
-      dispatch(assignAttendee(attendee_email, attendee_first_name, attendee_last_name, extra_questions));
+      dispatch(assignAttendee(attendee_email, attendee_first_name, attendee_surname, extra_questions));
     }).catch((e) => console.log('error', e));
 
 }

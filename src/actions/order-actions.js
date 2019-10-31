@@ -58,7 +58,7 @@ export const handleOrderChange = (order, errors = {}) => (dispatch, getState) =>
 
     if(currentStep === 2) {
         if (validator.isEmpty(order.first_name)) errors.first_name = 'Please enter your First Name.';
-        if (validator.isEmpty(order.last_name)) errors.last_name = 'Please enter your Last Name.';
+        if (validator.isEmpty(order.surname)) errors.surname = 'Please enter your Last Name.';
         if (!validator.isEmail(order.email)) errors.email = 'Please enter a valid Email.';
         if (validator.isEmpty(order.company)) errors.company = 'Please enter your Company.';
 
@@ -87,7 +87,7 @@ export const validateStripe = (value) => (dispatch, getState) => {
     dispatch(createAction(VALIDATE_STRIPE)({value}));
 }
 
-export const createReservation = (owner_email, owner_first_name, owner_last_name, owner_company, tickets) => (dispatch, getState) => {
+export const createReservation = (owner_email, owner_first_name, owner_surname, owner_company, tickets) => (dispatch, getState) => {
     let { summitState } = getState();    
     let { currentSummit }   = summitState;
 
@@ -102,7 +102,7 @@ export const createReservation = (owner_email, owner_first_name, owner_last_name
       expand       : 'tickets',
     };
 
-    let normalizedEntity = {owner_email, owner_first_name, owner_last_name, owner_company, tickets };
+    let normalizedEntity = {owner_email, owner_first_name, owner_surname, owner_company, tickets };
 
     return postRequest(
         createAction(CREATE_RESERVATION),
@@ -160,7 +160,7 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
     stripe.handleCardPayment(
       reservation.payment_gateway_client_token, card, {
             payment_method_data: {
-                billing_details: {name: `${order.first_name} ${order.last_name}`}
+                billing_details: {name: `${order.first_name} ${order.surname}`}
             }
         }
     ).then((result) => {

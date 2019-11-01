@@ -119,8 +119,7 @@ class PaymentInfoForm extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-12">
-                        {T.translate("step_three.payment_subtitle")}
+                    <div className="col-md-12">                        
                     </div>
                 </div>
                 <div className="row field-wrapper">

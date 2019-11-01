@@ -19,26 +19,38 @@ class OrderSummary extends React.Component {
         super(props);
 
         this.state = {
-
+          summaryToggle: false
         };
 
+        this.handleSummaryDisplay = this.handleSummaryDisplay.bind(this);
+
+    }
+
+    handleSummaryDisplay(){      
+      this.setState((prevState) => {
+        return {
+          summaryToggle: !prevState.summaryToggle
+        }
+      }, () => this.state.summaryToggle ? document.body.style.overflow = "hidden" : document.body.style.overflow = "visible", window.scrollTo(0, 0))      
     }
 
 
     render() {
-        let {order, summit} = this.props;
-        let {ticket_types} = summit;
+        // TODO: replace the order[0] with selected order
+        let {order, summit: {ticket_types}, type} = this.props;                
 
         let ticketTotal = 0;
-        let ticketSummary = [];
+        let ticketSummary = [];        
+
         order.tickets.forEach(tix => {
-            let idx = ticketSummary.findIndex(o => o.tix_type_id == tix.tix_type_id);
-            let tixType = ticket_types.find(tt => tt.id == tix.tix_type_id);
+            let idx = ticketSummary.findIndex(o => o.ticket_type_id == (tix.type_id ? tix.type_id : tix.ticket_type_id));
+            let tixType = ticket_types.find(tt => tt.id == (tix.type_id ? tix.type_id : tix.ticket_type_id));
 
             if (idx >= 0) {
                 ticketSummary[idx].qty++;
-            } else {
-                ticketSummary.push({tix_type_id: tix.tix_type_id, tix_type: tixType, qty: 1})
+            } else {                
+                let name = ticket_types.find(q => q.id === (tix.type_id ? tix.type_id : tix.ticket_type_id)).name;                
+                ticketSummary.push({ticket_type_id: (tix.type_id ? tix.type_id : tix.ticket_type_id), tix_type: tixType, name, qty: 1})
             }
 
             ticketTotal = ticketTotal + tixType.cost;
@@ -46,64 +58,140 @@ class OrderSummary extends React.Component {
         });
         
         let discountTotal = 0;
-        let discounts = order.tickets.filter(tix => tix.coupon).map(tix => {
-            let tixType = ticket_types.find(tt => tt.id == tix.tix_type_id);
 
-            let discountTmp = (tix.coupon.percentage / 100) * tixType.cost;
+        let discounts = order.tickets.filter(tix => tix.discount).map(tix => {
+            let tixType = ticket_types.find(tt => tt.id == tix.type_id || tix.ticket_type_id);
+
+            let discountPercentageTmp = (tix.discount * 100) / tixType.cost;            
+            let discountTmp = (discountPercentageTmp / 100) * tixType.cost;            
             discountTotal = discountTotal + discountTmp;
 
-            return {tix_type: tixType, percentage: tix.coupon.percentage, code: tix.coupon.code};
+            return {tix_type: tixType, percentage: discountPercentageTmp, code: tix.promo_code_id};
         });
 
         let total = ticketTotal - discountTotal;
 
-        return (
-            <div className="order-summary-wrapper">
-                <div className="row">
-                    <div className="col-xs-12">
-                        <h4>{T.translate("order_summary.order_summary")}</h4>
-                    </div>
-                </div>
-                {ticketSummary.map(tix => {
-                    let total = tix.qty * tix.tix_type.cost;
-                    return (
-                        <div className="row order-row" key={`tixorder_${tix.tix_type.id}`}>
-                            <div className="col-xs-6">
-                                {tix.tix_type.name}
+        if(type === "mobile") {
+          return(
+            <div className="order-summary">
+                <div className={this.state.summaryToggle ? 'order-summary-mobile open' : 'order-summary-mobile'}>
+                  <div className="order-summary-mobile--title" onClick={this.handleSummaryDisplay}>
+                    <span>Order Summary</span>                  
+                    <span>
+                      ${total.toFixed(2)} <i className="fa fa-chevron-down" aria-hidden="true"></i>                            
+                    </span>
+                  </div>
+                  <div className={this.state.summaryToggle ? 'open':'closed' }>
+                      <div className="order-summary-wrapper">
+                        <div className="row">
+                            <div className="col-xs-12">
+                                <h4>{T.translate("order_summary.order_summary")}</h4>
                             </div>
-                            <div className="col-xs-2">
-                                x{tix.qty}
+                        </div>
+                        {ticketSummary.map(tix => {
+                            let total = tix.qty * tix.tix_type.cost;
+                            return (
+                                <div className="row order-row" key={`tixorder_${tix.tix_type.created}`}>
+                                    <div className="col-xs-6">
+                                        {tix.tix_type.name}
+                                    </div>
+                                    <div className="col-xs-2">
+                                        x{tix.qty}
+                                    </div>
+                                    <div className="col-xs-4 text-right subtotal">
+                                        ${total.toFixed(2)}
+                                    </div>
+                                </div>
+                            );
+                        })}
+
+                        <div className="row order-discounts order-row">
+                            <div className="col-xs-8 text-left">
+                                {T.translate("order_summary.discounts")}
+                                <p className="discount-desc">
+                                    {discounts.map(dis => (
+                                        <span key={dis.code}>x1 {dis.tix_type.name} / {dis.percentage}%</span>
+                                    ))}
+                                </p>
                             </div>
                             <div className="col-xs-4 text-right subtotal">
+                                -${discountTotal.toFixed(2)}
+                            </div>
+                        </div>
+                        <div className="row total-row">
+                            <div className="col-xs-6 text-left">
+                                {T.translate("order_summary.total")}
+                            </div>
+                            <div className="col-xs-6 text-right total">
                                 ${total.toFixed(2)}
                             </div>
                         </div>
-                    );
-                })}
+                      </div>
+                      <div className="order-summary-mobile--coupon">
 
-                <div className="row order-discounts order-row">
-                    <div className="col-xs-8 text-left">
-                        {T.translate("order_summary.discounts")}
-                        <p className="discount-desc">
-                            {discounts.map(dis => (
-                                <div key={dis.code}>x1 {dis.tix_type.name} / {dis.percentage}%</div>
-                            ))}
-                        </p>
-                    </div>
-                    <div className="col-xs-4 text-right subtotal">
-                        -${discountTotal.toFixed(2)}
-                    </div>
-                </div>
-                <div className="row total-row">
-                    <div className="col-xs-6 text-left">
-                        {T.translate("order_summary.total")}
-                    </div>
-                    <div className="col-xs-6 text-right total">
-                        ${total.toFixed(2)}
-                    </div>
-                </div>
+                      </div>
+                      <div className="order-summary-mobile--close-text" onClick={this.handleSummaryDisplay}>
+                          Close
+                      </div>
+                  </div>                  
+              </div>
             </div>
-        );
+          )
+        } else if (type === "desktop") {
+          return (
+            <div className="order-summary">
+              
+              <div className="order-summary-wrapper">
+                  <div className="row">
+                      <div className="col-xs-12">
+                          <h4>{T.translate("order_summary.order_summary")}</h4>
+                      </div>
+                  </div>
+                  {ticketSummary.map(tix => {
+                      let total = tix.qty * tix.tix_type.cost;
+                      return (
+                          <div className="row order-row" key={`tixorder_${tix.tix_type.created}`}>
+                              <div className="col-xs-6">
+                                  {tix.tix_type.name}
+                              </div>
+                              <div className="col-xs-2">
+                                  x{tix.qty}
+                              </div>
+                              <div className="col-xs-4 text-right subtotal">
+                                  ${total.toFixed(2)}
+                              </div>
+                          </div>
+                      );
+                  })}
+
+                  <div className="row order-discounts order-row">
+                      <div className="col-xs-8 text-left">
+                          {T.translate("order_summary.discounts")}
+                          <p className="discount-desc">
+                              {discounts.map(dis => (
+                                  <span key={dis.code}>x1 {dis.tix_type.name} / {dis.percentage}%</span>
+                              ))}
+                          </p>
+                      </div>
+                      <div className="col-xs-4 text-right subtotal">
+                          -${discountTotal.toFixed(2)}
+                      </div>
+                  </div>
+                  <div className="row total-row">
+                      <div className="col-xs-6 text-left">
+                          {T.translate("order_summary.total")}
+                      </div>
+                      <div className="col-xs-6 text-right total">
+                          ${total.toFixed(2)}
+                      </div>
+                  </div>
+              </div>
+            </div>
+          );
+        } else {
+          return null
+        }
+        
     }
 }
 

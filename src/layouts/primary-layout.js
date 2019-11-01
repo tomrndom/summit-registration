@@ -14,20 +14,14 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { getSummits, getSummitBySlug } from '../actions/base-actions';
+import { getSummitBySlug } from '../actions/summit-actions';
 import StepOnePage from '../pages/step-one-page'
 import StepTwoPage from '../pages/step-two-page'
 import StepThreePage from '../pages/step-three-page'
 import StepFourPage from '../pages/step-four-page'
 
 class PrimaryLayout extends React.Component {
-
-    componentWillMount() {
-        let { getSummits } = this.props;
-        getSummits();
-    }
-
-    /*
+  
     componentDidMount() {
       let { getSummitBySlug } = this.props;
 
@@ -37,7 +31,6 @@ class PrimaryLayout extends React.Component {
           getSummitBySlug(summitSlug);
       }
     }
-    */
 
     componentWillReceiveProps(newProps) {
         let oldId = this.props.match.params.summit_slug;
@@ -80,7 +73,6 @@ const mapStateToProps = ({ summitState  }) => ({
 export default connect(
     mapStateToProps,
     {
-        getSummits,
         getSummitBySlug
     }
 )(PrimaryLayout);

@@ -15,7 +15,7 @@ import React from 'react'
 import { connect } from 'react-redux';
 import T from 'i18n-react/dist/i18n-react'
 import history from '../history'
-import { createReservation, payReservation } from '../actions/order-actions'
+import { createReservation, payReservation, deleteReservation } from '../actions/order-actions'
 
 const stepDefs = ['start', 'details', 'checkout', 'done'];
 
@@ -53,36 +53,22 @@ class SubmitButtons extends React.Component {
 
     backClick(ev) {
         let {step} = this.props;
+        if(step === 3) {
+          this.props.deleteReservation();
+        }
         let backStep = step - 2; // step is one plus the stepDef index
         ev.preventDefault();
         history.push(stepDefs[backStep]);
     }
 
     payClick(ev) {
-        let {dirty, errors, stripe, token, order, step} = this.props;
+        let {dirty, errors, stripe, card} = this.props;
         ev.preventDefault();
         if((Object.keys(errors.errors).length === 0) && errors.stripeForm) {
-            // stepDefs start on 0 so next step is the same as step
-            history.push(stepDefs[step]);
+            this.props.payReservation(card, stripe);
         } else {
             return dirty.call();
         }
-        
-        // stripe.handleCardPayment(
-        //     client_secret, token, {
-        //         payment_method_data: {
-        //             billing_details: {name: `${order.first_name} ${order.last_name}`}
-        //         }
-        //     }
-        // ).then(function(result) {
-        //     if (result.error) {
-        //         // Display error.message in your UI.
-        //         this.continueClick(ev);
-        //     } else {
-        //         // The payment has succeeded. Display a success message.
-        //         this.continueClick(ev);
-        //     }
-        // });
 
     }
 
@@ -134,7 +120,8 @@ export default connect (
     mapStateToProps,
     {
         createReservation,
-        payReservation
+        payReservation,
+        deleteReservation
     }
 )(SubmitButtons);
 

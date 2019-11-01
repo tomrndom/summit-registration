@@ -13,8 +13,8 @@
   },
   "general": {
     "continue"      : "Continue",
-    "pay_now"       : "Pay Now",
-    "back"          : "Back"
+    "back"          : "Back",
+    "pay_now"       : "Pay Now"
   },
   "order_summary": {
     "order_summary"   : "Order Summary",
@@ -45,7 +45,11 @@
     "tickets"           : "Tickets",
     "ticket"            : "Ticket",
     "add_ticket"        : "Add Ticket",
-    "no_tickets"        : "No tickets selected."
+    "no_tickets"        : "No tickets selected.",
+    "placeholders": {
+      "coupon"          : "Coupon Code (Optional)",
+      "email"           : "Email (Optional)"
+    }
   },
   "step_three": {
     "payment_info"        : "Payment Information",
@@ -69,5 +73,73 @@
     "text"                : "blah blah a text",
     "order_no"            : "ORDER NO",
     "manage"              : "Manage Your Tickets"
+  },
+  "guests": {
+    "cancel"              : "Cancel",
+    "send"                : "Send"
+  },
+  "orders": {
+    "empty"               : "There are no active orders so far"
+  },
+  "order_info": {
+    "print"               : "Print",
+    "resend"              : "Resend Receipt",
+    "download"            : "Download PDF",
+    "cancel_order"        : "Cancel Order",
+    "cancel_ticket"       : "Cancel Ticket",
+    "directions"          : "Get Directions",
+    "calendar"            : "Add to Calendar"
+  },
+  "tickets": {
+    "empty"               : "There are no tickets so far"
+  },
+  "nav_bar": {
+    "my-orders"           : "My Orders",
+    "my-tickets"          : "My Tickets"
+  },
+  "ticket_popup": {
+    "tab_assign"            : "Assign",
+    "tab_reassign"          : "Re-Assign",
+    "tab_edit"              : "Edit Details",
+    "tab_notify"            : "Notify attendee",
+    "assign_text"           : "Select the option to assign this ticket before",
+    "assign_or"             : "Or",
+    "assign_me"             : "Assign to Me",
+    "assign_this"           : "Assign this Ticket",
+    "assign_someone"        : "Assign to Someone Else",
+    "assign_ticket"         : "Assign this Ticket",
+    "assign_expire"         : "Expires in",
+    "assign_days"           : "days",
+    "reassign_text"         : "Select the option to re-assign this ticket from",    
+    "reassign_check"        : "Clean all fields",
+    "reassign_me"           : "Re-Assign to Me",
+    "reassign_someone"      : "Re-Assign to Someone Else",
+    "edit_basic_info"       : "Basic Information",
+    "edit_required"         : "* Required Fields",
+    "edit_email"            : "Email *",
+    "edit_first_name"       : "First Name *",
+    "edit_last_name"        : "Last Name *",
+    "edit_preferences"      : "Preferences",
+    "notify_text_1"         : "All required details must be completed before",
+    "notify_text_2"         : "Notify the attendee to",
+    "notify_button"         : "Re-Send Notification",    
+    "save_changes"          : "Save Changes"
+  },
+  "confirm_popup": {
+    "question_title_cancel"           : "Cancel Request",
+    "question_text_cancel"            : "Are you sure you want to clean all the fields?",
+    "question_title_assign"           : "Assign Request",
+    "question_text_assign"            : "Are you sure you want to clean all the fields?",
+    "question_title_reassign"         : "Re-Assign Request",
+    "question_text_reassign"          : "Are you sure you want to clean all the fields?",
+    "question_title_save"             : "Save Request",
+    "question_text_save"              : "Are you sure you want to clean all the fields?",
+    "question_title_notification"     : "Notification Request",
+    "question_text_notification"      : "Are you sure you want to clean all the fields?",
+    "cancel"                          : "Cancel",
+    "accept"                          : "Yeah",
+    "success_title"                   : "Request Submitted",
+    "success_text"                    : "An email notification has been sent to",
+    "success_button"                  : "Got it"
   }
 }

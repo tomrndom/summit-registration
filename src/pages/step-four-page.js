@@ -14,6 +14,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import T from "i18n-react/dist/i18n-react";
+import { Link } from 'react-router-dom';
 import OrderSummary from "../components/order-summary";
 import EventInfo from "../components/event-info";
 import BasicInfoForm from '../components/basic-info-form';
@@ -39,22 +40,25 @@ class StepFourPage extends React.Component {
 
 
     render(){
-        let {summit, order, errors} = this.props;
+        let {summit, order: {checkout}, order, errors, member} = this.props;
 
         return (
             <div className="step-four">
+                <OrderSummary order={order} summit={summit} type={'mobile'} />
                 <div className="row">
-                    <div className="col-md-6 col-md-offset-3">
-                        <h1>{T.translate("step_four.congratulations")} !</h1>
-                        <p className="subtitle">{T.translate("step_four.subtitle")}</p>
-                        <p className="text">{T.translate("step_four.text")}</p>
+                    <div className="order-result">
+                        <h1>{T.translate("step_four.congratulations")} !</h1>                        
                         <div className="order-no-box">
                             <p>{T.translate("step_four.order_no")}</p>
-                            <div className="order-no">12341234</div>
+                            <div className="order-no">{checkout.number}</div>
                         </div>
-                        <button className="btn btn-primary manage-btn">
-                            {T.translate("step_four.manage")}
-                        </button>
+                        {member &&
+                          <Link to="/a/member/orders">
+                            <button className="btn btn-primary manage-btn">
+                              {T.translate("step_four.manage")}
+                            </button>
+                          </Link>                          
+                        }
                     </div>
                 </div>
             </div>
@@ -63,7 +67,7 @@ class StepFourPage extends React.Component {
 }
 
 const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
-    member: loggedUserState.member,
+    member: loggedUserState.isLoggedUser,
     summit: summitState.currentSummit,
     order:  orderState.order,
     errors:  orderState.errors

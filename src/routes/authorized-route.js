@@ -13,6 +13,7 @@
 
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
+import { OPSessionChecker } from "openstack-uicore-foundation/lib/components";
 
 class AuthorizedRoute extends React.Component {
 
@@ -21,26 +22,29 @@ class AuthorizedRoute extends React.Component {
         return (
             <Route {...rest} render={props => {
                 let { location } = this.props;
-                let currentBackUrl =  backUrl == null ? location.pathname :  backUrl ;
+                let currentBackUrl = backUrl == null ? location.pathname : backUrl;
 
-                if(location.search != null && location.search != null){
+                if (location.search != null) {
                     currentBackUrl += location.search
                 }
-                if(location.hash != null && location.hash != null){
+                if (location.hash != null) {
                     currentBackUrl += location.hash
                 }
 
                 if (isLoggedUser) {
-                    return (<Component currentSummit={currentSummit} {...props} />);
+                    return (
+                        <React.Fragment>
+                            <OPSessionChecker clientId={window.OAUTH2_CLIENT_ID} idpBaseUrl={window.IDP_BASE_URL} />
+                            <Component currentSummit={currentSummit} {...props} />
+                        </React.Fragment>
+                    );
                 } else {
                     return (<Redirect to={{pathname: `/?BackUrl=${encodeURIComponent(currentBackUrl)}`, state: { from: location }}} />);
                 }
-
-            }} />
+            }}
+            />
         )
     }
 }
 
 export default AuthorizedRoute;
-
-

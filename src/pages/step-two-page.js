@@ -50,12 +50,20 @@ class StepTwoPage extends React.Component {
     }
 
     componentWillMount() {
-        let order = {...this.props.order};   
+        let order = {...this.props.order};
         
         order = {
             ...order,
             currentStep: this.step
-        };
+        };        
+
+        order.tickets.map(t => {
+          if(!t.tempId) {
+            const randomNumber = Math.floor(Math.random() * 10000) + 1; 
+            t.tempId = randomNumber;
+            return t;
+          }
+        });
         
         this.props.handleOrderChange(order);
     }
@@ -71,16 +79,11 @@ class StepTwoPage extends React.Component {
 
     handleTicketInfoChange(ticketId, field, value) {
         let order = cloneDeep(this.props.order);
-        let errors = cloneDeep(this.props.errors);
-        let randomNumber = moment().valueOf();
+        let errors = cloneDeep(this.props.errors);        
 
         order.tickets.forEach(tix => {
-            if (tix.id == ticketId) {
-                if (field == 'coupon') {
-                    tix.coupon = {id: randomNumber, code: value, percentage: 100};
-                } else {
-                    tix[field] = value;
-                }
+            if (tix.tempId == ticketId) {
+                tix[field] = value;
             }
         });
 
@@ -100,10 +103,10 @@ class StepTwoPage extends React.Component {
 
     handleAddTicket(ticketTypeId) {
         let order = cloneDeep(this.props.order);
-        let errors = cloneDeep(this.props.errors);
+        let errors = cloneDeep(this.props.errors);        
         let randomNumber = moment().valueOf();
 
-        order.tickets.push({id: randomNumber, tix_type_id: ticketTypeId});
+        order.tickets.push({type_id: ticketTypeId, tempId: randomNumber});
         this.props.handleOrderChange(order, errors);
     }
 
@@ -111,7 +114,7 @@ class StepTwoPage extends React.Component {
         let order = cloneDeep(this.props.order);
         let errors = cloneDeep(this.props.errors);
 
-        order.tickets = order.tickets.filter(t => t.id != ticketId);
+        order.tickets = order.tickets.filter(t => t.tempId != ticketId);
         this.props.handleOrderChange(order, errors);
     }
 
@@ -130,13 +133,14 @@ class StepTwoPage extends React.Component {
 
         return (
             <div className="step-two">
+                <OrderSummary order={order} summit={summit} type={'mobile'} />
                 <StepRow step={this.step} />
                 <div className="row">
                     <div className="col-md-8">
                         <BasicInfoForm order={order} errors={dirty? errors : {}} onChange={this.handleChange}/>
                         {summit.ticket_types.map((t,i) => (
                             <TicketInfoForm
-                                key={`tixinfo_${t.id}_${i}`}
+                                key={`tixinfo_${t.ticket_type_id}_${i}`}
                                 ticketType={t}
                                 order={order}
                                 errors={errors}
@@ -147,8 +151,7 @@ class StepTwoPage extends React.Component {
                         ))}
                     </div>
                     <div className="col-md-4">
-                        <OrderSummary order={order} summit={summit} />
-                        <EventInfo />
+                        <OrderSummary order={order} summit={summit} type={'desktop'} />
                     </div>
                 </div>
                 <SubmitButtons step={this.step} errors={errors} dirty={this.handleShowErrors}/>

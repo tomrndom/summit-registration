@@ -16,13 +16,14 @@ import { loggedUserReducer } from "openstack-uicore-foundation/lib/reducers"
 import baseReducer from './reducers/base-reducer'
 import summitReducer from './reducers/summit-reducer'
 import orderReducer from './reducers/order-reducer'
+import ticketReducer from './reducers/ticket-reducer'
 
 import thunk from 'redux-thunk';
 import { persistStore, persistCombineReducers } from 'redux-persist'
 import storage from 'redux-persist/es/storage' // default: localStorage if web, AsyncStorage if react-native
 
 const config = {
-  key: 'root_openstack survey analytics',
+  key: 'root_registration',
   storage,
 }
 
@@ -31,6 +32,7 @@ const reducers = persistCombineReducers(config, {
   baseState: baseReducer,
   summitState: summitReducer,
   orderState: orderReducer,
+  ticketState: ticketReducer,
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

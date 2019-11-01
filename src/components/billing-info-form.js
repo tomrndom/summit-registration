@@ -14,7 +14,7 @@
 import React from 'react'
 import T from 'i18n-react/dist/i18n-react'
 import { findElementPos } from 'openstack-uicore-foundation/lib/methods'
-import { Input } from 'openstack-uicore-foundation/lib/components'
+import { Input, CountryInput } from 'openstack-uicore-foundation/lib/components'
 
 
 class BillingInfoForm extends React.Component {
@@ -49,7 +49,6 @@ class BillingInfoForm extends React.Component {
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        {T.translate("step_three.billing_subtitle")}
                     </div>
                 </div>
                 <div className="row field-wrapper">
@@ -57,13 +56,13 @@ class BillingInfoForm extends React.Component {
                         <label>{T.translate("step_three.billing_country")} *</label>
                     </div>
                     <div className="col-md-6">
-                        <Input
+                        <CountryInput
                             id="billing_country"
-                            className="form-control"
+                            className="field-wrapper"
                             error={this.hasErrors('billing_country')}
                             onChange={onChange}
-                            value={order.billing_country}
-                        />
+                            value={order.billing_country} 
+                        />                        
                     </div>
                 </div>
                 <div className="row field-wrapper">

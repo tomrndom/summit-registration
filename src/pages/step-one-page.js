@@ -19,7 +19,7 @@ import EventInfo from "../components/event-info";
 import TicketInput from "../components/ticket-input";
 import StepRow from '../components/step-row';
 import SubmitButtons from "../components/submit-buttons";
-import { handleOrderChange } from '../actions/order-actions'
+import { handleOrderChange, handleResetOrder } from '../actions/order-actions'
 
 
 import '../styles/step-one-page.less';
@@ -40,14 +40,13 @@ class StepOnePage extends React.Component {
     }
 
     componentWillMount() {
-
-    }
-
-    componentWillMount() {
-        let order = {...this.props.order};        
+        this.props.handleResetOrder();
         
+        let {order} = this.props;
+                
         order = {
             ...order,
+            tickets: [],
             currentStep: this.step
         };
         
@@ -55,16 +54,17 @@ class StepOnePage extends React.Component {
     }
 
     handleAddTicket(ticketTypeId) {
-        let order = {...this.props.order};
-        let randomNumber = moment().valueOf();
+        let order = {...this.props.order};        
 
-        order.tickets.push({id: randomNumber, tix_type_id: ticketTypeId});
+        let randomNumber = moment().valueOf();
+        order.tickets.push({ type_id: ticketTypeId, tempId: randomNumber });
+        
         this.props.handleOrderChange(order)
     }
 
     handleSubstractTicket(ticketTypeId) {
         let order = {...this.props.order};
-        let idx = order.tickets.findIndex(t => t.tix_type_id == ticketTypeId);
+        let idx = order.tickets.findIndex(t => t.type_id == ticketTypeId);
 
         if (idx !== -1) {
             order.tickets.splice(idx,1);
@@ -83,11 +83,10 @@ class StepOnePage extends React.Component {
                     <div className="col-md-8">
                         <div className="row">
                             <div className="col-md-12">
-                                <h3>{T.translate("step_one.choose_tickets")}</h3>
-                                <p>{T.translate("step_one.choose_tickets_desc")}</p>
+                                <h3>{T.translate("step_one.choose_tickets")}</h3>                                
                             </div>
                             <div className="col-md-12">                                                           
-                              {(summit.timestamp > summit.start_date && summit.timestamp <summit.end_date) &&
+                              {(summit.timestamp < summit.start_date && summit.timestamp < summit.end_date) &&
                                 <TicketInput
                                     ticketTypes={summit.ticket_types}
                                     selection={order.tickets}
@@ -99,8 +98,7 @@ class StepOnePage extends React.Component {
                         </div>
 
                     </div>
-                    <div className="col-md-4">
-                        <EventInfo />
+                    <div className="col-md-4">                        
                     </div>
                 </div>
                 <SubmitButtons step={this.step} canContinue={order.tickets.length > 0} />
@@ -119,7 +117,8 @@ const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
 export default connect (
     mapStateToProps,
     {
-        handleOrderChange
+        handleOrderChange,
+        handleResetOrder
     }
 )(StepOnePage);
 

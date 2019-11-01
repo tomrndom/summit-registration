@@ -1,0 +1,194 @@
+@import 'constants.less';
+
+.popup-bg {  
+  position: fixed;  
+  width: 100%;  
+  height: 100%;  
+  top: 0;  
+  left: 0;  
+  right: 0;  
+  bottom: 0;  
+  margin: auto;  
+  background-color: rgba(0,0,0, 0.5);  
+  z-index: 10;
+}  
+.popup-form {  
+  position: absolute;  
+  left: 50%;  
+  right: 0%;  
+  top: 0%;  
+  bottom: 0%;  
+  margin: auto;    
+  background: white;
+  z-index: 15;
+}
+
+.popup-header {
+  background-color: #F9F9F9;
+  font-weight: bold;
+  padding: 25px;
+  display: flex;
+  justify-content: space-between;
+  h4 {
+    font-size: 20px;
+  }  
+  p {
+    margin: 2px 0;
+    text-transform: uppercase;
+    .warning {      
+      color: #cc9933;
+    }  
+    .complete {
+      color: #669933;
+    }
+  }
+  .popup-icons {
+    display: flex;
+    justify-content: space-around;
+    width: 30%;
+    i {
+      font-size: 1.5em;
+      cursor: pointer;      
+    }
+    :last-child {
+      color: black;
+    }
+  }
+  .popup-title {
+    .status {
+      margin-top: auto;
+      font-size: 0.7em;
+      color: #000;
+      text-transform: uppercase;
+      &.ticket-warning {
+        color: #cc9933;
+      }
+      &.ticket-complete {
+        color: #669933;
+      }
+      &.ticket-unset {
+        color: #000
+      }
+      &.ticket-cancel {
+        color: #da0000;
+      }
+    }
+  }
+}
+
+.popup-tabs {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  border-bottom: 2px solid #F9F9F9;
+  line-height: 40px;
+  margin-bottom: 0px;
+  padding-inline-start: 0px;
+  li {
+    list-style-type: none;
+    cursor: pointer;
+  }
+  &--active {
+    border-bottom: 2px solid @lblue_color_2;
+  }        
+}
+
+.popup-panel {  
+  &--assign {
+    text-align: center;
+    padding: 0 25%;
+    p {
+      font-size: 22px;      
+      margin: 70px 0 20px;
+    }
+    .popup-separator {      
+      display: table;    
+      margin: 25px 0;      
+      width: 100%;
+      div {
+        display: table-cell;
+        vertical-align: middle;
+        width: 40%;
+      }
+      span {
+        display: table-cell;
+        padding: 0 5px;
+        vertical-align: middle;
+        white-space: nowrap;
+      }
+    }
+    .form-control {
+      margin: 25px 0;
+    }
+  }
+  &--reassign {
+    padding: 20px;
+    text-align: center;
+    p {
+      font-size: 22px;      
+      margin-bottom: 20px;
+    }
+    .popup-separator {      
+      display: table;    
+      margin: 25px 0;      
+      width: 100%;
+      div {
+        display: table-cell;
+        vertical-align: middle;
+        width: 40%;
+      }
+      span {
+        display: table-cell;
+        padding: 0 5px;
+        vertical-align: middle;
+        white-space: nowrap;
+      }
+    }
+    .form-control {
+      margin: 25px 0;
+    }
+    .popup-clean {
+      margin-bottom: 30px;
+    }
+  }
+  &--edit {            
+    .popup-scroll {
+      overflow-y: scroll;
+      z-index: 20;
+      padding: 20px;
+      height: calc(100vh - 240px);      
+    }
+    .popup-footer-save {
+      border-top: 1px solid #f8f8f8;
+      bottom: 0;
+      height: 60px;
+      padding: 10px 0;
+      position: absolute;
+      text-align: center;
+      width: 100%;
+      background-color: white;
+      z-index: 25;
+      button {
+        font-size: 16px;
+      }
+    }
+    .popup-cancel-ticket {
+      color: #da0000;
+      cursor: pointer;
+    }
+  }
+  &--notify {
+    padding: 20px;
+    text-align: center;
+    p {
+      font-size: 22px;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+@media(max-width: 768px) {
+  .popup-form {      
+    left: 0%;      
+  }  
+}

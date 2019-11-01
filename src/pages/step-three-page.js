@@ -82,22 +82,23 @@ class StepThreePage extends React.Component {
     async handleStripe(ev, stripe) {        
         let stripeErrors = Object.values(ev).filter(x => x.required === true && x.message === '');
         if(stripeErrors.length === 3) { 
-            let {token} = await stripe.createToken({name: "Name"});
-            this.setState({token, stripe}, () => this.props.validateStripe(true));
+            let {card} = await stripe.createToken({name: "Name"});
+            this.setState({card, stripe}, () => this.props.validateStripe(true));
         } else {
             this.props.validateStripe(false);         
         }
     }
 
-    handleShowErrors() {        
+    handleShowErrors() {
         this.setState({dirty: true});
     }
 
     render(){
         let {summit, order, errors, stripeForm} = this.props;
-        let {token, stripe, dirty} = this.state;
+        let {card, stripe, dirty} = this.state;
         return (
             <div className="step-three">
+                <OrderSummary order={order} summit={summit} type={'mobile'} />
                 <StepRow step={this.step} />
                     <div className="row">
                         <div className="col-md-8">
@@ -116,14 +117,13 @@ class StepThreePage extends React.Component {
                                 errors={dirty ? errors : {}} />
                         </div>
                         <div className="col-md-4">
-                            <OrderSummary order={order} summit={summit} />
-                            <EventInfo />
+                            <OrderSummary order={order} summit={summit} type={'desktop'} />
                         </div>
                     </div>
                 <SubmitButtons 
                     step={this.step} 
                     stripe={stripe} 
-                    token={token}
+                    card={card}
                     errors={{errors, stripeForm}}
                     dirty={this.handleShowErrors} />
             </div>

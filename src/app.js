@@ -78,6 +78,10 @@ class App extends React.PureComponent {
     render() {
       let {isLoggedUser, onUserAuth, doLogout, getUserInfo, member, backUrl, summit} = this.props;
 
+      let url = URI(window.location.href);
+      let location = url.pathname();
+      let memberLocation = '/a/member/';      
+
       return (
           <Router history={history}>
               <div className="container">
@@ -86,7 +90,7 @@ class App extends React.PureComponent {
                       <div className="header-logo col-md-2">{summit?summit.logo:''}</div>
                       <div className="header-title col-md-8">
                           <h3>{summit && summit.name ? summit.name : 'Summit Registration'}</h3>
-                          {isLoggedUser && <NavBar />}
+                          {isLoggedUser && location.match(memberLocation) && <NavBar />}
                       </div>
                       <div className="col-md-2">
                           <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut}/>

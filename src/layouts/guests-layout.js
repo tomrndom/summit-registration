@@ -103,13 +103,17 @@ class GuestsLayout extends React.Component {
       let ticket = cloneDeep(this.props.ticket);
       let errors = cloneDeep(this.props.errors);
       let {value, id} = ev.target;
+
+      if(ev.target.id === 'attendee_last_name') {
+        id = 'attendee_surname';
+      }
   
       delete(errors[id]);
       ticket[id] = value;
 
       this.setState((prevState) => {
         return { tempTicket: { ...prevState.tempTicket, [id]: value }}
-      }, () => this.props.handleTicketChange(ticket, errors));        
+      });        
     }
 
     handleExpirationDate() {
@@ -118,10 +122,10 @@ class GuestsLayout extends React.Component {
     }
     
     render() {
-      let {ticket: {owner, order_extra_questions}, ticket, errors, loading, summit, summits} = this.props;
+      let {ticket: {owner, order_extra_questions}, ticket, errors, ticketLoading, summitLoading, summit, summits} = this.props;
       let {tempTicket} = this.state;
 
-      console.log(tempTicket)
+      let loading = ticketLoading && summitLoading;      
 
       if(!owner) {
         return (
@@ -145,6 +149,7 @@ class GuestsLayout extends React.Component {
                   ticket={ticket}
                   summit={summit}
                   summits={summits}
+                  loading={loading}
                 />
               </div>
               <div className="row submit-buttons-wrapper">
@@ -166,11 +171,12 @@ class GuestsLayout extends React.Component {
 }
 
 const mapStateToProps = ({ ticketState, summitState }) => ({
-  loading: ticketState.loading,
+  ticketLoading: ticketState.loading,
   ticket: ticketState.selectedTicket,
   errors: ticketState.errors,
   summit: summitState.selectedSummit,
-  summits: summitState.summits
+  summits: summitState.summits,
+  summitLoading: summitState.loading
 })
 
 export default connect(

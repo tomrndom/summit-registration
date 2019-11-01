@@ -57,12 +57,13 @@ window.STRIPE_PRIVATE_KEY  = process.env['STRIPE_PRIVATE_KEY'];
 class App extends React.PureComponent {
 
     getBackURL() {
-      let defaultLocation = '/a/member/orders'
+      let defaultLocation = '/a/member/orders';      
       let url      = URI(window.location.href);      
       let location = url.pathname();
+      if (location === '/') location = defaultLocation
       let query    = url.search(true);
       let fragment = url.fragment();      
-      let backUrl  = query.hasOwnProperty('BackUrl') ? query['BackUrl'] : defaultLocation;
+      let backUrl  = query.hasOwnProperty('BackUrl') ? query['BackUrl'] : location;
       if(fragment != null && fragment != ''){
           backUrl += `#${fragment}`;
       }
@@ -70,17 +71,19 @@ class App extends React.PureComponent {
     }
 
     onClickLogin() {
+        this.getBackURL();
         doLogin(this.getBackURL());        
     }
 
     render() {
-      let {isLoggedUser, onUserAuth, doLogout, getUserInfo, member, backUrl, summit} = this.props;        
+      let {isLoggedUser, onUserAuth, doLogout, getUserInfo, member, backUrl, summit} = this.props;
+
       return (
           <Router history={history}>
               <div className="container">
                   <AjaxLoader show={ this.props.loading } size={ 120 }/>
                   <div className="header row">
-                      <div className="header-logo col-md-2">LOGO</div>
+                      <div className="header-logo col-md-2">{summit?summit.logo:''}</div>
                       <div className="header-title col-md-8">
                           <h3>{summit && summit.name ? summit.name : 'Summit Registration'}</h3>
                           {isLoggedUser && <NavBar />}

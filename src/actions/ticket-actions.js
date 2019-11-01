@@ -140,9 +140,9 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
   );
 }
 
-export const editOwnedTicket = (attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions, fromTicket) => (dispatch, getState) => {  
+export const editOwnedTicket = (attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions) => (dispatch, getState) => {  
 
-  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
+  let { loggedUserState, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
 
   dispatch(startLoading());
@@ -305,6 +305,10 @@ export const assignTicketByHash = (attendee_first_name, attendee_last_name, disc
 
   dispatch(startLoading());
 
+  let params = {
+    expand : 'order_extra_questions.values, owner, owner.extra_questions, badge, badge.features'
+  };
+
   let normalizedEntity = {attendee_first_name, attendee_last_name, disclaimer_accepted, share_contact_info, extra_questions};
 
   return putRequest(
@@ -313,7 +317,7 @@ export const assignTicketByHash = (attendee_first_name, attendee_last_name, disc
     `${window.API_BASE_URL}/api/public/v1/summits/all/orders/orders/all/tickets/${hash}`,
     normalizedEntity,
     authErrorHandler
-  )()(dispatch).then(() => {
+  )(params)(dispatch).then(() => {
     dispatch(stopLoading());
   });
 }

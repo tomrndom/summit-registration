@@ -54,7 +54,8 @@ class TicketsListPage extends React.Component {
 
     render() {
         let { 
-          tickets, 
+          tickets,
+          member, 
           extraQuestions, 
           selectedTicket, 
           selectTicket, 
@@ -67,11 +68,12 @@ class TicketsListPage extends React.Component {
           lastPage, 
           loadingTickets, 
           loadingSummits, 
-          errors} = this.props;        
+          errors} = this.props;
         return (
             <div>
                 <TicketList 
                   tickets={tickets}
+                  member={member}
                   selectedTicket={selectedTicket}
                   selectTicket={selectTicket}
                   getTicketPDF={getTicketPDF}                  
@@ -93,7 +95,8 @@ class TicketsListPage extends React.Component {
     }
 }
 
-const mapStateToProps = ({ ticketState, summitState }) => ({
+const mapStateToProps = ({ loggedUserState, ticketState, summitState }) => ({
+    member: loggedUserState.member,
     tickets: ticketState.memberTickets,
     page: ticketState.current_page,
     lastPage: ticketState.last_page,

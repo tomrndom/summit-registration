@@ -48,6 +48,7 @@ class TicketPopup extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleTicketCancel = this.handleTicketCancel.bind(this);
         this.handleTicketReassign = this.handleTicketReassign.bind(this);
+        this.handleTicketSave = this.handleTicketSave.bind(this);
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleFormatExpirationDate = this.handleFormatExpirationDate.bind(this);
         this.handleFormatReassignDate = this.handleFormatReassignDate.bind(this);
@@ -101,17 +102,19 @@ class TicketPopup extends React.Component {
                 this.props.removeAttendee(ticket);
                 this.props.closePopup();
                 break;
-          case 'save':              
-              ticket = {...ticket, ...this.state.tempTicket};
-              this.props.updateTicket(ticket);
-              this.props.closePopup();
-              break;
           case 'notification':
               break;
           default:
             return null;
         }              
       }
+    }
+
+    handleTicketSave(){
+      let ticket = cloneDeep(this.props.ticket);
+      ticket = {...ticket, ...this.state.tempTicket};
+      this.props.updateTicket(ticket);
+      this.props.closePopup();
     }
 
     hasErrors(field) {
@@ -314,8 +317,8 @@ class TicketPopup extends React.Component {
                         <div className="popup-footer-save">
                           <button 
                               className="btn btn-primary" 
-                              disabled={summit.registration_disclaimer_content === true && tempTicket.disclaimer_accepted !== true} 
-                              onClick={() => this.handleConfirmPopup('save')}>
+                              disabled={tempTicket.disclaimer_accepted === false} 
+                              onClick={() => this.handleTicketSave()}>
                                   {T.translate("ticket_popup.save_changes")}
                           </button>  
                         </div>

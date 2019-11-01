@@ -80,6 +80,7 @@ class TicketAssignForm extends React.Component {
 
       let {guest, ownedTicket, ticket, onChange, extraQuestions, status, summit, orderOwned } = this.props;
       let {extra_questions, input_email} = this.state;
+      let now = parseInt((new Date().getTime() / 1000).toFixed(0));
 
         return (
           <div>
@@ -173,7 +174,7 @@ class TicketAssignForm extends React.Component {
                 </div>
               </React.Fragment>
             }
-            {!guest && orderOwned &&
+            {!guest && orderOwned && summit.start_date > now &&
               <div className="row field-wrapper">
                 <div className="col-sm-4"></div>
                 <div className="col-sm-6">

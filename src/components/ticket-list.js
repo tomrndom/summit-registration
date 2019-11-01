@@ -106,7 +106,6 @@ class TicketList extends React.Component {
 
     handleTicketUpdate(ticket){
       let { attendee_first_name, attendee_surname, attendee_email, disclaimer_accepted, extra_questions } = ticket;
-      console.log(attendee_surname);
       this.props.editOwnedTicket(attendee_email, attendee_first_name, attendee_surname, disclaimer_accepted, extra_questions);
     }
 
@@ -176,8 +175,8 @@ class TicketList extends React.Component {
 
 
     render() {
-      let { tickets, selectedTicket, extraQuestions, loading, errors, summits, lastPage, currentPage } = this.props;
-      let { showPopup } = this.state;      
+      let { tickets, selectedTicket, extraQuestions, loading, errors, summits, lastPage, currentPage, member } = this.props;
+      let { showPopup } = this.state;
 
       if (tickets.length && !loading) {
         return (
@@ -225,7 +224,7 @@ class TicketList extends React.Component {
                   ticket={selectedTicket}
                   reassignDate={this.handleReassignDate(selectedTicket)}
                   expirationDate={this.handleExpirationDate(selectedTicket)}
-                  member={null}
+                  member={member}
                   status={this.handleTicketStatus(selectedTicket)}
                   onChange={this.handleChange}
                   owned={selectedTicket.owner.member_id === selectedTicket.order.owner_id}

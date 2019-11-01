@@ -244,6 +244,7 @@ class OrderDetailPage extends React.Component {
                 <TicketPopup  
                   ticket={ticket}
                   member={member}
+                  owned={true}
                   status={this.handleTicketStatus(ticket)}
                   reassignDate={this.handleReassignDate()}
                   expirationDate={this.handleExpirationDate()}

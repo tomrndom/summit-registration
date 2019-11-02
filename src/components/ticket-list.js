@@ -84,9 +84,9 @@ class TicketList extends React.Component {
       }
       else if(ticket.owner_id === 0) {
         return status[0];
-      } else if (!ticket.owner.extra_questions) {
+      } else if (!ticket.owner.extra_questions.length) {
         return status[1];
-      } else if (ticket.owner.extra_questions) {
+      } else if (ticket.owner.extra_questions.length) {
         let incomplete = ticket.owner.extra_questions.filter((q) => q.value == '');
         if(incomplete.length === 0) {
           return status[2];

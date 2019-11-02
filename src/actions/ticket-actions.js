@@ -142,7 +142,7 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
 
 export const editOwnedTicket = (attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions) => (dispatch, getState) => {  
 
-  let { loggedUserState, ticketState: { selectedTicket } } = getState();
+  let { loggedUserState, ticketState: { selectedTicket, current_page } } = getState();
   let { accessToken }     = loggedUserState;
 
   dispatch(startLoading());
@@ -161,7 +161,7 @@ export const editOwnedTicket = (attendee_email, attendee_first_name, attendee_la
       normalizedEntity,
       authErrorHandler
   )(params)(dispatch).then(() => {
-      dispatch(getUserTickets());
+      dispatch(getUserTickets(current_page));
     }
   );
 

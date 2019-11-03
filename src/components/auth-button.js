@@ -45,7 +45,7 @@ export default class AuthButton extends React.Component {
                     </div>
                     <br/>
                     {showLogOut &&
-                    <button className="btn btn-default btn-xs logout" onClick={() => { initLogOut(); }}>
+                    <button className="btn btn-default btn-xs dropdown" onClick={() => { initLogOut(); }}>
                         {T.translate("landing.sign_out")}
                     </button>
                     }

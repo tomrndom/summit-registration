@@ -81,10 +81,24 @@ input {
   margin: 0;
 }
 
-.user-menu {
+.user-menu {  
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: 40px;
+    background-color: #f9f9f9;
+    min-width: 120px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+  }  
+}
+
+.user-menu:hover .dropdown {
+  display: block;
 }
 
 
@@ -311,6 +325,9 @@ input {
   }
   .user-menu {
     flex-direction: column;
+    .dropdown {
+      right: 15px;
+    }  
   }
 
   .order-summary-mobile{

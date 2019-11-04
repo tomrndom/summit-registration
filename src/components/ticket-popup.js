@@ -157,9 +157,9 @@ class TicketPopup extends React.Component {
           this.setState((prevState) => {
             return {
               tempTicket: {                    
-                attendee_first_name: prevState.attendee_first_name,
-                attendee_surname: prevState.attendee_surname,
-                extra_questions: prevState.extra_questions,
+                attendee_first_name: prevState.tempTicket.attendee_first_name,
+                attendee_surname: prevState.tempTicket.attendee_surname,
+                extra_questions: prevState.tempTicket.extra_questions,
                 attendee_email: email
               }
             }

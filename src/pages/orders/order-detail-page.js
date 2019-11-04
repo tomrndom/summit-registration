@@ -207,24 +207,46 @@ class OrderDetailPage extends React.Component {
                             {order.tickets.map(t => {
                               return (
                                 s.id === t.ticket_type_id ?
-                                <div className="row" key={t.id} onClick={() => {t.status === "Cancelled" ? null: this.togglePopup(t)}}>
-                                  <div className={`ticket ${this.handleTicketStatus(t).orderClass} p-2 col-sm-12 col-sm-offset-1`}>        
-                                      <div className="col-sm-1">
-                                        <i className={`fa fa-2x ${this.handleTicketStatus(t).icon} ${this.handleTicketStatus(t).class}`}></i>                             
+                                <React.Fragment>
+                                <div className="ticket-list-desktop">
+                                    <div className="row" key={t.id} onClick={() => {t.status === "Cancelled" ? null: this.togglePopup(t)}}>
+                                      <div className={`ticket ${this.handleTicketStatus(t).orderClass} p-2 col-sm-12 col-sm-offset-1`}>        
+                                          <div className="col-sm-1">
+                                            <i className={`fa fa-2x ${this.handleTicketStatus(t).icon} ${this.handleTicketStatus(t).class}`}></i>                             
+                                          </div>
+                                          <div className="col-sm-5">
+                                              <h4>{this.handleTicketRole(t)}</h4>
+                                              {t.discount > 0 && `${(t.discount * 100) / t.raw_cost}% Discount`}
+                                              <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
+                                          </div>
+                                          <div className="col-sm-5">
+                                            {t.owner ? t.owner.email : ''}
+                                          </div>
+                                          <div className="col-sm-1">
+                                              <h4>&#10095;</h4>
+                                          </div>
                                       </div>
-                                      <div className="col-sm-5">
-                                          <h4>{this.handleTicketRole(t)}</h4>
-                                          {t.discount > 0 && `${(t.discount * 100) / t.raw_cost}% Discount`}
-                                          <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
+                                    </div> 
+                                </div>
+                                <div className="ticket-list-mobile">
+                                    <div key={t.id} onClick={() => {t.status === "Cancelled" ? null: this.togglePopup(t)}}>
+                                      <div className={`ticket ${this.handleTicketStatus(t).orderClass} p-2`}>        
+                                          <div className="col-xs-1">
+                                            <i className={`fa fa-2x ${this.handleTicketStatus(t).icon} ${this.handleTicketStatus(t).class}`}></i>                             
+                                          </div>
+                                          <div className="col-xs-10">                                              
+                                              <h4>{this.handleTicketRole(t)}</h4>
+                                              {t.discount > 0 && `${(t.discount * 100) / t.raw_cost}% Discount`}
+                                              <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
+                                              {t.owner ? t.owner.email : ''}                                              
+                                          </div>
+                                          <div className="col-xs-1">
+                                              <h4>&#10095;</h4>                         
+                                          </div>
                                       </div>
-                                      <div className="col-sm-5">
-                                        {t.owner ? t.owner.email : ''}
-                                      </div>
-                                      <div className="col-sm-1">
-                                          <h4>&#10095;</h4>
-                                      </div>
-                                  </div>
-                                </div> 
+                                    </div> 
+                                </div>
+                                </React.Fragment>
                                 : null  
                               )
                             })                           

@@ -192,7 +192,7 @@ class TicketList extends React.Component {
                       <div className="col-sm-5">
                           <h4>{this.handleEventName(t)}</h4>
                           <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
-                      </div>
+                      </div>                      
                       <div className="col-sm-4">
                           <h5>{this.handleTicketName(t)}</h5>
                           <p>{this.handleTicketLocation(t)} / {this.handleTicketDate(t)}</p>

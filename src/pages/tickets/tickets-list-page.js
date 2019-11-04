@@ -70,6 +70,7 @@ class TicketsListPage extends React.Component {
           loadingSummits, 
           errors} = this.props;
         return (
+            !loadingTickets && !loadingTickets &&
             <div>
                 <TicketList 
                   tickets={tickets}

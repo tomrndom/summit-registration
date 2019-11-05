@@ -12,7 +12,9 @@
  **/
 
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import T from 'i18n-react/dist/i18n-react'
+import history from '../history'
 
 
 export default class AuthButton extends React.Component {
@@ -25,10 +27,28 @@ export default class AuthButton extends React.Component {
         };
 
         this.toggleLogOut = this.toggleLogOut.bind(this);
+        this.handleMemberMenu = this.handleMemberMenu.bind(this);
+        this.onTicketClick = this.onTicketClick.bind(this);
+        this.onOrderClick = this.onOrderClick.bind(this);
     }
 
     toggleLogOut(ev) {
         this.setState({showLogOut: !this.state.showLogOut});
+    }
+
+    handleMemberMenu() {
+      let { location } = this.props;
+      let memberLocation = '/a/member/';
+      let showMemberOptions = location.match(memberLocation) ? false : true;
+      return showMemberOptions;
+    }
+
+    onTicketClick() {
+      history.push('/a/member/orders');
+    }
+
+    onOrderClick() {
+      history.push('/a/member/tickets');
     }
 
     render() {
@@ -44,11 +64,23 @@ export default class AuthButton extends React.Component {
                         <img src={profile_pic} />
                     </div>
                     <br/>
-                    {showLogOut &&
-                    <button className="btn btn-default btn-xs dropdown" onClick={() => { initLogOut(); }}>
-                        {T.translate("landing.sign_out")}
-                    </button>
-                    }
+                    <div className="dropdown-container">
+                        {showLogOut &&
+                        <span className="dropdown-item" onClick={() => { initLogOut(); }}>
+                            {T.translate("landing.sign_out")}
+                        </span>
+                        }
+                        {showLogOut && this.handleMemberMenu() &&
+                        <React.Fragment>
+                            <span className="dropdown-item" onClick={() => { this.onTicketClick(); }}>
+                                {T.translate("nav_bar.my-orders")}
+                            </span>
+                            <span className="dropdown-item" onClick={() => { this.onOrderClick(); }}>
+                                {T.translate("nav_bar.my-tickets")}
+                            </span>
+                        </React.Fragment>
+                        }
+                    </div>                    
                 </div>
             );
         } else {

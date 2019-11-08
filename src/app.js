@@ -93,8 +93,7 @@ class App extends React.PureComponent {
                           {isLoggedUser && location.match(memberLocation) && <NavBar />}
                       </div>
                       <div className="col-md-2">
-                          <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut} location={location}/>
-                          <a onClick={this.props.handleResetOrder}>x</a>
+                          <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut} location={location}/>                          
                       </div>
                   </div>
                   <Switch>

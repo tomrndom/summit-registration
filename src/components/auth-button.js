@@ -17,7 +17,8 @@ import T from 'i18n-react/dist/i18n-react'
 import history from '../history'
 
 
-export default class AuthButton extends React.Component {
+export default class 
+AuthButton extends React.Component {
 
     constructor(props) {
         super(props);
@@ -65,11 +66,6 @@ export default class AuthButton extends React.Component {
                     </div>
                     <br/>
                     <div className="dropdown-container">
-                        {showLogOut &&
-                        <span className="dropdown-item" onClick={() => { initLogOut(); }}>
-                            {T.translate("landing.sign_out")}
-                        </span>
-                        }
                         {showLogOut && this.handleMemberMenu() &&
                         <React.Fragment>
                             <span className="dropdown-item" onClick={() => { this.onTicketClick(); }}>
@@ -80,6 +76,11 @@ export default class AuthButton extends React.Component {
                             </span>
                         </React.Fragment>
                         }
+                        {showLogOut &&
+                        <span className="dropdown-item" onClick={() => { initLogOut(); }}>
+                            {T.translate("landing.sign_out")}
+                        </span>
+                        }                        
                     </div>                    
                 </div>
             );

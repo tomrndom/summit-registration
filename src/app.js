@@ -92,7 +92,7 @@ class App extends React.PureComponent {
                           <h3>{summit && summit.name ? summit.name : 'Summit Registration'}</h3>
                           {isLoggedUser && location.match(memberLocation) && <NavBar />}
                       </div>
-                      <div className="col-md-2">
+                      <div className="col-md-2 col-sm-3 col-xs-2">
                           <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut} location={location}/>                          
                       </div>
                   </div>

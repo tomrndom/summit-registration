@@ -87,12 +87,13 @@ class App extends React.PureComponent {
               <div className="container">
                   <AjaxLoader show={ this.props.loading } size={ 120 }/>
                   <div className="header row">
-                      <div className="header-logo col-md-2">{summit?summit.logo:''}</div>
-                      <div className="header-title col-md-8">
-                          <h3>{summit && summit.name ? summit.name : 'Summit Registration'}</h3>
-                          {isLoggedUser && location.match(memberLocation) && <NavBar />}
+                      <div className="header-title">
+                          <h4>{summit?summit.logo:''}<b>{summit && summit.name ? summit.name : 'Registration'}</b></h4>
                       </div>
-                      <div className="col-md-2 col-sm-3 col-xs-2">
+                      <div className="header-menu">                        
+                        {isLoggedUser && location.match(memberLocation) && <NavBar />}
+                      </div>
+                      <div className="header-user">
                           <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut} location={location}/>                          
                       </div>
                   </div>

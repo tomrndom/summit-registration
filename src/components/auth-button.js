@@ -60,7 +60,7 @@ AuthButton extends React.Component {
         if (isLoggedUser) {
             return (
                 <div className="user-menu" onMouseEnter={this.toggleLogOut} onMouseLeave={this.toggleLogOut}>
-                    <span className="user-greeting">{member ? `Hi ${member.first_name}` : 'Hi'}&nbsp;</span>
+                    <span className="user-greeting"><b>{member ? `Hi ${member.first_name}` : 'Hi'}&nbsp;</b></span>
                     <div className="profile-pic">
                         <img src={profile_pic} />
                     </div>
@@ -68,18 +68,26 @@ AuthButton extends React.Component {
                     <div className="dropdown-container">
                         {showLogOut && this.handleMemberMenu() &&
                         <React.Fragment>
-                            <span className="dropdown-item" onClick={() => { this.onTicketClick(); }}>
+                            <span className="dropdown-item-desktop" onClick={() => { this.onTicketClick(); }}>
                                 {T.translate("nav_bar.my-orders")}
                             </span>
-                            <span className="dropdown-item" onClick={() => { this.onOrderClick(); }}>
+                            <span className="dropdown-item-desktop" onClick={() => { this.onOrderClick(); }}>
                                 {T.translate("nav_bar.my-tickets")}
                             </span>
                         </React.Fragment>
                         }
                         {showLogOut &&
-                        <span className="dropdown-item" onClick={() => { initLogOut(); }}>
-                            {T.translate("landing.sign_out")}
-                        </span>
+                        <React.Fragment>
+                            <span className="dropdown-item-mobile" onClick={() => { this.onTicketClick(); }}>
+                                {T.translate("nav_bar.my-orders")}
+                            </span>
+                            <span className="dropdown-item-mobile" onClick={() => { this.onOrderClick(); }}>
+                                {T.translate("nav_bar.my-tickets")}
+                            </span>
+                            <span className="dropdown-item" onClick={() => { initLogOut(); }}>
+                                {T.translate("landing.sign_out")}
+                            </span>
+                        </React.Fragment>
                         }                        
                     </div>                    
                 </div>

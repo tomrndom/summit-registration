@@ -80,7 +80,7 @@ class App extends React.PureComponent {
 
       let url = URI(window.location.href);
       let location = url.pathname();
-      let memberLocation = '/a/member/';      
+      let memberLocation = '/a/member/';            
 
       return (
           <Router history={history}>
@@ -94,7 +94,7 @@ class App extends React.PureComponent {
                         {isLoggedUser && location.match(memberLocation) && <NavBar />}
                       </div>
                       <div className="header-user">
-                          <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut} location={location}/>                          
+                          <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut} location={location} clearState={this.props.handleResetOrder}/>
                       </div>
                   </div>
                   <Switch>

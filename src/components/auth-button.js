@@ -87,6 +87,9 @@ AuthButton extends React.Component {
                             <span className="dropdown-item" onClick={() => { initLogOut(); }}>
                                 {T.translate("landing.sign_out")}
                             </span>
+                            <span className="dropdown-item" onClick={() => { this.props.clearState(); }}>
+                                Clear State
+                            </span>                            
                         </React.Fragment>
                         }                        
                     </div>                    

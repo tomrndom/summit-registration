@@ -21,6 +21,7 @@ import StepRow from '../components/step-row';
 import SubmitButtons from "../components/submit-buttons";
 import { handleOrderChange, handleResetOrder } from '../actions/order-actions'
 
+import history from '../history';
 
 import '../styles/step-one-page.less';
 
@@ -75,6 +76,7 @@ class StepOnePage extends React.Component {
     render(){
 
         let {summit, order} = this.props;
+        let now = Math.round((new Date()).getTime() / 1000);
 
         return (
             <div className="step-one">
@@ -85,14 +87,17 @@ class StepOnePage extends React.Component {
                             <div className="col-md-12">
                                 <h3>{T.translate("step_one.choose_tickets")}</h3>                                
                             </div>
-                            <div className="col-md-12">                                                           
-                              {(summit.timestamp < summit.start_date && summit.timestamp < summit.end_date) &&
+                            <div className="col-md-12">
+                              {(now < summit.start_date && now < summit.end_date) &&
                                 <TicketInput
                                     ticketTypes={summit.ticket_types}
                                     selection={order.tickets}
                                     add={this.handleAddTicket}
                                     substract={this.handleSubstractTicket}
                                 />
+                              }
+                              {(now > summit.start_date && now > summit.end_date) &&
+                                history.push('/a/member/orders')
                               }
                             </div>
                         </div>

@@ -25,7 +25,7 @@ import NotFoundPage from './pages/not-found-page'
 import { connect } from 'react-redux'
 import { AjaxLoader } from "openstack-uicore-foundation/lib/components";
 import { onUserAuth, doLogin, doLogout, initLogOut, getUserInfo } from "openstack-uicore-foundation/lib/methods";
-import { handleResetOrder } from './actions/order-actions'
+import { handleResetReducers } from './actions/summit-actions'
 import T from 'i18n-react';
 import history from './history'
 import URI from "urijs";
@@ -94,7 +94,7 @@ class App extends React.PureComponent {
                         {isLoggedUser && location.match(memberLocation) && <NavBar />}
                       </div>
                       <div className="header-user">
-                          <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut} location={location} clearState={this.props.handleResetOrder}/>
+                          <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut} location={location} clearState={this.props.handleResetReducers}/>
                       </div>
                   </div>
                   <Switch>
@@ -125,5 +125,5 @@ export default connect(mapStateToProps, {
   onUserAuth,
   doLogout,
   getUserInfo,
-  handleResetOrder
+  handleResetReducers
 })(App)

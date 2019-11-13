@@ -23,12 +23,18 @@ import {
     showSuccessMessage,
 } from 'openstack-uicore-foundation/lib/methods';
 
+import { LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
+
 
 export const GET_SUMMIT_BY_SLUG        = 'GET_SUMMIT_BY_SLUG';
 export const GET_SUMMIT_BY_ID          = 'GET_SUMMIT_BY_ID';
 export const GET_USER_SUMMITS          = 'GET_USER_SUMMITS';
 export const SELECT_SUMMIT             = 'SELECT_SUMMIT';
 export const GET_SUMMIT_REFUND_POLICY  = 'GET_SUMMIT_REFUND_POLICY';
+
+export const handleResetReducers = () => (dispatch, getState) => {
+  dispatch(createAction(LOGOUT_USER)({}));
+}
 
 export const getSummitBySlug = (slug) => (dispatch, getState) => {
 
@@ -61,6 +67,8 @@ export const getSummitBySlug = (slug) => (dispatch, getState) => {
 
 export const getUserSummits = (from) => (dispatch, getState) => {  
 
+  dispatch(startLoading());
+
   let { orderState: {memberOrders}, ticketState: {memberTickets}, summitState: {summits} } = getState();
 
   let summitsId;
@@ -73,8 +81,12 @@ export const getUserSummits = (from) => (dispatch, getState) => {
     
   const storedSummits = [... new Set(summits.map(p => p.id))];
 
+  console.log(storedSummits);
+
   summitsId = summitsId.filter(s => storedSummits.indexOf(s) == -1);
   const summitCall = summitsId.map(s => dispatch(getSummitById(s)));
+
+  console.log(summitsId);
   
   Promise.all([...summitCall]).then(() => {
     dispatch(stopLoading());

@@ -94,32 +94,38 @@ class OrderList extends React.Component {
           class: 'order-warning'
         },
         { 
-          text: 'PENDING CONFIRMATION',          
+          text: 'PENDING CONFIRMATION',
+          icon: 'fa-fw',
           orderClass: 'pending',
           class: 'order-pending'
         },
         { 
           text: 'CANCELLED',
+          icon: 'fa-fw',
           orderClass: 'cancel',
           class: 'order-cancel'
         },
         { 
           text: 'REFUND REQUESTED',
+          icon: 'fa-fw',
           orderClass: 'cancel',
           class: 'order-cancel'
         },
         { 
           text: 'REFUNDED',
+          icon: 'fa-fw',
           orderClass: 'cancel',
           class: 'order-cancel'
         },
         { 
           text: 'PAYMENT ERROR',
+          icon: 'fa-fw',
           orderClass: 'cancel',
           class: 'order-cancel'
         },
         { 
           text: 'PAYMENT PROCESSING',
+          icon: 'fa-fw',
           orderClass: 'pending',
           class: 'order-pending'
         },      
@@ -205,8 +211,9 @@ class OrderList extends React.Component {
           return (
               <div className="orders-list">
                   {orders.map(o => {
-                    return (                    
-                      <div key={o.id} onClick={() => this.handleOrderSelect(o)}>
+                    return (
+                      <React.Fragment>
+                      <div className="order-list-desktop" key={o.id} onClick={() => this.handleOrderSelect(o)}>
                           <div className={`order ${this.handleOrderStatus(o).orderClass} p-2 col-sm-8 col-sm-offset-2`}>                   
                               <div className="col-sm-1">
                                   <i className={`fa fa-2x ${this.handleOrderStatus(o).icon} ${this.handleOrderStatus(o).class}`}></i>                             
@@ -232,6 +239,32 @@ class OrderList extends React.Component {
                               </div>
                           </div>
                       </div>
+                      <div className="order-list-mobile" key={o.id} onClick={() => this.handleOrderSelect(o)}>
+                          <div className={`order ${this.handleOrderStatus(o).orderClass} p-2 col-sm-8 col-sm-offset-2`}>                   
+                              <div className="col-sm-1">
+                                  <i className={`fa fa-2x ${this.handleOrderStatus(o).icon} ${this.handleOrderStatus(o).class}`}></i>                             
+                              </div>
+                              <div className="col-sm-7">
+                                  <h4>{this.getSummitName(o)}</h4>                                                                    
+                                  <ul>
+                                    {this.handleTicketCount(o.tickets, o.summit_id).map((t, i) => {
+                                      if(i < 1) {
+                                        return (
+                                          <li key={t.ticket_type_id}>
+                                            x{t.quantity} {t.name} ...
+                                          </li>                                      
+                                        )
+                                      }                                      
+                                    })}                                      
+                                  </ul>
+                                  <p className={`status ${this.handleOrderStatus(o).class}`}>{this.handleOrderStatus(o).text}</p>
+                              </div>                              
+                              <div className="col-sm-4">
+                                  <h4>$ {o.amount}</h4>
+                              </div>
+                          </div>
+                      </div>
+                      </React.Fragment>
                     )
                   })}
                   <div className="footer-pagination">
@@ -243,7 +276,7 @@ class OrderList extends React.Component {
                         last
                         ellipsis
                         boundaryLinks
-                        maxButtons={5}
+                        maxButtons={3}
                         items={lastPage}
                         activePage={currentPage}
                         onSelect={this.handlePageChange}

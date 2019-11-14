@@ -62,16 +62,20 @@ input {
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
 }
 
 .header-title {
   font-size: 23px;  
   height: 100%;
-  width: 30%;
+  width: 50%;
   display: flex;
-  justify-content: center;
-  position: relative;
-  text-align: center;
+  padding-left: 30px;
 }
 
 .header-title.center {
@@ -81,13 +85,20 @@ input {
   margin: 0;
 }
 
-.header-menu {
-  width: 40%;
+.header-bottom {
+  height: 100%;
   display: flex;
+  .header-menu {
+    width: 100%;
+    display: flex;
+    align-self: flex-end;
+  }
 }
 
+
+
 .header-user {
-  width: 30%;
+  width: 50%;
   padding-right: 30px;
   .user-menu {  
     display: flex;
@@ -350,7 +361,6 @@ input {
   }
 
   .header-title {
-    width: 70%;
     justify-content: left;
     padding-left: 30px;
     text-align: left;
@@ -367,10 +377,6 @@ input {
         right: 30px;
       }
     }
-  }
-
-  .header-menu {
-    display: none;
   }
 
   .ticket-list-desktop {

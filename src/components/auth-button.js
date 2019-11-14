@@ -78,12 +78,6 @@ AuthButton extends React.Component {
                         }
                         {showLogOut &&
                         <React.Fragment>
-                            <span className="dropdown-item-mobile" onClick={() => { this.onTicketClick(); }}>
-                                {T.translate("nav_bar.my-orders")}
-                            </span>
-                            <span className="dropdown-item-mobile" onClick={() => { this.onOrderClick(); }}>
-                                {T.translate("nav_bar.my-tickets")}
-                            </span>
                             <span className="dropdown-item" onClick={() => { initLogOut(); }}>
                                 {T.translate("landing.sign_out")}
                             </span>

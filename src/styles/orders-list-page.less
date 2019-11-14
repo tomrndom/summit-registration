@@ -71,7 +71,7 @@
     .cancel {
       .status {
         color: #da0000;
-      }
+      }      
       .col-sm-4, .col-sm-2, h4 {
         opacity: 0.6;
       }
@@ -117,5 +117,43 @@
 @media (max-width: 768px) {
   .orders-list {
     margin-bottom: 20px;
+  }
+  .order-list-desktop {
+    display: none;
+  }
+
+  .order-list-mobile {
+    display: block;    
+    .order {
+      div:nth-child(2) {        
+        margin-left: 0px;
+        padding-bottom: 0px;
+      }
+      div:last-child {
+        margin-left: auto;
+      }
+    }
+    .cancel {
+      div:first-of-type {        
+        margin-left: -40px;
+      }
+      div:nth-child(2) {        
+        padding-bottom: 0px;
+      }
+    }
+    .pending {
+      div:first-of-type {        
+        margin-left: -40px;
+      }
+      div:nth-child(2) {        
+        padding-bottom: 0px;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .order-list-mobile {
+    display: none;    
   }
 }

@@ -87,14 +87,18 @@ class App extends React.PureComponent {
               <div className="container">
                   <AjaxLoader show={ this.props.loading } size={ 120 }/>
                   <div className="header row">
-                      <div className="header-title">
-                          <h4>{summit?summit.logo:''}<b>{summit && summit.name ? summit.name : 'Registration'}</b></h4>
+                      <div className="header-top">
+                          <div className="header-title">
+                              <h4>{summit?summit.logo:''}<b>{summit && summit.name ? summit.name : 'Registration'}</b></h4>
+                          </div>
+                          <div className="header-user">
+                              <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut} location={location} clearState={this.props.handleResetReducers}/>
+                          </div>
                       </div>
-                      <div className="header-menu">                        
-                        {isLoggedUser && location.match(memberLocation) && <NavBar />}
-                      </div>
-                      <div className="header-user">
-                          <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut} location={location} clearState={this.props.handleResetReducers}/>
+                      <div className="header-bottom">
+                          <div className="header-menu">                        
+                            {isLoggedUser && location.match(memberLocation) && <NavBar />}
+                          </div>
                       </div>
                   </div>
                   <Switch>

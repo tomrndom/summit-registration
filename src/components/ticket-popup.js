@@ -250,7 +250,7 @@ class TicketPopup extends React.Component {
         return (
         <div className='popup-bg'>
             <div className='popup-form'>
-              <div className="popup-header">                
+              <div className={`popup-header ${status.orderClass}`}>                
                   {fromTicketList ? 
                     <div className="popup-title">
                       <h4><b>Full Day Pass</b></h4>

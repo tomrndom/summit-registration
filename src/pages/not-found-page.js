@@ -15,6 +15,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import T from "i18n-react/dist/i18n-react";
 import { doLogin } from "openstack-uicore-foundation/lib/methods";
+import URI from "urijs";
 
 //import '../styles/not-found-page.less';
 
@@ -35,8 +36,22 @@ export default class NotFoundPage extends React.Component {
       this.redirectLogin();
     }
 
-    redirectLogin() {      
-      doLogin();        
+    redirectLogin() {
+      function getBackURL() {
+        let defaultLocation = '/a/member/orders';      
+        let url      = URI(window.location.href);      
+        let location = url.pathname();
+        if (location === '/') location = defaultLocation
+        let query    = url.search(true);
+        let fragment = url.fragment();      
+        let backUrl  = query.hasOwnProperty('BackUrl') ? query['BackUrl'] : location;
+        if(fragment != null && fragment != ''){
+            backUrl += `#${fragment}`;
+        }
+        return backUrl;
+      }
+      getBackURL();
+      doLogin(getBackURL());        
     }
 
     render(){

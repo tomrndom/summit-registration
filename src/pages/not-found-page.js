@@ -14,7 +14,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import T from "i18n-react/dist/i18n-react";
-
+import { doLogin } from "openstack-uicore-foundation/lib/methods";
 
 //import '../styles/not-found-page.less';
 
@@ -27,10 +27,16 @@ export default class NotFoundPage extends React.Component {
         this.state = {
 
         };
+
+        this.redirectLogin = this.redirectLogin.bind(this);
     }
 
     componentWillMount() {
+      this.redirectLogin();
+    }
 
+    redirectLogin() {      
+      doLogin();        
     }
 
     render(){

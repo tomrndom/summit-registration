@@ -14,8 +14,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import T from "i18n-react/dist/i18n-react";
-import { doLogin } from "openstack-uicore-foundation/lib/methods";
-import URI from "urijs";
+
 
 //import '../styles/not-found-page.less';
 
@@ -28,40 +27,19 @@ export default class NotFoundPage extends React.Component {
         this.state = {
 
         };
-
-        this.redirectLogin = this.redirectLogin.bind(this);
-        this.getBackURL = this.getBackURL.bind(this);
     }
 
     componentWillMount() {
-      this.redirectLogin();
-    }
 
-    getBackURL() {
-      let defaultLocation = '/a/member/orders';
-      let url      = URI(window.location.href);
-      let location = url.pathname();
-      if (location === '/') location = defaultLocation
-      let query    = url.search(true);
-      let fragment = url.fragment();
-      let backUrl  = query.hasOwnProperty('BackUrl') ? query['BackUrl'] : location;
-      if(fragment != null && fragment != ''){
-          backUrl += `#${fragment}`;
-      }
-      return backUrl;
-    }
-
-    redirectLogin() {      
-      this.getBackURL();
-      doLogin(this.getBackURL());        
     }
 
     render(){
 
         return (
-            <div className="container">
-                <div className="row">
-                    NOT FOUND
+            <div className="not-found-container">
+                <div className="error-message">
+                    <h1>404</h1>
+                    <h3>This URL does not match any page.</h3>
                 </div>
             </div>
         );

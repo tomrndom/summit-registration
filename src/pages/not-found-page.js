@@ -30,28 +30,30 @@ export default class NotFoundPage extends React.Component {
         };
 
         this.redirectLogin = this.redirectLogin.bind(this);
+        this.getBackURL = this.getBackURL.bind(this);
     }
 
     componentWillMount() {
       this.redirectLogin();
     }
 
-    redirectLogin() {
-      function getBackURL() {
-        let defaultLocation = '/a/member/orders';      
-        let url      = URI(window.location.href);      
-        let location = url.pathname();
-        if (location === '/') location = defaultLocation
-        let query    = url.search(true);
-        let fragment = url.fragment();      
-        let backUrl  = query.hasOwnProperty('BackUrl') ? query['BackUrl'] : location;
-        if(fragment != null && fragment != ''){
-            backUrl += `#${fragment}`;
-        }
-        return backUrl;
+    getBackURL() {
+      let defaultLocation = '/a/member/orders';
+      let url      = URI(window.location.href);
+      let location = url.pathname();
+      if (location === '/') location = defaultLocation
+      let query    = url.search(true);
+      let fragment = url.fragment();
+      let backUrl  = query.hasOwnProperty('BackUrl') ? query['BackUrl'] : location;
+      if(fragment != null && fragment != ''){
+          backUrl += `#${fragment}`;
       }
-      getBackURL();
-      doLogin(getBackURL());        
+      return backUrl;
+    }
+
+    redirectLogin() {      
+      this.getBackURL();
+      doLogin(this.getBackURL());        
     }
 
     render(){

@@ -129,7 +129,7 @@ class StepTwoPage extends React.Component {
 
     render(){
         let {summit, order, errors} = this.props;
-        let {dirty} = this.state;        
+        let {dirty} = this.state;
 
         return (
             <div className="step-two">

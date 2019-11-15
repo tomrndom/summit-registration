@@ -238,8 +238,8 @@ class OrderDetailPage extends React.Component {
                                           <div className="col-xs-10">                                              
                                               <h4>{this.handleTicketRole(t)}</h4>
                                               {t.discount > 0 && `${(t.discount * 100) / t.raw_cost}% Discount`}
-                                              <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
                                               {t.owner ? t.owner.email : ''}                                              
+                                              <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
                                           </div>
                                           <div className="col-xs-1">
                                               <h4>&#10095;</h4>                         

@@ -278,26 +278,28 @@ class TicketPopup extends React.Component {
                     </TabList>
                     {status.text === 'UNASSIGNED' && 
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--assign">
-                        <p>{T.translate("ticket_popup.assign_text")} {this.handleFormatReassignDate(reassignDate)}</p>
-                        <button className="btn btn-primary" onClick={() => this.handleTicketAssign(true)}>
-                          {T.translate("ticket_popup.assign_me")}
-                        </button>
-                        <div className="popup-separator">
-                          <div><hr/></div>
-                          <span>{T.translate("ticket_popup.assign_or")}</span>
-                          <div><hr/></div>
+                        <div className="popup-scroll">
+                            <p>{T.translate("ticket_popup.assign_text")} {this.handleFormatReassignDate(reassignDate)}</p>
+                            <button className="btn btn-primary" onClick={() => this.handleTicketAssign(true)}>
+                              {T.translate("ticket_popup.assign_me")}
+                            </button>
+                            <div className="popup-separator">
+                              <div><hr/></div>
+                              <span>{T.translate("ticket_popup.assign_or")}</span>
+                              <div><hr/></div>
+                            </div>
+                            <Input
+                                id="attendee_email"
+                                className="form-control"
+                                placeholder="Email"
+                                error={this.hasErrors('email')}
+                                onChange={this.handleChange}
+                                value={attendee_email}
+                            />
+                            <button className="btn btn-primary" onClick={() => this.handleTicketAssign(false)}>
+                              {T.translate("ticket_popup.assign_someone")}
+                            </button>
                         </div>
-                        <Input
-                            id="attendee_email"
-                            className="form-control"
-                            placeholder="Email"
-                            error={this.hasErrors('email')}
-                            onChange={this.handleChange}
-                            value={attendee_email}
-                        />
-                        <button className="btn btn-primary" onClick={() => this.handleTicketAssign(false)}>
-                          {T.translate("ticket_popup.assign_someone")}
-                        </button>
                       </TabPanel>
                     }
                     <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--edit">
@@ -325,6 +327,7 @@ class TicketPopup extends React.Component {
                     </TabPanel>
                     {status.text !== 'UNASSIGNED' && 
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--reassign">
+                        <div className="popup-scroll">
                           <p>{T.translate("ticket_popup.reassign_text")} <br/> <b>{owner.email}</b></p>                        
                           <label>
                             <input type="checkbox" className="popup-clean" value={cleanFields} onChange={() => this.setState({cleanFields: !cleanFields})}/> &nbsp;
@@ -348,6 +351,7 @@ class TicketPopup extends React.Component {
                           <button className="btn btn-primary" onClick={() => this.handleTicketReassign(false)}>
                             {T.translate("ticket_popup.reassign_someone")}
                           </button>
+                        </div>
                       </TabPanel>
                     }
                     {status.text !== 'UNASSIGNED' && 

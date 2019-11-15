@@ -58,7 +58,7 @@ export const handleOrderChange = (order, errors = {}) => (dispatch, getState) =>
 
     if(currentStep === 2) {
         if (validator.isEmpty(order.first_name)) errors.first_name = 'Please enter your First Name.';
-        if (validator.isEmpty(order.surname)) errors.surname = 'Please enter your Last Name.';
+        if (validator.isEmpty(order.last_name)) errors.last_name = 'Please enter your Last Name.';
         if (!validator.isEmail(order.email)) errors.email = 'Please enter a valid Email.';
         if (validator.isEmpty(order.company)) errors.company = 'Please enter your Company.';
 

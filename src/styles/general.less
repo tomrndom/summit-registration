@@ -261,10 +261,12 @@ input {
   margin: 0 -15px;
   &.open {
     position: fixed;
-    top: 145px;
+    top: 100px;
     height: 100%;
     width: 100%;
     z-index: 50;
+    overflow-y: scroll;
+    height: calc(100vh - 100px);
   }
   .closed {
     display: none;
@@ -272,7 +274,7 @@ input {
   &--title {
     display: flex;
     justify-content: space-between;
-    line-height: 40px;    
+    line-height: 45px;    
     font-weight: bold;    
     padding: 0 15px;
     cursor: pointer;
@@ -298,10 +300,12 @@ input {
       border-bottom: 1px solid lightgray;
       padding: 10px 0;
       margin: 0 5px;
+      flex-direction: row;
     }
     .total-row {
       padding: 10px 0;
       margin: 0 5px;
+      flex-direction: row;
     }
     .order-discounts {
       color: green;
@@ -354,7 +358,7 @@ input {
 @media(max-width: 768px) {
 
   .header {
-    height: 145px;
+    height: 100px;
     margin-top: 0;
     position: absolute;
     width: 100%;
@@ -384,7 +388,7 @@ input {
   }
 
   .primary-layout{
-    margin: 145px 0;
+    margin: 100px 0;
   }
 
   .step-row{

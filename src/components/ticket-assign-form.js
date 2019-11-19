@@ -141,10 +141,10 @@ class TicketAssignForm extends React.Component {
                   value={ticket.attendee_surname}
                 />
               </div>
-            </div>            
-            <hr/>
+            </div>                        
             {extraQuestions && 
             <React.Fragment>
+              <hr/>
               <div className="row popup-basic-info">
                 <div className="col-sm-6">{T.translate("ticket_popup.edit_preferences")}</div>
                 <div className="col-sm-6"></div>

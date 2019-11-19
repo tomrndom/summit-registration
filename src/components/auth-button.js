@@ -73,7 +73,12 @@ AuthButton extends React.Component {
       let url           = URI(`${baseUrl}/oauth2/end-session`);
       let state         = this.createNonce(this.NONCE_LEN);
       let postLogOutUri = window.location.origin + '/auth/logout';
-      let backUrl       = URI(window.location.href).pathname();                  
+      let backUrl       = URI(window.location.href).pathname();
+      
+
+      let detailUrl     = '/a/member/orders/detail';
+      if(backUrl === detailUrl) backUrl = '/a/member/orders';
+
       // store nonce to check it later
       window.localStorage.setItem('post_logout_state', state);
       window.localStorage.setItem('post_logout_back_uri', backUrl);
@@ -111,7 +116,7 @@ AuthButton extends React.Component {
                         <img src={profile_pic} />
                     </div>
                     <div className="dropdown-container">
-                        {showLogOut && this.handleMemberMenu() &&
+                        {this.handleMemberMenu() &&
                         <React.Fragment>
                             <span className="dropdown-item-desktop" onClick={() => { this.onTicketClick(); }}>
                                 {T.translate("nav_bar.my-orders")}
@@ -121,16 +126,12 @@ AuthButton extends React.Component {
                             </span>
                         </React.Fragment>
                         }
-                        {showLogOut &&
-                        <React.Fragment>
-                            <span className="dropdown-item" onClick={() => { this.initLogOut(); }}>
-                                {T.translate("landing.sign_out")}
-                            </span>
-                            <span className="dropdown-item" onClick={() => { this.props.clearState(); }}>
-                                Clear State
-                            </span>                            
-                        </React.Fragment>
-                        }                        
+                        <span className="dropdown-item" onClick={() => { this.initLogOut(); }}>
+                            {T.translate("landing.sign_out")}
+                        </span>
+                        <span className="dropdown-item" onClick={() => { this.props.clearState(); }}>
+                            Clear State
+                        </span>                                            
                     </div>                    
                 </div>
             );

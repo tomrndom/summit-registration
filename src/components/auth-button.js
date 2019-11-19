@@ -15,6 +15,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import T from 'i18n-react/dist/i18n-react'
 import history from '../history'
+import URI from 'urijs';
 
 
 export default class 
@@ -26,11 +27,17 @@ AuthButton extends React.Component {
         this.state = {
             showLogOut: false,
         };
+        
+        this.NONCE_LEN = 16;
 
         this.toggleLogOut = this.toggleLogOut.bind(this);
         this.handleMemberMenu = this.handleMemberMenu.bind(this);
         this.onTicketClick = this.onTicketClick.bind(this);
         this.onOrderClick = this.onOrderClick.bind(this);
+        this.initLogOut = this.initLogOut.bind(this);
+        this.getLogoutUrl = this.getLogoutUrl.bind(this);
+        this.createNonce = this.createNonce.bind(this);
+
     }
 
     toggleLogOut(ev) {
@@ -52,8 +59,47 @@ AuthButton extends React.Component {
       history.push('/a/member/tickets');
     }
 
+    initLogOut() {
+      let location =  window.location;
+      // check if we are on iframe
+      if(window.top)
+          location = window.top.location;      
+      this.getLogoutUrl(window.idToken).toString()
+      location.replace(this.getLogoutUrl(window.idToken).toString());
+    }
+
+    getLogoutUrl(idToken) {
+      let baseUrl       = window.IDP_BASE_URL;
+      let url           = URI(`${baseUrl}/oauth2/end-session`);
+      let state         = this.createNonce(this.NONCE_LEN);
+      let postLogOutUri = window.location.origin + '/auth/logout';
+      let backUrl       = URI(window.location.href).pathname();                  
+      // store nonce to check it later
+      window.localStorage.setItem('post_logout_state', state);
+      window.localStorage.setItem('post_logout_back_uri', backUrl);
+      /**
+       * post_logout_redirect_uri should be listed on oauth2 client settings
+       * on IDP
+       * "Security Settings" Tab -> Logout Options -> Post Logout Uris
+       */
+      return url.query({
+          "id_token_hint"             : idToken,
+          "post_logout_redirect_uri"  : encodeURI(postLogOutUri),
+          "state"                     : state,
+      });
+    }
+
+    createNonce(len) {
+      let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      let nonce = '';
+      for(let i = 0; i < len; i++) {
+          nonce += possible.charAt(Math.floor(Math.random() * possible.length));
+      }
+      return nonce;
+    }
+
     render() {
-        let {isLoggedUser, doLogin, initLogOut, member} = this.props;
+        let {isLoggedUser, doLogin, member} = this.props;
         let profile_pic = member ? member.pic : '';
         let {showLogOut} = this.state;
 
@@ -77,7 +123,7 @@ AuthButton extends React.Component {
                         }
                         {showLogOut &&
                         <React.Fragment>
-                            <span className="dropdown-item" onClick={() => { initLogOut(); }}>
+                            <span className="dropdown-item" onClick={() => { this.initLogOut(); }}>
                                 {T.translate("landing.sign_out")}
                             </span>
                             <span className="dropdown-item" onClick={() => { this.props.clearState(); }}>

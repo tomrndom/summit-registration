@@ -77,7 +77,7 @@ class BasicInfoForm extends React.Component {
                 {!member &&
                 <div className="row">
                     <div className="col-md-12 link" onClick={() => this.onClickLogin()}>
-                        {T.translate("step_two.have_account")} <u>{T.translate("step_two.sign_in")}</u>
+                        {T.translate("step_two.have_account")} <u>{T.translate("step_two.sign_in")}</u> {T.translate("step_two.sign_in_account")}
                     </div>
                 </div>
                 }

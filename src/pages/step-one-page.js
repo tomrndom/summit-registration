@@ -88,7 +88,7 @@ class StepOnePage extends React.Component {
                                 <h3>{T.translate("step_one.choose_tickets")}</h3>                                
                             </div>
                             <div className="col-md-12">
-                              {(now < summit.start_date && now < summit.end_date) &&
+                              {now < summit.end_date &&
                                 <TicketInput
                                     ticketTypes={summit.ticket_types}
                                     selection={order.tickets}
@@ -96,7 +96,7 @@ class StepOnePage extends React.Component {
                                     substract={this.handleSubstractTicket}
                                 />
                               }
-                              {(now > summit.start_date && now > summit.end_date) &&
+                              {now > summit.end_date &&
                                 history.push('/a/member/orders')
                               }
                             </div>

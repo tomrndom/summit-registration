@@ -47,9 +47,11 @@ export default class TicketInput extends React.Component {
             <div className="ticket-input-box">
                 {ticketTypes.map(t => {
                     let quantity = selection.filter(sel => sel.type_id == t.id).length;                    
+                    let now = Math.round((new Date()).getTime() / 1000);
 
-                    return (
-                        <div className="ticket-wrapper" key={`ttype_${t.id}`}>
+                    if (now >= t.sales_start_date && now <= t.sales_end_date) {
+                      return (
+                        <div className={`ticket-wrapper ${t.quantity_2_sell == 0 ? 'sold_out' : ''}`} key={`ttype_${t.id}`}>
                             <div className="row">
                                 <div className="col-md-8">
                                     <div className="ticket-type">{t.name}</div>
@@ -57,10 +59,16 @@ export default class TicketInput extends React.Component {
                                         {t.cost > 0 ? `$ ${t.cost}` : T.translate("step_one.free")}
                                     </div>
                                     <div className="ticket-expiration">
-                                        {T.translate("step_one.expiration")} {getFormatedDate(t.sales_end_date)}
+                                        {t.quantity_2_sell > 0 ? 
+                                          `${T.translate("step_one.expiration")} ${getFormatedDate(t.sales_end_date)}` :
+                                          <div className="sold-out-text">
+                                            {T.translate("step_one.sold_out")}
+                                          </div>
+                                        }                                        
                                     </div>
                                 </div>
                                 <div className="col-md-4">
+                                    {t.quantity_2_sell > 0 ? 
                                     <div className="form-inline ticket-quantity">
                                         <button className="btn btn-default" onClick={this.substractTicket.bind(this, t.id)}>
                                             <i className="fa fa-minus"></i>
@@ -72,10 +80,15 @@ export default class TicketInput extends React.Component {
                                             <i className="fa fa-plus"></i>
                                         </button>
                                     </div>
+                                    : null
+                                    }
                                 </div>
                             </div>
                         </div>
-                    )
+                      )
+                    } else {
+                      return null;
+                    }                    
                 })}
             </div>
         );

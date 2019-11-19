@@ -31,7 +31,9 @@
     "choose_tickets"        : "Choose your tickets",
     "choose_tickets_desc"   : "a description",
     "expiration"            : "Promotional pricing available until ",
-    "free"                  : "Free"
+    "free"                  : "Free",
+    "sold_out"              : "Sold Out",
+    "no_tickets"            : "No tickets for sale!"
   },
   "step_two": {
     "basic_info"        : "Basic Information",

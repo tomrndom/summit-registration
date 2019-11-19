@@ -64,7 +64,6 @@ AuthButton extends React.Component {
                     <div className="profile-pic">
                         <img src={profile_pic} />
                     </div>
-                    <br/>
                     <div className="dropdown-container">
                         {showLogOut && this.handleMemberMenu() &&
                         <React.Fragment>

@@ -80,33 +80,41 @@ class StepOnePage extends React.Component {
 
         return (
             <div className="step-one">
-                <StepRow step={this.step} />
-                <div className="row">
-                    <div className="col-md-8">
-                        <div className="row">
-                            <div className="col-md-12">
-                                <h3>{T.translate("step_one.choose_tickets")}</h3>                                
-                            </div>
-                            <div className="col-md-12">
-                              {now < summit.end_date &&
-                                <TicketInput
-                                    ticketTypes={summit.ticket_types}
-                                    selection={order.tickets}
-                                    add={this.handleAddTicket}
-                                    substract={this.handleSubstractTicket}
-                                />
-                              }
-                              {now > summit.end_date &&
-                                history.push('/a/member/orders')
-                              }
-                            </div>
-                        </div>
+                {(now >= summit.registration_begin_date && 
+                  now <= summit.registration_end_date && 
+                  now < summit.end_date) ?
+                  <React.Fragment>
+                    <StepRow step={this.step} />
+                    <div className="row">
+                        <div className="col-md-8">
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <h3>{T.translate("step_one.choose_tickets")}</h3>                                
+                                </div>
+                                <div className="col-md-12">
 
+                                    <TicketInput
+                                        ticketTypes={summit.ticket_types}
+                                        selection={order.tickets}
+                                        add={this.handleAddTicket}
+                                        substract={this.handleSubstractTicket}
+                                    />                                                                      
+                                  {now >= summit.end_date &&
+                                  now <= summit.registration_begin_date &&
+                                    history.push('/a/member/orders')
+                                  }
+                                </div>
+                            </div>
+
+                        </div>
+                        <div className="col-md-4">                        
+                        </div>
                     </div>
-                    <div className="col-md-4">                        
-                    </div>
-                </div>
-                <SubmitButtons step={this.step} canContinue={order.tickets.length > 0} />
+                    <SubmitButtons step={this.step} canContinue={order.tickets.length > 0} />
+                    </React.Fragment>
+                  :
+                  <h3>{T.translate("step_one.no_tickets")}</h3>
+                }
             </div>
         );
     }

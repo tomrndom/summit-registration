@@ -58,63 +58,68 @@ class TicketInfoForm extends React.Component {
 
     render() {
         let {order, onChange, ticketType} = this.props;
-        let orderedTickets = order.tickets.filter(tix => tix.type_id == ticketType.id);        
+        let orderedTickets = order.tickets.filter(tix => tix.type_id == ticketType.id);
+        let now = Math.round((new Date()).getTime() / 1000);        
 
-        return (
-            <div className="ticket-info-wrapper">
-                <div className="row">
-                    <div className="col-md-12">
-                        <h3>{ticketType.name} {T.translate("step_two.tickets")} {orderedTickets.length > 0 ? `(${orderedTickets.length})` : ''}</h3>
-                    </div>
-                </div>
-                { orderedTickets.map((tix, i) => (                  
-                    <div className="row field-wrapper" key={`tix_${ticketType.id}_${i}`}>                                          
-                        <div className="col-md-4">
-                            <label>{T.translate("step_two.ticket")} #{i+1}</label>
-                        </div>
-                        <div className="col-md-6">
-                            <Input
-                                className="form-control"
-                                placeholder={T.translate("step_two.placeholders.coupon")}
-                                error={this.hasErrors(`tix_coupon_${tix.tempId}`)}
-                                onChange={this.ticketInfoChange.bind(this, tix.tempId, 'promo_code')}
-                                value={tix.promo_code ? tix.promo_code : ''}
-                            />
-                            <Input
-                                className="form-control email"
-                                placeholder={T.translate("step_two.placeholders.email")}
-                                error={this.hasErrors(`tix_email_${tix.tempId}`)}
-                                onChange={this.ticketInfoChange.bind(this, tix.tempId, 'attendee_email')}
-                                value={tix.attendee_email ? tix.attendee_email : ''}
-                            />
-                        </div>
-                        <div className="col-md-2">
-                            <a href="" onClick={this.removeTicket.bind(this, tix.tempId)}>
-                                <i className="fa fa-trash-o" aria-hidden="true"></i>
-                            </a>
-                        </div>
-                    </div>
-                ))}
-
-                {orderedTickets.length == 0 &&
+        if (ticketType.quantity_2_sell > 0 && now >= ticketType.sales_start_date && now <= ticketType.sales_end_date) {
+            return (
+                <div className="ticket-info-wrapper">
                     <div className="row">
                         <div className="col-md-12">
-                            {T.translate("step_two.no_tickets")}
+                            <h3>{ticketType.name} {T.translate("step_two.tickets")} {orderedTickets.length > 0 ? `(${orderedTickets.length})` : ''}</h3>
                         </div>
                     </div>
-                }
+                    { orderedTickets.map((tix, i) => (                  
+                        <div className="row field-wrapper" key={`tix_${ticketType.id}_${i}`}>                                          
+                            <div className="col-md-4">
+                                <label>{T.translate("step_two.ticket")} #{i+1}</label>
+                            </div>
+                            <div className="col-md-6">
+                                <Input
+                                    className="form-control"
+                                    placeholder={T.translate("step_two.placeholders.coupon")}
+                                    error={this.hasErrors(`tix_coupon_${tix.tempId}`)}
+                                    onChange={this.ticketInfoChange.bind(this, tix.tempId, 'promo_code')}
+                                    value={tix.promo_code ? tix.promo_code : ''}
+                                />
+                                <Input
+                                    className="form-control email"
+                                    placeholder={T.translate("step_two.placeholders.email")}
+                                    error={this.hasErrors(`tix_email_${tix.tempId}`)}
+                                    onChange={this.ticketInfoChange.bind(this, tix.tempId, 'attendee_email')}
+                                    value={tix.attendee_email ? tix.attendee_email : ''}
+                                />
+                            </div>
+                            <div className="col-md-2">
+                                <a href="" onClick={this.removeTicket.bind(this, tix.tempId)}>
+                                    <i className="fa fa-trash-o" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        </div>
+                    ))}
 
-                <div className="row ticket-add-wrapper">
-                    <div className="col-md-10 text-right">
-                        <button className="btn btn-primary" onClick={this.addTicket.bind(this, ticketType.id)}>
-                            {T.translate("step_two.add_ticket")}
-                        </button>
+                    {orderedTickets.length == 0 &&
+                        <div className="row">
+                            <div className="col-md-12">
+                                {T.translate("step_two.no_tickets")}
+                            </div>
+                        </div>
+                    }
+
+                    <div className="row ticket-add-wrapper">
+                        <div className="col-md-10 text-right">
+                            <button className="btn btn-primary" onClick={this.addTicket.bind(this, ticketType.id)}>
+                                {T.translate("step_two.add_ticket")}
+                            </button>
+                        </div>
                     </div>
+
+
                 </div>
-
-
-            </div>
-        );
+            );
+        } else { 
+          return null;
+        }        
     }
 }
 

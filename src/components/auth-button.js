@@ -52,11 +52,11 @@ AuthButton extends React.Component {
     }
 
     onTicketClick() {
-      history.push('/a/member/orders');
+      this.setState({showLogOut: !this.state.showLogOut}, () => history.push('/a/member/orders'));      
     }
 
     onOrderClick() {
-      history.push('/a/member/tickets');
+      this.setState({showLogOut: !this.state.showLogOut}, () => history.push('/a/member/tickets'));
     }
 
     initLogOut() {

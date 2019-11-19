@@ -139,7 +139,7 @@ class OrderList extends React.Component {
                 if(incomplete) {
                   return status[1];
                 } else {
-                  if(!eq.answer){
+                  if(!eq.value){
                     incomplete = true;
                   }
                 }
@@ -148,7 +148,7 @@ class OrderList extends React.Component {
               incomplete = true;
             }
           });
-          if(incomplete === false) { 
+          if(incomplete === false) {
             return status[0];
           } else {
             return status[1];

@@ -92,7 +92,7 @@ AuthButton extends React.Component {
             return (
                 <div className="user-menu">
                     <button className="btn btn-primary btn-xs login" onClick={() => { doLogin(); }}>
-                        {T.translate("landing.log_in")}
+                        {T.translate("landing.sign_in")}
                     </button>
                 </div>
             );

@@ -1,7 +1,7 @@
 {
   "landing": {
     "sign_out"            : "Sign out",
-    "log_in"              : "Log in",
+    "sign_in"              : "Sign in",
     "not_logged_in"       : "You are not logged in. Please log in to continue:"
   },
   "errors": {

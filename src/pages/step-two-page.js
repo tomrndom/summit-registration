@@ -51,6 +51,7 @@ class StepTwoPage extends React.Component {
 
     componentWillMount() {
         let order = {...this.props.order};
+        let {member} = this.props;
         
         order = {
             ...order,
@@ -64,6 +65,11 @@ class StepTwoPage extends React.Component {
             return t;
           }
         });
+
+        if(member) {
+          let {first_name, last_name} = member;
+          order = {...order, first_name, last_name};
+        }
         
         this.props.handleOrderChange(order);
     }
@@ -128,7 +134,7 @@ class StepTwoPage extends React.Component {
     }
 
     render(){
-        let {summit, order, errors} = this.props;
+        let {summit, order, errors, member} = this.props;
         let {dirty} = this.state;
 
         return (
@@ -137,7 +143,7 @@ class StepTwoPage extends React.Component {
                 <StepRow step={this.step} />
                 <div className="row">
                     <div className="col-md-8">
-                        <BasicInfoForm order={order} errors={dirty? errors : {}} onChange={this.handleChange}/>
+                        <BasicInfoForm order={order} errors={dirty? errors : {}} onChange={this.handleChange} member={member}/>
                         {summit.ticket_types.map((t,i) => (
                             <TicketInfoForm
                                 key={`tixinfo_${t.ticket_type_id}_${i}`}

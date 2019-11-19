@@ -15,6 +15,8 @@ import React from 'react'
 import T from 'i18n-react/dist/i18n-react'
 import { findElementPos } from 'openstack-uicore-foundation/lib/methods'
 import { Input } from 'openstack-uicore-foundation/lib/components'
+import { doLogin } from 'openstack-uicore-foundation/lib/methods';
+import URI from "urijs";
 
 
 class BasicInfoForm extends React.Component {
@@ -24,6 +26,9 @@ class BasicInfoForm extends React.Component {
         this.state = {
 
         };
+
+        this.getBackURL = this.getBackURL.bind(this);
+        this.onClickLogin = this.onClickLogin.bind(this);
 
     }
 
@@ -36,9 +41,28 @@ class BasicInfoForm extends React.Component {
         return '';
     }
 
+    getBackURL() {
+      let defaultLocation = '/a/member/orders';      
+      let url      = URI(window.location.href);      
+      let location = url.pathname();
+      if (location === '/') location = defaultLocation
+      let query    = url.search(true);
+      let fragment = url.fragment();      
+      let backUrl  = query.hasOwnProperty('BackUrl') ? query['BackUrl'] : location;
+      if(fragment != null && fragment != ''){
+          backUrl += `#${fragment}`;
+      }
+      return backUrl;
+    }
+
+    onClickLogin() {
+        this.getBackURL();
+        doLogin(this.getBackURL());
+    }
+
 
     render() {
-        let {order, onChange} = this.props;
+        let {order, onChange, member} = this.props;
 
         return (
             <div className="basic-info">
@@ -50,11 +74,13 @@ class BasicInfoForm extends React.Component {
                         * {T.translate("step_two.required")}
                     </div>
                 </div>
+                {!member &&
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-md-12 link" onClick={() => this.onClickLogin()}>
                         {T.translate("step_two.have_account")} {T.translate("step_two.sign_in")}
                     </div>
                 </div>
+                }
                 <div className="row field-wrapper">
                     <div className="col-md-4">
                         <label>{T.translate("step_two.first_name")} *</label>

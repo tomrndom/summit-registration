@@ -81,13 +81,8 @@ export const getUserSummits = (from) => (dispatch, getState) => {
     
   const storedSummits = [... new Set(summits.map(p => p.id))];
 
-  console.log(storedSummits);
-
   summitsId = summitsId.filter(s => storedSummits.indexOf(s) == -1);
   const summitCall = summitsId.map(s => dispatch(getSummitById(s)));
-
-  console.log(summitsId);
-  
   Promise.all([...summitCall]).then(() => {
     dispatch(stopLoading());
     }
@@ -131,7 +126,6 @@ export const getSummitRefundPolicy = (id, select = false) => (dispatch, getState
     `${window.API_BASE_URL}/api/v1/summits/${id}/refund-policies`,
     authErrorHandler
   )(params)(dispatch).then((payload) => {
-    console.log(payload);
     dispatch(stopLoading());
   });  
 }

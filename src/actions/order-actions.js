@@ -262,7 +262,6 @@ export const cancelOrder = (order) => (dispatch, getState) => {
       `${window.API_BASE_URL}/api/v1/summits/all/orders/${order.id}/refund`,
       authErrorHandler
   )(params)(dispatch).then((payload) => {
-      console.log(payload);
       dispatch(getUserOrders());
       dispatch(stopLoading());
       history.push('/a/member/orders');

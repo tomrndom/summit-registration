@@ -213,7 +213,7 @@ class TicketPopup extends React.Component {
 
       ticket[id] = value;
 
-      this.setState({tempTicket: ticket}, () => console.log(this.state.tempTicket));
+      this.setState({tempTicket: ticket});
   
       //this.props.handleTicketChange(ticket, errors);
     }

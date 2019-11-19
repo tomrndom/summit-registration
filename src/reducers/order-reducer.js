@@ -67,11 +67,9 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
         case LOGOUT_USER:
             return DEFAULT_STATE;
         case START_LOADING:
-            console.log('START_LOADING')
             return {...state, loading: true};
             break;
         case STOP_LOADING:
-            console.log('STOP_LOADING')
             return {...state, loading: false};
             break;
         case RESET_ORDER:
@@ -121,8 +119,7 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
         case SELECT_ORDER:
             return {...state, selectedOrder: payload};
             break;
-        case REFUND_ORDER:
-            console.log(payload);
+        case REFUND_ORDER:            
             return {...state}
         default:
             return state;

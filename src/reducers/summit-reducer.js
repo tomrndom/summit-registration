@@ -31,11 +31,9 @@ const summitReducer = (state = DEFAULT_STATE, action) => {
         case LOGOUT_USER:
             return DEFAULT_STATE;
         case START_LOADING:
-            console.log('START_LOADING')
             return {...state, loading: true};
             break;
         case STOP_LOADING:
-            console.log('STOP_LOADING')
             return {...state, loading: false};
             break;
         case GET_SUMMIT_BY_SLUG:

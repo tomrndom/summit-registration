@@ -94,9 +94,7 @@ export const selectTicket = (ticket, ticketList = false) => (dispatch, getState)
 
 }
 
-export const handleTicketChange = (ticket, errors = {}) => (dispatch, getState) => {
-
-    console.log(ticket)
+export const handleTicketChange = (ticket, errors = {}) => (dispatch, getState) => {    
 
     // if (validator.isEmpty(ticket.attendee_first_name)) errors.attendee_first_name = 'Please enter your First Name.';
     // if (validator.isEmpty(ticket.attendee_surname)) errors.attendee_surname = 'Please enter your Last Name.';

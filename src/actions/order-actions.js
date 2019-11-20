@@ -87,7 +87,7 @@ export const validateStripe = (value) => (dispatch, getState) => {
     dispatch(createAction(VALIDATE_STRIPE)({value}));
 }
 
-export const createReservation = (owner_email, owner_first_name, owner_surname, owner_company, tickets) => (dispatch, getState) => {
+export const createReservation = (owner_email, owner_first_name, owner_last_name, owner_company, tickets) => (dispatch, getState) => {
     let { summitState } = getState();    
     let { currentSummit }   = summitState;
 
@@ -102,7 +102,7 @@ export const createReservation = (owner_email, owner_first_name, owner_surname, 
       expand       : 'tickets',
     };
 
-    let normalizedEntity = {owner_email, owner_first_name, owner_surname, owner_company, tickets };
+    let normalizedEntity = {owner_email, owner_first_name, owner_last_name, owner_company, tickets };
 
     return postRequest(
         createAction(CREATE_RESERVATION),

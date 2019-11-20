@@ -119,6 +119,7 @@ export const createReservation = (owner_email, owner_first_name, owner_last_name
         })
         .catch(e => {
             dispatch(createAction(CREATE_RESERVATION_ERROR)(e));
+            dispatch(stopLoading());
             return (e);
         })
 }
@@ -142,6 +143,7 @@ export const deleteReservation = () => (dispatch, getState) => {
     })
     .catch(e => {
         dispatch(createAction(DELETE_RESERVATION_ERROR)(e));
+        dispatch(stopLoading());
         return (e);
     })
 }
@@ -196,7 +198,11 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
             // The payment has succeeded. Display a success message.
         }
     })
-    .catch(e => console.log('error', e));
+    .catch(e => {
+      console.log('error', e)
+      dispatch(stopLoading());
+      return (e);
+    });
 }
 
 export const getUserOrders = (updateId, page = 1, per_page = 5) => (dispatch, getState) => {
@@ -225,7 +231,10 @@ export const getUserOrders = (updateId, page = 1, per_page = 5) => (dispatch, ge
         dispatch(getUserSummits('orders'));
       }
     }
-  );
+  ).cath(e => {
+    dispatch(stopLoading());
+    return (e);
+  });
 }
 
 export const selectOrder = (order, updateId = null) => (dispatch, getState) => {    
@@ -266,7 +275,10 @@ export const cancelOrder = (order) => (dispatch, getState) => {
       dispatch(stopLoading());
       history.push('/a/member/orders');
     }
-  );
+  ).catch(e => {
+    dispatch(stopLoading());
+    return (e);
+  });
 }
 
 

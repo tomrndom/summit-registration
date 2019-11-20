@@ -60,7 +60,10 @@ export const getSummitBySlug = (slug) => (dispatch, getState) => {
       )(params)(dispatch).then(() => {
             dispatch(stopLoading());
           }
-      );   
+      ).catch(e => {
+        dispatch(stopLoading());
+        return (e);
+      });   
     }            
      
 }
@@ -86,7 +89,10 @@ export const getUserSummits = (from) => (dispatch, getState) => {
   Promise.all([...summitCall]).then(() => {
     dispatch(stopLoading());
     }
-  );
+  ).catch(e => {
+    dispatch(stopLoading());
+    return (e);
+  });
 
 }
 
@@ -106,7 +112,10 @@ export const getSummitById = (id, select = false) => (dispatch, getState) => {
   )(params)(dispatch).then(() => {
         select ? dispatch(selectSummitById(id)) : dispatch(stopLoading());
       }
-  );    
+  ).catch(e => {
+    dispatch(stopLoading());
+    return (e);
+  });    
 }
 
 export const getSummitRefundPolicy = (id, select = false) => (dispatch, getState) => {
@@ -127,6 +136,9 @@ export const getSummitRefundPolicy = (id, select = false) => (dispatch, getState
     authErrorHandler
   )(params)(dispatch).then((payload) => {
     dispatch(stopLoading());
+  }).catch(e => {
+    dispatch(stopLoading());
+    return (e);
   });  
 }
 

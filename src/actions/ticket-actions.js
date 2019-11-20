@@ -76,7 +76,10 @@ export const getUserTickets = (page = 1, per_page = 5) => (dispatch, getState) =
   )(params)(dispatch).then(() => {
       dispatch(getUserSummits('tickets'));
     }
-  );
+  ).catch(e => {
+    dispatch(stopLoading());
+    return (e);
+  });
 
 }
 
@@ -135,7 +138,10 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
   )(params)(dispatch).then(() => {
       dispatch(getUserOrders(selectedOrder.id, current_page));
     }
-  );
+  ).catch(e => {
+    dispatch(stopLoading());
+    return (e);
+  });
 }
 
 export const editOwnedTicket = (attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions) => (dispatch, getState) => {  
@@ -161,7 +167,10 @@ export const editOwnedTicket = (attendee_email, attendee_first_name, attendee_la
   )(params)(dispatch).then(() => {
       dispatch(getUserTickets(current_page));
     }
-  );
+  ).catch(e => {
+    dispatch(stopLoading());
+    return (e);
+  });
 
 }
 
@@ -185,8 +194,10 @@ export const resendNotification = () => (dispatch, getState) => {
     authErrorHandler
   )(params)(dispatch).then(() => {
     dispatch(stopLoading());
-  }
-);
+  }).catch(e => {
+    dispatch(stopLoading());
+    return (e);
+  });
   
 }
 
@@ -213,7 +224,11 @@ export const removeAttendee = (tempTicket) => (dispatch, getState) => {
       authErrorHandler
   )(params)(dispatch).then(() => {
       dispatch(assignAttendee(attendee_email, attendee_first_name, attendee_surname, extra_questions));
-    }).catch((e) => console.log('error', e));
+    }).catch((e) => {
+      console.log('error', e)
+      dispatch(stopLoading());
+      return (e);
+    });
 
 }
 
@@ -273,7 +288,10 @@ export const refundTicket = (ticket) => (dispatch, getState) => {
       history.push('/a/member/tickets/');
       dispatch(stopLoading());
     }
-  );
+  ).catch(e => {
+    dispatch(stopLoading());
+    return (e);
+  });
 
 }
 
@@ -317,6 +335,9 @@ export const assignTicketByHash = (attendee_first_name, attendee_last_name, disc
     authErrorHandler
   )(params)(dispatch).then(() => {
     dispatch(stopLoading());
+  }).catch(e => {
+    dispatch(stopLoading());
+    return (e);
   });
 }
 
@@ -331,7 +352,10 @@ export const regenerateTicketHash = (formerHash) => (dispatch, getState) => {
   )()(dispatch).then(() => {
       dispatch(stopLoading());
     }
-  );
+  ).catch(e => {
+    dispatch(stopLoading());
+    return (e);
+  });
 }
 
 export const getTicketPDFByHash = (hash) => (dispatch, getState) => {

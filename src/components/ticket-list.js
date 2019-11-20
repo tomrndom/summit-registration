@@ -181,7 +181,7 @@ class TicketList extends React.Component {
       if (tickets.length && !loading) {
         return (
           <div className="tickets-list">            
-            <div>
+            <div className="list-desktop">
               {tickets.map((t) => {
                 return (
                   <div className={`ticket ${this.handleTicketStatus(t).ticketClass} p-2 col-sm-8 col-sm-offset-2`} key={t.id} 
@@ -197,6 +197,26 @@ class TicketList extends React.Component {
                           <h5>{this.handleTicketName(t)}</h5>
                           <p>{this.handleTicketLocation(t)} / {this.handleTicketDate(t)}</p>
                       </div>
+                      <div className="arrow col-sm-2">
+                          <i className="fa fa-angle-right"></i>
+                      </div>
+                  </div>
+                )
+              })}              
+            </div>
+            <div className="list-mobile">
+              {tickets.map((t) => {
+                return (
+                  <div className={`ticket ${this.handleTicketStatus(t).ticketClass} p-2 col-sm-8 col-sm-offset-2`} key={t.id} 
+                    onClick={() => {t.status === "Cancelled" ? null: this.togglePopup(t)}}>
+                      <div className="col-sm-1">
+                          <i className={`fa fa-2x ${this.handleTicketStatus(t).icon} ${this.handleTicketStatus(t).class}`}></i>                             
+                      </div>
+                      <div className="col-sm-7">
+                          <h4>{this.handleEventName(t)}</h4>
+                          <p>{this.handleTicketLocation(t)} / {this.handleTicketDate(t)}</p>
+                          <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
+                      </div>                                            
                       <div className="arrow col-sm-2">
                           <i className="fa fa-angle-right"></i>
                       </div>

@@ -1,8 +1,8 @@
 @import 'constants.less';
 
 .tickets-list {
-  margin-top: 50px;
-    .ticket {
+  margin-top: 50px;  
+      .ticket {
         display: flex;
         background-color: #fff;
         border: 1px solid #ddd;
@@ -27,13 +27,13 @@
             color: #000
           }        
         }
-        div:nth-child(3) {
+        div:nth-child(2) {
           display: flex;
           flex-direction: column;          
-        }
-        div:nth-child(3) {
-          margin-top: 10px;
-        }
+          p {
+            font-size: 12px;
+          }
+        }        
         div:last-child {
           text-align: right;
           align-self: center;
@@ -85,10 +85,20 @@
         cursor: default;
       }
     }
+    
+}
+
+@media (min-width: 768px) {
+  .list-mobile {
+    display: none;    
+  }
 }
 
 @media (max-width: 768px) {
   .tickets-list {
     margin-bottom: 20px;
+  }
+  .list-desktop {
+    display: none;
   }
 }

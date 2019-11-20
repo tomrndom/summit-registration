@@ -31,10 +31,12 @@
   justify-content: space-between;
   h4 {
     font-size: 20px;
+    margin-bottom: 15px;
   }  
   p {
-    margin: 2px 0;
+    margin: 0;
     text-transform: uppercase;
+    font-size: 12px;
     .warning {      
       color: #cc9933;
     }  
@@ -45,7 +47,7 @@
   .popup-icons {
     display: flex;
     justify-content: space-evenly;
-    width: 15%;
+    width: 20%;
     i {
       font-size: 1.5em;
       cursor: pointer;      
@@ -57,7 +59,7 @@
   .popup-title {
     .status {
       margin-top: auto;
-      font-size: 0.7em;
+      font-size: 12px;
       color: #000;
       text-transform: uppercase;
       &.ticket-warning {
@@ -82,7 +84,7 @@
 .popup-tabs {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
   border-bottom: 2px solid #F9F9F9;
   line-height: 40px;
   margin-bottom: 0px;
@@ -129,8 +131,13 @@
     text-align: center;
     p {
       font-size: 22px;      
-      margin-bottom: 20px;
+      margin: 25px 0;
     }
+    button {
+      padding: 8px 22px;
+      line-height: 22px;
+      font-size: 16px;
+    }    
     .popup-separator {      
       display: table;    
       margin: 25px 0;      
@@ -148,7 +155,13 @@
       }
     }
     .form-control {
-      margin: 25px 0;
+      width: 60%;
+      margin: 25px auto 25px auto;
+      border-color: @lblue_color_2;
+      background-color: #F9F9F9;      
+      &::placeholder {
+        color: @lblue_color_2;
+      }
     }
     .popup-clean {
       margin-bottom: 30px;
@@ -159,7 +172,7 @@
       overflow-y: scroll;
       z-index: 20;
       padding: 20px;
-      height: calc(100vh - 240px);      
+      height: calc(100vh - 230px);
     }
     .popup-footer-save {
       border-top: 1px solid #f8f8f8;
@@ -172,6 +185,8 @@
       background-color: white;
       z-index: 25;
       button {
+        padding: 8px 26px;
+        line-height: 22px;
         font-size: 16px;
       }
     }
@@ -185,7 +200,13 @@
     text-align: center;
     p {
       font-size: 22px;
-      margin-bottom: 20px;
+      margin: 20px 0;
+    }
+    button {
+      padding: 8px 22px;
+      line-height: 22px;
+      font-size: 16px;
+      margin-top: 15px;
     }
   }
 }
@@ -221,6 +242,9 @@
       z-index: 20;
       padding: 20px;
       height: calc(100vh - 170px);      
+    }
+    .form-control {
+      width: 100%;
     }
   }  
 

@@ -83,7 +83,7 @@ class TicketAssignForm extends React.Component {
       let now = parseInt((new Date().getTime() / 1000).toFixed(0));
 
         return (
-          <div>
+          <div className="ticket-assign-form">
             <div className="row popup-basic-info">
               <div className="col-sm-6">{T.translate("ticket_popup.edit_basic_info")}</div>
               <div className="col-sm-6">{T.translate("ticket_popup.edit_required")}</div>

@@ -1,42 +1,50 @@
 @import 'constants.less';
 
-.popup-basic-info {
-  margin-top: 20px;
-  div:first-child {
-    font-size: 18px;
+.ticket-assign-form {
+
+  padding: 0 15%;
+
+  .popup-basic-info {
     margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  div:last-child {
-    text-align: right;
-  }
-}
-.field-wrapper {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  input {
-    background-color: @lblue_color_1;
-    border-color: @header_lblue_color;
-  }
-  .css-bg1rzq-control, .css-1szy77t-control {    
-    background-color: @lblue_color_1;
-    border-color: @header_lblue_color;
-    .css-dvua67-singleValue {
-      color: @font_blue_2 !important;
+    div:first-child {
+      font-size: 18px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    div:last-child {
+      text-align: right;
     }
   }
-  textarea {
-    background-color: @lblue_color_1;
-    border-color: @header_lblue_color;
+  .field-wrapper {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    input {
+      background-color: @lblue_color_1;
+      border-color: @header_lblue_color;
+    }
+    .css-bg1rzq-control, .css-1szy77t-control {    
+      background-color: @lblue_color_1;
+      border-color: @header_lblue_color;
+      .css-dvua67-singleValue {
+        color: @font_blue_2 !important;
+      }
+    }
+    textarea {
+      background-color: @lblue_color_1;
+      border-color: @header_lblue_color;
+    }
   }
-}
-.popup-cancel-ticket {
-  color: #da0000;
-  cursor: pointer;
+  .popup-cancel-ticket {
+    color: #da0000;
+    cursor: pointer;
+  }
 }
 
 @media(max-width: 768px) {
-  .popup-basic-info {
-    margin-top: 0px;
+  .ticket-assign-form {
+    padding: 0;
+    .popup-basic-info {
+      margin-top: 0px;
+    }
   }
 }

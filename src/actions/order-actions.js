@@ -231,7 +231,7 @@ export const getUserOrders = (updateId, page = 1, per_page = 5) => (dispatch, ge
         dispatch(getUserSummits('orders'));
       }
     }
-  ).cath(e => {
+  ).catch(e => {
     dispatch(stopLoading());
     return (e);
   });

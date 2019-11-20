@@ -134,6 +134,7 @@ export const deleteReservation = () => (dispatch, getState) => {
     createAction(DELETE_RESERVATION),
     createAction(DELETE_RESERVATION_SUCCESS),    
     `${window.API_BASE_URL}/api/public/v1/summits/${id}/orders/${hash}`,
+    {},
     authErrorHandler,
     // entity
   )({})(dispatch)
@@ -269,6 +270,7 @@ export const cancelOrder = (order) => (dispatch, getState) => {
       null,
       createAction(REFUND_ORDER),
       `${window.API_BASE_URL}/api/v1/summits/all/orders/${order.id}/refund`,
+      {},
       authErrorHandler
   )(params)(dispatch).then((payload) => {
       dispatch(getUserOrders());

@@ -221,6 +221,7 @@ export const removeAttendee = (tempTicket) => (dispatch, getState) => {
       null,
       createAction(REMOVE_TICKET_ATTENDEE),        
       `${window.API_BASE_URL}/api/v1/summits/all/orders/${orderId}/tickets/${selectedTicket.id}/attendee`,
+      {},
       authErrorHandler
   )(params)(dispatch).then(() => {
       dispatch(assignAttendee(attendee_email, attendee_first_name, attendee_surname, extra_questions));
@@ -283,6 +284,7 @@ export const refundTicket = (ticket) => (dispatch, getState) => {
       null,
       createAction(REFUND_TICKET),
       `${window.API_BASE_URL}/api/v1/summits/all/orders/${ticket.order.id}/tickets/${ticket.id}/refund`,
+      {},
       authErrorHandler
   )(params)(dispatch).then((payload) => {
       history.push('/a/member/tickets/');

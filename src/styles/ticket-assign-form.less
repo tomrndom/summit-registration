@@ -5,38 +5,95 @@
   padding: 0 15%;
 
   .popup-basic-info {
-    margin-top: 20px;
+    margin-top: 10px;
+    display: flex;
+    align-items: baseline;
     div:first-child {
-      font-size: 18px;
-      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;      
       margin-bottom: 20px;
     }
     div:last-child {
       text-align: right;
+      font-size: 12px;
+      margin-left: auto;
     }
   }
   .field-wrapper {
     margin-top: 10px;
     margin-bottom: 10px;
     input {
-      background-color: @lblue_color_1;
+      background-color: #EEF4F9;
       border-color: @header_lblue_color;
     }
     .css-bg1rzq-control, .css-1szy77t-control {    
-      background-color: @lblue_color_1;
+      background-color: #EEF4F9;
       border-color: @header_lblue_color;
       .css-dvua67-singleValue {
         color: @font_blue_2 !important;
       }
     }
     textarea {
-      background-color: @lblue_color_1;
+      background-color: #EEF4F9;
       border-color: @header_lblue_color;
+    }
+  }
+  .form-group {
+    input {
+      background-color: #EEF4F9;
+      border-color: @header_lblue_color;
+      color: #3486cd;
+    }
+    .css-bg1rzq-control, .css-1szy77t-control {    
+      background-color: #EEF4F9;
+      border-color: @header_lblue_color;
+      .css-dvua67-singleValue {
+        color: @font_blue_2 !important;
+      }
+    }
+    textarea {
+      background-color: #EEF4F9;
+      border-color: @header_lblue_color;
+    }
+    .abc-checkbox label{
+      &::before {
+        background-color: #EEF4F9;
+        border: 1px solid @header_lblue_color;
+        color: #3486cd;
+      }
+      &::after {
+        background-color: #EEF4F9;        
+        color: @font_blue_2;
+        border: 1px solid @header_lblue_color;
+        padding-left: 2px;
+        padding-top: 0px;
+      }
+    }
+    .abc-radio label {
+      &::before {
+        background-color: #EEF4F9;
+        border: 1px solid @header_lblue_color;
+        color: #3486cd;
+      }
     }
   }
   .popup-cancel-ticket {
     color: #da0000;
     cursor: pointer;
+  }
+  .abc-checkbox label{
+    &::before {
+      background-color: #EEF4F9;
+      border: 1px solid @header_lblue_color;
+      color: #3486cd;
+    }
+    &::after {
+      background-color: #EEF4F9;        
+      color: @font_blue_2;
+      border: 1px solid @header_lblue_color;
+      padding-left: 2px;
+      padding-top: 0px;
+    }
   }
 }
 

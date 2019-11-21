@@ -90,7 +90,7 @@ class TicketAssignForm extends React.Component {
             </div>
             <div className="row field-wrapper">
               <div className="col-sm-4">{T.translate("ticket_popup.edit_email")}</div>
-              <div className="col-sm-6">
+              <div className="col-sm-8">
                 {status === 'UNASSIGNED' ?
                   <span>
                     {input_email ?
@@ -120,7 +120,7 @@ class TicketAssignForm extends React.Component {
             </div>
             <div className="row field-wrapper">
               <div className="col-sm-4">{T.translate("ticket_popup.edit_first_name")}</div>
-              <div className="col-sm-6">
+              <div className="col-sm-8">
                 <Input
                   id="attendee_first_name"
                   className="form-control"              
@@ -132,7 +132,7 @@ class TicketAssignForm extends React.Component {
             </div>
             <div className="row field-wrapper">
               <div className="col-sm-4">{T.translate("ticket_popup.edit_last_name")}</div>
-              <div className="col-sm-6">
+              <div className="col-sm-8">
                 <Input
                   id="attendee_last_name"
                   className="form-control"

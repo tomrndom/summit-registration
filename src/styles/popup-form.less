@@ -24,9 +24,9 @@
 }
 
 .popup-header {
-  background-color: #F9F9F9;
+  background-color: #F2F2F2;
   font-weight: bold;
-  padding: 25px;
+  padding: 15px;
   display: flex;
   justify-content: space-between;
   h4 {
@@ -53,6 +53,7 @@
       cursor: pointer;      
     }
     :last-child {
+      font-weight: normal;
       color: black;
     }
   }
@@ -84,17 +85,18 @@
 .popup-tabs {
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
   border-bottom: 2px solid #F9F9F9;
-  line-height: 40px;
+  line-height: 35px;
   margin-bottom: 0px;
   padding-inline-start: 0px;
   li {
     list-style-type: none;
     cursor: pointer;
+    padding: 0 15px;
   }
   &--active {
-    border-bottom: 2px solid @lblue_color_2;
+    border-bottom: 2px solid @lblue_color_2;    
   }        
 }
 
@@ -158,8 +160,8 @@
     .form-control {
       width: 60%;
       margin: 25px auto 25px auto;
-      border-color: @lblue_color_2;
-      background-color: #F9F9F9;      
+      background-color: #EEF4F9;
+      border-color: @header_lblue_color;
       &::placeholder {
         color: @lblue_color_2;
       }

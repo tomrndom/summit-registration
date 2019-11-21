@@ -67,8 +67,8 @@ class StepTwoPage extends React.Component {
         });
 
         if(member) {
-          let {first_name, last_name} = member;
-          order = {...order, first_name, last_name};
+          let {first_name, last_name, email} = member;
+          order = {...order, first_name, last_name, email};
         }
         
         this.props.handleOrderChange(order);
@@ -81,6 +81,10 @@ class StepTwoPage extends React.Component {
             let firstNode = document.getElementById(firstError);
             if (firstNode) window.scrollTo(0, findElementPos(firstNode));
         }
+    }
+
+    componentDidMount() {
+        window.scrollTo(0, 0);
     }
 
     handleTicketInfoChange(ticketId, field, value) {

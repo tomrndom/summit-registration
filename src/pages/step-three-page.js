@@ -68,6 +68,10 @@ class StepThreePage extends React.Component {
         }
     }
 
+    componentDidMount() {
+        window.scrollTo(0, 0);
+    }
+
     handleChange(ev) {
         let order = cloneDeep(this.props.order);
         let errors = cloneDeep(this.props.errors);

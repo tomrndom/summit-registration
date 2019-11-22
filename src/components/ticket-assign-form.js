@@ -32,7 +32,7 @@ class TicketAssignForm extends React.Component {
         disclaimer_checked: null,
       };
 
-      this.handleFormatExpirationDate = this.handleFormatExpirationDate.bind(this);
+      this.handleFormatReassignDate = this.handleFormatReassignDate.bind(this);
 
     }
 
@@ -64,13 +64,14 @@ class TicketAssignForm extends React.Component {
       return '';
     }
 
-    handleFormatExpirationDate(days) {
-      let {expirationDate, summit} = this.props;
+    handleFormatReassignDate(days) {
+      let {summit} = this.props;
+      let reassign_date = summit.reassign_ticket_till_date < summit.end_date ? summit.reassign_ticket_till_date : summit.end_date
       if(days) {
         let now = parseInt((new Date().getTime() / 1000).toFixed(0));
-        return daysBetweenDates(now, expirationDate, summit.time_zone.name).length;        
+        return daysBetweenDates(now, reassign_date, summit.time_zone.name).length;        
       } else {
-        return getFormatedDate(expirationDate);
+        return getFormatedDate(reassign_date);
       }      
 
     }
@@ -108,7 +109,7 @@ class TicketAssignForm extends React.Component {
                       <button className="btn btn-primary" onClick={() => this.setState({input_email: true})}>
                         {T.translate("ticket_popup.assign_this")}
                       </button>                    
-                      <p>{T.translate("ticket_popup.assign_expire")} {this.handleFormatExpirationDate(true)} {T.translate("ticket_popup.assign_days")} ({this.handleFormatExpirationDate(false)})</p>
+                      <p>{T.translate("ticket_popup.assign_expire")} {this.handleFormatReassignDate(true)} {T.translate("ticket_popup.assign_days")} ({this.handleFormatReassignDate(false)})</p>
                     </React.Fragment>
                     }
                     

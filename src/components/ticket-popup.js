@@ -49,8 +49,7 @@ class TicketPopup extends React.Component {
         this.handleTicketCancel = this.handleTicketCancel.bind(this);
         this.handleTicketReassign = this.handleTicketReassign.bind(this);
         this.handleTicketSave = this.handleTicketSave.bind(this);
-        this.handleChangeEmail = this.handleChangeEmail.bind(this);
-        this.handleFormatExpirationDate = this.handleFormatExpirationDate.bind(this);
+        this.handleChangeEmail = this.handleChangeEmail.bind(this);        
         this.handleFormatReassignDate = this.handleFormatReassignDate.bind(this);
         this.handleTicketRole = this.handleTicketRole.bind(this);
     }
@@ -234,17 +233,15 @@ class TicketPopup extends React.Component {
       this.setState({reassignEmail: ev.target.value});
     }
 
-    handleFormatExpirationDate(expirationDate) {
-      return getFormatedDate(expirationDate);
-    }
-
-    handleFormatReassignDate(reassignDate) {
-      return getFormatedDate(reassignDate);
+    handleFormatReassignDate() {
+      let {summit} = this.props;
+      let reassign_date = summit.reassign_ticket_till_date < summit.end_date ? summit.reassign_ticket_till_date : summit.end_date;
+      return getFormatedDate(reassign_date);
     }
 
     render() {
 
-      let {extraQuestions, status, errors, ticket: {owner, badge}, fromTicketList, reassignDate, expirationDate, summit, owned} = this.props;
+      let {extraQuestions, status, errors, ticket: {owner, badge}, fromTicketList, summit, owned} = this.props;
       let {showPopup, tempTicket, tempTicket: {attendee_email}, popupCase, cleanFields, reassignEmail} = this.state;
 
         return (
@@ -279,7 +276,7 @@ class TicketPopup extends React.Component {
                     {status.text === 'UNASSIGNED' && 
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--assign">
                         <div className="popup-scroll">
-                            <p>{T.translate("ticket_popup.assign_text")} {this.handleFormatReassignDate(reassignDate)}</p>
+                            <p>{T.translate("ticket_popup.assign_text")} {this.handleFormatReassignDate()}</p>
                             <button className="btn btn-primary" onClick={() => this.handleTicketAssign(true)}>
                               {T.translate("ticket_popup.assign_me")}
                             </button>
@@ -310,7 +307,6 @@ class TicketPopup extends React.Component {
                             ownedTicket={fromTicketList}
                             orderOwned={owned}
                             extraQuestions={extraQuestions}
-                            expirationDate={expirationDate}
                             onChange={this.handleChange} 
                             cancelTicket={this.handleTicketCancel}
                             summit={summit}
@@ -358,7 +354,7 @@ class TicketPopup extends React.Component {
                     }
                     {status.text !== 'UNASSIGNED' && 
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--notify">
-                          <p>{T.translate("ticket_popup.notify_text_1")} {this.handleFormatExpirationDate(expirationDate)}.</p>                                                
+                          <p>{T.translate("ticket_popup.notify_text_1")} {this.handleFormatReassignDate()}.</p>                                                
                           <p>{T.translate("ticket_popup.notify_text_2")} <b>{owner.email}</b></p>
                           <button className="btn btn-primary" onClick={this.props.resendNotification}>{T.translate("ticket_popup.notify_button")}</button>  
                       </TabPanel>

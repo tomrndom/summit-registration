@@ -38,7 +38,7 @@ class GuestsLayout extends React.Component {
 
     this.handleTicketDownload = this.handleTicketDownload.bind(this);
     this.handleTicketCancel = this.handleTicketCancel.bind(this);    
-    this.handleExpirationDate = this.handleExpirationDate.bind(this);
+    this.handleReassignDate = this.handleReassignDate.bind(this);
     this.handleTicketUpdate = this.handleTicketUpdate.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -116,9 +116,10 @@ class GuestsLayout extends React.Component {
       });        
     }
 
-    handleExpirationDate() {
-      let {summit} = this.props;      
-      return summit.registration_end_date;
+    handleReassignDate() {
+      let {summit} = this.props;
+      let reassign_date = summit.reassign_ticket_till_date < summit.end_date ? summit.reassign_ticket_till_date : summit.end_date;
+      return reassign_date;
     }
     
     render() {
@@ -142,8 +143,7 @@ class GuestsLayout extends React.Component {
               </div>
               <div className="col-sm-4">
                 <TicketOptions 
-                  guest={true}
-                  expirationDate={this.handleExpirationDate()} 
+                  guest={true}                  
                   downloadTicket={this.handleTicketDownload} 
                   cancelTicket={this.handleTicketCancel}
                   ticket={ticket}

@@ -35,8 +35,7 @@ class TicketList extends React.Component {
         this.handleTicketLocation = this.handleTicketLocation.bind(this);
         this.handleTicketName = this.handleTicketName.bind(this);        
         this.handleEventName = this.handleEventName.bind(this);
-        this.handleTicketDate = this.handleTicketDate.bind(this);
-        this.handleExpirationDate = this.handleExpirationDate.bind(this);
+        this.handleTicketDate = this.handleTicketDate.bind(this);        
         this.handleReassignDate = this.handleReassignDate.bind(this);
         this.handleTicketCancel = this.handleTicketCancel.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);
@@ -138,16 +137,11 @@ class TicketList extends React.Component {
       }          
     }
 
-    handleExpirationDate(ticket) {
-      let {summits} = this.props;
-      let summit = summits.find(s => s.id === ticket.owner.summit_id);      
-      return summit.registration_end_date;
-    }
-
     handleReassignDate(ticket) {
       let {summits} = this.props;
-      let summit = summits.find(s => s.id === ticket.owner.summit_id);      
-      return summit.reassign_ticket_till_date;
+      let summit = summits.find(s => s.id === ticket.owner.summit_id);
+      let reassign_date = summit.reassign_ticket_till_date < summit.end_date ? summit.reassign_ticket_till_date : summit.end_date
+      return reassign_date;
     }
 
     handleEventName(ticket) {
@@ -184,7 +178,7 @@ class TicketList extends React.Component {
             <div className="list-desktop">
               {tickets.map((t) => {
                 return (
-                  <div className={`ticket ${this.handleTicketStatus(t).ticketClass} p-2 col-sm-8 col-sm-offset-2`} key={t.id} 
+                  <div className={`ticket ${this.handleTicketStatus(t).orderClass} p-2 col-sm-8 col-sm-offset-2`} key={t.id} 
                     onClick={() => {t.status === "Cancelled" ? null: this.togglePopup(t)}}>
                       <div className="col-sm-1">
                           <i className={`fa fa-2x ${this.handleTicketStatus(t).icon} ${this.handleTicketStatus(t).class}`}></i>                             
@@ -207,7 +201,7 @@ class TicketList extends React.Component {
             <div className="list-mobile">
               {tickets.map((t) => {
                 return (
-                  <div className={`ticket ${this.handleTicketStatus(t).ticketClass} p-2 col-sm-8 col-sm-offset-2`} key={t.id} 
+                  <div className={`ticket ${this.handleTicketStatus(t).orderClass} p-2 col-sm-8 col-sm-offset-2`} key={t.id} 
                     onClick={() => {t.status === "Cancelled" ? null: this.togglePopup(t)}}>
                       <div className="col-sm-1">
                           <i className={`fa fa-2x ${this.handleTicketStatus(t).icon} ${this.handleTicketStatus(t).class}`}></i>                             
@@ -242,8 +236,6 @@ class TicketList extends React.Component {
             {showPopup ?  
                 <TicketPopup  
                   ticket={selectedTicket}
-                  reassignDate={this.handleReassignDate(selectedTicket)}
-                  expirationDate={this.handleExpirationDate(selectedTicket)}
                   member={member}
                   status={this.handleTicketStatus(selectedTicket)}
                   onChange={this.handleChange}

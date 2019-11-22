@@ -37,12 +37,30 @@
         padding-right: 0px;
         .ticket-warning {
           color: #cc9933;
+          &::before {
+            background: #FFF;
+            border-radius: 50%;
+            height: 1em;
+            width: 1em;
+          }
         }
         .ticket-complete {
           color: #669933;
+          &::before {
+            background: #FFF;
+            border-radius: 50%;
+            height: 1em;
+            width: 1em;
+          }
         }
         .ticket-unset {
-          color: #000
+          color: #000;
+          &::before {
+            background: #FFF;
+            border-radius: 50%;
+            height: 1em;
+            width: 1em;
+          }
         }        
       }
       div:nth-child(2) {

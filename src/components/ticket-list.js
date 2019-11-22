@@ -212,7 +212,7 @@ class TicketList extends React.Component {
                       </div>
                       <div className="col-sm-7">
                           <h4>{this.handleEventName(t)}</h4>
-                          <p>{this.handleTicketLocation(t)} / {this.handleTicketDate(t)}</p>
+                          <p>{this.handleTicketLocation(t)} {this.handleTicketDate(t)}</p>
                           <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
                       </div>                                            
                       <div className="arrow col-sm-2">

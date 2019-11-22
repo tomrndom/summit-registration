@@ -236,7 +236,7 @@ class TicketPopup extends React.Component {
     handleFormatReassignDate() {
       let {summit} = this.props;
       let reassign_date = summit.reassign_ticket_till_date < summit.end_date ? summit.reassign_ticket_till_date : summit.end_date;
-      return getFormatedDate(reassign_date);
+      return getFormatedDate(reassign_date, summit.time_zone_id);
     }
 
     render() {

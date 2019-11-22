@@ -71,7 +71,7 @@ class TicketAssignForm extends React.Component {
         let now = parseInt((new Date().getTime() / 1000).toFixed(0));
         return daysBetweenDates(now, reassign_date, summit.time_zone.name).length;        
       } else {
-        return getFormatedDate(reassign_date);
+        return getFormatedDate(reassign_date, summit.time_zone_id);
       }      
 
     }

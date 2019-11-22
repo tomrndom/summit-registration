@@ -42,10 +42,10 @@ class TicketOptions extends React.Component {
       let dateRange = daysBetweenDates(summit.start_date, summit.end_date, summit.time_zone_id);
       
       if(dateRange.length > 1) {        
-        let summitDate = `${getFormatedDate(dateRange[0])}, ${getFormatedDate(dateRange[dateRange.length-1])}`;
+        let summitDate = `${getFormatedDate(dateRange[0], summit.time_zone_id)}, ${getFormatedDate(dateRange[dateRange.length-1], summit.time_zone_id)}`;
         return summitDate;
       } else {
-        let summitDate = getFormatedDate(summit.start_date);
+        let summitDate = getFormatedDate(summit.start_date, summit.time_zone_id);
         return summitDate;
       }          
     }
@@ -73,6 +73,7 @@ class TicketOptions extends React.Component {
     render() {
 
       let {guest, summit, ticket} = this.props;
+      let now = parseInt((new Date().getTime() / 1000).toFixed(0));      
 
         return (
             <div className="order-info-wrapper">
@@ -90,9 +91,9 @@ class TicketOptions extends React.Component {
                 </React.Fragment>
                 }                                
                 <div className="row">
-                    <div className="col-md-12">                        
+                    <div className="col-md-12">
                         {guest && <a onClick={this.props.downloadTicket}>{T.translate("order_info.download")}<br/></a>}
-                        {!guest && <a onClick={this.props.cancelOrder} className="cancel">{T.translate("order_info.cancel_order")}</a>}
+                        {!guest && summit.start_date > now && <a onClick={this.props.cancelOrder} className="cancel">{T.translate("order_info.cancel_order")}</a>}
                     </div>
                 </div>
             </div>

@@ -95,6 +95,7 @@ class StepOnePage extends React.Component {
 
                                     <TicketInput
                                         ticketTypes={summit.ticket_types}
+                                        summit={summit}
                                         selection={order.tickets}
                                         add={this.handleAddTicket}
                                         substract={this.handleSubstractTicket}

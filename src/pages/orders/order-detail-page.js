@@ -144,10 +144,10 @@ class OrderDetailPage extends React.Component {
     let dateRange = daysBetweenDates(summit.start_date, summit.end_date, summit.time_zone_id);
     
     if(dateRange.length > 1) {        
-      let summitDate = `${getFormatedDate(dateRange[0])}, ${getFormatedDate(dateRange[dateRange.length-1])}`;
+      let summitDate = `${getFormatedDate(dateRange[0], summit.time_zone_id)}, ${getFormatedDate(dateRange[dateRange.length-1], summit.time_zone_id)}`;
       return summitDate;
     } else {
-      let summitDate = getFormatedDate(summit.start_date);
+      let summitDate = getFormatedDate(summit.start_date, summit.time_zone_id);
       return summitDate;
     }          
   }
@@ -255,7 +255,7 @@ class OrderDetailPage extends React.Component {
                   </div>
                   <div className="col-md-4">
                       <OrderSummary order={order} summit={summit} type={'desktop'}/>
-                      <TicketOptions cancelOrder={this.handleOrderCancel}/>
+                      <TicketOptions summit={summit} cancelOrder={this.handleOrderCancel}/>
                   </div>
               </div>
               {showPopup ?  

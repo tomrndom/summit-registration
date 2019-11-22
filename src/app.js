@@ -79,7 +79,8 @@ class App extends React.PureComponent {
       let {isLoggedUser, onUserAuth, doLogout, getUserInfo, member, backUrl, summit} = this.props;
 
       let url = URI(window.location.href);
-      let location = url.pathname();      
+      let location = url.pathname();
+      let memberLocation = '/a/member/';
       let purchaseLocation = '/register/';
 
       return (

@@ -60,7 +60,7 @@
             border-radius: 50%;
             height: 1em;
             width: 1em;
-          }
+          }          
         }        
       }
       div:nth-child(2) {
@@ -131,6 +131,21 @@
       opacity: 0.6;
     }
     &:hover {
+      background-color: #fff;
+    }
+  }
+  .disabled {
+    .status {
+      color: #000000;
+    }
+    .col-sm-4, .col-sm-2, h4 {
+      opacity: 0.6;
+    }
+    div:last-of-type {
+      display: none;
+    }
+    &:hover {
+      cursor: default;
       background-color: #fff;
     }
   }

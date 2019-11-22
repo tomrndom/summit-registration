@@ -111,8 +111,11 @@ class TicketList extends React.Component {
     handleTicketLocation(ticket) {
       let {summits} = this.props;
       let summit = summits.find(s => s.id === ticket.owner.summit_id);
-      if(summit.locations.length === 1) {        
-        return `${summit.locations[0].city}, ${summit.locations[0].country}`
+      let location = summit.locations.filter(l => l.class_name === "SummitVenue").find(l => l.is_main === true);      
+      if(location) {
+        return `${location.city}, ${location.country} / `;
+      } else {
+        return null;
       }
     }
 
@@ -190,7 +193,7 @@ class TicketList extends React.Component {
                       </div>                      
                       <div className="col-sm-4">
                           <h5>{this.handleTicketName(t)}</h5>
-                          <p>{this.handleTicketLocation(t)} / {this.handleTicketDate(t)}</p>
+                          <p>{this.handleTicketLocation(t)} {this.handleTicketDate(t)}</p>
                       </div>
                       <div className="arrow col-sm-2">
                           <i className="fa fa-angle-right"></i>

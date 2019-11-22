@@ -172,9 +172,11 @@ class OrderDetailPage extends React.Component {
 
   handleSummitLocation() {
     let {summit} = this.props;
-    if(summit.locations.length === 1) {
-      let location = `${summit.locations[0].city}, ${summit.locations[0].country}`;
-      return location;
+    let location = summit.locations.filter(l => l.class_name === "SummitVenue").find(l => l.is_main === true);    
+    if(location) {
+      return `${location.city}, ${location.country} / `;
+    } else {
+      return null;
     }
   }
 
@@ -189,7 +191,7 @@ class OrderDetailPage extends React.Component {
                   <div className="col-md-8">
                     <div className="order-detail__title">
                       <h4><b>{summit.name}</b></h4>
-                      {this.handleSummitLocation()} / {this.handleTicketDate()}
+                      {this.handleSummitLocation()} {this.handleTicketDate()}
                     </div>
                     <div className="ticket-list">
                       {summit.ticket_types.map((s, index) => {                        

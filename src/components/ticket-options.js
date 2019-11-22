@@ -63,9 +63,11 @@ class TicketOptions extends React.Component {
     }
 
     handleSummitLocation(summit) {
-      if(summit.locations.length === 1) {
-        let location = `${summit.locations[0].city}, ${summit.locations[0].country}`;
-        return location;
+      let location = summit.locations.filter(l => l.class_name === "SummitVenue").find(l => l.is_main === true);      
+      if(location) {
+        return `${location.city}, ${location.country} / `;
+      } else {
+        return null;
       }
     }
 
@@ -73,7 +75,7 @@ class TicketOptions extends React.Component {
     render() {
 
       let {guest, summit, ticket} = this.props;
-      let now = parseInt((new Date().getTime() / 1000).toFixed(0));      
+      let now = parseInt((new Date().getTime() / 1000).toFixed(0));        
 
         return (
             <div className="order-info-wrapper">
@@ -83,19 +85,27 @@ class TicketOptions extends React.Component {
                     <div className="col-md-12 info">
                       <h4>{summit.name}</h4>
                       <p>{this.handleTicketName(ticket)}</p>
-                      <p>{this.handleSummitLocation(summit)} / {this.handleTicketDate(ticket)}</p>
+                      <p>{this.handleSummitLocation(summit)} {this.handleTicketDate(ticket)}</p>
                       <p>{this.handleTicketRole(ticket.badge)}</p>
                     </div>
                   </div>
                   <hr />
                 </React.Fragment>
-                }                                
+                }
+                {!guest && summit.start_date > now && 
                 <div className="row">
-                    <div className="col-md-12">
-                        {guest && <a onClick={this.props.downloadTicket}>{T.translate("order_info.download")}<br/></a>}
-                        {!guest && summit.start_date > now && <a onClick={this.props.cancelOrder} className="cancel">{T.translate("order_info.cancel_order")}</a>}
+                    <div className="col-md-12">                        
+                        <a onClick={this.props.cancelOrder} className="cancel">{T.translate("order_info.cancel_order")}</a>
                     </div>
                 </div>
+                }
+                {guest && 
+                <div className="row">
+                    <div className="col-md-12">
+                        <a onClick={this.props.downloadTicket}>{T.translate("order_info.download")}<br/></a>                        
+                    </div>
+                </div>
+                }
             </div>
         );
     }

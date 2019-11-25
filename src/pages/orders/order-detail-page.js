@@ -183,7 +183,7 @@ class OrderDetailPage extends React.Component {
   render() {
       let {order, summit, ticket, errors, extraQuestions, member} = this.props;
       let {showPopup} = this.state;
-      let now = parseInt((new Date().getTime() / 1000).toFixed(0));
+      let now = parseInt((new Date().getTime() / 1000).toFixed(0));      
 
       return (
           <div className="order-detail">
@@ -215,7 +215,7 @@ class OrderDetailPage extends React.Component {
                                           </div>
                                           <div className="col-sm-5">
                                               <h4>{this.handleTicketRole(t)}</h4>
-                                              {t.discount > 0 && `${(t.discount * 100) / t.raw_cost}% Discount`}
+                                              {t.discount > 0 && `${(t.discount * 100) / t.raw_cost}% discount`}
                                               <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
                                           </div>
                                           <div className="col-sm-5">
@@ -235,7 +235,7 @@ class OrderDetailPage extends React.Component {
                                           </div>
                                           <div className="col-xs-10">                                              
                                               <h4>{this.handleTicketRole(t)}</h4>
-                                              {t.discount > 0 && `${(t.discount * 100) / t.raw_cost}% Discount`}
+                                              {t.discount > 0 && `${(t.discount * 100) / t.raw_cost}% discount`}
                                               {t.owner ? t.owner.email : ''}                                              
                                               <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
                                           </div>

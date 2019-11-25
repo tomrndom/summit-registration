@@ -271,10 +271,12 @@ export const getTicketPDF = () => (dispatch, getState) => {
 };
 
 export const refundTicket = (ticket) => (dispatch, getState) => {
-
+  
   let { loggedUserState } = getState();
   let { accessToken }     = loggedUserState;
 
+  let orderId = ticket.order ? ticket.order.id : ticket.order_id;
+  
   dispatch(startLoading());
 
   let params = {
@@ -284,7 +286,7 @@ export const refundTicket = (ticket) => (dispatch, getState) => {
   return deleteRequest(
       null,
       createAction(REFUND_TICKET),
-      `${window.API_BASE_URL}/api/v1/summits/all/orders/${ticket.order.id}/tickets/${ticket.id}/refund`,
+      `${window.API_BASE_URL}/api/v1/summits/all/orders/${orderId}/tickets/${ticket.id}/refund`,
       {},
       authErrorHandler
   )(params)(dispatch).then((payload) => {

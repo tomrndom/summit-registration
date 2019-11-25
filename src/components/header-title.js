@@ -48,7 +48,13 @@ class HeaderTitle extends React.Component {
           summitLocation = `${location.city}, ${location.country} `;
         }      
         if(summitLocation !== '') {
-          return `${summitDate} \n ${summitLocation}`;
+          return (
+            <React.Fragment>
+              {summitDate}
+              <br />
+              {summitLocation}
+            </React.Fragment>
+          );
         } else {
           return null;
         }

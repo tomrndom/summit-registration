@@ -78,7 +78,7 @@ class OrderSummary extends React.Component {
                   <div className="order-summary-mobile--title" onClick={this.handleSummaryDisplay}>
                     <span>Order Summary</span>                  
                     <span>
-                      ${total.toFixed(2)} &nbsp; <i className="fa fa-chevron-down" aria-hidden="true"></i>                            
+                      ${total.toFixed(2)} &nbsp; <i className={`fa ${this.state.summaryToggle ? 'fa-chevron-up' : 'fa-chevron-down'}`} aria-hidden="true"></i>                            
                     </span>
                   </div>
                   <div className={this.state.summaryToggle ? 'open':'closed' }>

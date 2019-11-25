@@ -75,7 +75,7 @@
     "subtitle"            : "a subtitle",
     "text"                : "blah blah a text",
     "order_no"            : "ORDER NO",
-    "manage"              : "Manage Your Tickets"
+    "manage"              : "Manage your Orders"
   },
   "guests": {
     "cancel"              : "Cancel",

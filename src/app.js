@@ -83,7 +83,7 @@ class App extends React.PureComponent {
       let eventDate = '';
       let eventLocation = '';
       if(dateRange.length > 1) {        
-        eventDate = `${getFormatedDate(dateRange[0], summit.time_zone_id)}, ${getFormatedDate(dateRange[dateRange.length-1], summit.time_zone_id)}`;        
+        eventDate = `${getFormatedDate(dateRange[0], summit.time_zone_id)} - ${getFormatedDate(dateRange[dateRange.length-1], summit.time_zone_id)}`;        
       } else {
         eventDate = getFormatedDate(summit.start_date, summit.time_zone_id);        
       }
@@ -91,7 +91,7 @@ class App extends React.PureComponent {
         eventLocation = `${location.city}, ${location.country} `;
       }      
       if(eventLocation !== '') {
-        return `${eventLocation} / ${eventDate}`;
+        return `${eventDate} \n ${eventLocation}`;
       } else {
         return null;
       }            

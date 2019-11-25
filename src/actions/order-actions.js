@@ -217,6 +217,7 @@ export const getUserOrders = (updateId, page = 1, per_page = 5) => (dispatch, ge
       access_token : accessToken,
       expand       : 'extra_questions, tickets, tickets.owner, tickets.owner.extra_questions, tickets.badge, tickets.badge.features',
       order        : '-id',
+      filter       : 'status==Reserved,status==RefundRequested,status==Refunded,status==Confirmed,status==Paid,status==Error',
       page         : page,
       per_page     : per_page 
   };

@@ -20,13 +20,13 @@ import AuthorizedRoute from './routes/authorized-route'
 import AuthorizationCallbackRoute from "./routes/authorization-callback-route"
 import LogOutCallbackRoute from './routes/logout-callback-route'
 import AuthButton from './components/auth-button'
+import HeaderTitle from './components/header-title'
 import NavBar from './components/nav-bar'
 import NotFoundPage from './pages/not-found-page'
 import { connect } from 'react-redux'
 import { AjaxLoader } from "openstack-uicore-foundation/lib/components";
 import { onUserAuth, doLogin, doLogout, initLogOut, getUserInfo } from "openstack-uicore-foundation/lib/methods";
 import { handleResetReducers } from './actions/summit-actions'
-import { daysBetweenDates, getFormatedDate } from './utils/helpers';
 import T from 'i18n-react';
 import history from './history'
 import URI from "urijs";
@@ -74,52 +74,22 @@ class App extends React.PureComponent {
     onClickLogin() {
         this.getBackURL();
         doLogin(this.getBackURL());        
-    }
-
-    handleEventDateLocation() {
-      let {summit} = this.props;
-      let location = summit.locations.filter(l => l.class_name === "SummitVenue").find(l => l.is_main === true);
-      let dateRange = daysBetweenDates(summit.start_date, summit.end_date, summit.time_zone_id);
-      let summitDate = '';
-      let summitLocation = '';
-      if(dateRange.length > 1) {
-        let startDate = getFormatedDate(dateRange[0], summit.time_zone_id);
-        let endDate = getFormatedDate(dateRange[dateRange.length-1], summit.time_zone_id);
-        let startYear = startDate.substring(startDate.length, startDate.length-4);
-        let endYear = endDate.substring(endDate.length, endDate.length-4);
-        if (startYear === endYear) startDate = startDate.substring(0, startDate.length-4);        
-        summitDate = `${startDate} - ${endDate}`;
-      } else {
-        summitDate = getFormatedDate(summit.start_date, summit.time_zone_id);        
-      }
-      if(location) {
-        summitLocation = `${location.city}, ${location.country} `;
-      }      
-      if(summitLocation !== '') {
-        return `${summitDate} \n ${summitLocation}`;
-      } else {
-        return null;
-      }            
-    }
+    }    
 
     render() {
       let {isLoggedUser, onUserAuth, doLogout, getUserInfo, member, backUrl, summit} = this.props;
 
       let url = URI(window.location.href);
       let location = url.pathname();
-      let memberLocation = '/a/member/';
-      let purchaseLocation = '/register/';
+      let memberLocation = '/a/member/';      
 
       return (
           <Router history={history}>
               <div className="container">
                   <AjaxLoader show={ this.props.loading } size={ 120 }/>
                   <div className="header row">
-                      <div className="header-top">
-                          <div className="header-title">
-                              <h4>{summit?summit.logo:''}<b>{!location.match(purchaseLocation) ? 'Registration' : summit && summit.name ? summit.name : 'Registration'}</b></h4>
-                              <h5>{!location.match(purchaseLocation) ? '' : summit ? this.handleEventDateLocation() : ''}</h5>
-                          </div>
+                      <div className="header-top">                          
+                          <HeaderTitle summit={summit}/>
                           <div className="header-user">
                               <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut} location={location} clearState={this.props.handleResetReducers}/>
                           </div>

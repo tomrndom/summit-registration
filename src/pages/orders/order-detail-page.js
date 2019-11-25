@@ -254,8 +254,7 @@ class OrderDetailPage extends React.Component {
                                 : null  
                               )
                             })                           
-                            }             
-                          {index < order.tickets.length -1 ? <div className="separator"></div> : null}
+                            }                          
                           </React.Fragment>                   
                         )
                       })}                                                

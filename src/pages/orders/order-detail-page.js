@@ -143,8 +143,13 @@ class OrderDetailPage extends React.Component {
     let {summit} = this.props;
     let dateRange = daysBetweenDates(summit.start_date, summit.end_date, summit.time_zone_id);
     
-    if(dateRange.length > 1) {        
-      let summitDate = `${getFormatedDate(dateRange[0], summit.time_zone_id)}, ${getFormatedDate(dateRange[dateRange.length-1], summit.time_zone_id)}`;
+    if(dateRange.length > 1) {
+      let startDate = getFormatedDate(dateRange[0], summit.time_zone_id);
+      let endDate = getFormatedDate(dateRange[dateRange.length-1], summit.time_zone_id);
+      let startYear = startDate.substring(startDate.length, startDate.length-4);
+      let endYear = endDate.substring(endDate.length, endDate.length-4);
+      if (startYear === endYear) startDate = startDate.substring(0, startDate.length-4);
+      let summitDate = `${startDate}, ${endDate}`;
       return summitDate;
     } else {
       let summitDate = getFormatedDate(summit.start_date, summit.time_zone_id);
@@ -174,7 +179,7 @@ class OrderDetailPage extends React.Component {
     let {summit} = this.props;
     let location = summit.locations.filter(l => l.class_name === "SummitVenue").find(l => l.is_main === true);    
     if(location) {
-      return `${location.city}, ${location.country} / `;
+      return `${location.city}, ${location.country}`;
     } else {
       return null;
     }
@@ -192,7 +197,7 @@ class OrderDetailPage extends React.Component {
                   <div className="col-md-8">
                     <div className="order-detail__title">
                       <h4><b>{summit.name}</b></h4>
-                      {this.handleSummitLocation()} {this.handleTicketDate()}
+                      {this.handleTicketDate()} <br /> {this.handleSummitLocation()}
                     </div>
                     <div className="ticket-list">
                       {summit.ticket_types.map((s, index) => {                        

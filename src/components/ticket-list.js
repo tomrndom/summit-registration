@@ -113,7 +113,7 @@ class TicketList extends React.Component {
       let summit = summits.find(s => s.id === ticket.owner.summit_id);
       let location = summit.locations.filter(l => l.class_name === "SummitVenue").find(l => l.is_main === true);      
       if(location) {
-        return `${location.city}, ${location.country} / `;
+        return `${location.city}, ${location.country}`;
       } else {
         return null;
       }
@@ -131,8 +131,13 @@ class TicketList extends React.Component {
       let summit = summits.find(s => s.id === ticket.owner.summit_id);
       let dateRange = daysBetweenDates(summit.start_date, summit.end_date, summit.time_zone_id);
       
-      if(dateRange.length > 1) {        
-        let summitDate = `${getFormatedDate(dateRange[0], summit.time_zone_id)}, ${getFormatedDate(dateRange[dateRange.length-1], summit.time_zone_id)}`;
+      if(dateRange.length > 1) {     
+        let startDate = getFormatedDate(dateRange[0], summit.time_zone_id);
+        let endDate = getFormatedDate(dateRange[dateRange.length-1], summit.time_zone_id);
+        let startYear = startDate.substring(startDate.length, startDate.length-4);
+        let endYear = endDate.substring(endDate.length, endDate.length-4);
+        if (startYear === endYear) startDate = startDate.substring(0, startDate.length-4);   
+        let summitDate = `${startDate}, ${endDate}`;
         return summitDate;
       } else {
         let summitDate = getFormatedDate(summit.start_date, summit.time_zone_id);
@@ -193,7 +198,7 @@ class TicketList extends React.Component {
                       </div>                      
                       <div className="col-sm-4">
                           <h5>{this.handleTicketName(t)}</h5>
-                          <p>{this.handleTicketLocation(t)} {this.handleTicketDate(t)}</p>
+                          <p>{this.handleTicketDate(t)} <br /> {this.handleTicketLocation(t)} </p>
                       </div>
                       <div className="arrow col-sm-2">
                           <i className="fa fa-angle-right"></i>
@@ -212,7 +217,7 @@ class TicketList extends React.Component {
                       </div>
                       <div className="col-sm-7">
                           <h4>{this.handleEventName(t)}</h4>
-                          <p>{this.handleTicketLocation(t)} {this.handleTicketDate(t)}</p>
+                          <p>{this.handleTicketDate(t)} <br/> {this.handleTicketLocation(t)} </p>
                           <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
                       </div>                                            
                       <div className="arrow col-sm-2">

@@ -189,10 +189,14 @@ class OrderList extends React.Component {
     getSummitDate(order) {
       let {summits} = this.props;
       let summit = summits.find(s => s.id === order.summit_id);
-      let dateRange = daysBetweenDates(summit.start_date, summit.end_date, summit.time_zone_id);
-      
-      if(dateRange.length > 1) {        
-        let summitDate = `${getFormatedDate(dateRange[0], summit.time_zone_id)}, ${getFormatedDate(dateRange[dateRange.length-1], summit.time_zone_id)}`;
+      let dateRange = daysBetweenDates(summit.start_date, summit.end_date, summit.time_zone_id);      
+      if(dateRange.length > 1) {
+        let startDate = getFormatedDate(dateRange[0], summit.time_zone_id);
+        let endDate = getFormatedDate(dateRange[dateRange.length-1], summit.time_zone_id);
+        let startYear = startDate.substring(startDate.length, startDate.length-4);
+        let endYear = endDate.substring(endDate.length, endDate.length-4);
+        if (startYear === endYear) startDate = startDate.substring(0, startDate.length-4);
+        let summitDate = `${startDate}, ${endDate}`;
         return summitDate;
       } else {
         let summitDate = getFormatedDate(summit.start_date, summit.time_zone_id);

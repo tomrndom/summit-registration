@@ -80,18 +80,23 @@ class App extends React.PureComponent {
       let {summit} = this.props;
       let location = summit.locations.filter(l => l.class_name === "SummitVenue").find(l => l.is_main === true);
       let dateRange = daysBetweenDates(summit.start_date, summit.end_date, summit.time_zone_id);
-      let eventDate = '';
-      let eventLocation = '';
-      if(dateRange.length > 1) {        
-        eventDate = `${getFormatedDate(dateRange[0], summit.time_zone_id)} - ${getFormatedDate(dateRange[dateRange.length-1], summit.time_zone_id)}`;        
+      let summitDate = '';
+      let summitLocation = '';
+      if(dateRange.length > 1) {
+        let startDate = getFormatedDate(dateRange[0], summit.time_zone_id);
+        let endDate = getFormatedDate(dateRange[dateRange.length-1], summit.time_zone_id);
+        let startYear = startDate.substring(startDate.length, startDate.length-4);
+        let endYear = endDate.substring(endDate.length, endDate.length-4);
+        if (startYear === endYear) startDate = startDate.substring(0, startDate.length-4);        
+        summitDate = `${startDate} - ${endDate}`;
       } else {
-        eventDate = getFormatedDate(summit.start_date, summit.time_zone_id);        
+        summitDate = getFormatedDate(summit.start_date, summit.time_zone_id);        
       }
       if(location) {
-        eventLocation = `${location.city}, ${location.country} `;
+        summitLocation = `${location.city}, ${location.country} `;
       }      
-      if(eventLocation !== '') {
-        return `${eventDate} \n ${eventLocation}`;
+      if(summitLocation !== '') {
+        return `${summitDate} \n ${summitLocation}`;
       } else {
         return null;
       }            

@@ -26,6 +26,7 @@ import { connect } from 'react-redux'
 import { AjaxLoader } from "openstack-uicore-foundation/lib/components";
 import { onUserAuth, doLogin, doLogout, initLogOut, getUserInfo } from "openstack-uicore-foundation/lib/methods";
 import { handleResetReducers } from './actions/summit-actions'
+import { daysBetweenDates, getFormatedDate } from './utils/helpers';
 import T from 'i18n-react';
 import history from './history'
 import URI from "urijs";
@@ -75,6 +76,27 @@ class App extends React.PureComponent {
         doLogin(this.getBackURL());        
     }
 
+    handleEventDateLocation() {
+      let {summit} = this.props;
+      let location = summit.locations.filter(l => l.class_name === "SummitVenue").find(l => l.is_main === true);
+      let dateRange = daysBetweenDates(summit.start_date, summit.end_date, summit.time_zone_id);
+      let eventDate = '';
+      let eventLocation = '';
+      if(dateRange.length > 1) {        
+        eventDate = `${getFormatedDate(dateRange[0], summit.time_zone_id)}, ${getFormatedDate(dateRange[dateRange.length-1], summit.time_zone_id)}`;        
+      } else {
+        eventDate = getFormatedDate(summit.start_date, summit.time_zone_id);        
+      }
+      if(location) {
+        eventLocation = `${location.city}, ${location.country} `;
+      }      
+      if(eventLocation !== '') {
+        return `${eventLocation} / ${eventDate}`;
+      } else {
+        return null;
+      }            
+    }
+
     render() {
       let {isLoggedUser, onUserAuth, doLogout, getUserInfo, member, backUrl, summit} = this.props;
 
@@ -91,6 +113,7 @@ class App extends React.PureComponent {
                       <div className="header-top">
                           <div className="header-title">
                               <h4>{summit?summit.logo:''}<b>{!location.match(purchaseLocation) ? 'Registration' : summit && summit.name ? summit.name : 'Registration'}</b></h4>
+                              <h5>{!location.match(purchaseLocation) ? '' : summit ? this.handleEventDateLocation() : ''}</h5>
                           </div>
                           <div className="header-user">
                               <AuthButton isLoggedUser={isLoggedUser} member={member} doLogin={this.onClickLogin.bind(this)} initLogOut={initLogOut} location={location} clearState={this.props.handleResetReducers}/>

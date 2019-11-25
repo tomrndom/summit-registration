@@ -196,7 +196,7 @@ class OrderList extends React.Component {
         let startYear = startDate.substring(startDate.length, startDate.length-4);
         let endYear = endDate.substring(endDate.length, endDate.length-4);
         if (startYear === endYear) startDate = startDate.substring(0, startDate.length-4);
-        let summitDate = `${startDate}, ${endDate}`;
+        let summitDate = `${startDate} - ${endDate}`;
         return summitDate;
       } else {
         let summitDate = getFormatedDate(summit.start_date, summit.time_zone_id);

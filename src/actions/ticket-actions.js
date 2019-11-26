@@ -63,7 +63,7 @@ export const getUserTickets = (page = 1, per_page = 5) => (dispatch, getState) =
       access_token : accessToken,
       expand       : 'order, owner, owner.extra_questions, order.summit, badge, badge.features',
       order        : '-id',
-      filter       : 'status==Reserved,status==RefundRequested,status==Refunded,status==Confirmed,status==Paid,status==Error',
+      filter       : 'status==RefundRequested,status==Refunded,status==Confirmed,status==Paid,status==Error',
       page         : page,
       per_page     : per_page,
   };    

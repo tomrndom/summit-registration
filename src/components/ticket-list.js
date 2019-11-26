@@ -83,11 +83,11 @@ class TicketList extends React.Component {
       }
       else if(ticket.owner_id === 0) {
         return status[0];
-      } else if (!ticket.owner.extra_questions.length || !t.owner.first_name || !t.owner.surname) {
+      } else if (!ticket.owner.extra_questions.length || !ticket.owner.first_name || !ticket.owner.surname) {
         return status[1];
       } else if (ticket.owner.extra_questions.length) {
         let incomplete = ticket.owner.extra_questions.filter((q) => q.value == '');
-        if(incomplete.length === 0 && t.owner.first_name && t.owner.surname) {
+        if(incomplete.length === 0 && ticket.owner.first_name && ticket.owner.surname) {
           return status[2];
         } else {
           return status[1];

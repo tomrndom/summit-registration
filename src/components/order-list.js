@@ -66,6 +66,7 @@ class OrderList extends React.Component {
         case 'Error':
         case 'Refunded':
         case 'Confirmed':
+        case 'Reserved':
           break;
         default: 
         let summit = summits.find(s => s.id === order.summit_id);      

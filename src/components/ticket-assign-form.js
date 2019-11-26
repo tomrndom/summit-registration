@@ -180,8 +180,7 @@ class TicketAssignForm extends React.Component {
                 <div className="col-sm-4"></div>
                 <div className="col-sm-6">
                   <h4 className="popup-cancel-ticket" onClick={this.props.cancelTicket}>Cancel Ticket</h4>
-                  <p>Description about the refund policy lorem ipsum dolor sit amet.</p>
-                  learn more
+                  <p></p>                  
                 </div>
               </div>
             }

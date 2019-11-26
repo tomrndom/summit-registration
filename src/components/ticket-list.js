@@ -215,7 +215,7 @@ class TicketList extends React.Component {
                       <div className="col-sm-1">
                           <i className={`fa fa-2x ${this.handleTicketStatus(t).icon} ${this.handleTicketStatus(t).class}`}></i>                             
                       </div>
-                      <div className="col-sm-7">
+                      <div className="col-sm-9">
                           <h4>{this.handleEventName(t)}</h4>
                           <p>{this.handleTicketDate(t)} <br/> {this.handleTicketLocation(t)} </p>
                           <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>

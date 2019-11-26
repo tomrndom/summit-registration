@@ -90,7 +90,7 @@ export const selectTicket = (ticket, ticketList = false) => (dispatch, getState)
   dispatch(startLoading());
 
   if(ticketList){
-    dispatch(selectSummitById(ticket.order.summitId));
+    dispatch(selectSummitById(ticket.order.summit_id));
     dispatch(createAction(SELECT_TICKET)(ticket));    
   } else {
     dispatch(createAction(SELECT_TICKET)(ticket));
@@ -250,8 +250,6 @@ export const getTicketPDF = () => (dispatch, getState) => {
 
   let queryString = objectToQueryString(params);
   let apiUrl = `${window.API_BASE_URL}/api/v1/summits/all/orders/all/tickets/${selectedTicket.id}/pdf?${queryString}`;  
-
-    dispatch(startLoading());
 
     return fetch(apiUrl, { responseType: 'Blob', headers: {'Content-Type': 'application/pdf'}})
         .then((response) => {            

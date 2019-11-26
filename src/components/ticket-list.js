@@ -43,7 +43,7 @@ class TicketList extends React.Component {
     }
 
     togglePopup(ticket) {
-      ticket ? this.props.selectTicket(ticket) : this.props.selectTicket({});
+      ticket ? this.props.selectTicket(ticket, true) : this.props.selectTicket({});
   
       this.setState((prevState, props) => {
         return {

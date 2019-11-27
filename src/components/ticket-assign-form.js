@@ -178,7 +178,7 @@ class TicketAssignForm extends React.Component {
             {!guest && orderOwned && summit.start_date > now &&
               <div className="row field-wrapper">
                 <div className="col-sm-4"></div>
-                <div className="col-sm-6">
+                <div className="col-sm-8">
                   <h4 className="popup-cancel-ticket" onClick={this.props.cancelTicket}>Cancel Ticket</h4>
                   <p></p>                  
                 </div>

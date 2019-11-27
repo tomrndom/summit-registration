@@ -22,6 +22,11 @@
   .field-wrapper {
     margin-top: 10px;
     margin-bottom: 10px;
+    display: flex;
+    align-items: baseline;
+    &--radio-list {
+      align-items: center;
+    }
     input {
       background-color: @lblue_color_1;
       border-color: @header_lblue_color;
@@ -50,6 +55,9 @@
       .css-dvua67-singleValue {
         color: @font_blue_2 !important;
       }
+      .css-151xaom-placeholder {
+        color: @font_blue_2 !important;
+      }
     }
     textarea {
       background-color: @lblue_color_1;
@@ -72,13 +80,14 @@
     }
     .form-check.abc-checkbox {
       padding-left: 0px !important;
-
+      .form-check-label {
+        padding-left: 17px !important;
+      }
     }
     .form-check.abc-radio {
+      width: 100% !important;
       padding-left: 0px !important;
-      &:first-child {
-        margin-left: 10px !important;
-      }
+      margin-left: 7px !important;      
     }
     .abc-radio label {
       &::before {

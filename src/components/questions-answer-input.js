@@ -75,26 +75,31 @@ export default class QuestionAnswersInput extends React.Component {
         switch(question.type) {
             case 'Text':
                 return (
-                    <div>
-                        <label> {question.label} </label>
-                        <Input
-                            id={question.id}
-                            value={answerValue}
-                            onChange={this.handleChange}
-                            className="form-control"
-                        />
+                    <div className="row field-wrapper">
+                        <div className="col-sm-4"> {question.label} </div>
+                        <div className="col-sm-8">
+                            <Input
+                                id={question.id}
+                                value={answerValue}
+                                onChange={this.handleChange}
+                                className="form-control"
+                            />
+                        </div>                        
                     </div>
                 );
             case 'TextArea':
                 return (
-                    <div>
-                        <label> {question.label} </label>
-                        <textarea
-                            id={question.id}
-                            value={answerValue}
-                            onChange={this.handleChange}
-                            className="form-control"
-                        />
+                    <div className="row field-wrapper">
+                        <div className="col-sm-4"> {question.label} </div>
+                        <div className="col-sm-8">
+                            <textarea
+                                id={question.id}
+                                value={answerValue}
+                                onChange={this.handleChange}
+                                className="form-control"                                
+                                rows="4"
+                            />
+                        </div>                        
                     </div>
                 );
             case 'CheckBox':
@@ -111,42 +116,48 @@ export default class QuestionAnswersInput extends React.Component {
                 let value = answerValue ? questionValues.find(val => val.id == parseInt(answerValue)) : null;
                 questionValues = questionValues.map(val => ({...val, value: val.id}));
                 return (
-                    <div>
-                        <label> {question.label} </label>
-                        <Dropdown
-                            id={question.id}
-                            value={value}
-                            options={questionValues}
-                            onChange={this.handleChange}
-                        />
+                    <div className="row field-wrapper">
+                        <div className="col-sm-4"> {question.label} </div>
+                        <div className="col-sm-8">
+                            <Dropdown
+                                id={question.id}
+                                value={value}
+                                options={questionValues}
+                                onChange={this.handleChange}
+                            />
+                        </div>                        
                     </div>
                 );
             case 'CheckBoxList':
                 questionValues = questionValues.map(val => ({...val, value: val.id}));
                 answerValue = answerValue ? answerValue.split(',').map(ansVal => parseInt(ansVal)) : [];
                 return (
-                    <div>
-                        <label> {question.label} </label>
-                        <CheckboxList
-                            id={question.id}
-                            value={answerValue}
-                            options={questionValues}
-                            onChange={this.handleChange}
-                        />
+                    <div className="row field-wrapper">
+                        <div className="col-sm-4"> {question.label} </div>
+                        <div className="col-sm-8">
+                            <CheckboxList
+                                id={question.id}
+                                value={answerValue}
+                                options={questionValues}
+                                onChange={this.handleChange}
+                            />
+                        </div>                        
                     </div>
                 );
             case 'RadioButtonList':
                 questionValues = questionValues.map(val => ({...val, value: val.id}));
                 return (
-                    <div>
-                        <label> {question.label} </label>
-                        <RadioList
-                            id={question.id}
-                            value={answerValue}
-                            options={questionValues}
-                            onChange={this.handleChange}
-                            inline
-                        />
+                    <div className="row field-wrapper--radio-list">
+                        <div className="col-sm-4"> {question.label} </div>
+                        <div className="col-sm-8">
+                            <RadioList
+                                id={question.id}
+                                value={answerValue}
+                                options={questionValues}
+                                onChange={this.handleChange}
+                                inline
+                            />
+                        </div>                                             
                     </div>
                 );
         }

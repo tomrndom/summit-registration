@@ -139,6 +139,7 @@
     "question_text_save"              : "",
     "question_title_notification"     : "Notification Request",
     "question_text_notification"      : "",
+    "question_text_confirm"           : "Are you sure?",
     "cancel"                          : "Cancel",
     "accept"                          : "Yeah",
     "success_title"                   : "Request Submitted",

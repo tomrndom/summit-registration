@@ -27,7 +27,7 @@ class ConfirmPopup extends React.Component {
     }
 
     render() {
-      let {closePopup, popupCase} = this.props;
+      let {closePopup, popupCase, cleanFields} = this.props;
         return (  
           <div className="confirm-popup-bg">
             <div className="confirm-popup">
@@ -50,8 +50,12 @@ class ConfirmPopup extends React.Component {
                   case 'reassign':
                       return (
                         <React.Fragment>
-                            <h4>{T.translate("confirm_popup.question_title_reassign")}</h4>            
-                            <p>{T.translate("confirm_popup.question_text_reassign")}</p>    
+                            <h4>{T.translate("confirm_popup.question_title_reassign")}</h4>
+                            {cleanFields ? 
+                              <p>{T.translate("confirm_popup.question_text_reassign")}</p>
+                              :
+                              <p>{T.translate("confirm_popup.question_text_confirm")}</p>
+                            }
                         </React.Fragment>
                       );    
                   case 'save':

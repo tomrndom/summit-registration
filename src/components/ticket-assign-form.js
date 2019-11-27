@@ -79,7 +79,7 @@ class TicketAssignForm extends React.Component {
 
     render() {
 
-      let {guest, ownedTicket, ticket, onChange, extraQuestions, status, summit, orderOwned } = this.props;
+      let {guest, ownedTicket, ticket, onChange, extraQuestions, status, summit, orderOwned, readOnly } = this.props;
       let {extra_questions, input_email} = this.state;
       let now = parseInt((new Date().getTime() / 1000).toFixed(0));
 
@@ -122,25 +122,33 @@ class TicketAssignForm extends React.Component {
             <div className="row field-wrapper">
               <div className="col-sm-4">{T.translate("ticket_popup.edit_first_name")}</div>
               <div className="col-sm-8">
-                <Input
-                  id="attendee_first_name"
-                  className="form-control"              
-                  error={this.hasErrors('attendee_first_name')}
-                  onChange={onChange}
-                  value={ticket.attendee_first_name}
-                />
+                {readOnly ? 
+                  <span>{ticket.attendee_first_name}</span>
+                  :
+                  <Input
+                    id="attendee_first_name"
+                    className="form-control"
+                    error={this.hasErrors('attendee_first_name')}
+                    onChange={onChange}
+                    value={ticket.attendee_first_name}
+                  />
+                }                
               </div>
             </div>
             <div className="row field-wrapper">
               <div className="col-sm-4">{T.translate("ticket_popup.edit_last_name")}</div>
               <div className="col-sm-8">
-                <Input
-                  id="attendee_last_name"
-                  className="form-control"
-                  error={this.hasErrors('attendee_last_name')}
-                  onChange={onChange}
-                  value={ticket.attendee_surname}
-                />
+                {readOnly ? 
+                  <span>{ticket.attendee_first_name}</span>
+                  :
+                  <Input
+                    id="attendee_last_name"
+                    className="form-control"
+                    error={this.hasErrors('attendee_last_name')}
+                    onChange={onChange}
+                    value={ticket.attendee_surname}
+                  />
+                }
               </div>
             </div>                        
             {extraQuestions && 
@@ -155,6 +163,7 @@ class TicketAssignForm extends React.Component {
                   answers={ticket.extra_questions}
                   questions={extraQuestions}
                   questions_type={'Ticket'}
+                  readOnly={readOnly}
                   onChange={onChange}
               />                        
             </React.Fragment>

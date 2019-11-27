@@ -316,6 +316,7 @@ class TicketPopup extends React.Component {
                             ownedTicket={fromTicketList || member.email === owner.email}
                             orderOwned={owned}
                             extraQuestions={extraQuestions}
+                            readOnly={now > reassign_date}
                             onChange={this.handleChange} 
                             cancelTicket={this.handleTicketCancel}
                             summit={summit}

@@ -71,6 +71,7 @@ export default class QuestionAnswersInput extends React.Component {
 
     getInput(question, answerValue) {        
         let questionValues = question.values;
+        let {readOnly} = this.props;
 
         switch(question.type) {
             case 'Text':
@@ -78,12 +79,16 @@ export default class QuestionAnswersInput extends React.Component {
                     <div className="row field-wrapper">
                         <div className="col-sm-4"> {question.label} </div>
                         <div className="col-sm-8">
+                          {readOnly ? 
+                            <span>{answerValue}</span>
+                            :
                             <Input
                                 id={question.id}
                                 value={answerValue}
                                 onChange={this.handleChange}
                                 className="form-control"
                             />
+                          }                            
                         </div>                        
                     </div>
                 );
@@ -92,6 +97,9 @@ export default class QuestionAnswersInput extends React.Component {
                     <div className="row field-wrapper">
                         <div className="col-sm-4"> {question.label} </div>
                         <div className="col-sm-8">
+                          {readOnly ? 
+                            <span>{answerValue}</span>
+                            :
                             <textarea
                                 id={question.id}
                                 value={answerValue}
@@ -99,11 +107,22 @@ export default class QuestionAnswersInput extends React.Component {
                                 className="form-control"                                
                                 rows="4"
                             />
+                          }
                         </div>                        
                     </div>
                 );
             case 'CheckBox':
-                return (
+                if(readOnly) {
+                  return (
+                    <div className="row field-wrapper">
+                        <div className="col-sm-4"> {question.label} </div>
+                        <div className="col-sm-8">
+                            <span>{answerValue}</span>                                                     
+                        </div>                        
+                    </div>
+                  );
+                } else {
+                  return (
                     <div className="form-check abc-checkbox">
                         <input type="checkbox" id={question.id} checked={(answerValue == "true")}
                                onChange={this.handleChange} className="form-check-input" />
@@ -111,30 +130,59 @@ export default class QuestionAnswersInput extends React.Component {
                             {question.label}
                         </label>
                     </div>
-                );
+                  );
+                }                                
             case 'ComboBox':
                 let value = answerValue ? questionValues.find(val => val.id == parseInt(answerValue)) : null;
-                questionValues = questionValues.map(val => ({...val, value: val.id}));
-                return (
+                questionValues = questionValues.map(val => ({...val, value: val.id}));                
+                if(readOnly) {
+                  return (
                     <div className="row field-wrapper">
                         <div className="col-sm-4"> {question.label} </div>
-                        <div className="col-sm-8">
-                            <Dropdown
-                                id={question.id}
-                                value={value}
-                                options={questionValues}
-                                onChange={this.handleChange}
-                            />
+                        <div className="col-sm-8"> {value.label} </div>                        
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div className="row field-wrapper">
+                        <div className="col-sm-4"> {question.label} </div>
+                        <div className="col-sm-8">                          
+                          <Dropdown
+                              id={question.id}
+                              value={value}
+                              options={questionValues}
+                              onChange={this.handleChange}
+                          />
                         </div>                        
                     </div>
-                );
+                  );
+                }
+                
             case 'CheckBoxList':
                 questionValues = questionValues.map(val => ({...val, value: val.id}));
-                answerValue = answerValue ? answerValue.split(',').map(ansVal => parseInt(ansVal)) : [];
-                return (
+                answerValue = answerValue ? answerValue.split(',').map(ansVal => parseInt(ansVal)) : [];                
+                if(readOnly) {
+                  let readOnlyAnswers = [];
+                  answerValue.map(a => {
+                    questionValues.map(q => { 
+                      if(q.value == a) {
+                        readOnlyAnswers.push(q.label);
+                      }
+                    });
+                  });                  
+                  return (
                     <div className="row field-wrapper">
                         <div className="col-sm-4"> {question.label} </div>
-                        <div className="col-sm-8">
+                        <div className="col-sm-8">                          
+                            {readOnlyAnswers.join(', ')}
+                        </div>                        
+                    </div>
+                  );
+                } else {
+                  return(
+                    <div className="row field-wrapper">
+                        <div className="col-sm-4"> {question.label} </div>
+                        <div className="col-sm-8">                          
                             <CheckboxList
                                 id={question.id}
                                 value={answerValue}
@@ -143,23 +191,37 @@ export default class QuestionAnswersInput extends React.Component {
                             />
                         </div>                        
                     </div>
-                );
+                  );
+                }
             case 'RadioButtonList':
-                questionValues = questionValues.map(val => ({...val, value: val.id}));
-                return (
-                    <div className="row field-wrapper--radio-list">
-                        <div className="col-sm-4"> {question.label} </div>
-                        <div className="col-sm-8">
-                            <RadioList
-                                id={question.id}
-                                value={answerValue}
-                                options={questionValues}
-                                onChange={this.handleChange}
-                                inline
-                            />
-                        </div>                                             
-                    </div>
-                );
+                questionValues = questionValues.map(val => ({...val, value: val.id}));                 
+                if(readOnly){
+                  return(
+                      <div className="row field-wrapper">
+                          <div className="col-sm-4"> {question.label} </div>
+                          <div className="col-sm-8">{questionValues.find(q => q.value == answerValue).label}</div>
+                      </div>
+                  );
+                } else {
+                  return (
+                      <div className="row field-wrapper--radio-list">
+                          <div className="col-sm-4"> {question.label} </div>
+                          <div className="col-sm-8">
+                            {readOnly ? 
+                              <span>{answerValue}</span>
+                              :
+                              <RadioList
+                                  id={question.id}
+                                  value={answerValue}
+                                  options={questionValues}
+                                  onChange={this.handleChange}
+                                  inline
+                              />
+                            }
+                          </div>                                             
+                      </div>
+                  );
+                }
         }
 
     }

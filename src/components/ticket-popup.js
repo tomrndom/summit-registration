@@ -271,7 +271,10 @@ class TicketPopup extends React.Component {
                         {status.text === 'UNASSIGNED' && <Tab>{T.translate("ticket_popup.tab_assign")}</Tab>}
                         <Tab>{T.translate("ticket_popup.tab_edit")}</Tab>
                         {status.text !== 'UNASSIGNED' && <Tab>{T.translate("ticket_popup.tab_reassign")}</Tab>}
-                        {status.text !== 'UNASSIGNED' && !fromTicketList && <Tab>{T.translate("ticket_popup.tab_notify")}</Tab>}
+                        {status.text !== 'UNASSIGNED' && 
+                        (!fromTicketList && member.email !== tempTicket.attendee_email) && 
+                          <Tab>{T.translate("ticket_popup.tab_notify")}</Tab>
+                        }
                     </TabList>
                     {status.text === 'UNASSIGNED' && 
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--assign">
@@ -352,7 +355,7 @@ class TicketPopup extends React.Component {
                         </div>
                       </TabPanel>
                     }
-                    {status.text !== 'UNASSIGNED' && !fromTicketList &&
+                    {status.text !== 'UNASSIGNED' && (!fromTicketList && member.email !== tempTicket.attendee_email) &&
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--notify">
                           <p>{T.translate("ticket_popup.notify_text_1")} {this.handleFormatReassignDate()}.</p>                                                
                           <p>{T.translate("ticket_popup.notify_text_2")} <b>{owner.email}</b></p>

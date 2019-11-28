@@ -83,6 +83,8 @@ class TicketAssignForm extends React.Component {
       let {extra_questions, input_email} = this.state;
       let now = parseInt((new Date().getTime() / 1000).toFixed(0));
 
+      console.log(extraQuestions);
+
         return (
           <div className="ticket-assign-form">
             <div className="row popup-basic-info">
@@ -115,13 +117,83 @@ class TicketAssignForm extends React.Component {
                     
                   </span>
                   :
-                  <span>{ticket.attendee_email}</span>
+                  <React.Fragment>
+                    {input_email ? 
+                        <Input
+                          id="attendee_email"
+                          className="form-control"                              
+                          error={this.hasErrors('attendee_email')}
+                          onChange={onChange}
+                          value={ticket.email}
+                        />
+                        :
+                        <span>{ticket.attendee_email} | <u onClick={() => this.setState({input_email: true})}>Change</u> </span> 
+                    }                    
+                  </React.Fragment>                  
+                }
+              </div>
+            </div>
+            <div className="field-wrapper-mobile">
+            <div>{T.translate("ticket_popup.edit_email")}</div>
+              <div>
+                {status === 'UNASSIGNED' ?
+                  <span>
+                    {input_email ?
+                    <React.Fragment>
+                      <Input
+                        id="attendee_email"
+                        className="form-control"                              
+                        error={this.hasErrors('attendee_email')}
+                        onChange={onChange}
+                        value={ticket.email}
+                      />
+                    </React.Fragment>
+                    :
+                    <React.Fragment>
+                      <button className="btn btn-primary" onClick={() => this.setState({input_email: true})}>
+                        {T.translate("ticket_popup.assign_this")}
+                      </button>                    
+                      <p>{T.translate("ticket_popup.assign_expire")} {this.handleFormatReassignDate(true)} {T.translate("ticket_popup.assign_days")} ({this.handleFormatReassignDate(false)})</p>
+                    </React.Fragment>
+                    }
+                    
+                  </span>
+                  :
+                  <React.Fragment>
+                    {input_email ? 
+                        <Input
+                          id="attendee_email"
+                          className="form-control"                              
+                          error={this.hasErrors('attendee_email')}
+                          onChange={onChange}
+                          value={ticket.email}
+                        />
+                        :
+                        <span>{ticket.attendee_email} | <u onClick={() => this.setState({input_email: true})}>Change</u> </span> 
+                    }                    
+                  </React.Fragment>                  
                 }
               </div>
             </div>
             <div className="row field-wrapper">
               <div className="col-sm-4">{T.translate("ticket_popup.edit_first_name")}</div>
               <div className="col-sm-8">
+                {readOnly ? 
+                  <span>{ticket.attendee_first_name}</span>
+                  :
+                  <Input
+                    id="attendee_first_name"
+                    className="form-control"
+                    error={this.hasErrors('attendee_first_name')}
+                    onChange={onChange}
+                    value={ticket.attendee_first_name}
+                  />
+                }                
+              </div>
+            </div>
+            <div className="field-wrapper-mobile">
+              <div>{T.translate("ticket_popup.edit_first_name")}</div>
+              <div>
                 {readOnly ? 
                   <span>{ticket.attendee_first_name}</span>
                   :
@@ -150,7 +222,23 @@ class TicketAssignForm extends React.Component {
                   />
                 }
               </div>
-            </div>                        
+            </div>
+            <div className="field-wrapper-mobile">
+            <div>{T.translate("ticket_popup.edit_last_name")}</div>
+              <div>
+                {readOnly ? 
+                  <span>{ticket.attendee_first_name}</span>
+                  :
+                  <Input
+                    id="attendee_last_name"
+                    className="form-control"
+                    error={this.hasErrors('attendee_last_name')}
+                    onChange={onChange}
+                    value={ticket.attendee_surname}
+                  />
+                }
+              </div>
+            </div>
             {extraQuestions && 
             <React.Fragment>
               <hr/>
@@ -182,16 +270,36 @@ class TicketAssignForm extends React.Component {
                       </div>
                   </div>
                 </div>
+                <div className="field-wrapper-mobile">
+                  <div>
+                      <div className="form-check abc-checkbox">
+                          <input type="checkbox" id="disclaimer_accepted" checked={ticket.disclaimer_accepted}
+                                  onChange={onChange} className="form-check-input" />
+                          <label className="form-check-label" htmlFor="disclaimer_accepted">
+                              {summit.registration_disclaimer_content}
+                          </label>
+                      </div>
+                  </div>
+                </div>
               </React.Fragment>
             }
             {!guest && orderOwned && summit.start_date > now &&
-              <div className="row field-wrapper">
-                <div className="col-sm-4"></div>
-                <div className="col-sm-8">
-                  <h4 className="popup-cancel-ticket" onClick={this.props.cancelTicket}>Cancel Ticket</h4>
-                  <p></p>                  
+              <React.Fragment>
+                <div className="row field-wrapper">
+                  <div className="col-sm-4"></div>
+                  <div className="col-sm-8">
+                    <h4 className="popup-cancel-ticket" onClick={this.props.cancelTicket}>Cancel Ticket</h4>
+                    <p></p>                  
+                  </div>
                 </div>
-              </div>
+                <div className="field-wrapper-mobile">
+                  <div></div>
+                  <div>
+                    <h4 className="popup-cancel-ticket" onClick={this.props.cancelTicket}>Cancel Ticket</h4>
+                    <p></p>                  
+                  </div>
+                </div>
+              </React.Fragment>
             }
           </div>
         );

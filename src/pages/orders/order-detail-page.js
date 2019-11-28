@@ -224,7 +224,7 @@ class OrderDetailPage extends React.Component {
                                               <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
                                           </div>
                                           <div className="col-sm-5">
-                                            {t.owner ? t.owner.email : ''}
+                                            <h5>{t.owner ? t.owner.email : ''}</h5>
                                           </div>
                                           <div className="col-sm-1">
                                               <h4>&#10095;</h4>

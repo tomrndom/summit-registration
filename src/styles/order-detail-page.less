@@ -70,19 +70,20 @@
           text-transform: uppercase;
         }
       }
-      div:nth-child(3) {
-        margin-top: 10px;
-      }
       div:last-child {
         margin-left: auto;
         align-self: center;
         font-size: 1.5em;
+        h4 {
+          margin-top: 0px;
+        }
       }
       .status {
-          margin-top: 10px;
+          margin-top: auto;
           font-size: 0.7em;
           color: #000;
           text-transform: uppercase;
+          margin-bottom: 5px;
         &.ticket-warning {
           color: #cc9933;
         }
@@ -152,7 +153,13 @@
 @media (min-width: 768px) {
   .ticket-list-desktop {
     .col-sm-offset-1 {
-      margin-left: 4%;
+      margin-left: 5%;
+    }
+  }
+
+  .ticket-list {    
+    .row {      
+      margin-right: -39px;
     }
   }
 }

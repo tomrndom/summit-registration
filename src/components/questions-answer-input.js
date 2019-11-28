@@ -76,6 +76,7 @@ export default class QuestionAnswersInput extends React.Component {
         switch(question.type) {
             case 'Text':
                 return (
+                  <React.Fragment>
                     <div className="row field-wrapper">
                         <div className="col-sm-4"> {question.label} </div>
                         <div className="col-sm-8">
@@ -91,9 +92,26 @@ export default class QuestionAnswersInput extends React.Component {
                           }                            
                         </div>                        
                     </div>
+                    <div className="field-wrapper-mobile">
+                    <div> {question.label} </div>
+                        <div>
+                          {readOnly ? 
+                            <span>{answerValue}</span>
+                            :
+                            <Input
+                                id={question.id}
+                                value={answerValue}
+                                onChange={this.handleChange}
+                                className="form-control"
+                            />
+                          }                            
+                        </div>                        
+                    </div>
+                  </React.Fragment>
                 );
             case 'TextArea':
                 return (
+                  <React.Fragment>
                     <div className="row field-wrapper">
                         <div className="col-sm-4"> {question.label} </div>
                         <div className="col-sm-8">
@@ -110,16 +128,41 @@ export default class QuestionAnswersInput extends React.Component {
                           }
                         </div>                        
                     </div>
+                    <div className="field-wrapper-mobile">
+                        <div> {question.label} </div>
+                        <div>
+                          {readOnly ? 
+                            <span>{answerValue}</span>
+                            :
+                            <textarea
+                                id={question.id}
+                                value={answerValue}
+                                onChange={this.handleChange}
+                                className="form-control"                                
+                                rows="4"
+                            />
+                          }
+                        </div>                        
+                    </div>
+                  </React.Fragment>
                 );
             case 'CheckBox':
                 if(readOnly) {
                   return (
-                    <div className="row field-wrapper">
-                        <div className="col-sm-4"> {question.label} </div>
-                        <div className="col-sm-8">
+                    <React.Fragment>
+                      <div className="row field-wrapper">
+                          <div className="col-sm-4"> {question.label} </div>
+                          <div className="col-sm-8">
+                              <span>{answerValue}</span>                                                     
+                          </div>                        
+                      </div>
+                      <div className="field-wrapper-mobile">
+                        <div> {question.label} </div>
+                        <div>
                             <span>{answerValue}</span>                                                     
                         </div>                        
                     </div>
+                    </React.Fragment>
                   );
                 } else {
                   return (
@@ -137,24 +180,43 @@ export default class QuestionAnswersInput extends React.Component {
                 questionValues = questionValues.map(val => ({...val, value: val.id}));                
                 if(readOnly) {
                   return (
-                    <div className="row field-wrapper">
-                        <div className="col-sm-4"> {question.label} </div>
-                        <div className="col-sm-8"> {value.label} </div>                        
-                    </div>
+                    <React.Fragment>
+                      <div className="row field-wrapper">
+                          <div className="col-sm-4"> {question.label} </div>
+                          <div className="col-sm-8"> {value.label} </div>                        
+                      </div>
+                      <div className="field-wrapper-mobile">
+                          <div> {question.label} </div>
+                          <div> {value.label} </div>                        
+                      </div>
+                    </React.Fragment>
                   );
                 } else {
                   return (
-                    <div className="row field-wrapper">
-                        <div className="col-sm-4"> {question.label} </div>
-                        <div className="col-sm-8">                          
-                          <Dropdown
-                              id={question.id}
-                              value={value}
-                              options={questionValues}
-                              onChange={this.handleChange}
-                          />
-                        </div>                        
-                    </div>
+                    <React.Fragment>
+                      <div className="row field-wrapper">
+                          <div className="col-sm-4"> {question.label} </div>
+                          <div className="col-sm-8">                          
+                            <Dropdown
+                                id={question.id}
+                                value={value}
+                                options={questionValues}
+                                onChange={this.handleChange}
+                            />
+                          </div>                        
+                      </div>
+                      <div className="field-wrapper-mobile">
+                          <div> {question.label} </div>
+                          <div>                          
+                            <Dropdown
+                                id={question.id}
+                                value={value}
+                                options={questionValues}
+                                onChange={this.handleChange}
+                            />
+                          </div>                        
+                      </div>
+                    </React.Fragment>
                   );
                 }
                 
@@ -171,18 +233,38 @@ export default class QuestionAnswersInput extends React.Component {
                     });
                   });                  
                   return (
-                    <div className="row field-wrapper">
-                        <div className="col-sm-4"> {question.label} </div>
-                        <div className="col-sm-8">                          
+                    <React.Fragment>
+                      <div className="row field-wrapper">
+                          <div className="col-sm-4"> {question.label} </div>
+                          <div className="col-sm-8">                          
+                              {readOnlyAnswers.join(', ')}
+                          </div>                        
+                      </div>
+                      <div className="field-wrapper-mobile">
+                        <div> {question.label} </div>
+                        <div>                          
                             {readOnlyAnswers.join(', ')}
                         </div>                        
                     </div>
+                    </React.Fragment>
                   );
                 } else {
                   return(
-                    <div className="row field-wrapper">
-                        <div className="col-sm-4"> {question.label} </div>
-                        <div className="col-sm-8">                          
+                    <React.Fragment>
+                      <div className="row field-wrapper">
+                          <div className="col-sm-4"> {question.label} </div>
+                          <div className="col-sm-8">                          
+                              <CheckboxList
+                                  id={question.id}
+                                  value={answerValue}
+                                  options={questionValues}
+                                  onChange={this.handleChange}
+                              />
+                          </div>                        
+                      </div>
+                      <div className="field-wrapper-mobile">
+                        <div> {question.label} </div>
+                        <div>                          
                             <CheckboxList
                                 id={question.id}
                                 value={answerValue}
@@ -191,16 +273,23 @@ export default class QuestionAnswersInput extends React.Component {
                             />
                         </div>                        
                     </div>
+                    </React.Fragment>
                   );
                 }
             case 'RadioButtonList':
                 questionValues = questionValues.map(val => ({...val, value: val.id}));                 
                 if(readOnly){
                   return(
+                    <React.Fragment>
                       <div className="row field-wrapper">
                           <div className="col-sm-4"> {question.label} </div>
                           <div className="col-sm-8">{questionValues.find(q => q.value == answerValue).label}</div>
                       </div>
+                      <div className="field-wrapper-mobile">
+                          <div> {question.label} </div>
+                          <div>{questionValues.find(q => q.value == answerValue).label}</div>
+                      </div>
+                    </React.Fragment>
                   );
                 } else {
                   return (

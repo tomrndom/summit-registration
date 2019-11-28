@@ -120,6 +120,12 @@
   }
 }
 
+@media(min-width: 768px) {
+  .field-wrapper-mobile {
+    display: none;
+  }
+}
+
 @media(max-width: 768px) {
   .ticket-assign-form {
     padding: 0;
@@ -127,6 +133,33 @@
       margin-top: 0px;
       align-items: baseline;
       flex-direction: row !important;
+    }
+    .field-wrapper {
+      display: none;
+    }
+  }  
+
+  .field-wrapper-mobile {
+    margin-top: 10px;
+    margin-bottom: 10px;    
+    align-items: baseline;
+    &--radio-list {
+      align-items: center;
+    }
+    input {
+      background-color: @lblue_color_1;
+      border-color: @header_lblue_color;
+    }
+    .css-bg1rzq-control, .css-1szy77t-control {          
+      background-color: @lblue_color_1;
+      border-color: @header_lblue_color;      
+      .css-dvua67-singleValue {
+        color: @font_blue_2 !important;
+      }
+    }
+    textarea {
+      background-color: @lblue_color_1;
+      border-color: @header_lblue_color;
     }
   }
 }

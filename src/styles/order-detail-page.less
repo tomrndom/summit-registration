@@ -1,157 +1,162 @@
-.order-detail__title {
-    background-color: #F9F9F9;
-    margin-top: 20px;
-    padding: 15px;
-}
+.order-detail {
+  .row{  
 
-.ticket-list {
-  width: 90%;
-  margin-top: 20px;
+    .order-detail__title {
+        background-color: #F9F9F9;
+        margin-top: 20px;
+        padding: 15px;
+    }
 
-  .ticket-type {
-    padding: 15px 20px;    
-    font-size: 18px;
-    font-weight: 600;
-  }  
+    .ticket-list {
+      width: 90%;
+      margin-top: 20px;
 
-  .ticket {
-      display: flex;
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      margin-top: 0.5em;
-      min-height: 6em;
-      ul {
-          padding: 0;
-          list-style-type: none;
-      }
-      h4 {
-        font-size: 12px;
-        margin-bottom: 0px;
-      }
-      div:first-of-type {
-        margin-top: 10px;
-        margin-left: -30px;
-        padding-right: 0px;
-        .ticket-warning {
-          color: #cc9933;
-          &::before {
-            background: #FFF;
-            border-radius: 50%;
-            height: 1em;
-            width: 1em;
+      .ticket-type {
+        padding: 15px 20px;    
+        font-size: 18px;
+        font-weight: 600;
+      }  
+
+      .ticket {
+          display: flex;
+          background-color: #fff;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          margin-top: 0.5em;
+          min-height: 6em;
+          ul {
+              padding: 0;
+              list-style-type: none;
           }
-        }
-        .ticket-complete {
-          color: #669933;
-          &::before {
-            background: #FFF;
-            border-radius: 50%;
-            height: 1em;
-            width: 1em;
+          h4 {
+            font-size: 12px;
+            margin-bottom: 0px;
           }
-        }
-        .ticket-unset {
-          color: #000;
-          &::before {
-            background: #FFF;
-            border-radius: 50%;
-            height: 1em;
-            width: 1em;
-          }          
-        }        
+          div:first-of-type {
+            margin-top: 10px;
+            margin-left: -30px;
+            padding-right: 0px;
+            .ticket-warning {
+              color: #cc9933;
+              &::before {
+                background: #FFF;
+                border-radius: 50%;
+                height: 1em;
+                width: 1em;
+              }
+            }
+            .ticket-complete {
+              color: #669933;
+              &::before {
+                background: #FFF;
+                border-radius: 50%;
+                height: 1em;
+                width: 1em;
+              }
+            }
+            .ticket-unset {
+              color: #000;
+              &::before {
+                background: #FFF;
+                border-radius: 50%;
+                height: 1em;
+                width: 1em;
+              }          
+            }        
+          }
+          div:nth-child(2) {
+            display: flex;
+            flex-direction: column;
+            margin-left: 10px;        
+            h4 {
+              font-weight: bold;
+              text-transform: uppercase;
+            }
+          }
+          div:nth-child(3) {        
+            h5 {
+              margin-top: 8px;
+            }
+          }
+          div:last-child {
+            margin-left: auto;
+            align-self: center;
+            font-size: 1.5em;
+            text-align: right;
+            h4 {
+              margin-top: 0px;
+            }
+          }
+          .status {
+              margin-top: auto;
+              font-size: 0.7em;
+              color: #000;
+              text-transform: uppercase;
+              margin-bottom: 5px;
+            &.ticket-warning {
+              color: #cc9933;
+            }
+            &.ticket-complete {
+              color: #669933;
+            }
+            &.ticket-unset {
+              color: #000
+            }
+          }      
+          &:hover {
+              background-color: #eee;
+              cursor: pointer;
+          }      
       }
-      div:nth-child(2) {
-        display: flex;
-        flex-direction: column;
-        margin-left: 10px;        
-        h4 {
-          font-weight: bold;
-          text-transform: uppercase;
+      .warning {
+          border: 1px solid #cc9933;
+          .status {
+              color: #cc9933;
+          }
+      }  
+      .complete {
+          .status {
+              color: #669933;
+          }
+      }
+      .cancel {
+        .status {
+          color: #da0000;
+        }
+        .col-sm-4, .col-sm-2, h4 {
+          opacity: 0.6;
+        }
+        &:hover {
+          background-color: #fff;
+          cursor: default;
         }
       }
-      div:nth-child(3) {        
-        h5 {
-          margin-top: 8px;
+      .pending {
+        .status {
+            color: #000000;
+        }
+        .col-sm-4, .col-sm-2, h4 {
+          opacity: 0.6;
+        }
+        &:hover {
+          background-color: #fff;
         }
       }
-      div:last-child {
-        margin-left: auto;
-        align-self: center;
-        font-size: 1.5em;
-        text-align: right;
-        h4 {
-          margin-top: 0px;
+      .disabled {
+        .status {
+          color: #000000;
+        }
+        .col-sm-4, .col-sm-2, h4 {
+          opacity: 0.6;
+        }
+        div:last-of-type {
+          display: none;
+        }
+        &:hover {
+          cursor: default;
+          background-color: #fff;
         }
       }
-      .status {
-          margin-top: auto;
-          font-size: 0.7em;
-          color: #000;
-          text-transform: uppercase;
-          margin-bottom: 5px;
-        &.ticket-warning {
-          color: #cc9933;
-        }
-        &.ticket-complete {
-          color: #669933;
-        }
-        &.ticket-unset {
-          color: #000
-        }
-      }      
-      &:hover {
-          background-color: #eee;
-          cursor: pointer;
-      }      
-  }
-  .warning {
-      border: 1px solid #cc9933;
-      .status {
-          color: #cc9933;
-      }
-  }  
-  .complete {
-      .status {
-          color: #669933;
-      }
-  }
-  .cancel {
-    .status {
-      color: #da0000;
-    }
-    .col-sm-4, .col-sm-2, h4 {
-      opacity: 0.6;
-    }
-    &:hover {
-      background-color: #fff;
-      cursor: default;
-    }
-  }
-  .pending {
-    .status {
-        color: #000000;
-    }
-    .col-sm-4, .col-sm-2, h4 {
-      opacity: 0.6;
-    }
-    &:hover {
-      background-color: #fff;
-    }
-  }
-  .disabled {
-    .status {
-      color: #000000;
-    }
-    .col-sm-4, .col-sm-2, h4 {
-      opacity: 0.6;
-    }
-    div:last-of-type {
-      display: none;
-    }
-    &:hover {
-      cursor: default;
-      background-color: #fff;
     }
   }
 }
@@ -172,45 +177,50 @@
 
 @media (max-width: 768px) {
 
-  .order-detail__title {        
-    padding: 20px 10px;
-    h4 {
-      margin-top: 5px;
-      margin-bottom: 5px;
-    }
-  }
-
   .order-detail {
-    margin-bottom: 20px;
-    margin-top: -20px;
-    .row {
-      display: flex;
-      flex-direction: column;
-      margin-top: 0px;
-    }
-  }
+    .row{  
 
-  .ticket-list {
-    .ticket-type {
-      padding: 15px 0;
-      font-size: 16px;
-    }
-    .ticket {
-      div:nth-child(2) {
+      .order-detail__title {        
+        padding: 20px 10px;
         h4 {
-          margin-bottom: 0px;
+          margin-top: 5px;
+          margin-bottom: 5px;
         }
       }
-      div:nth-child(3) {
-        margin-top: 0px;
+
+      .order-detail {
+        margin-bottom: 20px;
+        margin-top: -20px;
+        .row {
+          display: flex;
+          flex-direction: column;
+          margin-top: 0px;
+        }
       }
-      .status {
-        margin-top: 10px;
+
+      .ticket-list {
+        .ticket-type {
+          padding: 15px 0;
+          font-size: 16px;
+        }
+        .ticket {
+          div:nth-child(2) {
+            h4 {
+              margin-bottom: 0px;
+            }
+          }
+          div:nth-child(3) {
+            margin-top: 0px;
+          }
+          .status {
+            margin-top: 10px;
+          }
+        }
+        .row {
+          margin-left: 0px;
+          margin-right: 0px;
+        }      
       }
     }
-    .row {
-      margin-left: 0px;
-      margin-right: 0px;
-    }      
   }
 }

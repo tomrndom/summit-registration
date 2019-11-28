@@ -313,7 +313,7 @@ class TicketPopup extends React.Component {
                           <TicketAssignForm 
                             ticket={tempTicket} 
                             status={status.text} 
-                            ownedTicket={fromTicketList || member.email === owner.email}
+                            ownedTicket={fromTicketList || owner? owner.email === member.email : false }
                             orderOwned={owned}
                             extraQuestions={extraQuestions}
                             readOnly={now > reassign_date}

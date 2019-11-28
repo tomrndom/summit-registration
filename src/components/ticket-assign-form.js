@@ -83,8 +83,6 @@ class TicketAssignForm extends React.Component {
       let {extra_questions, input_email} = this.state;
       let now = parseInt((new Date().getTime() / 1000).toFixed(0));
 
-      console.log(extraQuestions);
-
         return (
           <div className="ticket-assign-form">
             <div className="row popup-basic-info">

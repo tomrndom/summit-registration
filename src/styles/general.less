@@ -140,7 +140,7 @@ input {
         display: block;
       }
     }        
-    &:hover .dropdown-container {
+    &:hover .dropdown-container, &:active .dropdown-container {
       display: flex;
       flex-direction: column;
       .dropdown-item, .dropdown-item-mobile, .dropdown-item-desktop {
@@ -152,7 +152,7 @@ input {
           border-bottom: none;
           color: #297fca;
         }
-        &:hover {
+        &:hover, &:active {
           background-color: lightgrey;
         }
       }

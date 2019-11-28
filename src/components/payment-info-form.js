@@ -101,7 +101,7 @@ class PaymentInfoForm extends React.Component {
                 fontSize: '16px',
 
                 '::placeholder': {
-                    color: '#3486cd'
+                    color: '#A4C7E6'
                 }
             },
             invalid: {

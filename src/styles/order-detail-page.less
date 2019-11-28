@@ -1,5 +1,4 @@
 .order-detail {
-  .row{  
 
     .order-detail__title {
         background-color: #F9F9F9;
@@ -158,7 +157,7 @@
         }
       }
     }
-  }
+
 }
 
 @media (min-width: 768px) {
@@ -178,23 +177,17 @@
 @media (max-width: 768px) {
 
   .order-detail {
-    .row{  
+    margin-bottom: 20px;
+    margin-top: -20px;
+    .row {      
+      flex-direction: column;
+      margin-top: 0px;
 
       .order-detail__title {        
         padding: 20px 10px;
         h4 {
           margin-top: 5px;
           margin-bottom: 5px;
-        }
-      }
-
-      .order-detail {
-        margin-bottom: 20px;
-        margin-top: -20px;
-        .row {
-          display: flex;
-          flex-direction: column;
-          margin-top: 0px;
         }
       }
 

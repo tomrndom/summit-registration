@@ -42,7 +42,7 @@ class StepFourPage extends React.Component {
 
     generateQRCode() {
       var QRCode = require('qrcode.react');      
-      const {checkout: { number }} = this.props;
+      const {order: {checkout: { number }}} = this.props;
       let qr = null;
 
       if (number) {

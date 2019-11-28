@@ -20,6 +20,7 @@ import TicketAssignForm from '../components/ticket-assign-form';
 import TicketOptions from '../components/ticket-options';
 
 import { getTicketByHash, getTicketPDFByHash, refundTicket, regenerateTicketHash, handleTicketChange, assignTicketByHash } from '../actions/ticket-actions'
+import history from '../history';
 
 class GuestsLayout extends React.Component {
 
@@ -129,6 +130,7 @@ class GuestsLayout extends React.Component {
       let loading = ticketLoading && summitLoading;      
 
       if(!owner) {
+        history.push('/a/member/tickets/');
         return (
           <div>
             Ticket not found

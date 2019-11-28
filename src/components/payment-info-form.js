@@ -99,6 +99,10 @@ class PaymentInfoForm extends React.Component {
                 // Add your base input styles here. For example: #d4e5f4
                 color: '#3486cd',
                 fontSize: '16px',
+
+                '::placeholder': {
+                    color: '#3486cd'
+                }
             },
             invalid: {
                 color: '#e5424d',

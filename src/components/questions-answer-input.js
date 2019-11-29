@@ -112,7 +112,7 @@ export default class QuestionAnswersInput extends React.Component {
             case 'TextArea':
                 return (
                   <React.Fragment>
-                    <div className="row field-wrapper">
+                    <div className="row field-wrapper--textarea">
                         <div className="col-sm-4"> {question.label} </div>
                         <div className="col-sm-8">
                           {readOnly ? 

@@ -30,6 +30,7 @@
     input {
       background-color: @lblue_color_1;
       border-color: @header_lblue_color;
+      display: inline-flex;
     }
     .css-bg1rzq-control, .css-1szy77t-control {          
       background-color: @lblue_color_1;
@@ -41,6 +42,12 @@
     textarea {
       background-color: @lblue_color_1;
       border-color: @header_lblue_color;
+    }
+    &--textarea {
+      align-items: flex-start;
+      div:first-child {
+        padding-top: 5px;
+      }
     }
   }
   .form-group {

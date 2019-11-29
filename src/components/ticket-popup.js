@@ -126,9 +126,9 @@ class TicketPopup extends React.Component {
     }
 
     handleTicketAssign(self) {
-      if(self){
-        const { email } = this.props.member;
-        this.props.updateTicket({attendee_email: email});
+      if(self){        
+        const { email, first_name, last_name } = this.props.member;
+        this.props.updateTicket({attendee_email: email, attendee_first_name: first_name, attendee_surname: last_name});
         this.props.closePopup();
       } else {
         let { tempTicket } = this.state;

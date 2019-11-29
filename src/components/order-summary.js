@@ -92,10 +92,10 @@ class OrderSummary extends React.Component {
                             let total = tix.qty * tix.tix_type.cost;
                             return (
                                 <div className="row order-row" key={`tixorder_${tix.tix_type.created}`}>
-                                    <div className="col-xs-6">
+                                    <div className="col-xs-6 text-left">
                                         {tix.tix_type.name}
                                     </div>
-                                    <div className="col-xs-2">
+                                    <div className="col-xs-2 text-center">
                                         x{tix.qty}
                                     </div>
                                     <div className="col-xs-4 text-right subtotal">
@@ -106,7 +106,7 @@ class OrderSummary extends React.Component {
                         })}
 
                         <div className="row order-discounts order-row">
-                            <div className="col-xs-8">
+                            <div className="col-xs-8 text-left">
                                 {T.translate("order_summary.discounts")}
                                 <p className="discount-desc">
                                     {discounts.map(dis => (
@@ -119,7 +119,7 @@ class OrderSummary extends React.Component {
                             </div>
                         </div>
                         <div className="row total-row">
-                            <div className="col-xs-6">
+                            <div className="col-xs-6 text-left">
                                 {T.translate("order_summary.total")}
                             </div>
                             <div className="col-xs-6 text-right total">

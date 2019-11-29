@@ -157,7 +157,7 @@ class GuestsLayout extends React.Component {
               <div className="row submit-buttons-wrapper">
                   <div className="col-md-12">                      
                       <button className="btn btn-primary continue-btn" 
-                        disabled={!tempTicket.attendee_first_name || !tempTicket.attendee_surname} 
+                        disabled={!tempTicket.attendee_first_name || !tempTicket.attendee_surname || !tempTicket.disclaimer_accepted} 
                         onClick={() =>this.handleTicketUpdate(tempTicket)}>
                           {T.translate("guests.save")}
                       </button>

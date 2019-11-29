@@ -128,8 +128,13 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
     expand: 'owner, owner.extra_questions'
   };
 
-  let normalizedEntity = { attendee_email, attendee_first_name, attendee_last_name, extra_questions };
-      
+  let normalizedEntity = {}
+
+  if(!attendee_first_name & !attendee_last_name) {
+    normalizedEntity = { attendee_email };  
+  } else {
+    normalizedEntity = { attendee_email, attendee_first_name, attendee_last_name, extra_questions };
+  }
   
   return putRequest(
     null,

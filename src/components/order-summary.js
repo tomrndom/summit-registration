@@ -92,12 +92,10 @@ class OrderSummary extends React.Component {
                             let total = tix.qty * tix.tix_type.cost;
                             return (
                                 <div className="row order-row" key={`tixorder_${tix.tix_type.created}`}>
-                                    <div className="col-xs-6 text-left">
-                                        {tix.tix_type.name}
-                                    </div>
-                                    <div className="col-xs-2 text-center">
-                                        x{tix.qty}
-                                    </div>
+                                    <div className="col-xs-8">
+                                        <span>{tix.tix_type.name}</span>
+                                        <span>x{tix.qty}</span>
+                                    </div>                                    
                                     <div className="col-xs-4 text-right subtotal">
                                         ${total.toFixed(2)}
                                     </div>

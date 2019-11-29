@@ -128,7 +128,7 @@ export const deleteReservation = () => (dispatch, getState) => {
   
   let { summitState, orderState } = getState();    
   let { currentSummit: { id } } = summitState;
-  let { reservation: { hash } } = orderState;
+  let { order: {reservation: { hash } }} = orderState;
 
   return deleteRequest(
     createAction(DELETE_RESERVATION),
@@ -150,7 +150,7 @@ export const deleteReservation = () => (dispatch, getState) => {
 }
 
 export const payReservation = (card, stripe) => (dispatch, getState) => {
-    let {orderState: {order, reservation}, summitState: {currentSummit}} = getState();
+    let {orderState: { order, order: {reservation}}, summitState: {currentSummit}} = getState();
 
     let success_message = {
         title: T.translate("general.done"),
@@ -259,7 +259,7 @@ export const selectOrder = (order, updateId = null) => (dispatch, getState) => {
 
 export const cancelOrder = (order) => (dispatch, getState) => {
     
-  let { loggedUserState } = getState();
+  let { loggedUserState, orderState: {current_page} } = getState();
   let { accessToken }     = loggedUserState;
 
   dispatch(startLoading());
@@ -275,7 +275,7 @@ export const cancelOrder = (order) => (dispatch, getState) => {
       {},
       authErrorHandler
   )(params)(dispatch).then((payload) => {
-      dispatch(getUserOrders());
+      dispatch(getUserOrders(null, current_page));
       dispatch(stopLoading());
       history.push('/a/member/orders');
     }

@@ -118,10 +118,10 @@ AuthButton extends React.Component {
                     <div className="dropdown-container">
                         {this.handleMemberMenu() &&
                         <React.Fragment>
-                            <span className="dropdown-item-desktop" onClick={() => { this.onTicketClick(); }}>
+                            <span className="dropdown-item" onClick={() => { this.onTicketClick(); }}>
                                 {T.translate("nav_bar.my-orders")}
                             </span>
-                            <span className="dropdown-item-desktop" onClick={() => { this.onOrderClick(); }}>
+                            <span className="dropdown-item" onClick={() => { this.onOrderClick(); }}>
                                 {T.translate("nav_bar.my-tickets")}
                             </span>
                         </React.Fragment>

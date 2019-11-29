@@ -25,6 +25,7 @@ import {findElementPos} from "openstack-uicore-foundation/lib/methods";
 
 
 import '../styles/step-four-page.less';
+import history from '../history';
 
 
 class StepFourPage extends React.Component {
@@ -40,12 +41,22 @@ class StepFourPage extends React.Component {
 
     }
 
+    componentDidMount() {
+      let {order:{checkout}} = this.props;
+        const stepDefs = ['start', 'details', 'checkout', 'done'];        
+        if(checkout) {           
+          window.scrollTo(0, 0);
+        } else {
+          history.push(stepDefs[0]);
+        }
+    }
+
     generateQRCode() {
       var QRCode = require('qrcode.react');      
-      const {order: {checkout: { number }}} = this.props;
+      const { order: { checkout }} = this.props;
       let qr = null;
 
-      if (number) {
+      if (checkout && checkout.number) {
           qr = <QRCode value={number} />
       }
 
@@ -60,7 +71,8 @@ class StepFourPage extends React.Component {
                 <OrderSummary order={order} summit={summit} type={'mobile'} />
                 <div className="row">
                     <div className="order-result">
-                        <h1>{T.translate("step_four.congratulations")}!</h1>                        
+                        <h1>{T.translate("step_four.congratulations")}!</h1>
+                        {checkout &&
                         <div className="order-no-box">
                             <p>{T.translate("step_four.order_no")}</p>
                             <div className="qr-code">
@@ -68,6 +80,7 @@ class StepFourPage extends React.Component {
                             </div>
                             <div className="order-no">{checkout.number}</div>
                         </div>
+                        }
                         {member &&
                           <Link to="/a/member/orders">
                             <button className="btn btn-primary manage-btn">

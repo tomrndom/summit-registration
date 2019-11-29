@@ -260,7 +260,7 @@ class TicketList extends React.Component {
                   last
                   ellipsis
                   boundaryLinks
-                  maxButtons={5}
+                  maxButtons={3}
                   items={lastPage}
                   activePage={currentPage}
                   onSelect={this.handlePageChange}

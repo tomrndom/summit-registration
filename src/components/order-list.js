@@ -265,7 +265,7 @@ class OrderList extends React.Component {
                                   <p className={`status ${this.handleOrderStatus(o).class}`}>{this.handleOrderStatus(o).text}</p>
                               </div>                              
                               <div className="col-sm-4">
-                                  <h4>${o.amount}</h4>
+                                  <h4>$ {o.amount}</h4>
                               </div>
                           </div>
                       </div>

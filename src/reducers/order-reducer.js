@@ -44,6 +44,7 @@ const DEFAULT_ENTITY = {
     currentStep: null,
     tickets: [],
     reservation: {},
+    checkout: {},
 }
 
 const DEFAULT_STATE = {
@@ -65,7 +66,7 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
 
     switch(type){
         case LOGOUT_USER:
-            return DEFAULT_STATE;
+            return { state: {...state.order}, ...DEFAULT_STATE };
         case START_LOADING:
             return {...state, loading: true};
             break;
@@ -91,7 +92,7 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             break;
         case CREATE_RESERVATION_SUCCESS:
             let entity = {...payload.response};
-            return {...state, reservation: entity, errors: {}, loading: false, loaded: true};
+            return {...state, order: {...state.order, reservation: entity }, errors: {}, loading: false, loaded: true};
             break
         case CREATE_RESERVATION_ERROR:
             let {tickets} = state.order;            

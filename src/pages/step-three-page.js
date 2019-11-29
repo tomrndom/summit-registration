@@ -27,6 +27,7 @@ import BillingInfoForm from "../components/billing-info-form";
 
 
 import '../styles/step-three-page.less';
+import history from '../history';
 
 
 class StepThreePage extends React.Component {
@@ -69,7 +70,13 @@ class StepThreePage extends React.Component {
     }
 
     componentDidMount() {
-        window.scrollTo(0, 0);
+        let {order:{reservation}} = this.props;
+        const stepDefs = ['start', 'details', 'checkout', 'done'];
+        if(reservation) {          
+          window.scrollTo(0, 0);
+        } else {
+          history.push(stepDefs[0]);
+        }
     }
 
     handleChange(ev) {
@@ -99,7 +106,8 @@ class StepThreePage extends React.Component {
 
     render(){
         let {summit, order, errors, stripeForm} = this.props;
-        let {card, stripe, dirty} = this.state;
+        let {card, stripe, dirty} = this.state;        
+
         return (
             <div className="step-three">
                 <OrderSummary order={order} summit={summit} type={'mobile'} />
@@ -140,7 +148,8 @@ const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
     summit: summitState.currentSummit,
     order:  orderState.order,
     errors:  orderState.errors,
-    stripeForm:  orderState.stripeForm
+    stripeForm:  orderState.stripeForm,
+    reservation:  orderState.reservation
 })
 
 export default connect (

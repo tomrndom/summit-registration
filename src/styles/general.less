@@ -129,12 +129,7 @@ input {
         text-decoration: none;
         display: block;
       }
-      .dropdown-item-mobile button, a {
-        color: black;    
-        text-decoration: none;
-        display: block;
-      }
-      .dropdown-item-desktop button, a {
+      .dropdown-item button, a {
         color: black;    
         text-decoration: none;
         display: block;
@@ -143,7 +138,7 @@ input {
     &:hover .dropdown-container, &:active .dropdown-container {
       display: flex;
       flex-direction: column;
-      .dropdown-item, .dropdown-item-mobile, .dropdown-item-desktop {
+      .dropdown-item {
         font-size: 12px;
         width: 100%;
         padding: 12px 30px;
@@ -458,11 +453,7 @@ input {
 
   .ticket-list-mobile {
     width: 111%;
-  }
-
-  .dropdown-item-desktop {
-    display: none;
-  }
+  }  
 
   .not-found-container {
     margin-top: 150px;
@@ -476,10 +467,6 @@ input {
   }
 
   .ticket-list-mobile {
-    display: none;
-  }
-
-  .dropdown-item-mobile {
     display: none;
   }
 }

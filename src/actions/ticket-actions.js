@@ -54,7 +54,7 @@ export const handleResetTicket = () => (dispatch, getState) => {
 
 
 
-export const getUserTickets = (page = 1, per_page = 5) => (dispatch, getState) => {
+export const getUserTickets = (ticketRefresh, page = 1, per_page = 5) => (dispatch, getState) => {
 
   let { loggedUserState } = getState();
   let { accessToken } = loggedUserState;
@@ -76,7 +76,11 @@ export const getUserTickets = (page = 1, per_page = 5) => (dispatch, getState) =
       `${window.API_BASE_URL}/api/v1/summits/all/orders/all/tickets/me`,
       authErrorHandler
   )(params)(dispatch).then(() => {
-      dispatch(getUserSummits('tickets'));
+      if(ticketRefresh){
+        dispatch(selectTicket({}, false, ticketRefresh))
+      } else {
+        dispatch(getUserSummits('tickets'));
+      }      
     }
   ).catch(e => {
     dispatch(stopLoading());
@@ -85,12 +89,17 @@ export const getUserTickets = (page = 1, per_page = 5) => (dispatch, getState) =
 
 }
 
-export const selectTicket = (ticket, ticketList = false) => (dispatch, getState) => {
+export const selectTicket = (ticket, ticketList = false, ticketRefresh) => (dispatch, getState) => {
     
   dispatch(startLoading());
 
   if(ticketList){
     dispatch(selectSummitById(ticket.order.summit_id));
+    if(ticketRefresh) {
+      let {ticketState: {memberTickets}} = getState();
+      let memberTicket = memberTickets.find(t => t.id === ticketRefresh);
+      dispatch(createAction(SELECT_TICKET)(memberTicket));
+    }
     dispatch(createAction(SELECT_TICKET)(ticket));    
   } else {
     dispatch(createAction(SELECT_TICKET)(ticket));
@@ -172,7 +181,7 @@ export const editOwnedTicket = (attendee_email, attendee_first_name, attendee_la
       normalizedEntity,
       authErrorHandler
   )(params)(dispatch).then(() => {
-      dispatch(getUserTickets(current_page));
+      dispatch(getUserTickets(null, current_page));
     }
   ).catch(e => {
     dispatch(stopLoading());
@@ -276,11 +285,13 @@ export const getTicketPDF = () => (dispatch, getState) => {
 
 export const refundTicket = (ticket) => (dispatch, getState) => {
   
-  let { loggedUserState } = getState();
+  let { loggedUserState, orderState: { selectedOrder }, ticketState: {selectedTicket }} = getState();
+  let orderPage = getState().orderState.current_page;   
+  let ticketPage = getState().ticketState.current_page;   
   let { accessToken }     = loggedUserState;
 
-  let orderId = ticket.order ? ticket.order.id : ticket.order_id;
-  
+  let orderId = ticket.order ? ticket.order.id : ticket.order_id;  
+
   dispatch(startLoading());
 
   let params = {
@@ -294,10 +305,11 @@ export const refundTicket = (ticket) => (dispatch, getState) => {
       {},
       authErrorHandler
   )(params)(dispatch).then((payload) => {
-      if(ticket.order.id) {
-        history.push('/a/member/tickets/');
-      }
-      dispatch(stopLoading());
+      if(ticket.order_id) {        
+        dispatch(getUserOrders(selectedOrder.id, orderPage));      
+      } else {        
+        dispatch(getUserTickets(selectedTicket.id, ticketPage));        
+      }             
     }
   ).catch(e => {
     dispatch(stopLoading());

@@ -36,7 +36,7 @@ class TicketsListPage extends React.Component {
 
     componentWillMount() {    
         let {page, perPage} = this.props;
-        this.props.getUserTickets(page, perPage);
+        this.props.getUserTickets(null, page, perPage);
     }
 
     handleTicketRemoveAttendee(ticket) {
@@ -45,7 +45,7 @@ class TicketsListPage extends React.Component {
 
     handlePageChange(page) {      
       let {perPage} = this.props;
-      this.props.getUserTickets(page, perPage);
+      this.props.getUserTickets(null, page, perPage);
     }
   
     handleResendNotification() {

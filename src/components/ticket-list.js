@@ -97,8 +97,7 @@ class TicketList extends React.Component {
         return status[4];
       } else if (ticket.status === "Refunded") {
         return status[5];
-      }          
-      else if(ticket.owner_id === 0) {
+      } else if(ticket.owner_id === 0) {
         return status[0];
       } else if (!ticket.owner.extra_questions.length || !ticket.owner.first_name || !ticket.owner.surname) {
         return status[1];
@@ -205,7 +204,7 @@ class TicketList extends React.Component {
               {tickets.map((t) => {
                 return (
                   <div className={`ticket ${this.handleTicketStatus(t).text === "UNASSIGNED" ? now > this.handleReassignDate(t) ? 'disabled' : this.handleTicketStatus(t).orderClass : this.handleTicketStatus(t).orderClass} p-2 col-sm-8 col-sm-offset-2`} key={t.id} 
-                    onClick={() => {t.status === "Cancelled" || (this.handleTicketStatus(t).text === "UNASSIGNED" && now > this.handleReassignDate(t)) ? null: this.togglePopup(t)}}>
+                    onClick={() => {t.status === "Cancelled" || t.status === "RefundRequested" || t.status === "Refunded" || (this.handleTicketStatus(t).text === "UNASSIGNED" && now > this.handleReassignDate(t)) ? null: this.togglePopup(t)}}>
                       <div className="col-sm-1">
                           <i className={`fa fa-2x ${this.handleTicketStatus(t).icon} ${this.handleTicketStatus(t).class}`}></i>                             
                       </div>
@@ -217,9 +216,13 @@ class TicketList extends React.Component {
                           <h5>{this.handleTicketName(t)}</h5>
                           <p>{this.handleTicketDate(t)} <br /> {this.handleTicketLocation(t)} </p>
                       </div>
-                      <div className="arrow col-sm-2">
-                          <i className="fa fa-angle-right"></i>
-                      </div>
+                      {(t.status === "Cancelled" || t.status === "RefundRequested" || t.status === "Refunded") ?
+                        <div className="arrow col-sm-2"></div>
+                        :
+                        <div className="arrow col-sm-2">
+                            <i className="fa fa-angle-right"></i>
+                        </div>
+                      }
                   </div>
                 )
               })}              
@@ -228,7 +231,7 @@ class TicketList extends React.Component {
               {tickets.map((t) => {
                 return (
                   <div className={`ticket ${this.handleTicketStatus(t).text === "UNASSIGNED" ? now > this.handleReassignDate(t) ? 'disabled' : this.handleTicketStatus(t).orderClass : this.handleTicketStatus(t).orderClass} p-2 col-sm-8 col-sm-offset-2`} key={t.id} 
-                  onClick={() => {t.status === "Cancelled" || (this.handleTicketStatus(t).text === "UNASSIGNED" && now > this.handleReassignDate(t)) ? null: this.togglePopup(t)}}>
+                  onClick={() => {t.status === "Cancelled" || t.status === "RefundRequested" || t.status === "Refunded" || (this.handleTicketStatus(t).text === "UNASSIGNED" && now > this.handleReassignDate(t)) ? null: this.togglePopup(t)}}>
                       <div className="col-sm-1">
                           <i className={`fa fa-2x ${this.handleTicketStatus(t).icon} ${this.handleTicketStatus(t).class}`}></i>                             
                       </div>
@@ -237,9 +240,13 @@ class TicketList extends React.Component {
                           <p>{this.handleTicketDate(t)} <br/> {this.handleTicketLocation(t)} </p>
                           <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
                       </div>                                            
-                      <div className="arrow col-sm-2">
-                          <i className="fa fa-angle-right"></i>
-                      </div>
+                      {(t.status === "Cancelled" || t.status === "RefundRequested" || t.status === "Refunded") ?
+                        <div className="arrow col-sm-2"></div>
+                        :
+                        <div className="arrow col-sm-2">
+                            <i className="fa fa-angle-right"></i>
+                        </div>
+                      }
                   </div>
                 )
               })}              

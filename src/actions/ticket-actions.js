@@ -294,7 +294,9 @@ export const refundTicket = (ticket) => (dispatch, getState) => {
       {},
       authErrorHandler
   )(params)(dispatch).then((payload) => {
-      history.push('/a/member/tickets/');
+      if(ticket.order.id) {
+        history.push('/a/member/tickets/');
+      }
       dispatch(stopLoading());
     }
   ).catch(e => {

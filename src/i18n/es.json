@@ -79,7 +79,7 @@
   },
   "guests": {
     "cancel"              : "Cancel",
-    "send"                : "Send"
+    "save"                : "Save"
   },
   "orders": {
     "empty"               : "There are no active orders so far"

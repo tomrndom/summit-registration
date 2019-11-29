@@ -57,9 +57,11 @@ class TicketOptions extends React.Component {
 
     handleTicketRole(badge) {
       let roles = [];
-      badge.features.map(f => {
+      
+      if(badge && badge.features) {
+        badge.features.map(f => {
         roles.push(f.name);
-      });
+      });}
       if(roles.length) {
         return roles.join(', ');
       } else {
@@ -91,7 +93,7 @@ class TicketOptions extends React.Component {
                       <h4>{summit.name}</h4>
                       <p>{this.handleTicketName(ticket)}</p>
                       <p>{this.handleTicketDate(ticket)} <br />{this.handleSummitLocation(summit)} </p>
-                      <p>{this.handleTicketRole(ticket.badge)}</p>
+                      <p className="role-badge">{this.handleTicketRole(ticket.badge)}</p>
                     </div>
                   </div>
                   <hr />

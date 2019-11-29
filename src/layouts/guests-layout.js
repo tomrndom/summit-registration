@@ -155,12 +155,11 @@ class GuestsLayout extends React.Component {
                 />
               </div>
               <div className="row submit-buttons-wrapper">
-                  <div className="col-md-12">  
-                      <a href="" className="back-btn" onClick={this.cancelClick}>                        
-                          {T.translate("guests.cancel")}
-                      </a>
-                      <button className="btn btn-primary continue-btn" onClick={() =>this.handleTicketUpdate(tempTicket)}>
-                          {T.translate("guests.send")}
+                  <div className="col-md-12">                      
+                      <button className="btn btn-primary continue-btn" 
+                        disabled={!tempTicket.attendee_first_name || !tempTicket.attendee_surname} 
+                        onClick={() =>this.handleTicketUpdate(tempTicket)}>
+                          {T.translate("guests.save")}
                       </button>
                   </div>
               </div>

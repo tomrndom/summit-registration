@@ -125,7 +125,7 @@ class TicketAssignForm extends React.Component {
                           value={ticket.email}
                         />
                         :
-                        <span>{ticket.attendee_email} | <u onClick={() => this.setState({input_email: true})}>Change</u> </span> 
+                        <span>{ticket.attendee_email}{!guest && <u onClick={() => this.setState({input_email: true})}> | Change</u>} </span> 
                     }                    
                   </React.Fragment>                  
                 }
@@ -261,6 +261,7 @@ class TicketAssignForm extends React.Component {
                   <div className="col-sm-12">
                       <div className="form-check abc-checkbox">
                           <input type="checkbox" id="disclaimer_accepted" checked={ticket.disclaimer_accepted}
+                                  disabled={ticket.disclaimer_accepted && guest}
                                   onChange={onChange} className="form-check-input" />
                           <label className="form-check-label" htmlFor="disclaimer_accepted">
                               {summit.registration_disclaimer_content}

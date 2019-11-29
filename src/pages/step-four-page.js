@@ -56,8 +56,8 @@ class StepFourPage extends React.Component {
       const { order: { checkout }} = this.props;
       let qr = null;
 
-      if (checkout && checkout.number) {
-          qr = <QRCode value={number} />
+      if (checkout && checkout.number) {          
+          qr = <QRCode value={checkout.number} />
       }
 
       return qr;

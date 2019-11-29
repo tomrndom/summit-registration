@@ -77,10 +77,27 @@ class TicketList extends React.Component {
           orderClass: 'cancel',
           class: 'ticket-cancel'
         },
+        { 
+          text: 'REFUND REQUESTED',
+          icon: 'fa-fw',
+          orderClass: 'cancel',
+          class: 'order-cancel'
+        },
+        { 
+          text: 'REFUNDED',
+          icon: 'fa-fw',
+          orderClass: 'cancel',
+          class: 'order-cancel'
+        },
       ];
       if(ticket.status === "Cancelled") {
         return status[3];
       }
+      else if(ticket.status === "RefundRequested") {
+        return status[4];
+      } else if (ticket.status === "Refunded") {
+        return status[5];
+      }          
       else if(ticket.owner_id === 0) {
         return status[0];
       } else if (!ticket.owner.extra_questions.length || !ticket.owner.first_name || !ticket.owner.surname) {

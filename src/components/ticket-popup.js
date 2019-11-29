@@ -325,7 +325,7 @@ class TicketPopup extends React.Component {
                         <div className="popup-footer-save">
                           <button 
                               className="btn btn-primary" 
-                              disabled={tempTicket.disclaimer_accepted === false} 
+                              disabled={tempTicket.disclaimer_accepted === false && fromTicketList}
                               onClick={() => this.handleTicketSave()}>
                                   {T.translate("ticket_popup.save_changes")}
                           </button>  

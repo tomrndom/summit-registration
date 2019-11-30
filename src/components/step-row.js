@@ -30,9 +30,14 @@ export default class StepRow extends React.Component {
 
         return (
             <div className="row step-row">
-                <div className="col-md-12">
+                <div className="col-md-6">
                     Step {step} of 4
                 </div>
+                {(step === 2 || step === 3) &&
+                <div className="col-md-6">                    
+                    * {T.translate("step_two.required")}
+                </div>
+                }
             </div>
         );
 

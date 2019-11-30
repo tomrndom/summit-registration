@@ -4,14 +4,12 @@
   .link {
     cursor: pointer;
   }
-  .basic-info {
-    div:first-child {      
-      display: flex;
-      align-items: baseline;
-      div:last-child {
-        margin-left: auto;
-      }
-    }
+  .info-title {
+    display: flex;
+    align-items: baseline;    
+    div:last-child {
+      margin-left: auto;
+    }    
   }
   .field-wrapper {
     margin-top: 10px;
@@ -24,6 +22,16 @@
       border-color: @header_lblue_color;
       &::placeholder{
         color: #A4C7E6;
+      }
+    }
+  }
+}
+
+@media(max-width: 768px) {
+  .step-two {
+    .basic-info {
+      .required {
+        display: none;
       }
     }
   }

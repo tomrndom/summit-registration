@@ -114,11 +114,11 @@ class PaymentInfoForm extends React.Component {
 
         return (
             <div className="payment-info">
-                <div className="row">
+                <div className="row info-title ">
                     <div className="col-md-8">
                         <h3>{T.translate("step_three.payment_info")}</h3>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-4 required">
                         * {T.translate("step_three.required")}
                     </div>
                 </div>

@@ -1,6 +1,13 @@
 @import 'constants.less';
 
 .step-three {
+  .info-title {
+    display: flex;
+    align-items: baseline;    
+    div:last-child {
+      margin-left: auto;
+    }    
+  }
   .field-wrapper {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -35,3 +42,12 @@
   }
 }
 
+@media(max-width: 768px) {
+  .step-three {
+    .info-title {
+      .required {
+        display: none;
+      }
+    }
+  }
+}

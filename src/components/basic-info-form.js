@@ -66,11 +66,11 @@ class BasicInfoForm extends React.Component {
 
         return (
             <div className="basic-info">
-                <div className="row">
+                <div className="row info-title">
                     <div className="col-md-8">
                         <h3>{T.translate("step_two.basic_info")}</h3>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-4 required">
                         * {T.translate("step_two.required")}
                     </div>
                 </div>

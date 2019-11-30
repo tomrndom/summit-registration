@@ -177,6 +177,12 @@ input {
 
 .step-row {
   font-weight: bold;
+  display: flex;
+  align-items: baseline;
+  div:last-child {
+    margin-left: auto;
+    font-weight: normal;
+  }
 }
 
 .guest-layout{
@@ -468,6 +474,11 @@ input {
 
   .ticket-list-mobile {
     display: none;
+  }
+  .step-row {
+    div:last-child {
+      display: none;
+    }
   }
 }
 

@@ -327,7 +327,7 @@ class TicketPopup extends React.Component {
                           <button 
                               className="btn btn-primary" 
                               disabled={
-                                (tempTicket.disclaimer_accepted === false && summit.registration_disclaimer_mandatory === true && fromTicketList) ||
+                                (summit.registration_disclaimer_mandatory === true && tempTicket.disclaimer_accepted === false && fromTicketList) ||
                                 !tempTicket.attendee_first_name || 
                                 !tempTicket.attendee_surname}
                               onClick={() => this.handleTicketSave()}>

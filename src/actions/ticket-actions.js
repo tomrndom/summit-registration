@@ -125,7 +125,7 @@ export const handleTicketChange = (ticket, errors = {}) => (dispatch, getState) 
 
 }
 
-export const assignAttendee = (attendee_email, attendee_first_name, attendee_last_name, extra_questions) => (dispatch, getState) => {
+export const assignAttendee = (attendee_email, attendee_first_name, attendee_last_name, attendee_company_name, extra_questions) => (dispatch, getState) => {
       
   let { loggedUserState, orderState: { selectedOrder, current_page }, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
@@ -142,7 +142,7 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
   if(!attendee_first_name & !attendee_last_name) {
     normalizedEntity = { attendee_email };  
   } else {
-    normalizedEntity = { attendee_email, attendee_first_name, attendee_last_name, extra_questions };
+    normalizedEntity = { attendee_email, attendee_first_name, attendee_last_name, attendee_company_name, extra_questions };
   }
   
   return putRequest(
@@ -160,7 +160,7 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
   });
 }
 
-export const editOwnedTicket = (attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions) => (dispatch, getState) => {  
+export const editOwnedTicket = (attendee_email, attendee_first_name, attendee_last_name, attendee_company_name, disclaimer_accepted, extra_questions) => (dispatch, getState) => {  
 
   let { loggedUserState, ticketState: { selectedTicket, current_page } } = getState();
   let { accessToken }     = loggedUserState;
@@ -172,7 +172,7 @@ export const editOwnedTicket = (attendee_email, attendee_first_name, attendee_la
     expand: 'owner, owner.extra_questions'
   };
 
-  let normalizedEntity = { attendee_email, attendee_first_name, attendee_last_name, disclaimer_accepted, extra_questions };
+  let normalizedEntity = { attendee_email, attendee_first_name, attendee_last_name, attendee_company_name, disclaimer_accepted, extra_questions };
 
   return putRequest(
       null,
@@ -231,7 +231,7 @@ export const removeAttendee = (tempTicket) => (dispatch, getState) => {
 
   let orderId = selectedTicket.order ? selectedTicket.order.id : selectedTicket.order_id;
 
-  let {attendee_email, attendee_first_name, attendee_surname, extra_questions} = tempTicket;
+  let {attendee_email, attendee_first_name, attendee_surname, attendee_company_name, extra_questions} = tempTicket;
 
   return deleteRequest(
       null,
@@ -240,7 +240,7 @@ export const removeAttendee = (tempTicket) => (dispatch, getState) => {
       {},
       authErrorHandler
   )(params)(dispatch).then(() => {
-      dispatch(assignAttendee(attendee_email, attendee_first_name, attendee_surname, extra_questions));
+      dispatch(assignAttendee(attendee_email, attendee_first_name, attendee_surname, attendee_company_name, extra_questions));
     }).catch((e) => {
       console.log('error', e)
       dispatch(stopLoading());
@@ -340,7 +340,7 @@ export const getTicketByHash = (hash) => (dispatch, getState) => {
       
 }
 
-export const assignTicketByHash = (attendee_first_name, attendee_last_name, disclaimer_accepted, share_contact_info, extra_questions, hash) => (dispatch, getState) => {
+export const assignTicketByHash = (attendee_first_name, attendee_last_name, attendee_company_name, disclaimer_accepted, share_contact_info, extra_questions, hash) => (dispatch, getState) => {
 
   dispatch(startLoading());
 
@@ -348,7 +348,7 @@ export const assignTicketByHash = (attendee_first_name, attendee_last_name, disc
     expand : 'order_extra_questions.values, owner, owner.extra_questions, badge, badge.features'
   };
 
-  let normalizedEntity = {attendee_first_name, attendee_last_name, disclaimer_accepted, share_contact_info, extra_questions};
+  let normalizedEntity = {attendee_first_name, attendee_last_name, attendee_company_name, disclaimer_accepted, share_contact_info, extra_questions};
 
   return putRequest(
     null,

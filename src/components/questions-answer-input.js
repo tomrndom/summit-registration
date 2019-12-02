@@ -87,6 +87,7 @@ export default class QuestionAnswersInput extends React.Component {
                                 id={question.id}
                                 value={answerValue}
                                 onChange={this.handleChange}
+                                placeholder={question.placeholder}
                                 className="form-control"
                             />
                           }                            
@@ -102,6 +103,7 @@ export default class QuestionAnswersInput extends React.Component {
                                 id={question.id}
                                 value={answerValue}
                                 onChange={this.handleChange}
+                                placeholder={question.placeholder}
                                 className="form-control"
                             />
                           }                            
@@ -122,6 +124,7 @@ export default class QuestionAnswersInput extends React.Component {
                                 id={question.id}
                                 value={answerValue}
                                 onChange={this.handleChange}
+                                placeholder={question.placeholder}
                                 className="form-control"                                
                                 rows="4"
                             />
@@ -138,6 +141,7 @@ export default class QuestionAnswersInput extends React.Component {
                                 id={question.id}
                                 value={answerValue}
                                 onChange={this.handleChange}
+                                placeholder={question.placeholder}
                                 className="form-control"                                
                                 rows="4"
                             />

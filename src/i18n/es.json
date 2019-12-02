@@ -122,6 +122,7 @@
     "edit_email"            : "Email *",
     "edit_first_name"       : "First Name *",
     "edit_last_name"        : "Last Name *",
+    "edit_company"          : "Company",
     "edit_preferences"      : "Preferences",
     "notify_text_1"         : "All required details must be completed before",
     "notify_text_2"         : "Notify the attendee to",

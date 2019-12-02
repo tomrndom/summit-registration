@@ -237,6 +237,38 @@ class TicketAssignForm extends React.Component {
                 }
               </div>
             </div>
+            <div className="row field-wrapper">
+              <div className="col-sm-4">{T.translate("ticket_popup.edit_company")}</div>
+              <div className="col-sm-8">
+                {readOnly ? 
+                  <span>{ticket.attendee_company}</span>
+                  :
+                  <Input
+                    id="attendee_company"
+                    className="form-control"
+                    error={this.hasErrors('attendee_company')}
+                    onChange={onChange}
+                    value={ticket.attendee_company}
+                  />
+                }                
+              </div>
+            </div>
+            <div className="field-wrapper-mobile">
+              <div>{T.translate("ticket_popup.edit_company")}</div>
+              <div>
+                {readOnly ? 
+                  <span>{ticket.attendee_company}</span>
+                  :
+                  <Input
+                    id="attendee_company"
+                    className="form-control"
+                    error={this.hasErrors('attendee_company')}
+                    onChange={onChange}
+                    value={ticket.attendee_company}
+                  />
+                }                
+              </div>
+            </div>
             {extraQuestions && 
             <React.Fragment>
               <hr/>

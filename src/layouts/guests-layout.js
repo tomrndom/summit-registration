@@ -32,6 +32,7 @@ class GuestsLayout extends React.Component {
         attendee_email: '',
         attendee_first_name: '',
         attendee_surname: '',
+        attendee_company: '',
         disclaimer_accepted: null,
         extra_questions: []
       }
@@ -55,10 +56,10 @@ class GuestsLayout extends React.Component {
     }
 
     componentDidUpdate() {
-      let {attendee_email, attendee_first_name, attendee_surname, disclaimer_accepted, extra_questions} = this.state.tempTicket;
+      let {attendee_email, attendee_first_name, attendee_surname, attendee_company, disclaimer_accepted, extra_questions} = this.state.tempTicket;
       let {owner} = this.props.ticket;      
-      if(owner && !attendee_email && (!attendee_first_name || !attendee_surname || !disclaimer_accepted || !extra_questions)) {
-        let {email, first_name, surname, disclaimer_accepted_date, extra_questions} = owner;
+      if(owner && !attendee_email && (!attendee_first_name || !attendee_surname || !attendee_company || !disclaimer_accepted || !extra_questions)) {
+        let {email, first_name, surname, company, disclaimer_accepted_date, extra_questions} = owner;
         let formattedQuestions = [];
         extra_questions.map(q => {
           let question = {question_id: q.question_id, answer: q.value};
@@ -68,6 +69,7 @@ class GuestsLayout extends React.Component {
           attendee_email: email, 
           attendee_first_name: first_name, 
           attendee_surname: surname, 
+          attendee_company: company,
           disclaimer_accepted: disclaimer_accepted_date ? true : false,
           extra_questions: formattedQuestions}});                        
       }
@@ -96,8 +98,8 @@ class GuestsLayout extends React.Component {
 
     handleTicketUpdate(ticket){
       let ticketHash = this.props.match.params.ticket_hash;
-      let { attendee_first_name, attendee_surname, disclaimer_accepted, share_contact_info, extra_questions } = ticket;
-      this.props.assignTicketByHash(attendee_first_name, attendee_surname, disclaimer_accepted, share_contact_info, extra_questions, ticketHash);
+      let { attendee_first_name, attendee_surname, attendee_company, disclaimer_accepted, share_contact_info, extra_questions } = ticket;
+      this.props.assignTicketByHash(attendee_first_name, attendee_surname, attendee_company, disclaimer_accepted, share_contact_info, extra_questions, ticketHash);
     }
   
     handleChange(ev) {

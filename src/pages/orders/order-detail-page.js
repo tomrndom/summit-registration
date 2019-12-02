@@ -130,8 +130,8 @@ class OrderDetailPage extends React.Component {
   }
 
   handleTicketUpdate(ticket){    
-    let { attendee_first_name, attendee_surname, attendee_email, extra_questions } = ticket;
-    this.props.assignAttendee(attendee_email, attendee_first_name, attendee_surname, extra_questions);
+    let { attendee_first_name, attendee_surname, attendee_email, attendee_company, extra_questions } = ticket;
+    this.props.assignAttendee(attendee_email, attendee_first_name, attendee_surname, attendee_company, extra_questions);
   }
 
   handleTicketRemoveAttendee(ticket) {

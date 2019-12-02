@@ -120,8 +120,8 @@ class TicketList extends React.Component {
     }
 
     handleTicketUpdate(ticket){
-      let { attendee_first_name, attendee_surname, attendee_email, disclaimer_accepted, extra_questions } = ticket;
-      this.props.editOwnedTicket(attendee_email, attendee_first_name, attendee_surname, disclaimer_accepted, extra_questions);
+      let { attendee_first_name, attendee_surname, attendee_company, attendee_email, disclaimer_accepted, extra_questions } = ticket;
+      this.props.editOwnedTicket(attendee_email, attendee_first_name, attendee_surname, attendee_company, disclaimer_accepted, extra_questions);
     }
 
     handleTicketLocation(ticket) {

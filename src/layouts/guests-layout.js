@@ -159,7 +159,7 @@ class GuestsLayout extends React.Component {
                   loading={loading}
                 />
               </div>
-              {now > this.handleReassignDate() &&
+              {now < this.handleReassignDate() &&
                 <div className="row submit-buttons-wrapper">
                     <div className="col-md-12">                      
                         <button className="btn btn-primary continue-btn" 

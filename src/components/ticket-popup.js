@@ -52,6 +52,7 @@ class TicketPopup extends React.Component {
         this.handleChangeEmail = this.handleChangeEmail.bind(this);        
         this.handleFormatReassignDate = this.handleFormatReassignDate.bind(this);
         this.handleTicketRole = this.handleTicketRole.bind(this);
+        this.handlePopupSave = this.handlePopupSave.bind(this);
     }
 
     componentWillMount() {      
@@ -192,6 +193,22 @@ class TicketPopup extends React.Component {
       }, () => this.togglePopup(null, popup));
     }
 
+    handlePopupSave() {
+
+      let {tempTicket: {attendee_first_name, attendee_surname, disclaimer_accepted}} = this.state;
+      let {summit:{registration_disclaimer_mandatory}, ticket: {owner}, fromTicketList, member} = this.props;      
+
+      let assignedTicket = owner? owner.email === member.email : false ;
+      let saveEnabled = attendee_first_name && attendee_surname;
+
+      if(registration_disclaimer_mandatory && assignedTicket) {
+        saveEnabled = attendee_first_name && attendee_surname && disclaimer_accepted;
+      }
+
+      return saveEnabled;
+      
+    }
+
     handleChange(ev) {
       
       let ticket = this.state.tempTicket;
@@ -326,10 +343,7 @@ class TicketPopup extends React.Component {
                         <div className="popup-footer-save">
                           <button 
                               className="btn btn-primary" 
-                              disabled={
-                                (summit.registration_disclaimer_mandatory === true && tempTicket.disclaimer_accepted === false && fromTicketList) ||
-                                !tempTicket.attendee_first_name || 
-                                !tempTicket.attendee_surname}
+                              disabled={this.handlePopupSave()}
                               onClick={() => this.handleTicketSave()}>
                                   {T.translate("ticket_popup.save_changes")}
                           </button>

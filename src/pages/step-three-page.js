@@ -72,7 +72,7 @@ class StepThreePage extends React.Component {
     componentDidMount() {
         let {order:{reservation}} = this.props;
         const stepDefs = ['start', 'details', 'checkout', 'done'];
-        if(reservation) {          
+        if(reservation === {}) {          
           window.scrollTo(0, 0);
         } else {
           history.push(stepDefs[0]);
@@ -106,8 +106,8 @@ class StepThreePage extends React.Component {
 
     render(){
         let {summit, order, errors, stripeForm} = this.props;
-        let {card, stripe, dirty} = this.state;        
-
+        let {card, stripe, dirty} = this.state; 
+        
         return (
             <div className="step-three">
                 <OrderSummary order={order} summit={summit} type={'mobile'} />
@@ -146,10 +146,9 @@ class StepThreePage extends React.Component {
 const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
     member: loggedUserState.member,
     summit: summitState.currentSummit,
-    order:  orderState.order,
+    order:  orderState.purchaseOrder,
     errors:  orderState.errors,
     stripeForm:  orderState.stripeForm,
-    reservation:  orderState.reservation
 })
 
 export default connect (

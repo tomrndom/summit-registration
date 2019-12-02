@@ -15,6 +15,7 @@ import { authErrorHandler } from "openstack-uicore-foundation/lib/methods";
 import T from "i18n-react/dist/i18n-react";
 import history from '../history'
 import validator from "validator"
+import Swal from 'sweetalert2';
 
 
 import {
@@ -128,7 +129,7 @@ export const deleteReservation = () => (dispatch, getState) => {
   
   let { summitState, orderState } = getState();    
   let { currentSummit: { id } } = summitState;
-  let { order: {reservation: { hash } }} = orderState;
+  let { purchaseOrder: {reservation: { hash } }} = orderState;
 
   return deleteRequest(
     createAction(DELETE_RESERVATION),
@@ -150,7 +151,7 @@ export const deleteReservation = () => (dispatch, getState) => {
 }
 
 export const payReservation = (card, stripe) => (dispatch, getState) => {
-    let {orderState: { order, order: {reservation}}, summitState: {currentSummit}} = getState();
+    let {orderState: { purchaseOrder, purchaseOrder: {reservation}}, summitState: {currentSummit}} = getState();
 
     let success_message = {
         title: T.translate("general.done"),
@@ -163,21 +164,23 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
     stripe.handleCardPayment(
       reservation.payment_gateway_client_token, card, {
             payment_method_data: {
-                billing_details: {name: `${order.first_name} ${order.surname}`}
+                billing_details: {name: `${purchaseOrder.first_name} ${purchaseOrder.surname}`}
             }
         }
     ).then((result) => {
         if (result.error) {
-            // Display error.message in your UI.
+            // Reserve error.message in your UI.            
+            Swal.fire("Payment intent expired", "Please retry purchase.", "warning");
+            history.push(stepDefs[1]);
             dispatch(stopLoading());            
         } else {            
             let normalizedEntity = {
-                billing_address_1: order.billing_address,
-                billing_address_2: order.billing_address_two,
-                billing_address_zip_code: order.billing_zipcode,
-                billing_address_city: order.billing_city,
-                billing_address_state: order.billing_state,
-                billing_address_country: order.billing_country
+                billing_address_1: purchaseOrder.billing_address,
+                billing_address_2: purchaseOrder.billing_address_two,
+                billing_address_zip_code: purchaseOrder.billing_zipcode,
+                billing_address_city: purchaseOrder.billing_city,
+                billing_address_state: purchaseOrder.billing_state,
+                billing_address_country: purchaseOrder.billing_country
             };            
             return putRequest(
                 null,
@@ -187,7 +190,7 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
                 authErrorHandler,
                 // entity
             )()(dispatch)
-                .then((payload) => {
+                .then((payload) => {                    
                     dispatch(stopLoading());
                     history.push(stepDefs[3]);
                     return (payload);

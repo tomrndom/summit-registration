@@ -55,6 +55,8 @@ class StepTwoPage extends React.Component {
         
         order = {
             ...order,
+            reservation: {},
+            checkout: {},
             currentStep: this.step
         };        
 
@@ -173,7 +175,7 @@ class StepTwoPage extends React.Component {
 const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
     member: loggedUserState.member,
     summit: summitState.currentSummit,
-    order:  orderState.order,
+    order:  orderState.purchaseOrder,
     errors:  orderState.errors
 })
 

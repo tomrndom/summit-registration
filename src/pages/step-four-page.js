@@ -44,11 +44,15 @@ class StepFourPage extends React.Component {
     componentDidMount() {
       let {order:{checkout}} = this.props;
         const stepDefs = ['start', 'details', 'checkout', 'done'];        
-        if(checkout) {           
+        if(checkout === {}) {           
           window.scrollTo(0, 0);
         } else {
           history.push(stepDefs[0]);
         }
+    }
+
+    componentWillUnmount() {
+      console.log('bye');
     }
 
     generateQRCode() {
@@ -65,6 +69,8 @@ class StepFourPage extends React.Component {
 
     render(){
         let {summit, order: {checkout}, order, errors, member} = this.props;
+
+        console.log(order);
 
         return (
             <div className="step-four">
@@ -98,7 +104,7 @@ class StepFourPage extends React.Component {
 const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
     member: loggedUserState.isLoggedUser,
     summit: summitState.currentSummit,
-    order:  orderState.order,
+    order:  orderState.purchaseOrder,
     errors:  orderState.errors
 })
 

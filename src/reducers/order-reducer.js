@@ -48,7 +48,7 @@ const DEFAULT_ENTITY = {
 }
 
 const DEFAULT_STATE = {
-    order: DEFAULT_ENTITY,
+    purchaseOrder: DEFAULT_ENTITY,
     memberOrders: [],
     selectedOrder: {},
     errors: {},
@@ -81,7 +81,7 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             break;
         case CHANGE_ORDER:
             let {order, errors} = payload;
-            return {...state, order: order, errors: errors};
+            return {...state, purchaseOrder: order, errors: errors};
             break;
         case VALIDATE_STRIPE:
             let {value} = payload
@@ -92,7 +92,7 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             break;
         case CREATE_RESERVATION_SUCCESS:
             let entity = {...payload.response};
-            return {...state, order: {...state.order, reservation: entity }, errors: {}, loading: false, loaded: true};
+            return {...state, purchaseOrder: {...state.purchaseOrder, reservation: entity }, errors: {}, loading: false, loaded: true};
             break
         case CREATE_RESERVATION_ERROR:
             let {tickets} = state.order;            
@@ -103,15 +103,15 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
                 return t;
               }
             });
-            return {...state, order: {...state.order, tickets}};
+            return {...state, purchaseOrder: {...state.purchaseOrder, tickets}};
             break;
         case DELETE_RESERVATION:
             return state
             break;
         case DELETE_RESERVATION_SUCCESS:
-            return {...state, order: {...state.order, reservation: {}}}
+            return {...state, purchaseOrder: {...state.purchaseOrder, reservation: {}}}
         case PAY_RESERVATION:                        
-            return { ...state, order : { ...state.order, checkout : payload.response}};
+            return { ...state, order : { ...state.order, checkout : payload.response, reservation: {}}};
             break;
         case GET_USER_ORDERS:
             let {data, current_page, total, last_page} = payload.response;

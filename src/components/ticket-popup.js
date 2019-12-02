@@ -322,7 +322,7 @@ class TicketPopup extends React.Component {
                             summit={summit}
                             errors={errors}/>
                         </div>
-                        {now > reassign_date && 
+                        {now < reassign_date && 
                         <div className="popup-footer-save">
                           <button 
                               className="btn btn-primary" 

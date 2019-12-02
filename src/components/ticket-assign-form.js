@@ -166,8 +166,8 @@ class TicketAssignForm extends React.Component {
                           onChange={onChange}
                           value={ticket.email}
                         />
-                        :
-                        <span>{ticket.attendee_email} | <u onClick={() => this.setState({input_email: true})}>Change</u> </span> 
+                        :                        
+                        <span>{ticket.attendee_email}{!guest && !readOnly && <span onClick={() => this.setState({input_email: true})}> | <u>Change</u></span>} </span> 
                     }                    
                   </React.Fragment>                  
                 }

@@ -205,7 +205,8 @@ class TicketPopup extends React.Component {
         saveEnabled = attendee_first_name && attendee_surname && disclaimer_accepted;
       }
 
-      return saveEnabled;
+      // return the reverse value for disabled prop
+      return !saveEnabled;
       
     }
 

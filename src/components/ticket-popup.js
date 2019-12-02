@@ -322,6 +322,7 @@ class TicketPopup extends React.Component {
                             summit={summit}
                             errors={errors}/>
                         </div>
+                        {now > reassign_date && 
                         <div className="popup-footer-save">
                           <button 
                               className="btn btn-primary" 
@@ -331,8 +332,9 @@ class TicketPopup extends React.Component {
                                 !tempTicket.attendee_surname}
                               onClick={() => this.handleTicketSave()}>
                                   {T.translate("ticket_popup.save_changes")}
-                          </button>  
+                          </button>
                         </div>
+                        }
                     </TabPanel>
                     {status.text !== 'UNASSIGNED' && now < reassign_date && (!fromTicketList || (fromTicketList && owned)) &&
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--reassign">

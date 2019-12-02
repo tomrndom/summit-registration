@@ -125,6 +125,7 @@ class GuestsLayout extends React.Component {
     
     render() {
       let {ticket: {owner, order_extra_questions}, ticket, errors, ticketLoading, summitLoading, summit, summits} = this.props;
+      let now = parseInt((new Date().getTime() / 1000).toFixed(0));
       let {tempTicket} = this.state;
 
       let loading = ticketLoading && summitLoading;      
@@ -154,18 +155,20 @@ class GuestsLayout extends React.Component {
                   loading={loading}
                 />
               </div>
-              <div className="row submit-buttons-wrapper">
-                  <div className="col-md-12">                      
-                      <button className="btn btn-primary continue-btn" 
-                        disabled={
-                          !tempTicket.attendee_first_name || 
-                          !tempTicket.attendee_surname ||
-                          (!tempTicket.disclaimer_accepted && summit.registration_disclaimer_mandatory === true)} 
-                        onClick={() =>this.handleTicketUpdate(tempTicket)}>
-                          {T.translate("guests.save")}
-                      </button>
-                  </div>
-              </div>
+              {now > this.handleReassignDate() &&
+                <div className="row submit-buttons-wrapper">
+                    <div className="col-md-12">                      
+                        <button className="btn btn-primary continue-btn" 
+                          disabled={
+                            !tempTicket.attendee_first_name || 
+                            !tempTicket.attendee_surname ||
+                            (!tempTicket.disclaimer_accepted && summit.registration_disclaimer_mandatory === true)} 
+                          onClick={() =>this.handleTicketUpdate(tempTicket)}>
+                            {T.translate("guests.save")}
+                        </button>
+                    </div>
+                </div>
+              }
             </div>
         )
       }

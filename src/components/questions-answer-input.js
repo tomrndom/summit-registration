@@ -112,7 +112,7 @@ export default class QuestionAnswersInput extends React.Component {
             case 'TextArea':
                 return (
                   <React.Fragment>
-                    <div className="row field-wrapper--textarea">
+                    <div className={`row field-wrapper--textarea ${readOnly?'read-only':''}`}>
                         <div className="col-sm-4"> {question.label} </div>
                         <div className="col-sm-8">
                           {readOnly ? 
@@ -177,17 +177,17 @@ export default class QuestionAnswersInput extends React.Component {
                 }                                
             case 'ComboBox':
                 let value = answerValue ? questionValues.find(val => val.id == parseInt(answerValue)) : null;
-                questionValues = questionValues.map(val => ({...val, value: val.id}));                
+                questionValues = questionValues.map(val => ({...val, value: val.id}));
                 if(readOnly) {
                   return (
                     <React.Fragment>
                       <div className="row field-wrapper">
                           <div className="col-sm-4"> {question.label} </div>
-                          <div className="col-sm-8"> {value.label} </div>                        
+                          <div className="col-sm-8"> {value? value.label: ''} </div>                        
                       </div>
                       <div className="field-wrapper-mobile">
                           <div> {question.label} </div>
-                          <div> {value.label} </div>                        
+                          <div> {value? value.label: ''} </div>                        
                       </div>
                     </React.Fragment>
                   );
@@ -277,17 +277,26 @@ export default class QuestionAnswersInput extends React.Component {
                   );
                 }
             case 'RadioButtonList':
-                questionValues = questionValues.map(val => ({...val, value: val.id}));                 
+                questionValues = questionValues.map(val => ({...val, value: val.id}));
                 if(readOnly){
                   return(
                     <React.Fragment>
                       <div className="row field-wrapper">
                           <div className="col-sm-4"> {question.label} </div>
-                          <div className="col-sm-8">{questionValues.find(q => q.value == answerValue).label}</div>
+                          <div className="col-sm-8">
+                            {questionValues.find(q => q.value == answerValue) ? 
+                              questionValues.find(q => q.value == answerValue).label 
+                              : 
+                              ''
+                            }</div>
                       </div>
                       <div className="field-wrapper-mobile">
                           <div> {question.label} </div>
-                          <div>{questionValues.find(q => q.value == answerValue).label}</div>
+                          <div>{questionValues.find(q => q.value == answerValue) ? 
+                              questionValues.find(q => q.value == answerValue).label 
+                              : 
+                              ''
+                            }</div>
                       </div>
                     </React.Fragment>
                   );

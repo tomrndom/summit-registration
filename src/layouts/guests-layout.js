@@ -108,6 +108,10 @@ class GuestsLayout extends React.Component {
       if(ev.target.id === 'attendee_last_name') {
         id = 'attendee_surname';
       }
+
+      if (ev.target.type == 'checkbox') {
+        value = ev.target.checked;        
+      }
   
       delete(errors[id]);
       ticket[id] = value;

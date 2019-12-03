@@ -51,8 +51,15 @@ class StepFourPage extends React.Component {
       }
     }
 
-    componentWillUnmount() {
-      console.log('bye');
+    componentWillUnmount() {      
+      let order = {...this.props.order};
+
+      order = {
+        ...order,
+        checkout: {}
+      };      
+        
+      this.props.handleOrderChange(order);
     }
 
     generateQRCode() {
@@ -69,8 +76,6 @@ class StepFourPage extends React.Component {
 
     render(){
         let {summit, order: {checkout}, order, errors, member} = this.props;
-
-        console.log(order);
 
         return (
             <div className="step-four">

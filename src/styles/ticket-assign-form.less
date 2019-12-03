@@ -45,13 +45,14 @@
     }
     &--textarea {
       align-items: flex-start;
+      margin-bottom: 0px;
       div:first-child {
         padding-top: 5px;
-        &--read-only {
-          padding-top: 0px;
-        }
       }
-    }
+      div:first-child, .read-only {
+        padding-top: 0px;        
+      }
+    }    
     u {
       cursor: pointer;
     }
@@ -112,6 +113,15 @@
     .checkboxes-div {
       margin: 0;      
     }    
+  }
+  .read-only {
+    margin-bottom: 0px;
+    margin-top: 0px;
+    .col-md-12 {
+      .field-wrapper {
+        margin-bottom: 0px;
+      }
+    }
   }
   .popup-cancel-ticket {
     color: #da0000;

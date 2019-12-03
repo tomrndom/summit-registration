@@ -114,8 +114,8 @@ export default class QuestionAnswersInput extends React.Component {
             case 'TextArea':
                 return (
                   <React.Fragment>
-                    <div className={`row field-wrapper--textarea ${readOnly?'read-only':''}`}>
-                        <div className="col-sm-4"> {question.label} </div>
+                    <div className='row field-wrapper--textarea'>
+                        <div className={`col-sm-4 ${readOnly?'read-only':''}`}> {question.label} </div>
                         <div className="col-sm-8">
                           {readOnly ? 
                             <span>{answerValue}</span>
@@ -330,7 +330,7 @@ export default class QuestionAnswersInput extends React.Component {
 
     render() {
         let { answers } = this.state;
-        let { questions, questions_type } = this.props;
+        let { questions, questions_type, readOnly } = this.props;
 
         return (
             <div>
@@ -338,7 +338,7 @@ export default class QuestionAnswersInput extends React.Component {
                     let answer = answers.find(ans => ans.question_id == q.id);
                     let answerValue = answer ? answer.answer : null;
                     return (                      
-                        <div className="row form-group" key={`question_answer_${q.id}`}>
+                        <div className={`row form-group ${readOnly? 'read-only':''}`} key={`question_answer_${q.id}`}>
                             <div className="col-md-12">
                                 {this.getInput(q, answerValue)}
                             </div>

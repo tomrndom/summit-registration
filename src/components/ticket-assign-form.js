@@ -87,10 +87,15 @@ class TicketAssignForm extends React.Component {
           <div className="ticket-assign-form">
             <div className="row popup-basic-info">
               <div className="col-sm-6">{T.translate("ticket_popup.edit_basic_info")}</div>
-              <div className="col-sm-6">{T.translate("ticket_popup.edit_required")}</div>
+              <div className="col-sm-6">
+                {!readOnly && T.translate("ticket_popup.edit_required")}
+              </div>
             </div>
             <div className="row field-wrapper">
-              <div className="col-sm-4">{T.translate("ticket_popup.edit_email")}</div>
+              <div className="col-sm-4">
+                {T.translate("ticket_popup.edit_email")}
+                {!readOnly && T.translate("ticket_popup.edit_required_star")}
+                </div>
               <div className="col-sm-8">
                 {status === 'UNASSIGNED' ?
                   <span>
@@ -132,7 +137,7 @@ class TicketAssignForm extends React.Component {
               </div>
             </div>
             <div className="field-wrapper-mobile">
-            <div>{T.translate("ticket_popup.edit_email")}</div>
+            <div>{T.translate("ticket_popup.edit_email")}{!readOnly && T.translate("ticket_popup.edit_required_star")}</div>
               <div>
                 {status === 'UNASSIGNED' ?
                   <span>
@@ -174,7 +179,10 @@ class TicketAssignForm extends React.Component {
               </div>
             </div>
             <div className="row field-wrapper">
-              <div className="col-sm-4">{T.translate("ticket_popup.edit_first_name")}</div>
+              <div className="col-sm-4">
+                {T.translate("ticket_popup.edit_first_name")}
+                {!readOnly && T.translate("ticket_popup.edit_required_star")}
+              </div>
               <div className="col-sm-8">
                 {readOnly ? 
                   <span>{ticket.attendee_first_name}</span>
@@ -190,7 +198,7 @@ class TicketAssignForm extends React.Component {
               </div>
             </div>
             <div className="field-wrapper-mobile">
-              <div>{T.translate("ticket_popup.edit_first_name")}</div>
+              <div>{T.translate("ticket_popup.edit_first_name")}{!readOnly && T.translate("ticket_popup.edit_required_star")}</div>
               <div>
                 {readOnly ? 
                   <span>{ticket.attendee_first_name}</span>
@@ -206,10 +214,13 @@ class TicketAssignForm extends React.Component {
               </div>
             </div>
             <div className="row field-wrapper">
-              <div className="col-sm-4">{T.translate("ticket_popup.edit_last_name")}</div>
+              <div className="col-sm-4">
+                {T.translate("ticket_popup.edit_last_name")}
+                {!readOnly && T.translate("ticket_popup.edit_required_star")}
+              </div>
               <div className="col-sm-8">
                 {readOnly ? 
-                  <span>{ticket.attendee_first_name}</span>
+                  <span>{ticket.attendee_surname}</span>
                   :
                   <Input
                     id="attendee_last_name"
@@ -222,10 +233,10 @@ class TicketAssignForm extends React.Component {
               </div>
             </div>
             <div className="field-wrapper-mobile">
-            <div>{T.translate("ticket_popup.edit_last_name")}</div>
+            <div>{T.translate("ticket_popup.edit_last_name")}{!readOnly && T.translate("ticket_popup.edit_required_star")}</div>
               <div>
                 {readOnly ? 
-                  <span>{ticket.attendee_first_name}</span>
+                  <span>{ticket.attendee_surname}</span>
                   :
                   <Input
                     id="attendee_last_name"

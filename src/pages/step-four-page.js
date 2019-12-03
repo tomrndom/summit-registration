@@ -43,12 +43,12 @@ class StepFourPage extends React.Component {
 
     componentDidMount() {
       let {order:{checkout}} = this.props;
-        const stepDefs = ['start', 'details', 'checkout', 'done'];        
-        if(checkout === {}) {           
-          window.scrollTo(0, 0);
-        } else {
-          history.push(stepDefs[0]);
-        }
+      const stepDefs = ['start', 'details', 'checkout', 'done'];
+      if(Object.entries(checkout).length === 0 && checkout.constructor === Object) {
+        history.push(stepDefs[0]);
+      } else {
+        window.scrollTo(0, 0);
+      }
     }
 
     componentWillUnmount() {

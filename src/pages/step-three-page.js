@@ -72,10 +72,10 @@ class StepThreePage extends React.Component {
     componentDidMount() {
         let {order:{reservation}} = this.props;
         const stepDefs = ['start', 'details', 'checkout', 'done'];
-        if(reservation === {}) {          
-          window.scrollTo(0, 0);
-        } else {
+        if(Object.entries(reservation).length === 0 && reservation.constructor === Object) {
           history.push(stepDefs[0]);
+        } else {
+          window.scrollTo(0, 0);
         }
     }
 

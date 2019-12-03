@@ -111,7 +111,7 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
         case DELETE_RESERVATION_SUCCESS:
             return {...state, purchaseOrder: {...state.purchaseOrder, reservation: {}}}
         case PAY_RESERVATION:                        
-            return { ...state, order : { ...state.order, checkout : payload.response, reservation: {}}};
+            return { ...state, purchaseOrder : { ...state.purchaseOrder, checkout : payload.response, reservation: {}}};
             break;
         case GET_USER_ORDERS:
             let {data, current_page, total, last_page} = payload.response;

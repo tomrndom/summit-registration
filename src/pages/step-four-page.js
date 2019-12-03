@@ -51,14 +51,30 @@ class StepFourPage extends React.Component {
       }
     }
 
-    componentWillUnmount() {      
-      let order = {...this.props.order};
+    componentWillUnmount() {
+      let {member, order} = this.props;
 
-      order = {
-        ...order,
-        checkout: {}
-      };      
-        
+      if(member) {
+        order = {
+          ...order,
+          checkout: {}
+        };
+      } else {
+        order= {
+          ...order,
+          checkout: {},
+          first_name: '',
+          last_name: '',
+          email: '',
+          company: '',
+          billing_country: '',
+          billing_address: '',
+          billing_city: '',
+          billing_state: '',
+          billing_zipcode: ''
+        }        
+      }
+
       this.props.handleOrderChange(order);
     }
 

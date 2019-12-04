@@ -30,6 +30,7 @@ export const GET_SUMMIT_BY_SLUG        = 'GET_SUMMIT_BY_SLUG';
 export const GET_SUMMIT_BY_ID          = 'GET_SUMMIT_BY_ID';
 export const GET_USER_SUMMITS          = 'GET_USER_SUMMITS';
 export const SELECT_SUMMIT             = 'SELECT_SUMMIT';
+export const GET_SUGGESTED_SUMMITS     = 'GET_SUGGESTED_SUMMITS';
 export const GET_SUMMIT_REFUND_POLICY  = 'GET_SUMMIT_REFUND_POLICY';
 
 export const handleResetReducers = () => (dispatch, getState) => {
@@ -116,6 +117,29 @@ export const getSummitById = (id, select = false) => (dispatch, getState) => {
     dispatch(stopLoading());
     return (e);
   });    
+}
+
+export const getSuggestedSummits = () => (dispatch, getState) => {
+
+  dispatch(startLoading());
+
+  let params = {
+    filter: 'ticket_types_count>0'
+  };
+
+  return getRequest(
+    dispatch(startLoading()),
+    createAction(GET_SUGGESTED_SUMMITS),
+    `${window.API_BASE_URL}/api/public/v1/summits`,
+    authErrorHandler
+    )(params)(dispatch).then(() => {
+        dispatch(stopLoading());
+      }
+    ).catch(e => {
+      dispatch(stopLoading());
+      return (e);
+    });    
+
 }
 
 export const getSummitRefundPolicy = (id, select = false) => (dispatch, getState) => {

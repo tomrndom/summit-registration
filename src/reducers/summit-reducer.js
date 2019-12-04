@@ -12,7 +12,7 @@
  **/
 
 import { START_LOADING, STOP_LOADING, LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
-import { GET_SUMMIT_BY_ID, GET_SUMMIT_BY_SLUG, SELECT_SUMMIT, GET_SUMMIT_REFUND_POLICY } from "../actions/summit-actions";
+import { GET_SUMMIT_BY_ID, GET_SUMMIT_BY_SLUG, SELECT_SUMMIT, GET_SUMMIT_REFUND_POLICY, GET_SUGGESTED_SUMMITS } from "../actions/summit-actions";
 
 
 const DEFAULT_STATE = {
@@ -21,7 +21,8 @@ const DEFAULT_STATE = {
     selectedSummit: {
       refund_policy: null
     },
-    summits: []
+    summits: [],
+    suggestedSummits: []
 }
 
 const summitReducer = (state = DEFAULT_STATE, action) => {
@@ -59,6 +60,8 @@ const summitReducer = (state = DEFAULT_STATE, action) => {
             break;
         case GET_SUMMIT_REFUND_POLICY:
             return {...state, selectedSummit: { ...state.selectedSummit, refund_policy: payload.response}}
+        case GET_SUGGESTED_SUMMITS:
+            return {...state, suggestedSummits: payload.response.data}
         default:
             return state;
             break;

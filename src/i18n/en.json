@@ -84,6 +84,11 @@
   "orders": {
     "empty"               : "There are no active orders so far"
   },
+  "no-summit": {
+    "show-slug"           : "A show with the slug",
+    "not-found"           : "was not found.",
+    "select-list"         : "Please select from the available shows :"
+  },
   "order_info": {
     "print"               : "Print",
     "resend"              : "Resend Receipt",

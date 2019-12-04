@@ -14,13 +14,24 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { getSummitBySlug } from '../actions/summit-actions';
+import { getSummitBySlug, getSuggestedSummits } from '../actions/summit-actions';
 import StepOnePage from '../pages/step-one-page'
 import StepTwoPage from '../pages/step-two-page'
 import StepThreePage from '../pages/step-three-page'
 import StepFourPage from '../pages/step-four-page'
+import NotFoundSummit from '../components/not-found-summit';
 
 class PrimaryLayout extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+        };
+
+        this.handleSummitNotFound = this.handleSummitNotFound.bind(this);
+
+    }
   
     componentDidMount() {
       let { getSummitBySlug } = this.props;
@@ -43,13 +54,20 @@ class PrimaryLayout extends React.Component {
         }
     }
 
+    handleSummitNotFound() {
+      this.props.getSuggestedSummits();
+    }
+
     render(){
-        let { location, match, summit } = this.props;
+        let { location, match, summit, suggestedSummits } = this.props;
         let summitSlug = this.props.match.params.summit_slug;
 
-        if (!summit || summitSlug != summit.slug) return (<div></div>);
-
-        return(
+        if (!summit || summitSlug != summit.slug) {
+          return (<div>
+          <NotFoundSummit slug={summitSlug} summits={suggestedSummits} getSuggestedSummits={this.handleSummitNotFound}/>
+        </div>);
+        } else {
+          return(
             <div className="primary-layout">
                 <main id="page-wrap">
                     <Switch>
@@ -61,19 +79,22 @@ class PrimaryLayout extends React.Component {
                     </Switch>
                 </main>
             </div>
-        );
+          );
+        }
     }
 
 }
 
 const mapStateToProps = ({ summitState  }) => ({
-    summit: summitState.currentSummit
+    summit: summitState.currentSummit,
+    suggestedSummits: summitState.suggestedSummits
 })
 
 export default connect(
     mapStateToProps,
     {
-        getSummitBySlug
+        getSummitBySlug,
+        getSuggestedSummits
     }
 )(PrimaryLayout);
 

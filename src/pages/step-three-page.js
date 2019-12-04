@@ -50,12 +50,26 @@ class StepThreePage extends React.Component {
     }
 
     componentWillMount() {
-        let order = {...this.props.order};    
+        let order = {...this.props.order};
         
         order = {
             ...order,
             currentStep: this.step
         };
+
+        let address = this.props.member ? this.props.member.address : {};
+
+        if(Object.entries(address).length !== 0 && address.constructor === Object) {        
+          let {country, region, locality, postal_code, street_address} = address;
+          order = {
+            ...order, 
+            billing_country: country ? country : '',
+            billing_address: street_address ? street_address : '',
+            billing_city: locality ? locality : '',
+            billing_state: region ? region : '',
+            billing_zipcode: postal_code ? postal_code : '',
+          };
+        }       
         
         this.props.handleOrderChange(order)
     }
@@ -107,7 +121,9 @@ class StepThreePage extends React.Component {
     render(){
         let {summit, order, errors, stripeForm} = this.props;
         let {card, stripe, dirty} = this.state; 
-        
+
+        let address = this.props.member ? this.props.member.address : {};
+
         return (
             <div className="step-three">
                 <OrderSummary order={order} summit={summit} type={'mobile'} />
@@ -123,9 +139,10 @@ class StepThreePage extends React.Component {
                             </Elements>
                         </StripeProvider>
                             <BillingInfoForm 
-                                onChange={this.handleChange} 
+                                onChange={this.handleChange}
                                 order={order} 
                                 summit={summit} 
+                                address={address}
                                 errors={dirty ? errors : {}} />
                         </div>
                         <div className="col-md-4">

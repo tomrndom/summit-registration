@@ -18,7 +18,7 @@ import OrderSummary from "../../components/order-summary";
 import TicketPopup from "../../components/ticket-popup";
 import TicketOptions from "../../components/ticket-options";
 
-import { selectTicket, getTicketPDF, assignAttendee, handleTicketChange, refundTicket, removeAttendee, resendNotification } from '../../actions/ticket-actions';
+import { selectTicket, getTicketPDF, assignAttendee, editOwnedTicket, handleTicketChange, refundTicket, removeAttendee, resendNotification } from '../../actions/ticket-actions';
 import { cancelOrder } from '../../actions/order-actions';
 
 import { daysBetweenDates, getFormatedDate } from '../../utils/helpers';
@@ -130,8 +130,13 @@ class OrderDetailPage extends React.Component {
   }
 
   handleTicketUpdate(ticket){    
-    let { attendee_first_name, attendee_surname, attendee_email, attendee_company, extra_questions } = ticket;
-    this.props.assignAttendee(attendee_email, attendee_first_name, attendee_surname, attendee_company, extra_questions);
+    let { attendee_first_name, attendee_surname, attendee_email, attendee_company, extra_questions, disclaimer_accepted, owner } = ticket;
+    let {member} = this.props;
+    if(owner && owner.email && (owner.email === member.email)){
+      this.props.editOwnedTicket(attendee_email, attendee_first_name, attendee_surname, attendee_company, disclaimer_accepted, extra_questions);      
+    } else {
+      this.props.assignAttendee(attendee_email, attendee_first_name, attendee_surname, attendee_company, extra_questions);
+    } 
   }
 
   handleTicketRemoveAttendee(ticket) {
@@ -329,6 +334,7 @@ export default connect(
       getTicketPDF,
       cancelOrder,
       assignAttendee,
+      editOwnedTicket,
       handleTicketChange,
       refundTicket,
       removeAttendee,

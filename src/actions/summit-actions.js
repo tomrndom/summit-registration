@@ -105,7 +105,7 @@ export const getSummitById = (id, select = false) => (dispatch, getState) => {
       `${window.API_BASE_URL}/api/public/v1/summits/all/${id}`,
       authErrorHandler
   )(params)(dispatch).then(() => {
-        select ? dispatch(selectSummitById(id)) : dispatch(stopLoading());
+        select ? dispatch(selectSummitById(id)) : null;
       }
   ).catch(e => {
     dispatch(stopLoading());

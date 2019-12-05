@@ -210,9 +210,9 @@ class OrderList extends React.Component {
 
     render() {
 
-      let { orders, summits, currentPage, lastPage } = this.props;           
+      let { orders, summits, currentPage, lastPage, loading } = this.props;
 
-      if (orders.length && summits) {      
+      if (!loading) {      
           return (
               <div className="orders-list">
                   {orders.map(o => {

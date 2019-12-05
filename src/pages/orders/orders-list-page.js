@@ -46,6 +46,8 @@ class OrdersListPage extends React.Component {
 
     render() {
       let {orders, summits, selectOrder, page, lastPage, selectSummit, orderLoader, summitLoader} = this.props;
+
+      let loading = orderLoader || summitLoader;
       
         return (
           <div>
@@ -57,6 +59,7 @@ class OrdersListPage extends React.Component {
                 lastPage={lastPage} 
                 selectSummit={selectSummit}
                 selectOrder={selectOrder} 
+                loading={loading}
                 pageChange={this.handlePageChange} />}
           </div>
         );

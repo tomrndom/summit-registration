@@ -37,35 +37,29 @@ export const handleResetReducers = () => (dispatch, getState) => {
   dispatch(createAction(LOGOUT_USER)({}));
 }
 
-export const getSummitBySlug = (slug) => (dispatch, getState) => {
-
-    let { summitState: {summits} } = getState();
+export const getSummitBySlug = (slug, updateSummit) => (dispatch, getState) => {  
 
     let params = {
       expand: 'order_extra_questions.values'
     }
-    
-    let selectedSummit = summits.find(s => s.slug === slug);  
 
     dispatch(startLoading());
 
-    if(selectedSummit) {        
-        dispatch(stopLoading());
-        dispatch(createAction(GET_SUMMIT_BY_SLUG)(selectedSummit));
-    } else {
-        return getRequest(
-          dispatch(startLoading()),
-          createAction(GET_SUMMIT_BY_SLUG),
-          `${window.API_BASE_URL}/api/public/v1/summits/all/${slug}`,
-          authErrorHandler
-      )(params)(dispatch).then(() => {
-            dispatch(stopLoading());
+    return getRequest(
+        dispatch(startLoading()),
+        createAction(GET_SUMMIT_BY_SLUG),
+        `${window.API_BASE_URL}/api/public/v1/summits/all/${slug}`,
+        authErrorHandler
+    )(params)(dispatch).then((payload) => {
+          if(updateSummit) {
+            dispatch(createAction(SELECT_SUMMIT)(payload.response, false));
           }
-      ).catch(e => {
+          dispatch(stopLoading());
+        }
+    ).catch(e => {
         dispatch(stopLoading());
         return (e);
-      });   
-    }            
+    });
      
 }
 
@@ -166,13 +160,11 @@ export const getSummitRefundPolicy = (id, select = false) => (dispatch, getState
   });  
 }
 
-export const selectSummit = (summit) => (dispatch, getState) => {  
+export const selectSummit = (summit, updateSummit = true) => (dispatch, getState) => {  
     
   dispatch(startLoading());
 
-  dispatch(createAction(SELECT_SUMMIT)(summit));
-  
-  dispatch(stopLoading());
+  dispatch(getSummitBySlug(summit.slug, updateSummit));
 
 }
 

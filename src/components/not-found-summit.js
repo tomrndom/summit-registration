@@ -30,6 +30,7 @@ export default class NotFoundSummit extends React.Component {
 
     handleChange(ev) {
       let {value} = ev.target;
+      //this.props.selectSummit(value);
       history.push(`/a/${value}/register`);
     }
 

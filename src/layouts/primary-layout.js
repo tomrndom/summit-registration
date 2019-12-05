@@ -45,10 +45,10 @@ class PrimaryLayout extends React.Component {
     }
 
     render(){
-        let { location, match, summit, suggestedSummits } = this.props;
-        let summitSlug = this.props.match.params.summit_slug;
+        let { location, match, summit, summitLoader } = this.props;
+        let summitSlug = this.props.match.params.summit_slug;            
 
-        if (!summit || summitSlug != summit.slug) {
+        if (!summitLoader && !summit) {
           let slug = match.url;
           slug = slug.substring(0, slug.lastIndexOf("/") + 1);          
           return <div>
@@ -76,7 +76,8 @@ class PrimaryLayout extends React.Component {
 }
 
 const mapStateToProps = ({ summitState  }) => ({
-    summit: summitState.currentSummit
+    summit: summitState.currentSummit,
+    summitLoader: summitState.loading
 })
 
 export default connect(

@@ -134,7 +134,7 @@ class GuestsLayout extends React.Component {
       let now = parseInt((new Date().getTime() / 1000).toFixed(0));
       let {tempTicket} = this.state;
 
-      let loading = ticketLoading && summitLoading;      
+      let loading = ticketLoading && summitLoading;
 
       if(!owner) {
         history.push('/a/member/tickets/');

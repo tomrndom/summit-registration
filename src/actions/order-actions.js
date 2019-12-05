@@ -255,9 +255,6 @@ export const selectOrder = (order, updateId = null) => (dispatch, getState) => {
     dispatch(createAction(SELECT_ORDER)(order));
   }
 
-
-  dispatch(stopLoading());
-
 }
 
 export const cancelOrder = (order) => (dispatch, getState) => {

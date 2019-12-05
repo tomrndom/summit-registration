@@ -205,10 +205,13 @@ class OrderDetailPage extends React.Component {
   }
 
   render() {
-      let {order, summit, ticket, errors, extraQuestions, member} = this.props;
+      let {order, summit, ticket, errors, extraQuestions, member, orderLoading, summitLoading} = this.props;
       let {showPopup} = this.state;
-      let now = parseInt((new Date().getTime() / 1000).toFixed(0));      
+      let now = parseInt((new Date().getTime() / 1000).toFixed(0));
 
+      let loading = summitLoading || orderLoading;
+
+      if(!loading) {
       return (
           <div className="order-detail">
               <OrderSummary order={order} summit={summit} type={'mobile'} />
@@ -315,13 +318,18 @@ class OrderDetailPage extends React.Component {
               }
           </div>
       );
+    } else {
+      return null;
     }
+  }
 }
 
 const mapStateToProps = ({ loggedUserState, orderState, summitState, ticketState }) => ({
     member: loggedUserState.member,
     order: orderState.selectedOrder,
+    orderLoading: orderState.loading,
     summit: summitState.selectedSummit,
+    summitLoading: summitState.loading,
     extraQuestions: summitState.selectedSummit.order_extra_questions,
     ticket: ticketState.selectedTicket,
     errors: ticketState.errors

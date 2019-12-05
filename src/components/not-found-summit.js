@@ -28,10 +28,6 @@ export default class NotFoundSummit extends React.Component {
         };
     }
 
-    componentWillMount() {
-      this.props.getSuggestedSummits();
-    }
-
     handleChange(ev) {
       let {value} = ev.target;
       history.push(`/a/${value}/register`);
@@ -44,11 +40,9 @@ export default class NotFoundSummit extends React.Component {
 
       summits = summits.map(s => ({...s, value: s.slug, label: s.name}));
 
-      console.log(summits);
-
         return (
             <div className="not-found-summit">
-                <h3>{`${T.translate("no-summit.show-slug")} "${slug}" ${T.translate("no-summit.not-found")}`}</h3>
+                <h3>{`${T.translate("no-summit.show-slug")} ${slug ? `"${slug}"` : ''} ${T.translate("no-summit.not-found")}`}</h3>
                 <h3>{`${T.translate("no-summit.select-list")}`}</h3>
                 <br />
                 <div className="row field-wrapper">                  

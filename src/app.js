@@ -12,7 +12,7 @@
  **/
 
 import React from 'react'
-import { Switch, Route, Router } from 'react-router-dom'
+import { Switch, Route, Router, Redirect } from 'react-router-dom'
 import PrimaryLayout from "./layouts/primary-layout"
 import DashboardLayout from "./layouts/dashboard-layout"
 import GuestsLayout from "./layouts/guests-layout"
@@ -30,6 +30,7 @@ import { handleResetReducers } from './actions/summit-actions'
 import T from 'i18n-react';
 import history from './history'
 import URI from "urijs";
+import SelectSummitPage from './pages/select-summit-page'
 
 
 // here is set by default user lang as en
@@ -107,8 +108,9 @@ class App extends React.PureComponent {
                       <AuthorizationCallbackRoute onUserAuth={onUserAuth} path='/auth/callback' getUserInfo={getUserInfo} />
                       <LogOutCallbackRoute doLogout={doLogout}  path='/auth/logout'/>
                       <Route path="/logout" component={NotFoundPage} />
-                      <Route path="/404" component={NotFoundPage} />
-                      <Route component={NotFoundPage} />
+                      <Route path="/404" component={NotFoundPage} />                      
+                      <Route path="/a/:summit_slug?" component={SelectSummitPage} />
+                      <Route render={props => (<Redirect to={`/a/`} />)}/>
                   </Switch>
               </div>
           </Router>

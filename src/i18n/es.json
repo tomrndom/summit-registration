@@ -108,7 +108,8 @@
   "ticket_popup": {
     "tab_assign"            : "Assign",
     "tab_reassign"          : "Re-Assign",
-    "tab_edit"              : "Details",
+    "tab_edit"              : "Edit Details",
+    "tab_edit_read_only"    : "Details",
     "tab_notify"            : "Notify attendee",
     "assign_text"           : "Select the option to assign this ticket before",
     "assign_or"             : "Or",

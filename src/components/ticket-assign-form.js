@@ -301,7 +301,7 @@ class TicketAssignForm extends React.Component {
               <React.Fragment>
                 <hr/>
                 <div className="row field-wrapper">
-                  <div className="col-sm-12">
+                  <div className="col-md-12">
                       <div className="form-check abc-checkbox">
                           <input type="checkbox" id="disclaimer_accepted" checked={ticket.disclaimer_accepted}
                                   disabled={readOnly} onChange={onChange} className="form-check-input" />

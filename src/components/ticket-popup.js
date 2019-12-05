@@ -306,7 +306,11 @@ class TicketPopup extends React.Component {
                 <Tabs selectedTabClassName="popup-tabs--active" >
                     <TabList className="popup-tabs">
                         {status.text === 'UNASSIGNED' && <Tab>{T.translate("ticket_popup.tab_assign")}</Tab>}
-                        <Tab>{T.translate("ticket_popup.tab_edit")}</Tab>
+                        <Tab>
+                          {now > reassign_date ? 
+                          `${T.translate("ticket_popup.tab_edit_read_only")}`
+                          : 
+                          `${T.translate("ticket_popup.tab_edit")}` }</Tab>
                         {status.text !== 'UNASSIGNED' && 
                           now < reassign_date && 
                           (!fromTicketList || (fromTicketList && owned)) &&

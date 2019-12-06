@@ -60,8 +60,7 @@ export const handleOrderChange = (order, errors = {}) => (dispatch, getState) =>
     if(currentStep === 2) {
         if (validator.isEmpty(order.first_name)) errors.first_name = 'Please enter your First Name.';
         if (validator.isEmpty(order.last_name)) errors.last_name = 'Please enter your Last Name.';
-        if (!validator.isEmail(order.email)) errors.email = 'Please enter a valid Email.';
-        if (validator.isEmpty(order.company)) errors.company = 'Please enter your Company.';
+        if (!validator.isEmail(order.email)) errors.email = 'Please enter a valid Email.';        
 
         order.tickets.forEach(tix => {
            if (tix.promo_code && tix.promo_code == 'NOTACOUPON') errors[`tix_coupon_${tix.tempId}`] = 'Coupon not valid.';

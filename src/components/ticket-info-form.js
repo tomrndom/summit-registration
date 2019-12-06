@@ -99,7 +99,7 @@ class TicketInfoForm extends React.Component {
                     ))}
 
                     {orderedTickets.length == 0 &&
-                        <div className="row">
+                        <div className="row no-tickets">
                             <div className="col-md-12">
                                 {T.translate("step_two.no_tickets")}
                             </div>

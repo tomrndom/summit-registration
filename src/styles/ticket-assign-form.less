@@ -26,6 +26,9 @@
     align-items: baseline;
     &--radio-list {
       align-items: center;
+      .form-check-label {
+        padding-left: 11px !important;
+      }
     }
     input {
       background-color: @lblue_color_1;
@@ -90,12 +93,13 @@
         border: 1px solid @header_lblue_color;
         padding-left: 2px;
         padding-top: 0px;
-      }
+      }      
     }
     .form-check.abc-checkbox {
       padding-left: 0px !important;
       .form-check-label {
         padding-left: 17px !important;
+        padding-top: 3px !important;
       }
     }
     .form-check.abc-radio {

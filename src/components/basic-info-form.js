@@ -125,7 +125,7 @@ class BasicInfoForm extends React.Component {
                 </div>
                 <div className="row field-wrapper">
                     <div className="col-md-4">
-                        <label>{T.translate("step_two.company")} *</label>
+                        <label>{T.translate("step_two.company")}</label>
                     </div>
                     <div className="col-md-6">
                         <Input

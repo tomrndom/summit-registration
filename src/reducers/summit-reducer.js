@@ -53,7 +53,6 @@ const summitReducer = (state = DEFAULT_STATE, action) => {
             }
             break;
         case SUMMIT_NOT_FOUND:
-            console.log(payload);
             return {...state, currentSummit: {}};
         case GET_SUMMIT_BY_ID:
             let summit = payload.response;

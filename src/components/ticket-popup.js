@@ -53,6 +53,7 @@ class TicketPopup extends React.Component {
         this.handleChangeEmail = this.handleChangeEmail.bind(this);        
         this.handleFormatReassignDate = this.handleFormatReassignDate.bind(this);
         this.handleTicketRole = this.handleTicketRole.bind(this);
+        this.handleTicketName = this.handleTicketName.bind(this);
         this.handlePopupSave = this.handlePopupSave.bind(this);
         this.handleMandatoryExtraQuestions = this.handleMandatoryExtraQuestions.bind(this);
     }
@@ -253,6 +254,12 @@ class TicketPopup extends React.Component {
   
       //this.props.handleTicketChange(ticket, errors);
     }
+
+    handleTicketName(ticket_type_id) {
+      let {summit} = this.props;      
+      let ticketName = summit.ticket_types.find(t => t.id === ticket_type_id).name;      
+      return ticketName;
+    }
     
     handleTicketRole(badge) {
       let roles = [];
@@ -278,7 +285,7 @@ class TicketPopup extends React.Component {
 
     render() {
 
-      let {extraQuestions, status, errors, ticket: {owner, badge}, fromTicketList, summit, owned, member} = this.props;
+      let {extraQuestions, status, errors, ticket: {owner, badge, ticket_type_id}, fromTicketList, summit, owned, member} = this.props;
       let {showPopup, tempTicket, tempTicket: {attendee_email}, popupCase, cleanFields, reassignEmail} = this.state;
       let reassign_date = summit.reassign_ticket_till_date < summit.end_date ? summit.reassign_ticket_till_date : summit.end_date;
       let now = parseInt((new Date().getTime() / 1000).toFixed(0));
@@ -286,20 +293,12 @@ class TicketPopup extends React.Component {
         return (
         <div className='popup-bg'>
             <div className='popup-form'>
-              <div className={`popup-header ${status.orderClass}`}>                
-                  {fromTicketList ? 
-                    <div className="popup-title">
-                      <h4><b>Full Day Pass</b></h4>
-                      <p>{this.handleTicketRole(badge)}</p>
-                      <p className={`status ${status.class}`}>{status.text}</p>
-                    </div>
-                    : 
-                    <div className="popup-title">
-                      <h4><b>Full Day Pass</b></h4>
-                      <p>{this.handleTicketRole(badge)}</p>
-                      <p className={`status ${status.class}`}>{status.text}</p>
-                    </div>
-                    }                  
+              <div className={`popup-header ${status.orderClass}`}>
+                  <div className="popup-title">
+                    <h4><b>{this.handleTicketName(ticket_type_id)}</b></h4>
+                    <p>{this.handleTicketRole(badge)}</p>
+                    <p className={`status ${status.class}`}>{status.text}</p>
+                  </div>
                   <div className="popup-icons">                     
                     <i onClick={() => this.props.downloadTicket()} className="fa fa-file-pdf-o"></i>
                     <i onClick={() => this.props.closePopup()} className="fa fa-times"></i>                    

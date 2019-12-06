@@ -12,7 +12,7 @@
  **/
 
 import { START_LOADING, STOP_LOADING, LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
-import { GET_SUMMIT_BY_ID, GET_SUMMIT_BY_SLUG, SELECT_SUMMIT, GET_SUMMIT_REFUND_POLICY, GET_SUGGESTED_SUMMITS } from "../actions/summit-actions";
+import { GET_SUMMIT_BY_ID, GET_SUMMIT_BY_SLUG, SELECT_SUMMIT, SUMMIT_NOT_FOUND, GET_SUMMIT_REFUND_POLICY, GET_SUGGESTED_SUMMITS } from "../actions/summit-actions";
 
 
 const DEFAULT_STATE = {
@@ -52,6 +52,9 @@ const summitReducer = (state = DEFAULT_STATE, action) => {
               return {...state, currentSummit: entity, summits: [ ...state.summits ]};
             }
             break;
+        case SUMMIT_NOT_FOUND:
+            console.log(payload);
+            return {...state, currentSummit: {}};
         case GET_SUMMIT_BY_ID:
             let summit = payload.response;
             return {...state, summits: [ ...state.summits, summit ]}

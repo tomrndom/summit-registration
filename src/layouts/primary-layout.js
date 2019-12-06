@@ -46,14 +46,12 @@ class PrimaryLayout extends React.Component {
 
     render(){
         let { location, match, summit, summitLoader } = this.props;
-        let summitSlug = this.props.match.params.summit_slug;            
+        let summitSlug = this.props.match.params.summit_slug;
 
-        if (!summitLoader && !summit) {
-          let slug = match.url;
-          slug = slug.substring(0, slug.lastIndexOf("/") + 1);          
+        if (!summitLoader && (Object.entries(summit).length === 0 && summit.constructor === Object)) {                    
           return <div>
             <Switch>
-                <Route render={props => (<Redirect to={`${slug}`} />)}/>
+                <Route render={props => (<Redirect to={`/a/`} />)}/>
             </Switch>
           </div>;
         } else {
@@ -61,11 +59,11 @@ class PrimaryLayout extends React.Component {
             <div className="primary-layout">
                 <main id="page-wrap">
                     <Switch>
-                        <Route exact path={`${match.url}/start`} component={StepOnePage}/>
-                        <Route exact path={`${match.url}/details`} component={StepTwoPage}/>
-                        <Route exact path={`${match.url}/checkout`} component={StepThreePage}/>
-                        <Route exact path={`${match.url}/done`} component={StepFourPage}/>
-                        <Route render={props => (<Redirect to={`${match.url}/start`} />)}/>
+                        <Route exact path={`${match.url}/register/start`} component={StepOnePage}/>
+                        <Route exact path={`${match.url}/register/details`} component={StepTwoPage}/>
+                        <Route exact path={`${match.url}/register/checkout`} component={StepThreePage}/>
+                        <Route exact path={`${match.url}/register/done`} component={StepFourPage}/>
+                        <Route render={props => (<Redirect to={`${match.url}/register/start`} />)}/>
                     </Switch>
                 </main>
             </div>

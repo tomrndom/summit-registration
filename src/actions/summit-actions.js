@@ -30,6 +30,7 @@ export const GET_SUMMIT_BY_SLUG        = 'GET_SUMMIT_BY_SLUG';
 export const GET_SUMMIT_BY_ID          = 'GET_SUMMIT_BY_ID';
 export const GET_USER_SUMMITS          = 'GET_USER_SUMMITS';
 export const SELECT_SUMMIT             = 'SELECT_SUMMIT';
+export const SUMMIT_NOT_FOUND          = 'SUMMIT_NOT_FOUND';
 export const GET_SUGGESTED_SUMMITS     = 'GET_SUGGESTED_SUMMITS';
 export const GET_SUMMIT_REFUND_POLICY  = 'GET_SUMMIT_REFUND_POLICY';
 
@@ -57,6 +58,7 @@ export const getSummitBySlug = (slug, updateSummit) => (dispatch, getState) => {
           dispatch(stopLoading());
         }
     ).catch(e => {
+        dispatch(createAction(SUMMIT_NOT_FOUND)({}))
         dispatch(stopLoading());
         return (e);
     });

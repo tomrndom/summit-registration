@@ -280,7 +280,7 @@ class TicketAssignForm extends React.Component {
                 }                
               </div>
             </div>
-            {extraQuestions && 
+            {extraQuestions.length > 0 && 
             <React.Fragment>
               <hr/>
               <div className="row popup-basic-info">

@@ -377,8 +377,7 @@ class TicketPopup extends React.Component {
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--reassign">
                         <div className="popup-scroll">
                           <div className="ticket-reassign-form">
-                              <p>{T.translate("ticket_popup.reassign_text")} <br/> <b>{owner.email}</b></p>                              
-                              <br />
+                              <p>{T.translate("ticket_popup.reassign_text")} <br/> <b>{owner.email}</b></p>
                               <button className="btn btn-primary" onClick={() => this.handleTicketReassign(true)}>{T.translate("ticket_popup.reassign_me")}</button>  
                               <div className="popup-separator">
                                 <div><hr/></div>

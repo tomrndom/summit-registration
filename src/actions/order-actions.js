@@ -253,7 +253,6 @@ export const selectOrder = (order, updateId = null) => (dispatch, getState) => {
     dispatch(stopLoading());
   } else {      
     dispatch(createAction(SELECT_ORDER)(order));
-    dispatch(stopLoading());
   }
 
 }

@@ -102,14 +102,15 @@ class App extends React.PureComponent {
                       </div>
                   </div>
                   <Switch>
-                      <Route path="/a/:summit_slug" component={PrimaryLayout}/>
-                      <Route path="/a/guests/:ticket_hash" component={GuestsLayout}/>
                       <AuthorizedRoute isLoggedUser={isLoggedUser} backUrl={backUrl} path="/a/member" component={DashboardLayout} />
                       <AuthorizationCallbackRoute onUserAuth={onUserAuth} path='/auth/callback' getUserInfo={getUserInfo} />
                       <LogOutCallbackRoute doLogout={doLogout}  path='/auth/logout'/>
+                      <Route path="/a/guests/:ticket_hash" component={GuestsLayout}/>
+                      <Route path="/a/:summit_slug" component={PrimaryLayout}/>
+                      <Route path="/a/" component={SelectSummitPage} />
                       <Route path="/logout" component={NotFoundPage} />
                       <Route path="/404" component={NotFoundPage} />                      
-                      <Route path="/a/" component={SelectSummitPage} />
+                      <Route path="/" render={props => (<Redirect to={`/a/`} />)} />
                       <Route render={props => (<Redirect to={`/404`} />)}/>
                   </Switch>
               </div>
@@ -122,7 +123,7 @@ const mapStateToProps = ({ loggedUserState, baseState, summitState }) => ({
   isLoggedUser: loggedUserState.isLoggedUser,
   backUrl: loggedUserState.backUrl,
   member: loggedUserState.member,
-  summit: summitState.currentSummit,
+  summit: summitState.purchaseSummit,
   loading : baseState.loading,
 })
 

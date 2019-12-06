@@ -123,7 +123,7 @@ class StepOnePage extends React.Component {
 
 const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
     member: loggedUserState.member,
-    summit: summitState.currentSummit,
+    summit: summitState.purchaseSummit,
     order:  orderState.purchaseOrder,
     errors:  orderState.errors
 })

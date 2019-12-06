@@ -124,7 +124,7 @@ class StepFourPage extends React.Component {
 
 const mapStateToProps = ({ loggedUserState, summitState, orderState }) => ({
     member: loggedUserState.isLoggedUser,
-    summit: summitState.currentSummit,
+    summit: summitState.purchaseSummit,
     order:  orderState.purchaseOrder,
     errors:  orderState.errors
 })

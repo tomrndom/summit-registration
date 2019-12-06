@@ -12,12 +12,20 @@
  **/
 
 import { START_LOADING, STOP_LOADING, LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
-import { GET_SUMMIT_BY_ID, GET_SUMMIT_BY_SLUG, SELECT_SUMMIT, SUMMIT_NOT_FOUND, GET_SUMMIT_REFUND_POLICY, GET_SUGGESTED_SUMMITS } from "../actions/summit-actions";
+import { 
+  GET_SUMMIT_BY_ID, 
+  GET_SUMMIT_BY_SLUG, 
+  SELECT_SUMMIT, 
+  SUMMIT_NOT_FOUND, 
+  SELECT_PURCHASE_SUMMIT,
+  GET_SUMMIT_REFUND_POLICY, 
+  GET_SUGGESTED_SUMMITS 
+} from "../actions/summit-actions";
 
 
 const DEFAULT_STATE = {
     loading: false,
-    currentSummit: {},
+    purchaseSummit: {},
     selectedSummit: {
       refund_policy: null
     },
@@ -45,15 +53,16 @@ const summitReducer = (state = DEFAULT_STATE, action) => {
                     entity[key] = (entity[key] == null) ? '' : entity[key] ;
                 }
             }
-
             if(payload.response) {
-              return {...state, currentSummit: entity, summits: [ ...state.summits, entity ]};
+              return {...state, purchaseSummit: entity, summits: [ ...state.summits, entity ]};
             } else {
-              return {...state, currentSummit: entity, summits: [ ...state.summits ]};
+              return {...state, purchaseSummit: entity, summits: [ ...state.summits ]};
             }
             break;
         case SUMMIT_NOT_FOUND:
-            return {...state, currentSummit: {}};
+            return {...state, purchaseSummit: {}};
+        case SELECT_PURCHASE_SUMMIT:
+            return {...state, purchaseSummit: payload };
         case GET_SUMMIT_BY_ID:
             let summit = payload.response;
             return {...state, summits: [ ...state.summits, summit ]}

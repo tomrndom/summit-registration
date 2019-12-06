@@ -18,7 +18,7 @@ import { OPSessionChecker } from "openstack-uicore-foundation/lib/components";
 class AuthorizedRoute extends React.Component {
 
     render() {
-        let { component: Component, isLoggedUser, backUrl, currentSummit, ...rest } = this.props;
+        let { component: Component, isLoggedUser, backUrl, purchaseSummit, ...rest } = this.props;
         return (
             <Route {...rest} render={props => {
                 let { location } = this.props;
@@ -35,7 +35,7 @@ class AuthorizedRoute extends React.Component {
                     return (
                         <React.Fragment>
                             <OPSessionChecker clientId={window.OAUTH2_CLIENT_ID} idpBaseUrl={window.IDP_BASE_URL} />
-                            <Component currentSummit={currentSummit} {...props} />
+                            <Component purchaseSummit={purchaseSummit} {...props} />
                         </React.Fragment>
                     );
                 } else {

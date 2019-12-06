@@ -74,7 +74,7 @@ class PrimaryLayout extends React.Component {
 }
 
 const mapStateToProps = ({ summitState  }) => ({
-    summit: summitState.currentSummit,
+    summit: summitState.purchaseSummit,
     summitLoader: summitState.loading
 })
 

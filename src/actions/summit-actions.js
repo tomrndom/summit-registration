@@ -31,6 +31,7 @@ export const GET_SUMMIT_BY_ID          = 'GET_SUMMIT_BY_ID';
 export const GET_USER_SUMMITS          = 'GET_USER_SUMMITS';
 export const SELECT_SUMMIT             = 'SELECT_SUMMIT';
 export const SUMMIT_NOT_FOUND          = 'SUMMIT_NOT_FOUND';
+export const SELECT_PURCHASE_SUMMIT    = 'SELECT_PURCHASE_SUMMIT';
 export const GET_SUGGESTED_SUMMITS     = 'GET_SUGGESTED_SUMMITS';
 export const GET_SUMMIT_REFUND_POLICY  = 'GET_SUMMIT_REFUND_POLICY';
 
@@ -120,7 +121,8 @@ export const getSuggestedSummits = () => (dispatch, getState) => {
   dispatch(startLoading());
 
   let params = {
-    filter: 'ticket_types_count>0'
+    filter: 'ticket_types_count>0',
+    expand: 'order_extra_questions.values'    
   };
 
   return getRequest(
@@ -168,6 +170,19 @@ export const selectSummit = (summit, updateSummit = true) => (dispatch, getState
 
   dispatch(getSummitBySlug(summit.slug, updateSummit));
 
+}
+
+export const selectPurchaseSummit = (slug) => (dispatch, getState) => {
+
+  dispatch(startLoading());
+
+  let { summitState: {suggestedSummits} } = getState();  
+
+  let summit = suggestedSummits.find(s => s.slug === slug);    
+
+  dispatch(createAction(SELECT_PURCHASE_SUMMIT)(summit));
+
+  history.push(`/a/${slug}/`);
 }
 
 export const selectSummitById = (id) => (dispatch, getState) => {

@@ -17,7 +17,7 @@ import T from "i18n-react/dist/i18n-react";
 
 import NotFoundSummit from '../components/not-found-summit';
 
-import {getSuggestedSummits} from '../actions/summit-actions';
+import {getSuggestedSummits, selectPurchaseSummit} from '../actions/summit-actions';
 
 
 //import '../styles/not-found-page.less';
@@ -31,6 +31,8 @@ class SelectSummitPage extends React.Component {
         this.state = {
 
         };
+
+        this.handleSummitSelect = this.handleSummitSelect.bind(this);
     }
 
     componentWillMount() {
@@ -42,26 +44,32 @@ class SelectSummitPage extends React.Component {
       getSuggestedSummits();
     }
 
+    handleSummitSelect(slug) {
+      this.props.selectPurchaseSummit(slug);
+    }
+
     render(){
-      let {suggestedSummits} = this.props;      
+      let {suggestedSummits, loading} = this.props;      
       let slug = this.props.match.params.summit_slug;
 
         return (
-            <div>              
-              <NotFoundSummit slug={slug} summits={suggestedSummits}/>
+            <div>
+              {!loading &&  <NotFoundSummit slug={slug} summits={suggestedSummits} selectPurchaseSummit={this.handleSummitSelect}/>}
             </div>
         );
     }
 }
 
-const mapStateToProps = ({ summitState  }) => ({  
-  suggestedSummits: summitState.suggestedSummits
+const mapStateToProps = ({ summitState  }) => ({
+  suggestedSummits: summitState.suggestedSummits,
+  loading: summitState.loading
 })
 
 export default connect(
   mapStateToProps,
   {
-      getSuggestedSummits
+      getSuggestedSummits,
+      selectPurchaseSummit
   }
 )(SelectSummitPage);
 

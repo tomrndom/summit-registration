@@ -90,7 +90,7 @@ export const validateStripe = (value) => (dispatch, getState) => {
 
 export const createReservation = (owner_email, owner_first_name, owner_last_name, owner_company, tickets) => (dispatch, getState) => {
     let { summitState } = getState();    
-    let { currentSummit }   = summitState;
+    let { purchaseSummit }   = summitState;
 
     dispatch(startLoading());
 
@@ -108,7 +108,7 @@ export const createReservation = (owner_email, owner_first_name, owner_last_name
     return postRequest(
         createAction(CREATE_RESERVATION),
         createAction(CREATE_RESERVATION_SUCCESS),        
-        `${window.API_BASE_URL}/api/public/v1/summits/${currentSummit.id}/orders/reserve`,
+        `${window.API_BASE_URL}/api/public/v1/summits/${purchaseSummit.id}/orders/reserve`,
         normalizedEntity,
         authErrorHandler,
         // entity
@@ -128,7 +128,7 @@ export const createReservation = (owner_email, owner_first_name, owner_last_name
 export const deleteReservation = () => (dispatch, getState) => {
   
   let { summitState, orderState } = getState();    
-  let { currentSummit: { id } } = summitState;
+  let { purchaseSummit: { id } } = summitState;
   let { purchaseOrder: {reservation: { hash } }} = orderState;
 
   return deleteRequest(
@@ -151,7 +151,7 @@ export const deleteReservation = () => (dispatch, getState) => {
 }
 
 export const payReservation = (card, stripe) => (dispatch, getState) => {
-    let {orderState: { purchaseOrder, purchaseOrder: {reservation}}, summitState: {currentSummit}} = getState();
+    let {orderState: { purchaseOrder, purchaseOrder: {reservation}}, summitState: {purchaseSummit}} = getState();
 
     let success_message = {
         title: T.translate("general.done"),
@@ -185,7 +185,7 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
             return putRequest(
                 null,
                 createAction(PAY_RESERVATION),
-                `${window.API_BASE_URL}/api/public/v1/summits/${currentSummit.id}/orders/${reservation.hash}/checkout`,
+                `${window.API_BASE_URL}/api/public/v1/summits/${purchaseSummit.id}/orders/${reservation.hash}/checkout`,
                 normalizedEntity,
                 authErrorHandler,
                 // entity

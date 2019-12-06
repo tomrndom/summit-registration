@@ -26,16 +26,17 @@ export default class NotFoundSummit extends React.Component {
         this.state = {
           selectedSummit : ''
         };
+
+        this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange(ev) {
+      let {selectPurchaseSummit} = this.props;
       let {value} = ev.target;
-      //this.props.selectSummit(value);
-      history.push(`/a/${value}/register`);
+      selectPurchaseSummit(value);      
     }
 
     render(){
-
       let {slug, summits} = this.props;
       let {selectedSummit} = this.state;
 

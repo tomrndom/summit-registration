@@ -198,7 +198,6 @@ export const selectSummitById = (id) => (dispatch, getState) => {
   } else {
     dispatch(getSummitById(id, true));
   }
-  
 
 }
 

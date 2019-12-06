@@ -250,8 +250,10 @@ export const selectOrder = (order, updateId = null) => (dispatch, getState) => {
     let {orderState: {memberOrders}} = getState();
     let updatedOrder = memberOrders.find(o => o.id === updateId);
     dispatch(createAction(SELECT_ORDER)(updatedOrder));
+    dispatch(stopLoading());
   } else {      
     dispatch(createAction(SELECT_ORDER)(order));
+    dispatch(stopLoading());
   }
 
 }

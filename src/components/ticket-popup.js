@@ -202,11 +202,13 @@ class TicketPopup extends React.Component {
       let {extraQuestions} = this.props;
       let {tempTicket: {extra_questions}} = this.state;
       let answeredQuestions = true;
-      extraQuestions.map(eq => {
-        if(eq.mandatory) {
-          answeredQuestions = extra_questions.find(q => q.question_id === eq.id).answer ? true : false;          
-        }
-      });
+      if(extraQuestions){
+        extraQuestions.map(eq => {
+          if(eq.mandatory) {
+            answeredQuestions = extra_questions.find(q => q.question_id === eq.id).answer ? true : false;          
+          }
+        });
+      }
       return answeredQuestions;
     }
 

@@ -73,7 +73,7 @@ class SubmitButtons extends React.Component {
     }
 
     render() {
-        let {step, canContinue} = this.props;
+        let {step, canContinue, stripe = null} = this.props;
 
         return (
             <div className="row submit-buttons-wrapper">
@@ -98,7 +98,8 @@ class SubmitButtons extends React.Component {
                     }
 
                     {step == 3 &&
-                    <button className="btn btn-primary continue-btn" onClick={this.payClick}>
+                    <button className="btn btn-primary continue-btn" onClick={this.payClick} 
+                      disabled={Object.entries(stripe).length === 0 && stripe.constructor === Object}>
                         {T.translate("general.pay_now")}
                     </button>
                     }

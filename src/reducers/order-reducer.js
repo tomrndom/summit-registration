@@ -95,7 +95,7 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             return {...state, purchaseOrder: {...state.purchaseOrder, reservation: entity }, errors: {}, loading: false, loaded: true};
             break
         case CREATE_RESERVATION_ERROR:
-            let {tickets} = state.order;            
+            let {tickets} = {...state.order};
             tickets.map(t => {
               if(!t.tempId) {
                 const randomNumber = Math.floor(Math.random() * 10000) + 1; 

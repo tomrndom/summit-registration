@@ -68,7 +68,12 @@
     "billing_address_two" : "Address 2",
     "billing_city"        : "City",
     "billing_state"       : "State",
-    "billing_zipcode"     : "ZIP Code"
+    "billing_zipcode"     : "ZIP Code",
+    "stripe_errors": {
+      "cardNumber"       : "Please enter a valid Credit Card.",
+      "cardExpiry"       : "Please enter the card expiration.",
+      "cardCvc"          : "Please enter the card cvc."
+    }
   },
   "step_four": {
     "congratulations"     : "Congratulations",

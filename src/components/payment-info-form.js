@@ -27,9 +27,9 @@ class PaymentInfoForm extends React.Component {
 
         this.state = {
             stripeErrors: {
-                cardNumber: { message: 'Please enter a valid Credit Card.', required: false },
-                cardExpiry: { message: 'Please enter the card expiration.', required: false },
-                cardCvc: { message: 'Please enter the card cvc.', required: false },
+                cardNumber: { message: '', required: false },
+                cardExpiry: { message: '', required: false },
+                cardCvc: { message: '', required: false },
             }
         };
         
@@ -47,7 +47,7 @@ class PaymentInfoForm extends React.Component {
     }
 
     hasStripeErrors(ev) {
-        let {error, elementType} = ev;          
+        let {error, elementType} = ev;
 
         if(error) {
             switch(elementType) {
@@ -75,8 +75,8 @@ class PaymentInfoForm extends React.Component {
     }
 
     hasUncompletedFields(ev){    
-        let {complete, elementType} = ev;
-        let {onChange, stripe} = this.props;        
+        let {complete, elementType, empty} = ev;
+        let {onChange, stripe} = this.props;
         let {message} = this.state.stripeErrors[elementType];        
 
         if(complete) {
@@ -87,6 +87,12 @@ class PaymentInfoForm extends React.Component {
             this.setState({ 
                 stripeErrors: { ...this.state.stripeErrors, [elementType]: { message, required: false }}
             }, () => onChange(this.state.stripeErrors, stripe));
+        }
+
+        if(empty) {
+          this.setState({ 
+            stripeErrors: { ...this.state.stripeErrors, [elementType]: { message: T.translate(`step_three.stripe_errors.${elementType}`), required: false }}
+          }, () => onChange(this.state.stripeErrors, stripe));
         }
     }
 

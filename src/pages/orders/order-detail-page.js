@@ -131,15 +131,22 @@ class OrderDetailPage extends React.Component {
     this.props.refundTicket(ticket);
   }
 
-  handleTicketUpdate(ticket){    
-    let { attendee_first_name, attendee_surname, attendee_email, attendee_company, extra_questions, disclaimer_accepted, owner } = ticket;
-    let {member} = this.props;
-    if(owner && owner.email && (owner.email === member.email)){
-      this.props.editOwnedTicket(attendee_email, attendee_first_name, attendee_surname, attendee_company, disclaimer_accepted, extra_questions);      
+  handleTicketUpdate(tempTicket) {    
+    let { attendee_first_name, attendee_surname, attendee_email, attendee_company, extra_questions, disclaimer_accepted, owner } = tempTicket;    
+    let { member } = this.props;
+    
+    if (owner && owner.email) {
+      if(owner.email !== attendee_email) {
+        this.props.removeAttendee(tempTicket);
+      } else if(owner.email === member.email) {
+        this.props.editOwnedTicket(attendee_email, attendee_first_name, attendee_surname, attendee_company, disclaimer_accepted, extra_questions);      
+      } else {
+        this.props.assignAttendee(attendee_email, attendee_first_name, attendee_surname, attendee_company, extra_questions);  
+      }
     } else {
       this.props.assignAttendee(attendee_email, attendee_first_name, attendee_surname, attendee_company, extra_questions);
-    } 
-  }
+    }
+  }   
 
   handleTicketRemoveAttendee(ticket) {
     this.props.removeAttendee(ticket);

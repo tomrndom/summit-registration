@@ -33,10 +33,12 @@ export default class StepRow extends React.Component {
                 <div className="col-md-6">
                     Step {step} of 4
                 </div>
-                {(step === 2 || step === 3) &&
+                {(step === 2 || step === 3) ?
                 <div className="col-md-6">                    
                     * {T.translate("step_two.required")}
                 </div>
+                :
+                <div className="col-md-6"></div>
                 }
             </div>
         );

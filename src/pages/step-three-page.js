@@ -28,6 +28,7 @@ import BillingInfoForm from "../components/billing-info-form";
 
 import '../styles/step-three-page.less';
 import history from '../history';
+import URI from "urijs";
 
 
 class StepThreePage extends React.Component {
@@ -83,10 +84,27 @@ class StepThreePage extends React.Component {
         }
     }
 
+    componentWillMount() {
+      let {summit: {slug}} = this.props;
+      const stepDefs = ['start', 'details', 'checkout', 'done']; 
+
+      let url = URI(window.location.href);
+      let location = url.pathname();
+      
+      let sameUrlAsSlug = location.match(/.*\/a\/(.*)\/register\/checkout/)[1] === slug;      
+
+      if(sameUrlAsSlug) {
+        history.push(stepDefs[0]);
+      } else {
+        window.scrollTo(0, 0);
+      }
+    }
+
     componentDidMount() {
-        let {order:{reservation}} = this.props;
-        const stepDefs = ['start', 'details', 'checkout', 'done'];
-        if(Object.entries(reservation).length === 0 && reservation.constructor === Object) {
+        let {order:{reservation}, summit: {slug}} = this.props;
+        const stepDefs = ['start', 'details', 'checkout', 'done'];                  
+
+        if(Object.entries(reservation).length === 0 && reservation.constructor === Object && sameUrlAsSlug) {
           history.push(stepDefs[0]);
         } else {
           window.scrollTo(0, 0);

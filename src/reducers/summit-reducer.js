@@ -54,9 +54,10 @@ const summitReducer = (state = DEFAULT_STATE, action) => {
                 }
             }
             if(payload.response) {
-              return {...state, purchaseSummit: entity, summits: [ ...state.summits, entity ]};
+              let cachedSummits = [...new Set(state.summits.filter(s => s.id !== entity.id))];              
+              return {...state, purchaseSummit: entity, summits: [ ...cachedSummits, entity ]};
             } else {
-              return {...state, purchaseSummit: entity, summits: [ ...state.summits ]};
+              return {...state, purchaseSummit: entity, summits: [ ...cachedSummits ]};
             }
             break;
         case SUMMIT_NOT_FOUND:

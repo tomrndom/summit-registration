@@ -131,7 +131,7 @@ class GuestsLayout extends React.Component {
     
     render() {
       let {ticket: {owner, order_extra_questions}, ticket, errors, ticketLoading, summitLoading, summit, summits} = this.props;
-      let now = parseInt((new Date().getTime() / 1000).toFixed(0));
+      let now = summit.timestamp;
       let {tempTicket} = this.state;
 
       let loading = ticketLoading && summitLoading;

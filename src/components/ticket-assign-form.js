@@ -68,7 +68,7 @@ class TicketAssignForm extends React.Component {
       let {summit} = this.props;
       let reassign_date = summit.reassign_ticket_till_date < summit.end_date ? summit.reassign_ticket_till_date : summit.end_date
       if(days) {
-        let now = parseInt((new Date().getTime() / 1000).toFixed(0));
+        let now = summit.timestamp;
         return daysBetweenDates(now, reassign_date, summit.time_zone.name).length;        
       } else {
         return getFormatedDate(reassign_date, summit.time_zone_id);
@@ -81,7 +81,7 @@ class TicketAssignForm extends React.Component {
 
       let {guest, ownedTicket, ticket, onChange, extraQuestions, status, summit, orderOwned, readOnly } = this.props;
       let {extra_questions, input_email} = this.state;
-      let now = parseInt((new Date().getTime() / 1000).toFixed(0));
+      let now = summit.timestamp;
 
         return (
           <div className="ticket-assign-form">

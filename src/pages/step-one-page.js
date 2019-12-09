@@ -76,7 +76,7 @@ class StepOnePage extends React.Component {
     render(){
 
         let {summit, order} = this.props;
-        let now = Math.round((new Date()).getTime() / 1000);
+        let now = summit.timestamp;
 
         return (
             <div className="step-one">

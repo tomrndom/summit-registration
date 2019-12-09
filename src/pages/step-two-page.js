@@ -159,6 +159,7 @@ class StepTwoPage extends React.Component {
                                 onAddTicket={this.handleAddTicket}
                                 onRemoveTicket={this.handleRemoveTicket}
                                 onChange={this.handleTicketInfoChange}
+                                summit={summit}
                             />
                         ))}
                     </div>

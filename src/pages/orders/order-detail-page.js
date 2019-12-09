@@ -209,7 +209,7 @@ class OrderDetailPage extends React.Component {
   render() {
       let {order, summit, ticket, errors, extraQuestions, member, orderLoading, summitLoading} = this.props;
       let {showPopup} = this.state;
-      let now = parseInt((new Date().getTime() / 1000).toFixed(0));
+      let now = summit.timestamp;
 
       let loading = summitLoading || orderLoading;
 

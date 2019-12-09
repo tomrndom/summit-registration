@@ -82,7 +82,7 @@ class TicketOptions extends React.Component {
     render() {
 
       let {guest, summit, ticket} = this.props;
-      let now = parseInt((new Date().getTime() / 1000).toFixed(0));        
+      let now = summit.timestamp;
 
         return (
             <div className="order-info-wrapper">

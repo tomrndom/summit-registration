@@ -288,7 +288,7 @@ class TicketPopup extends React.Component {
       let {extraQuestions, status, errors, ticket: {owner, badge, ticket_type_id}, fromTicketList, summit, owned, member} = this.props;
       let {showPopup, tempTicket, tempTicket: {attendee_email}, popupCase, cleanFields, reassignEmail} = this.state;
       let reassign_date = summit.reassign_ticket_till_date < summit.end_date ? summit.reassign_ticket_till_date : summit.end_date;
-      let now = parseInt((new Date().getTime() / 1000).toFixed(0));
+      let now = summit.timestamp;
 
         return (
         <div className='popup-bg'>

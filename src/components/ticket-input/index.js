@@ -47,7 +47,7 @@ export default class TicketInput extends React.Component {
             <div className="ticket-input-box">
                 {ticketTypes.map(t => {
                     let quantity = selection.filter(sel => sel.type_id == t.id).length;                    
-                    let now = Math.round((new Date()).getTime() / 1000);
+                    let now = summit.timestamp;
 
                     if (now >= t.sales_start_date && now <= t.sales_end_date) {
                       return (

@@ -64,6 +64,7 @@ class TicketsListPage extends React.Component {
           handleTicketChange, 
           refundTicket,
           summits,
+          summit,
           page,
           lastPage, 
           loadingTickets, 
@@ -86,6 +87,7 @@ class TicketsListPage extends React.Component {
                   currentPage={page}
                   lastPage={lastPage}
                   summits={summits}
+                  summit={summit}
                   extraQuestions={extraQuestions}
                   loading={loadingTickets && loadingSummits}
                   errors={errors}
@@ -104,6 +106,7 @@ const mapStateToProps = ({ loggedUserState, ticketState, summitState }) => ({
     selectedTicket: ticketState.selectedTicket,
     loadingTickets: ticketState.loading,
     errors: ticketState.errors,
+    summit: summitState.selectedSummit,
     summits: summitState.summits,
     loadingSummits: summitState.loading,
     extraQuestions: summitState.selectedSummit.order_extra_questions

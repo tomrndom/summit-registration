@@ -195,9 +195,9 @@ class TicketList extends React.Component {
 
 
     render() {
-      let { tickets, selectedTicket, extraQuestions, loading, errors, summits, lastPage, currentPage, member } = this.props;
+      let { tickets, selectedTicket, extraQuestions, loading, errors, summits, lastPage, currentPage, member, summit } = this.props;
       let { showPopup } = this.state;
-      let now = parseInt((new Date().getTime() / 1000).toFixed(0));
+      let now = summit.timestamp;
 
       if (tickets.length && !loading) {
         return (

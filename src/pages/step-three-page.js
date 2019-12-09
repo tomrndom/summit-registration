@@ -94,9 +94,9 @@ class StepThreePage extends React.Component {
       let sameUrlAsSlug = location.match(/.*\/a\/(.*)\/register\/checkout/)[1] === slug;      
 
       if(sameUrlAsSlug) {
-        history.push(stepDefs[0]);
-      } else {
         window.scrollTo(0, 0);
+      } else {
+        history.push(stepDefs[0]);
       }
     }
 

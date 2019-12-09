@@ -51,8 +51,8 @@ class BillingInfoForm extends React.Component {
                     <div className="col-md-12">
                     </div>
                 </div>
-                <div className="row field-wrapper">
-                    <div className="col-md-4">
+                <div className="row">
+                    <div className="col-md-4 field-wrapper">
                         <label>{T.translate("step_three.billing_country")} *</label>
                     </div>
                     <div className="col-md-6">

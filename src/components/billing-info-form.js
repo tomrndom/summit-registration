@@ -51,14 +51,13 @@ class BillingInfoForm extends React.Component {
                     <div className="col-md-12">
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-md-4 field-wrapper">
+                <div className="row field-wrapper">
+                    <div className="col-md-4">
                         <label>{T.translate("step_three.billing_country")} *</label>
                     </div>
                     <div className="col-md-6">
                         <CountryInput
                             id="billing_country"
-                            className="field-wrapper"
                             error={this.hasErrors('billing_country')}
                             onChange={onChange}
                             value={order.billing_country} 

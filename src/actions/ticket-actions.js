@@ -125,7 +125,7 @@ export const handleTicketChange = (ticket, errors = {}) => (dispatch, getState) 
 
 }
 
-export const assignAttendee = (attendee_email, attendee_first_name, attendee_last_name, attendee_company, extra_questions, reassignOrderId = null) => (dispatch, getState) => {
+export const assignAttendee = (attendee_email, attendee_first_name, attendee_last_name, attendee_company, extra_questions, reassignOrderId = null, refreshTickets = false) => (dispatch, getState) => {
       
   let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
@@ -158,6 +158,7 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
     authErrorHandler
   )(params)(dispatch).then(() => {
       if(reassignOrderId) {
+        refreshTickets ? dispatch(getUserTickets(selectedTicket.id, ticketPage)) : dispatch(getUserOrders(selectedOrder.id, orderPage));
         dispatch(getUserTickets(selectedTicket.id, ticketPage))
       } else {
         dispatch(getUserOrders(selectedOrder.id, orderPage));
@@ -226,7 +227,7 @@ export const resendNotification = () => (dispatch, getState) => {
   
 }
 
-export const removeAttendee = (tempTicket) => (dispatch, getState) => {
+export const removeAttendee = (tempTicket, fromTicket = false) => (dispatch, getState) => {
 
   let { loggedUserState, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
@@ -249,7 +250,7 @@ export const removeAttendee = (tempTicket) => (dispatch, getState) => {
       {},
       authErrorHandler
   )(params)(dispatch).then(() => {
-      dispatch(assignAttendee(attendee_email, attendee_first_name, attendee_surname, attendee_company, extra_questions, orderId));
+      dispatch(assignAttendee(attendee_email, attendee_first_name, attendee_surname, attendee_company, extra_questions, orderId, fromTicket));
     }).catch((e) => {
       console.log('error', e)
       dispatch(stopLoading());

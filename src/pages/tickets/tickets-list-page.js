@@ -40,7 +40,7 @@ class TicketsListPage extends React.Component {
     }
 
     handleTicketRemoveAttendee(ticket) {
-      this.props.removeAttendee(ticket);
+      this.props.removeAttendee(ticket, true);
     }
 
     handlePageChange(page) {      

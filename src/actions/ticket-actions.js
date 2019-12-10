@@ -125,10 +125,13 @@ export const handleTicketChange = (ticket, errors = {}) => (dispatch, getState) 
 
 }
 
-export const assignAttendee = (attendee_email, attendee_first_name, attendee_last_name, attendee_company, extra_questions, orderId = null) => (dispatch, getState) => {
+export const assignAttendee = (attendee_email, attendee_first_name, attendee_last_name, attendee_company, extra_questions, reassignOrderId = null) => (dispatch, getState) => {
       
-  let { loggedUserState, orderState: { selectedOrder, current_page }, ticketState: { selectedTicket } } = getState();
+  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
+
+  let orderPage = getState().orderState.current_page;   
+  let ticketPage = getState().ticketState.current_page;   
 
   dispatch(startLoading());
 
@@ -145,7 +148,7 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
     normalizedEntity = { attendee_email, attendee_first_name, attendee_last_name, attendee_company, extra_questions };
   }
 
-  let order_id = orderId ? orderId : selectedOrder.id;
+  let order_id = reassignOrderId ? reassignOrderId : selectedOrder.id;
   
   return putRequest(
     null,
@@ -154,7 +157,11 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
     normalizedEntity,
     authErrorHandler
   )(params)(dispatch).then(() => {
-      dispatch(getUserOrders(selectedOrder.id, current_page));
+      if(reassignOrderId) {
+        dispatch(getUserTickets(selectedTicket.id, ticketPage))
+      } else {
+        dispatch(getUserOrders(selectedOrder.id, orderPage));
+      }
     }
   ).catch(e => {
     dispatch(stopLoading());

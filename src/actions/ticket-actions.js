@@ -125,7 +125,7 @@ export const handleTicketChange = (ticket, errors = {}) => (dispatch, getState) 
 
 }
 
-export const assignAttendee = (attendee_email, attendee_first_name, attendee_last_name, attendee_company, extra_questions) => (dispatch, getState) => {
+export const assignAttendee = (attendee_email, attendee_first_name, attendee_last_name, attendee_company, extra_questions, orderId = null) => (dispatch, getState) => {
       
   let { loggedUserState, orderState: { selectedOrder, current_page }, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
@@ -144,11 +144,13 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
   } else {
     normalizedEntity = { attendee_email, attendee_first_name, attendee_last_name, attendee_company, extra_questions };
   }
+
+  let order_id = orderId ? orderId : selectedOrder.id;
   
   return putRequest(
     null,
     createAction(ASSIGN_TICKET),
-    `${window.API_BASE_URL}/api/v1/summits/all/orders/${selectedOrder.id}/tickets/${selectedTicket.id}/attendee`,
+    `${window.API_BASE_URL}/api/v1/summits/all/orders/${order_id}/tickets/${selectedTicket.id}/attendee`,
     normalizedEntity,
     authErrorHandler
   )(params)(dispatch).then(() => {
@@ -240,7 +242,7 @@ export const removeAttendee = (tempTicket) => (dispatch, getState) => {
       {},
       authErrorHandler
   )(params)(dispatch).then(() => {
-      dispatch(assignAttendee(attendee_email, attendee_first_name, attendee_surname, attendee_company, extra_questions));
+      dispatch(assignAttendee(attendee_email, attendee_first_name, attendee_surname, attendee_company, extra_questions, orderId));
     }).catch((e) => {
       console.log('error', e)
       dispatch(stopLoading());

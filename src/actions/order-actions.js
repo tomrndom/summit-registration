@@ -149,7 +149,7 @@ export const deleteReservation = () => (dispatch, getState) => {
     })
 }
 
-export const payReservation = (card, stripe) => (dispatch, getState) => {
+export const payReservation = (card=null, stripe=null) => (dispatch, getState) => {
     let {orderState: { purchaseOrder, purchaseOrder: {reservation}}, summitState: {purchaseSummit}} = getState();
 
     let success_message = {
@@ -158,54 +158,85 @@ export const payReservation = (card, stripe) => (dispatch, getState) => {
         type: 'success'
     };
 
+    let params = {
+      expand       : 'tickets',
+    };
+
     dispatch(startLoading());
-    
-    stripe.handleCardPayment(
-      reservation.payment_gateway_client_token, card, {
-            payment_method_data: {
-                billing_details: {name: `${purchaseOrder.first_name} ${purchaseOrder.surname}`}
-            }
-        }
-    ).then((result) => {
-        if (result.error) {
-            // Reserve error.message in your UI.            
-            Swal.fire("Payment intent expired", "Please retry purchase.", "warning");
-            history.push(stepDefs[1]);
-            dispatch(stopLoading());            
-        } else {            
-            let normalizedEntity = {
-                billing_address_1: purchaseOrder.billing_address,
-                billing_address_2: purchaseOrder.billing_address_two,
-                billing_address_zip_code: purchaseOrder.billing_zipcode,
-                billing_address_city: purchaseOrder.billing_city,
-                billing_address_state: purchaseOrder.billing_state,
-                billing_address_country: purchaseOrder.billing_country
-            };            
-            return putRequest(
-                null,
-                createAction(PAY_RESERVATION),
-                `${window.API_BASE_URL}/api/public/v1/summits/${purchaseSummit.id}/orders/${reservation.hash}/checkout`,
-                normalizedEntity,
-                authErrorHandler,
-                // entity
-            )()(dispatch)
-                .then((payload) => {                    
-                    dispatch(stopLoading());
-                    history.push(stepDefs[3]);
-                    return (payload);
-                })
-                .catch(e => {
-                    dispatch(stopLoading());
-                    return (e);
-                });
-            // The payment has succeeded. Display a success message.
-        }
-    })
-    .catch(e => {
-      console.log('error', e)
-      dispatch(stopLoading());
-      return (e);
-    });
+
+    if(!card && !stripe) {
+      let normalizedEntity = {
+        billing_address_1: purchaseOrder.billing_address,
+        billing_address_2: purchaseOrder.billing_address_two,
+        billing_address_zip_code: purchaseOrder.billing_zipcode,
+        billing_address_city: purchaseOrder.billing_city,
+        billing_address_state: purchaseOrder.billing_state,
+        billing_address_country: purchaseOrder.billing_country
+      };            
+      return putRequest(
+          null,
+          createAction(PAY_RESERVATION),
+          `${window.API_BASE_URL}/api/public/v1/summits/${purchaseSummit.id}/orders/${reservation.hash}/checkout`,
+          normalizedEntity,
+          authErrorHandler,
+          // entity
+      )(params)(dispatch).then((payload) => {                    
+              dispatch(stopLoading());
+              history.push(stepDefs[3]);
+              return (payload);
+          })
+          .catch(e => {
+              dispatch(stopLoading());
+              return (e);
+          });
+    } else {
+      stripe.handleCardPayment(
+        reservation.payment_gateway_client_token, card, {
+              payment_method_data: {
+                  billing_details: {name: `${purchaseOrder.first_name} ${purchaseOrder.surname}`}
+              }
+          }
+      ).then((result) => {
+          if (result.error) {
+              // Reserve error.message in your UI.            
+              Swal.fire("Payment intent expired", "Please retry purchase.", "warning");
+              history.push(stepDefs[1]);
+              dispatch(stopLoading());            
+          } else {            
+              let normalizedEntity = {
+                  billing_address_1: purchaseOrder.billing_address,
+                  billing_address_2: purchaseOrder.billing_address_two,
+                  billing_address_zip_code: purchaseOrder.billing_zipcode,
+                  billing_address_city: purchaseOrder.billing_city,
+                  billing_address_state: purchaseOrder.billing_state,
+                  billing_address_country: purchaseOrder.billing_country
+              };            
+              return putRequest(
+                  null,
+                  createAction(PAY_RESERVATION),
+                  `${window.API_BASE_URL}/api/public/v1/summits/${purchaseSummit.id}/orders/${reservation.hash}/checkout`,
+                  normalizedEntity,
+                  authErrorHandler,
+                  // entity
+              )(params)(dispatch)
+                  .then((payload) => {                    
+                      dispatch(stopLoading());
+                      history.push(stepDefs[3]);
+                      return (payload);
+                  })
+                  .catch(e => {
+                      dispatch(stopLoading());
+                      return (e);
+                  });
+              // The payment has succeeded. Display a success message.
+          }
+      })
+      .catch(e => {
+        console.log('error', e)
+        dispatch(stopLoading());
+        return (e);
+      }); 
+    }        
 }
 
 export const getUserOrders = (updateId, page = 1, per_page = 5) => (dispatch, getState) => {

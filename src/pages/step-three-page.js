@@ -138,7 +138,7 @@ class StepThreePage extends React.Component {
 
     render(){
         let {summit, order, errors, stripeForm} = this.props;
-        let {card, stripe, dirty} = this.state; 
+        let {card, stripe, dirty} = this.state;
 
         let address = this.props.member ? this.props.member.address : {};
 
@@ -148,14 +148,16 @@ class StepThreePage extends React.Component {
                 <StepRow step={this.step} />
                     <div className="row">
                         <div className="col-md-8">
-                        <StripeProvider apiKey={window.STRIPE_PRIVATE_KEY}>
-                            <Elements>
-                                <PaymentInfoForm 
-                                    onChange={this.handleStripe} 
-                                    order={order} 
-                                    dirty={dirty} />
-                            </Elements>
-                        </StripeProvider>
+                        {order.reservation.discount_amount !== order.reservation.raw_amount &&
+                            <StripeProvider apiKey={window.STRIPE_PRIVATE_KEY}>
+                                <Elements>
+                                    <PaymentInfoForm 
+                                        onChange={this.handleStripe} 
+                                        order={order} 
+                                        dirty={dirty} />
+                                </Elements>
+                            </StripeProvider>
+                        }
                             <BillingInfoForm 
                                 onChange={this.handleChange}
                                 order={order} 
@@ -171,6 +173,7 @@ class StepThreePage extends React.Component {
                     step={this.step} 
                     stripe={stripe} 
                     card={card}
+                    free={order.reservation.discount_amount === order.reservation.raw_amount}
                     errors={{errors, stripeForm}}
                     dirty={this.handleShowErrors} />
             </div>

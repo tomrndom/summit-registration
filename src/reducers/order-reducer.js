@@ -92,7 +92,7 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             break;
         case CREATE_RESERVATION_SUCCESS:
             let entity = {...payload.response};
-            return {...state, purchaseOrder: {...state.purchaseOrder, reservation: entity }, errors: {}, loading: false, loaded: true};
+            return {...state, purchaseOrder: {...state.purchaseOrder, reservation: entity, tickets: entity.tickets }, errors: {}, loading: false, loaded: true};
             break
         case CREATE_RESERVATION_ERROR:
             let {tickets} = {...state.order};

@@ -16,6 +16,7 @@ import { connect } from 'react-redux';
 import T from "i18n-react/dist/i18n-react";
 import { Dropdown } from 'openstack-uicore-foundation/lib/components'
 import history from '../history';
+import SummitCard from './summit-card';
 
 
 export default class NotFoundSummit extends React.Component {
@@ -56,6 +57,17 @@ export default class NotFoundSummit extends React.Component {
                     />
                   </div>
                 </div>
+                <div className="row">
+                  {summits.map(s => {
+                    return (
+                      <React.Fragment>
+                        <SummitCard summit={s}/>
+                        <SummitCard summit={s}/>
+                        <SummitCard summit={s}/>
+                      </React.Fragment>
+                    )
+                  })}
+                </div>                
             </div>
         );
     }

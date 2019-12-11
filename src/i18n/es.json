@@ -18,7 +18,8 @@
   },
   "order_summary": {
     "order_summary"   : "Order Summary",
-    "discounts"       : "Discounts",
+    "discounts"       : "Discount",
+    "refunds"         : "Refund",
     "total"           : "Total"
   },
   "event_info": {

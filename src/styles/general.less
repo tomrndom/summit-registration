@@ -61,6 +61,47 @@ input {
   }
 }
 
+.summit-card {  
+  border: 1px solid #afafaf;
+  border-radius: 3px;
+  margin: 15px;
+  width: 30%;
+  display: inline-block;
+  .image-container {
+    img {
+      height: 150px;
+      width: 100%;
+    }
+  }
+  .summit-container {    
+    padding: 20px 15px;
+    .bottom-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      span {
+        display: flex;
+        h4 {
+          margin-left: 10px;
+        }
+      }
+    }
+    .btn-custom {
+      display: flex;
+      margin-left: auto;
+      border-radius: 5px 0 0 5px;      
+      margin-right: -30px;
+      font-size: 12px;
+      text-align: center;      
+      padding: 2px 20px 2px 15px;
+    }
+    h4 {
+      margin-top: 0;
+      font-weight: bold;    
+    }
+  }  
+}
+
 .header {
   padding: 13px 0 0 0;
   height: 96px;
@@ -362,6 +403,9 @@ input {
         margin-bottom: 0;
       }
     }
+    .order-refunds {
+      color: #e5424d;      
+    }
     .subtotal {
       font-weight: bold;
     }
@@ -399,6 +443,9 @@ input {
     .discount-desc {
       font-size: 12px;
     }
+  }
+  .order-refunds {
+    color: #e5424d;    
   }
   .subtotal {
     font-weight: bold;

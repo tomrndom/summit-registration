@@ -43,23 +43,23 @@ class OrderSummary extends React.Component {
         let ticketSummary = [];        
 
         order.tickets.forEach(tix => {
-            let idx = ticketSummary.findIndex(o => o.ticket_type_id == (tix.type_id ? tix.type_id : tix.ticket_type_id));
-            let tixType = ticket_types.find(tt => tt.id == (tix.type_id ? tix.type_id : tix.ticket_type_id));
-
-            if (idx >= 0) {
-                ticketSummary[idx].qty++;
-            } else {                
-                let name = ticket_types.find(q => q.id === (tix.type_id ? tix.type_id : tix.ticket_type_id)).name;                
-                ticketSummary.push({ticket_type_id: (tix.type_id ? tix.type_id : tix.ticket_type_id), tix_type: tixType, name, qty: 1})
-            }
-
-            ticketTotal = ticketTotal + tixType.cost;
+              let idx = ticketSummary.findIndex(o => o.ticket_type_id == (tix.type_id ? tix.type_id : tix.ticket_type_id));
+              let tixType = ticket_types.find(tt => tt.id == (tix.type_id ? tix.type_id : tix.ticket_type_id));
+  
+              if (idx >= 0) {
+                  ticketSummary[idx].qty++;
+              } else {
+                  let name = ticket_types.find(q => q.id === (tix.type_id ? tix.type_id : tix.ticket_type_id)).name;                
+                  ticketSummary.push({ticket_type_id: (tix.type_id ? tix.type_id : tix.ticket_type_id), tix_type: tixType, name, qty: 1})
+              }
+  
+              ticketTotal = ticketTotal + tixType.cost;
 
         });
         
         let discountTotal = 0;
 
-        let discounts = order.tickets.filter(tix => tix.discount).map(tix => {
+        let discounts = order.tickets.filter(tix => tix.discount && tix.status !== "Refunded").map(tix => {
             let tixType = ticket_types.find(tt => tt.id == tix.type_id || tix.ticket_type_id);
 
             let discountPercentageTmp = (tix.discount * 100) / tixType.cost;            
@@ -69,7 +69,13 @@ class OrderSummary extends React.Component {
             return {tix_type: tixType, percentage: discountPercentageTmp, code: tix.promo_code_id};
         });
 
-        let total = ticketTotal - discountTotal;
+        let refundTotal = 0;
+        let refunds = order.tickets.filter(tix => tix.status === "Refunded").map(tix => {
+          let tixType = ticket_types.find(tt => tt.id == (tix.type_id ? tix.type_id : tix.ticket_type_id));
+          refundTotal += tixType.cost;
+        });
+
+        let total = ticketTotal - discountTotal - refundTotal;
 
         if(type === "mobile") {
           return(
@@ -114,6 +120,14 @@ class OrderSummary extends React.Component {
                             </div>
                             <div className="col-xs-5 text-right subtotal">
                                 -${discountTotal.toFixed(2)}
+                            </div>
+                        </div>
+                        <div className="row order-refunds order-row">
+                            <div className="col-xs-7 text-left">
+                                {T.translate("order_summary.refunds")}                                
+                            </div>
+                            <div className="col-xs-5 text-right subtotal">
+                                -${refundTotal.toFixed(2)}
                             </div>
                         </div>
                         <div className="row total-row">
@@ -171,6 +185,14 @@ class OrderSummary extends React.Component {
                       </div>
                       <div className="col-xs-5 text-right subtotal">
                           -${discountTotal.toFixed(2)}
+                      </div>
+                  </div>
+                  <div className="row order-refunds order-row">
+                      <div className="col-xs-7 text-left">
+                          {T.translate("order_summary.refunds")}                          
+                      </div>
+                      <div className="col-xs-5 text-right subtotal">
+                          -${refundTotal.toFixed(2)}
                       </div>
                   </div>
                   <div className="row total-row">

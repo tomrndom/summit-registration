@@ -58,7 +58,7 @@ class TicketInfoForm extends React.Component {
 
     render() {
         let {order, onChange, ticketType, summit} = this.props;
-        let orderedTickets = order.tickets.filter(tix => tix.type_id == ticketType.id);
+        let orderedTickets = order.tickets.filter(tix => tix.type_id ? tix.type_id : tix.ticket_type_id == ticketType.id);
         let now = summit.timestamp;
 
         if (ticketType.quantity_2_sell > 0 && now >= ticketType.sales_start_date && now <= ticketType.sales_end_date) {

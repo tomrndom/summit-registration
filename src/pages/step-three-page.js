@@ -104,7 +104,7 @@ class StepThreePage extends React.Component {
         let {order:{reservation}, summit: {slug}} = this.props;
         const stepDefs = ['start', 'details', 'checkout', 'done'];                  
 
-        if(Object.entries(reservation).length === 0 && reservation.constructor === Object && sameUrlAsSlug) {
+        if(Object.entries(reservation).length === 0 && reservation.constructor === Object) {
           history.push(stepDefs[0]);
         } else {
           window.scrollTo(0, 0);

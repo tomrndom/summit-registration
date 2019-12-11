@@ -94,8 +94,11 @@ export const createReservation = (owner_email, owner_first_name, owner_last_name
     dispatch(startLoading());
 
     tickets = tickets.map(t => {
-      delete t.tempId;
-      return t;      
+      t.type_id = t.type_id ? t.type_id : t.ticket_type_id;
+      Object.keys(t).forEach((key) => {
+        if(key != "type_id") delete t[key];
+      });
+      return t;
     });
 
     let params = {

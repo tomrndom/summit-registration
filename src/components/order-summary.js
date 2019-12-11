@@ -109,27 +109,26 @@ class OrderSummary extends React.Component {
                             );
                         })}
 
+                        {discountTotal > 0 &&
                         <div className="row order-discounts order-row">
                             <div className="col-xs-7 text-left">
                                 {T.translate("order_summary.discounts")}
-                                <p className="discount-desc">
-                                    {discounts.map(dis => (
-                                        <span key={dis.code}>x1 {dis.tix_type.name} / {dis.percentage}%</span>
-                                    ))}
-                                </p>
                             </div>
                             <div className="col-xs-5 text-right subtotal">
                                 -${discountTotal.toFixed(2)}
                             </div>
                         </div>
+                        }
+                        {refundTotal > 0 && 
                         <div className="row order-refunds order-row">
                             <div className="col-xs-7 text-left">
-                                {T.translate("order_summary.refunds")}                                
+                                {T.translate("order_summary.refunds")}                          
                             </div>
                             <div className="col-xs-5 text-right subtotal">
                                 -${refundTotal.toFixed(2)}
                             </div>
                         </div>
+                        }
                         <div className="row total-row">
                             <div className="col-xs-6 text-left">
                                 {T.translate("order_summary.total")}
@@ -173,20 +172,17 @@ class OrderSummary extends React.Component {
                           </div>
                       );
                   })}
-
+                  {discountTotal > 0 &&
                   <div className="row order-discounts order-row">
                       <div className="col-xs-7 text-left">
                           {T.translate("order_summary.discounts")}
-                          <p className="discount-desc">
-                              {discounts.map(dis => (
-                                  <span key={dis.code}>x1 {dis.tix_type.name} / {dis.percentage}%</span>
-                              ))}
-                          </p>
                       </div>
                       <div className="col-xs-5 text-right subtotal">
                           -${discountTotal.toFixed(2)}
                       </div>
                   </div>
+                  }
+                  {refundTotal > 0 && 
                   <div className="row order-refunds order-row">
                       <div className="col-xs-7 text-left">
                           {T.translate("order_summary.refunds")}                          
@@ -195,6 +191,7 @@ class OrderSummary extends React.Component {
                           -${refundTotal.toFixed(2)}
                       </div>
                   </div>
+                  }
                   <div className="row total-row">
                       <div className="col-xs-6 text-left">
                           {T.translate("order_summary.total")}

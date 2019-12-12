@@ -167,7 +167,11 @@ class StepTwoPage extends React.Component {
                         <OrderSummary order={order} summit={summit} type={'desktop'} />
                     </div>
                 </div>
-                <SubmitButtons step={this.step} errors={errors} dirty={this.handleShowErrors}/>
+                <SubmitButtons 
+                    step={this.step} 
+                    errors={errors} 
+                    canContinue={order.tickets.length > 0}
+                    dirty={this.handleShowErrors}/>
             </div>
         );
     }

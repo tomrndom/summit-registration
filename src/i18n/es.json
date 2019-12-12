@@ -14,7 +14,8 @@
   "general": {
     "continue"      : "Continue",
     "back"          : "Back",
-    "pay_now"       : "Pay Now"
+    "pay_now"       : "Pay Now",
+    "confirm"       : "Confirm"
   },
   "order_summary": {
     "order_summary"   : "Order Summary",

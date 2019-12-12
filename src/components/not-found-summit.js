@@ -57,17 +57,6 @@ export default class NotFoundSummit extends React.Component {
                     />
                   </div>
                 </div>
-                <div className="row">
-                  {summits.map(s => {
-                    return (
-                      <React.Fragment>
-                        <SummitCard summit={s}/>
-                        <SummitCard summit={s}/>
-                        <SummitCard summit={s}/>
-                      </React.Fragment>
-                    )
-                  })}
-                </div>                
             </div>
         );
     }

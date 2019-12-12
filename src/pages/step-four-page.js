@@ -37,8 +37,6 @@ class StepFourPage extends React.Component {
 
         };
 
-        this.generateQRCode = this.generateQRCode.bind(this);
-
     }
 
     componentDidMount() {
@@ -78,18 +76,6 @@ class StepFourPage extends React.Component {
       this.props.handleOrderChange(order);
     }
 
-    generateQRCode() {
-      var QRCode = require('qrcode.react');      
-      const { order: { checkout }} = this.props;
-      let qr = null;
-
-      if (checkout && checkout.number) {          
-          qr = <QRCode value={checkout.number} />
-      }
-
-      return qr;
-  }
-
     render(){
         let {summit, order: {checkout}, order, errors, member} = this.props;
 
@@ -101,10 +87,7 @@ class StepFourPage extends React.Component {
                         <h1>{T.translate("step_four.congratulations")}!</h1>
                         {checkout &&
                         <div className="order-no-box">
-                            <p>{T.translate("step_four.order_no")}</p>
-                            <div className="qr-code">
-                              {this.generateQRCode()}
-                            </div>
+                            <p>{T.translate("step_four.order_no")}</p>                            
                             <div className="order-no">{checkout.number}</div>
                         </div>
                         }

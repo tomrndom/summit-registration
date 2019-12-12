@@ -123,7 +123,7 @@ export const getSuggestedSummits = () => (dispatch, getState) => {
 
   let params = {
     filter: 'ticket_types_count>0',
-    expand: 'order_extra_questions.values'    
+    expand: 'order_extra_questions.values'
   };
 
   return getRequest(

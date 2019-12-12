@@ -78,9 +78,18 @@
     }
   },
   "step_four": {
-    "congratulations"     : "Congratulations",
+    "thank_you"           : "Thank you for your order! You have completed your purchase of:",
     "subtitle"            : "a subtitle",
-    "text"                : "blah blah a text",
+    "manage_text"         : "If you haven't already you are now able to assign these tickets to individuals on the ",
+    "manage_link_text"    : "manage orders",
+    "page_text"           : " page.",
+    "manage_text_2"       : "You can optionally fill in the required details for the attendee or the attendee can do it themselves when they receive the ticket via email.",
+    "required_text"       : "Please remember all required information must be entered per attendee before the attendee can check in.",
+    "register_text"       : "If you do not have an account ",
+    "register_link_text"  : "create one",
+    "register_text_2"     : " with your ",
+    "register_text_3"     : " used for this purchase, you will then be able to manage your order.",
+    "help_text"           : "For further assistance please email ",
     "order_no"            : "ORDER NO",
     "manage"              : "Manage your Orders"
   },

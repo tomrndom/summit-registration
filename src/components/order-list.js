@@ -81,6 +81,10 @@ class OrderList extends React.Component {
     }
 
     handleOrderStatus(order){
+
+      let { summits } = this.props;
+      let summitExtraQuestions = summits.find(s => s.id === order.summit_id).order_extra_questions;
+
       const status = [
         { 
           text: 'READY TO USE',
@@ -135,26 +139,24 @@ class OrderList extends React.Component {
         case "Paid":
           let incomplete = false;
           order.tickets.map(t => {
-            switch(t.status) {
-              case "RefundRequested":
-              case "Refunded":
-              case "Cancelled":
-                break;
-              default:
-                if(t.owner && t.owner.first_name && t.owner.surname && t.owner.extra_questions.length){
-                  t.owner.extra_questions.map(eq => {
-                    if(incomplete) {
-                      return status[1];
-                    } else {
-                      if(!eq.value){
-                        incomplete = true;
-                      }
+            if(t.status !== "RefundRequested" &&
+            t.status !== "Refunded" &&
+            t.status !== "Cancelled" &&
+            summitExtraQuestions.length > 0){
+              if(t.owner && t.owner.first_name && t.owner.surname && t.owner.extra_questions.length > 0){
+                t.owner.extra_questions.map(eq => {
+                  if(incomplete) {
+                    return status[1];
+                  } else {
+                    if(!eq.value){
+                      incomplete = true;
                     }
-                  });
-                } else {
-                  incomplete = true;
-                }
-            }            
+                  }
+                });
+              } else {
+                incomplete = true;
+              }
+            }
           });
           if(incomplete === false) {
             return status[0];

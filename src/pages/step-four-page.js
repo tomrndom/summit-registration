@@ -37,6 +37,8 @@ class StepFourPage extends React.Component {
 
         };
 
+        this.purchasedTickets = this.purchasedTickets.bind(this);
+
     }
 
     componentDidMount() {
@@ -76,28 +78,83 @@ class StepFourPage extends React.Component {
       this.props.handleOrderChange(order);
     }
 
+    purchasedTickets(){
+      let {order, summit: {ticket_types}} = this.props;
+
+      let ticketSummary = [];
+      
+      order.tickets.forEach(tix => {
+        let idx = ticketSummary.findIndex(o => o.ticket_type_id == (tix.type_id ? tix.type_id : tix.ticket_type_id));
+        let tixType = ticket_types.find(tt => tt.id == (tix.type_id ? tix.type_id : tix.ticket_type_id));
+
+        if (idx >= 0) {
+            ticketSummary[idx].qty++;
+        } else {
+            let name = ticket_types.find(q => q.id === (tix.type_id ? tix.type_id : tix.ticket_type_id)).name;                
+            ticketSummary.push({ticket_type_id: (tix.type_id ? tix.type_id : tix.ticket_type_id), name, qty: 1})
+        }        
+      });
+      
+      return ticketSummary;
+    }
+
     render(){
         let {summit, order: {checkout}, order, errors, member} = this.props;
+
+        this.purchasedTickets();
 
         return (
             <div className="step-four">
                 <OrderSummary order={order} summit={summit} type={'mobile'} />
                 <div className="row">
                     <div className="order-result">
-                        <h1>{T.translate("step_four.congratulations")}!</h1>
-                        {checkout &&
-                        <div className="order-no-box">
-                            <p>{T.translate("step_four.order_no")}</p>                            
-                            <div className="order-no">{checkout.number}</div>
-                        </div>
-                        }
-                        {member &&
-                          <Link to="/a/member/orders">
-                            <button className="btn btn-primary manage-btn">
-                              {T.translate("step_four.manage")}
-                            </button>
-                          </Link>                          
-                        }
+
+                        <span>
+                          {T.translate("step_four.thank_you")}
+                          <br/>
+                          {this.purchasedTickets().map(t => {
+                            return (
+                              <ul>
+                                {`${t.qty} ${t.name}`}
+                              </ul>
+                            )
+                          })}
+                        </span>
+                          
+                            <span>
+                              {T.translate("step_four.manage_text")}
+                            <Link to="/a/member/orders">
+                              {T.translate("step_four.manage_link_text")}
+                            </Link>
+                            {T.translate("step_four.page_text")}                          
+                            </span>
+                            <br/>
+                            <span>
+                            {T.translate("step_four.required_text")}
+                            <br/><br/>
+                              <button className="btn btn-primary manage-btn">
+                                {T.translate("step_four.manage")}
+                              </button>
+                            </span>                            
+                            {!member &&
+                            <React.Fragment>
+                              <br/>
+                              <span>
+                                {T.translate("step_four.register_text")}
+                                <a href={`${window.IDP_BASE_URL}/auth/register`}>
+                                  {T.translate("step_four.register_link_text")}
+                                </a>
+                                {T.translate("step_four.register_text_2")}
+                                {order.email}
+                                {T.translate("step_four.register_text_3")}                              
+                              </span>              
+                            </React.Fragment>              
+                            }
+                            <br/>
+                            <span>
+                              {T.translate("step_four.help_text")} 
+                              <a href={`mailto:${window.SUPPORT_EMAIL}`}>{window.SUPPORT_EMAIL}</a>
+                            </span>
                     </div>
                 </div>
             </div>

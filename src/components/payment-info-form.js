@@ -77,7 +77,7 @@ class PaymentInfoForm extends React.Component {
     hasUncompletedFields(ev){    
         let {complete, elementType, empty} = ev;
         let {onChange, stripe} = this.props;
-        let {message} = this.state.stripeErrors[elementType];        
+        let {message} = this.state.stripeErrors[elementType];
 
         if(complete) {
             this.setState({ 

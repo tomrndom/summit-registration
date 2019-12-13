@@ -101,7 +101,7 @@ class StepThreePage extends React.Component {
     }
 
     componentDidMount() {
-        let {order:{reservation}, summit: {slug}} = this.props;
+        let {order:{reservation}} = this.props;
         const stepDefs = ['start', 'details', 'checkout', 'done'];                  
 
         if(Object.entries(reservation).length === 0 && reservation.constructor === Object) {
@@ -123,12 +123,21 @@ class StepThreePage extends React.Component {
     }
 
     async handleStripe(ev, stripe) {        
+        let {order} = this.props;
         let stripeErrors = Object.values(ev).filter(x => x.required === true && x.message === '');
         if(stripeErrors.length === 3) { 
-            let {card} = await stripe.createToken({name: "Name"});
+            let {card} = await stripe.createToken({              
+              name: `${order.first_name} ${order.last_name}`,
+              address_line1: order.billing_address,
+              address_line2: order.billing_address_two,
+              address_city: order.billing_city,
+              address_state: order.billing_state,
+              address_zip: order.billing_zipcode,
+              address_country: order.billing_country,
+            });
             this.setState({card, stripe}, () => this.props.validateStripe(true));
         } else {
-            this.props.validateStripe(false);         
+            this.setState({stripe: {}}, () => this.props.validateStripe(false));
         }
     }
 

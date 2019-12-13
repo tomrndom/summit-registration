@@ -141,18 +141,20 @@ class OrderList extends React.Component {
           order.tickets.map(t => {
             if(t.status !== "RefundRequested" &&
             t.status !== "Refunded" &&
-            t.status !== "Cancelled" &&
-            summitExtraQuestions.length > 0){
-              if(t.owner && t.owner.first_name && t.owner.surname && t.owner.extra_questions.length > 0){
+            t.status !== "Cancelled"){
+              if(t.owner && t.owner.first_name && t.owner.surname && (summitExtraQuestions.length > 0 && t.owner.extra_questions.length > 0)){
                 t.owner.extra_questions.map(eq => {
+                  let mandatory = summitExtraQuestions.find(question => question.id === eq.question_id).mandatory;
                   if(incomplete) {
                     return status[1];
                   } else {
-                    if(!eq.value){
+                    if(!eq.value && mandatory){
                       incomplete = true;
                     }
                   }
                 });
+              } else if(t.owner && t.owner.first_name && t.owner.surname && summitExtraQuestions.length === 0) {
+                incomplete = false;
               } else {
                 incomplete = true;
               }

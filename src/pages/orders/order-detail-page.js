@@ -60,6 +60,10 @@ class OrderDetailPage extends React.Component {
   }
 
   handleTicketStatus(ticket){
+
+    let { summit } = this.props;
+    let summitExtraQuestions = summit.order_extra_questions;
+
     const status = [
       { 
         text: 'UNASSIGNED',
@@ -106,11 +110,17 @@ class OrderDetailPage extends React.Component {
       return status[0];
     } else if (!ticket.owner.first_name || !ticket.owner.surname) {
       return status[1];
-    } else if (ticket.owner.first_name && ticket.owner.surname && ticket.owner.extra_questions.length === 0) {
+    } else if (ticket.owner.first_name && ticket.owner.surname && (summitExtraQuestions.length === 0 && ticket.owner.extra_questions.length === 0)) {
       return status[2];
-    } else if (ticket.owner.extra_questions.length) {
-      let incomplete = ticket.owner.extra_questions.filter((q) => q.value == '');
-      if(incomplete.length === 0 && ticket.owner.first_name && ticket.owner.surname) {
+    } else if (ticket.owner.first_name && ticket.owner.surname && (summitExtraQuestions.length > 0 && ticket.owner.extra_questions.length === 0)) {
+      return status[1];
+    } else if (ticket.owner.extra_questions.length > 0) {            
+      let incomplete = false;
+      ticket.owner.extra_questions.map((eq) => {
+        let mandatory = summitExtraQuestions.find(question => question.id === eq.question_id).mandatory;
+        incomplete = mandatory && q.value == '' ? true : false;
+      });
+      if(!incomplete && ticket.owner.first_name && ticket.owner.surname) {
         return status[2];
       } else {
         return status[1];

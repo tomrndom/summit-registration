@@ -107,18 +107,12 @@ class StepFourPage extends React.Component {
             <div className="step-four">
                 <OrderSummary order={order} summit={summit} type={'mobile'} />
                 <div className="row">
-                    <div className="order-result">
+                    <div className="col-md-8 order-result">
 
                         <span>
                           {T.translate("step_four.thank_you")}
                           <br/>
-                          {this.purchasedTickets().map(t => {
-                            return (
-                              <ul>
-                                {`${t.qty} ${t.name}`}
-                              </ul>
-                            )
-                          })}
+                          <br/>                          
                         </span>
                           
                             <span>
@@ -157,6 +151,9 @@ class StepFourPage extends React.Component {
                               {T.translate("step_four.help_text")} 
                               <a href={`mailto:${window.SUPPORT_EMAIL}`}>{window.SUPPORT_EMAIL}</a>
                             </span>
+                    </div>
+                    <div className="col-md-4">
+                      <OrderSummary order={order} summit={summit} type={'desktop'} />
                     </div>
                 </div>
             </div>

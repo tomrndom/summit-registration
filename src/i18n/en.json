@@ -78,9 +78,9 @@
     }
   },
   "step_four": {
-    "thank_you"           : "Thank you for your order! You have completed your purchase of:",
+    "thank_you"           : "Thank you for your order!",
     "subtitle"            : "a subtitle",
-    "manage_text"         : "If you haven't already you are now able to assign these tickets to individuals on the ",
+    "manage_text"         : "If you haven't already, you are now able to assign these tickets to individuals on the ",
     "manage_link_text"    : "manage orders",
     "page_text"           : " page.",
     "manage_text_2"       : "You can optionally fill in the required details for the attendee or the attendee can do it themselves when they receive the ticket via email.",

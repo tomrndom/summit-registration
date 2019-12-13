@@ -18,7 +18,7 @@ import { OPSessionChecker } from "openstack-uicore-foundation/lib/components";
 class AuthorizedRoute extends React.Component {
 
     render() {
-        let { component: Component, isLoggedUser, backUrl, purchaseSummit, ...rest } = this.props;
+        let { component: Component, isLoggedUser, doLogin, backUrl, purchaseSummit, ...rest } = this.props;
         return (
             <Route {...rest} render={props => {
                 let { location } = this.props;
@@ -39,7 +39,7 @@ class AuthorizedRoute extends React.Component {
                         </React.Fragment>
                     );
                 } else {
-                    return (<Redirect to={{pathname: `/?BackUrl=${encodeURIComponent(currentBackUrl)}`, state: { from: location }}} />);
+                    doLogin()
                 }
             }}
             />

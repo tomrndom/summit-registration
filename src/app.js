@@ -103,16 +103,13 @@ class App extends React.PureComponent {
                       </div>
                   </div>
                   <Switch>
-                      <AuthorizedRoute isLoggedUser={isLoggedUser} backUrl={backUrl} path="/a/member" component={DashboardLayout} />
+                      <AuthorizedRoute isLoggedUser={isLoggedUser} doLogin={this.onClickLogin.bind(this)} backUrl={backUrl} path="/a/member" component={DashboardLayout} />
                       <AuthorizationCallbackRoute onUserAuth={onUserAuth} path='/auth/callback' getUserInfo={getUserInfo} />
                       <LogOutCallbackRoute doLogout={doLogout}  path='/auth/logout'/>
                       <Route path="/a/guests/:ticket_hash" component={GuestsLayout}/>
                       <Route path="/a/:summit_slug" component={PrimaryLayout}/>
                       <Route path="/a/" component={SelectSummitPage} />
-                      <Route path="/logout" component={NotFoundPage} />
-                      <Route path="/404" component={NotFoundPage} />                      
-                      <Route path="/" render={props => (<Redirect to={`/a/`} />)} />
-                      <Route render={props => (<Redirect to={`/404`} />)}/>
+                      <Route render={props => (<Redirect to={`/a/`} />)}/>
                   </Switch>
               </div>
           </Router>

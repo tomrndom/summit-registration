@@ -42,7 +42,7 @@
     "required"          : "Required fields",
     "have_account"      : "Do you have an FNid account?",
     "sign_in"           : "Sign in",
-    "sign_in_account"   : "to your account",
+    "sign_in_account"   : "to your account.",
     "first_name"        : "First Name",
     "last_name"         : "Last Name",
     "email"             : "Email",

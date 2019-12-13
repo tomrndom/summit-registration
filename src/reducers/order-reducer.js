@@ -109,7 +109,9 @@ const orderReducer = (state = DEFAULT_STATE, action) => {
             return state
             break;
         case DELETE_RESERVATION_SUCCESS:
-            return {...state, purchaseOrder: {...state.purchaseOrder, reservation: {}}}
+            let noDiscountTix = [...state.purchaseOrder.tickets];            
+            noDiscountTix.map(t => t.discount = 0);            
+            return {...state, purchaseOrder: {...state.purchaseOrder, reservation: {}, tickets: noDiscountTix}}
         case PAY_RESERVATION:                        
             return { ...state, purchaseOrder : { ...state.purchaseOrder, checkout : payload.response, reservation: {}}};
             break;

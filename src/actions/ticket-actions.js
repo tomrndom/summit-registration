@@ -285,10 +285,12 @@ export const getTicketPDF = () => (dispatch, getState) => {
             }
         })
         .then((pdf) => {
-            dispatch(stopLoading());
-            const blob = new Blob([pdf], {type: 'application/pdf'});
+            dispatch(stopLoading());            
+            let link = document.createElement('a');
             const url = window.URL.createObjectURL(pdf);
-            window.open(url);            
+            link.href = url;
+            link.download = 'ticket.pdf';
+            link.dispatchEvent(new MouseEvent('click'));
         })
         .catch(fetchErrorHandler);
 };
@@ -397,7 +399,10 @@ export const getTicketPDFByHash = (hash) => (dispatch, getState) => {
 
   const apiUrl = `${window.API_BASE_URL}/api/public/v1/summits/all/orders/orders/all/tickets/${hash}/pdf`;
 
-  window.open(apiUrl);
+  let link = document.createElement('a');  
+  link.href = apiUrl;
+  link.download = 'ticket.pdf';
+  link.dispatchEvent(new MouseEvent('click'));
 
   dispatch(stopLoading());
   

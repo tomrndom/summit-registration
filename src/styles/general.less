@@ -61,49 +61,65 @@ input {
   }
 }
 
-.summit-card {  
-  border: 1px solid #afafaf;
-  border-radius: 3px;
-  margin: 15px;
-  width: 30%;
-  display: inline-block;
-  .image-container {
-    img {
-      height: 150px;
-      width: 100%;
+.summit-card-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  justify-content: center;
+  .summit-card {  
+    border: 1px solid #afafaf;
+    border-radius: 3px;
+    margin: 15px;
+    width: 30%;
+    display: inline-block;
+    .image-container {
+      img {
+        height: 150px;
+        width: 100%;
+        object-fit: cover;
+      }
     }
-  }
-  .summit-container {    
-    padding: 20px 15px;
-    .summit-label {
-      display: flex;
-      margin-left: 75%;
-      margin-right: -30px;
-      margin-bottom: 5px;
-      border-radius: 5px 0 0 5px;      
-      font-size: 12px;
-      font-weight: bold;
-      text-align: center;      
-      padding: 2px 20px 2px 20px;
-      background-color: #da0000;
-      color: #ffffff;
-    }
-    .bottom-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      span {
+    .summit-container {    
+      padding: 20px 15px;
+      .summit-label {
         display: flex;
-        h4 {
-          margin-left: 10px;
+        margin-left: 75%;
+        margin-right: -30px;
+        margin-bottom: 5px;
+        border-radius: 5px 0 0 5px;      
+        font-size: 12px;
+        font-weight: bold;
+        text-align: center;      
+        padding: 2px 20px 2px 20px;
+        color: #ffffff;
+        &--last-hours{
+          background-color: #da0000;    
         }
-      }      
-    }
-    h4 {
-      margin-top: 0;
-      font-weight: bold;    
-    }
-  }  
+        &--sold-out {
+          background-color: grey;
+        }
+        &--empty {
+          background-color: transparent;
+        }        
+      }
+      .bottom-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        span {
+          display: flex;
+          h4 {
+            margin-left: 10px;
+          }
+        }      
+      }
+      h4 {
+        margin-top: 0;
+        font-weight: bold;    
+      }
+    }  
+  }
 }
 
 .header {
@@ -225,12 +241,10 @@ input {
 }
 
 .not-found-summit {
-  h3 {
-    text-align: center;
-  }
-  .dropdown-summit {
-    width: 40%;
-    margin-left: 30%;
+  margin-top: 20px;
+  margin-left: 15px;  
+  .field-wrapper{
+    margin-top: 15px;
   }
 }
 
@@ -547,6 +561,19 @@ input {
     width: 111%;
   }
 
+  .summit-card-container {
+    .summit-card {  
+      margin: 3%;
+      width: 100%;
+      .image-container {
+        img {
+          height: 150px;
+          width: 100%;
+        }
+      }
+    }
+  }
+
 }
 
 @media(min-width: 768px) {
@@ -562,6 +589,19 @@ input {
       display: none;
     }
   }
+  .summit-card-container{
+    .summit-card {
+      width: 45%;
+    }
+  } 
+}
+
+@media(min-width: 1200px) {
+  .summit-card-container{
+    .summit-card {
+      width: 30%;
+    }
+  } 
 }
 
 @media(min-width: 1091) {

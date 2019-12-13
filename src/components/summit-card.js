@@ -72,10 +72,10 @@ export default class SummitCard extends React.Component {
     }
 
     render(){
-      let {summit, size, bgColor, fontColor, image} = this.props;      
+      let {summit, size, bgColor, fontColor, lastHours, soldOut, image} = this.props;      
 
         return (
-            <div className="summit-card">                
+            <div className="summit-card">
                 {image &&
                 <div className="image-container">
                   <img src={image} />
@@ -83,16 +83,18 @@ export default class SummitCard extends React.Component {
                 }
                 <div className="summit-container">
                   <h4>{summit.name}</h4>
-                  <h5>{this.handleEventDateLocation()}</h5>
+                  <h5>{this.handleEventDateLocation() ? this.handleEventDateLocation() : <React.Fragment><br/><br/></React.Fragment>}</h5>
                   <br />
-                  <span className="summit-label">Last hours</span>
+                  {/* {lastHours && !soldOut && <span className="summit-label summit-label--last-hours">Last hours</span>}
+                  {soldOut && !lastHours && <span className="summit-label summit-label--sold-out">Sold out</span>}
+                  {!soldOut && !lastHours && <span className="summit-label summit-label--empty">&nbsp;</span>} */}
                   <div className="bottom-row">
                     <button className="btn btn-primary btn-md login" onClick={() => this.clickSummit(summit.slug)}>
-                        Learn More
+                        Register
                     </button>
-                    <span>From <h4>$800</h4></span>
+                    {/* <span>From <h4>$800</h4></span> */}
                   </div>    
-                </div>            
+                </div>
             </div>
         );
     }

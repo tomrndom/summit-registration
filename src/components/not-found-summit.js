@@ -45,11 +45,11 @@ export default class NotFoundSummit extends React.Component {
 
         return (
             <div className="not-found-summit">
-                <h3>{`${T.translate("no-summit.show-slug")} ${slug ? `"${slug}"` : ''} ${T.translate("no-summit.not-found")}`}</h3>
-                <h3>{`${T.translate("no-summit.select-list")}`}</h3>
-                <br />
+                <span>{`${T.translate("no-summit.show-slug")} ${slug ? `"${slug}"` : ''} ${T.translate("no-summit.not-found")}`}</span>
+                <br/><br/>
+                <span>{`${T.translate("no-summit.select-list")}`}</span>
                 <div className="row field-wrapper">                  
-                  <div className="col-sm-6 col-sm-offset-3 col-lg-4 col-lg-offset-4 col-xs-8 col-xs-offset-2">
+                  <div className="col-sm-4 col-xs-4 col-lg-3">
                     <Dropdown
                       value={selectedSummit}
                       options={summits}
@@ -57,6 +57,13 @@ export default class NotFoundSummit extends React.Component {
                     />
                   </div>
                 </div>
+                {/* <div className="summit-card-container">
+                  {summits.map(s => {
+                    return (
+                        <SummitCard summit={s}/>
+                    )
+                  })}
+                </div> */}
             </div>
         );
     }

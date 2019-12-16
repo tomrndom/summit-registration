@@ -45,10 +45,10 @@ export default class NotFoundSummit extends React.Component {
 
         return (
             <div className="not-found-summit">
-                <h4>{`${T.translate("no-summit.show-slug")} ${slug ? `"${slug}"` : ''} ${T.translate("no-summit.not-found")}`}</h4>
+                <h4>{`${T.translate("no-summit.not-found")}`}</h4>
                 <h4>{`${T.translate("no-summit.select-list")}`}</h4>
                 <div className="row field-wrapper">                  
-                  <div className="col-sm-4 col-xs-4 col-lg-3">
+                  <div className="col-sm-4 col-xs-10 col-lg-3">
                     <Dropdown
                       value={selectedSummit}
                       options={summits}

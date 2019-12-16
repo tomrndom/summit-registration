@@ -207,7 +207,7 @@ class TicketList extends React.Component {
       let { showPopup } = this.state;
       let now = summit.timestamp;
 
-      if (tickets.length && !loading) {
+      if (tickets.length > 0 && !loading) {
         return (
           <div className="tickets-list">            
             <div className="list-desktop">

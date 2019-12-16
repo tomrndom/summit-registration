@@ -110,47 +110,50 @@ class StepFourPage extends React.Component {
                     <div className="col-md-8 order-result">
 
                         <span>
-                          {T.translate("step_four.thank_you")}
+                          <h3>{T.translate("step_four.thank_you")}</h3>         
+                          <br />                                           
+                          <span>{T.translate("step_four.order_no")}</span> <br/>
+                          <span>{checkout.number}</span>
                           <br/>
                           <br/>                          
                         </span>
                           
-                            <span>
-                              {T.translate("step_four.manage_text")}
-                            <Link to="/a/member/orders">
-                              {T.translate("step_four.manage_link_text")}
-                            </Link>
-                            {T.translate("step_four.page_text")}                          
-                            </span>
-                            <br/>
-                            <span>
-                            {T.translate("step_four.required_text")}
-                            <br/><br/>
-                              <Link to="/a/member/orders">
-                                <button className="btn btn-primary manage-btn">
-                                  {T.translate("step_four.manage")}
-                                </button>
-                              </Link>
-                            </span>                            
-                            {!member &&
-                            <React.Fragment>
-                              <br/>
-                              <span>
-                                {T.translate("step_four.register_text")}
-                                <a href={`${window.IDP_BASE_URL}/auth/register`}>
-                                  {T.translate("step_four.register_link_text")}
-                                </a>
-                                {T.translate("step_four.register_text_2")}
-                                {order.email}
-                                {T.translate("step_four.register_text_3")}                              
-                              </span>              
-                            </React.Fragment>              
-                            }
-                            <br/>
-                            <span>
-                              {T.translate("step_four.help_text")} 
-                              <a href={`mailto:${window.SUPPORT_EMAIL}`}>{window.SUPPORT_EMAIL}</a>
-                            </span>
+                        <span>
+                          {T.translate("step_four.manage_text")}
+                        <Link to="/a/member/orders">
+                          {T.translate("step_four.manage_link_text")}
+                        </Link>
+                        {T.translate("step_four.page_text")}                          
+                        </span>
+                        <br/>
+                        <span>
+                        {T.translate("step_four.required_text")}
+                        <br/><br/>
+                          <Link to="/a/member/orders">
+                            <button className="btn btn-primary manage-btn">
+                              {T.translate("step_four.manage")}
+                            </button>
+                          </Link>
+                        </span>                                     
+                        {!member &&
+                        <React.Fragment>    
+                          <br/>                          
+                          <span>
+                            {T.translate("step_four.register_text")}
+                            <a href={`${window.IDP_BASE_URL}/auth/register`}>
+                              {T.translate("step_four.register_link_text")}
+                            </a>
+                            {T.translate("step_four.register_text_2")}
+                            {order.email}
+                            {T.translate("step_four.register_text_3")}                              
+                          </span>              
+                        </React.Fragment>              
+                        }
+                        <br/>
+                        <span>
+                          {T.translate("step_four.help_text")} 
+                          <a href={`mailto:${window.SUPPORT_EMAIL}`}>{window.SUPPORT_EMAIL}</a>
+                        </span>
                     </div>
                     <div className="col-md-4">
                       <OrderSummary order={order} summit={summit} type={'desktop'} />

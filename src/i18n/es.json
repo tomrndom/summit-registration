@@ -90,7 +90,7 @@
     "register_text_2"     : " with your ",
     "register_text_3"     : " used for this purchase, you will then be able to manage your order.",
     "help_text"           : "For further assistance please email ",
-    "order_no"            : "ORDER NO",
+    "order_no"            : "ORDER NUMBER",
     "manage"              : "Manage your Orders"
   },
   "guests": {
@@ -100,10 +100,9 @@
   "orders": {
     "empty"               : "There are no active orders so far"
   },
-  "no-summit": {
-    "show-slug"           : "A show with the slug",
-    "not-found"           : "was not found.",
-    "select-list"         : "Please select from the available shows:"
+  "no-summit": {    
+    "not-found"           : "Show not found.",
+    "select-list"         : "Please select one from available shows:"
   },
   "order_info": {
     "print"               : "Print",

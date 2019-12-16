@@ -133,11 +133,11 @@ class GuestsLayout extends React.Component {
       let {ticket: {owner, order_extra_questions}, ticket, errors, ticketLoading, summitLoading, summit, summits} = this.props;
       let now = summit.timestamp;
       let {tempTicket} = this.state;
-
+      
       let loading = ticketLoading && summitLoading;
 
-      if(!owner) {
-        history.push('/a/member/tickets/');
+      if(!loading && !owner) {
+        //history.push('/a/member/tickets/');
         return (
           <div>
             Ticket not found

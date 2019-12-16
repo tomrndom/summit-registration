@@ -58,14 +58,6 @@ export default class TicketInput extends React.Component {
                                     <div className="ticket-price">
                                         {t.cost > 0 ? `$ ${t.cost}` : T.translate("step_one.free")}
                                     </div>
-                                    <div className="ticket-expiration">
-                                        {t.quantity_2_sell > 0 ? 
-                                          `${T.translate("step_one.expiration")} ${getFormatedDate(t.sales_end_date, summit.time_zone_id)}` :
-                                          <div className="sold-out-text">
-                                            {T.translate("step_one.sold_out")}
-                                          </div>
-                                        }                                        
-                                    </div>
                                 </div>
                                 <div className="col-md-4">
                                     {t.quantity_2_sell > 0 ? 
@@ -73,7 +65,7 @@ export default class TicketInput extends React.Component {
                                         <button className="btn btn-default" onClick={this.substractTicket.bind(this, t.id)}>
                                             <i className="fa fa-minus"></i>
                                         </button>
-                                        <div className="quantity-value">{quantity}</div>
+                                        <div className="quantity-value" style={{opacity : quantity > 0 ? '1' : '0.4'}}>{quantity}</div>
                                         <button className="btn btn-default" onClick={this.addTicket.bind(this, t.id)} 
                                           disabled={(t.max_quantity_per_order > 0 && t.max_quantity_per_order <= quantity) ||
                                           (quantity >= t.quantity_2_sell - t.quantity_sold)}>
@@ -83,6 +75,14 @@ export default class TicketInput extends React.Component {
                                     : null
                                     }
                                 </div>
+                            </div>
+                            <div className="ticket-expiration">
+                                {t.quantity_2_sell > 0 ? 
+                                  `${T.translate("step_one.expiration")} ${getFormatedDate(t.sales_end_date, summit.time_zone_id)}` :
+                                  <div className="sold-out-text">
+                                    {T.translate("step_one.sold_out")}
+                                  </div>
+                                }                                        
                             </div>
                         </div>
                       )

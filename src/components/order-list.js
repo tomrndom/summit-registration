@@ -221,7 +221,7 @@ class OrderList extends React.Component {
 
     render() {
 
-      let { summits, currentPage, lastPage, loading } = this.props;
+      let { summits, currentPage, lastPage, loading, orders } = this.props;
 
       if (orders.length > 0 && !loading) {
           return (

@@ -51,9 +51,10 @@ class StepThreePage extends React.Component {
     }    
 
     componentWillReceiveProps(nextProps) {
+        let {dirty} = this.state;
         //scroll to first error
-        if(Object.keys(nextProps.errors).length > 0) {
-            let firstError = Object.keys(nextProps.errors)[0]
+        if(Object.keys(nextProps.errors).length > 0 && dirty) {
+            let firstError = Object.keys(nextProps.errors)[0];
             let firstNode = document.getElementById(firstError);
             if (firstNode) window.scrollTo(0, findElementPos(firstNode));
         }

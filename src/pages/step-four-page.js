@@ -113,7 +113,7 @@ class StepFourPage extends React.Component {
                           <h3>{T.translate("step_four.thank_you")}</h3>         
                           <br />                                           
                           <span>{T.translate("step_four.order_no")}</span> <br/>
-                          <span>{checkout.number}</span>
+                          <span className="order-number">{checkout.number}</span>
                           <br/>
                           <br/>                          
                         </span>

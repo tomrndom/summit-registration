@@ -44,7 +44,11 @@ class BillingInfoForm extends React.Component {
             <div className="billing-info">
                 <div className="row">
                     <div className="col-md-12">
-                        <h3>{T.translate("step_three.billing_info")}</h3>
+                        {order.reservation.discount_amount !== order.reservation.raw_amount ? 
+                          <h3>{T.translate("step_three.billing_info")}</h3>
+                          :
+                          <h3>{T.translate("step_three.billing_address")}</h3>
+                        }                                                
                     </div>
                 </div>
                 <div className="row">

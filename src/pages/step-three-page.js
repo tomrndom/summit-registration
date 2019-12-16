@@ -70,8 +70,6 @@ class StepThreePage extends React.Component {
 
       if(sameUrlAsSlug) {
         window.scrollTo(0, 0);
-      } else {
-        history.push(stepDefs[0]);
       }
     }
 
@@ -91,7 +89,7 @@ class StepThreePage extends React.Component {
             currentStep: this.step
         };
 
-        let address = this.props.member ? this.props.member.address : {};
+        let address = this.props.member ? this.props.member.address : {country: 'US'};
 
         if(Object.entries(address).length !== 0 && address.constructor === Object) {        
           let {country, region, locality, postal_code, street_address} = address;

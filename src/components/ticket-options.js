@@ -91,8 +91,8 @@ class TicketOptions extends React.Component {
                   <div className="row">
                     <div className="col-md-12 info">
                       <h4>{summit.name}</h4>
-                      <p>{this.handleTicketName(ticket)}</p>
                       <p>{this.handleTicketDate(ticket)} <br />{this.handleSummitLocation(summit)} </p>
+                      <p>{this.handleTicketName(ticket)}</p>
                       <p className="role-badge">{this.handleTicketRole(ticket.badge)}</p>
                     </div>
                   </div>

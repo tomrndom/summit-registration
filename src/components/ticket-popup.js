@@ -326,6 +326,7 @@ class TicketPopup extends React.Component {
                     {status.text === 'UNASSIGNED' && 
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--assign">
                         <div className="popup-scroll">
+                          <div className="ticket-assign-form">
                             <p>{T.translate("ticket_popup.assign_text")} {this.handleFormatReassignDate()}</p>
                             <button className="btn btn-primary" onClick={() => this.handleTicketAssign(true)}>
                               {T.translate("ticket_popup.assign_me")}
@@ -346,6 +347,7 @@ class TicketPopup extends React.Component {
                             <button className="btn btn-primary" onClick={() => this.handleTicketAssign(false)}>
                               {T.translate("ticket_popup.assign_someone")}
                             </button>
+                          </div>
                         </div>
                       </TabPanel>
                     }
@@ -403,9 +405,11 @@ class TicketPopup extends React.Component {
                     {status.text !== 'UNASSIGNED' && (!fromTicketList && member.email !== owner.email) &&
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--notify">
                         <div className="popup-scroll">
-                          <p>{T.translate("ticket_popup.notify_text_1")} {this.handleFormatReassignDate()}.</p>                                                
-                          <p>{T.translate("ticket_popup.notify_text_2")} <b>{owner.email}</b></p>
-                          <button className="btn btn-primary" onClick={this.props.resendNotification}>{T.translate("ticket_popup.notify_button")}</button>  
+                          <div className="ticket-notify-form">
+                            <p>{T.translate("ticket_popup.notify_text_1")} {this.handleFormatReassignDate()}.</p>                                                
+                            <p>{T.translate("ticket_popup.notify_text_2")} <b>{owner.email}</b></p>
+                            <button className="btn btn-primary" onClick={this.props.resendNotification}>{T.translate("ticket_popup.notify_button")}</button>  
+                          </div>
                         </div>
                       </TabPanel>
                     }

@@ -274,7 +274,7 @@ class TicketList extends React.Component {
                   last
                   ellipsis
                   boundaryLinks
-                  maxButtons={3}
+                  maxButtons={2}
                   items={lastPage}
                   activePage={currentPage}
                   onSelect={this.handlePageChange}

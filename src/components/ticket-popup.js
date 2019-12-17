@@ -402,9 +402,11 @@ class TicketPopup extends React.Component {
                     }
                     {status.text !== 'UNASSIGNED' && (!fromTicketList && member.email !== owner.email) &&
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--notify">
+                        <div className="popup-scroll">
                           <p>{T.translate("ticket_popup.notify_text_1")} {this.handleFormatReassignDate()}.</p>                                                
                           <p>{T.translate("ticket_popup.notify_text_2")} <b>{owner.email}</b></p>
                           <button className="btn btn-primary" onClick={this.props.resendNotification}>{T.translate("ticket_popup.notify_button")}</button>  
+                        </div>
                       </TabPanel>
                     }
                 </Tabs>

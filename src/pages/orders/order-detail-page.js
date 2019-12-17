@@ -324,6 +324,7 @@ class OrderDetailPage extends React.Component {
                   status={this.handleTicketStatus(ticket)}
                   onChange={this.handleChange}
                   extraQuestions={extraQuestions}
+                  loading={loading}
                   downloadTicket={this.handleTicketDownload}
                   closePopup={this.togglePopup.bind(this)}
                   cancelTicket={this.handleTicketCancel}

@@ -101,10 +101,12 @@ export const selectTicket = (ticket, ticketList = false, ticketRefresh) => (disp
       dispatch(createAction(SELECT_TICKET)(memberTicket));
     }
     dispatch(createAction(SELECT_TICKET)(ticket));    
+  } else if (Object.entries(ticket).length === 0 && ticket.constructor === Object) {
+    dispatch(stopLoading());
   } else {
     dispatch(createAction(SELECT_TICKET)(ticket));
+    dispatch(stopLoading());
   }
-  dispatch(stopLoading());
 
 }
 

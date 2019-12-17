@@ -71,7 +71,7 @@ class TicketsListPage extends React.Component {
           loadingSummits, 
           errors} = this.props;
         return (
-            !loadingTickets && !loadingTickets &&
+            tickets.length > 0 &&
             <div>
                 <TicketList 
                   tickets={tickets}
@@ -90,6 +90,7 @@ class TicketsListPage extends React.Component {
                   summit={summit}
                   extraQuestions={extraQuestions}
                   loading={loadingTickets && loadingSummits}
+                  loadingSummits={loadingSummits}
                   errors={errors}
                   pageChange={this.handlePageChange}
                 />

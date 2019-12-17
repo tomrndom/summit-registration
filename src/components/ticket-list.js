@@ -203,11 +203,15 @@ class TicketList extends React.Component {
 
 
     render() {
-      let { tickets, selectedTicket, extraQuestions, loading, errors, summits, lastPage, currentPage, member, summit } = this.props;
+      let { tickets, selectedTicket, extraQuestions, loading, errors, summits, lastPage, currentPage, member, summit, loadingSummits } = this.props;
       let { showPopup } = this.state;
       let now = summit.timestamp;
 
-      if (tickets.length > 0 && !loading) {
+      if(loading) {
+        return (
+          <div></div>
+        )
+      } else if (tickets.length > 0 && !loading) {
         return (
           <div className="tickets-list">            
             <div className="list-desktop">
@@ -284,6 +288,7 @@ class TicketList extends React.Component {
                   onChange={this.handleChange}
                   owned={selectedTicket.owner.member_id === selectedTicket.order.owner_id}
                   extraQuestions={extraQuestions}
+                  loading={loadingSummits}
                   downloadTicket={this.handleTicketDownload}
                   closePopup={this.togglePopup.bind(this)}
                   updateTicket={this.handleTicketUpdate}

@@ -201,8 +201,8 @@ export const payReservation = (card=null, stripe=null) => (dispatch, getState) =
           }
       ).then((result) => {
           if (result.error) {
-              // Reserve error.message in your UI.            
-              Swal.fire("Payment intent expired", "Please retry purchase.", "warning");
+              // Reserve error.message in your UI.        
+              Swal.fire(result.error.message, "Please retry purchase.", "warning");
               history.push(stepDefs[1]);
               dispatch(stopLoading());            
           } else {            

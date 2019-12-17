@@ -115,7 +115,7 @@ class StepOnePage extends React.Component {
                     <SubmitButtons step={this.step} canContinue={order.tickets.length > 0} />
                     </React.Fragment>
                   :
-                  <div className="no-tickets">
+                  <div className="no-tickets-text">
                     <h3>{T.translate("step_one.no_tickets")}</h3>
                   </div>
                 }

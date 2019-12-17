@@ -60,6 +60,9 @@ class TicketPopup extends React.Component {
 
     componentWillMount() {      
       document.body.style.overflow = "hidden";
+      const targetElement = document.getElementById("popup-scroll");
+      bodyScrollLock.disableBodyScroll(targetElement);
+
       let {owner} = this.props.ticket;
       if(owner) {
         let {email, first_name, surname, company, disclaimer_accepted_date, extra_questions} = owner;
@@ -80,7 +83,9 @@ class TicketPopup extends React.Component {
     }
 
     componentWillUnmount() {      
-      document.body.style.overflow = "visible";      
+      document.body.style.overflow = "visible";
+      const targetElement = document.getElementById("popup-scroll");
+      bodyScrollLock.enableBodyScroll(targetElement);
     }
   
     togglePopup(confirm, popupCase) {

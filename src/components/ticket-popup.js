@@ -205,7 +205,7 @@ class TicketPopup extends React.Component {
       let answeredQuestions = true;
       if(extraQuestions){
         extraQuestions.map(eq => {
-          if(eq.mandatory) {
+          if(eq.mandatory === true && answeredQuestions === true) {
             let findEq = extra_questions.find(q => q.question_id === eq.id);
             answeredQuestions = findEq && findEq.answer ? true : false;          
           }

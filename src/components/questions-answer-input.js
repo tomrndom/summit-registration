@@ -78,7 +78,7 @@ export default class QuestionAnswersInput extends React.Component {
                 return (
                   <React.Fragment>
                     <div className="row field-wrapper">
-                        <div className="col-sm-4"> {question.label} </div>
+                        <div className="col-sm-4"> {question.label} {!readOnly && question.mandatory ? '*' : ''} </div>
                         <div className="col-sm-8">
                           {readOnly ? 
                             <span>{answerValue}</span>
@@ -94,7 +94,7 @@ export default class QuestionAnswersInput extends React.Component {
                         </div>                        
                     </div>
                     <div className="field-wrapper-mobile">
-                    <div> {question.label} </div>
+                    <div> {question.label} {!readOnly && question.mandatory ? '*' : ''}</div>
                         <div>
                           {readOnly ? 
                             <span>{answerValue}</span>
@@ -115,7 +115,7 @@ export default class QuestionAnswersInput extends React.Component {
                 return (
                   <React.Fragment>
                     <div className='row field-wrapper--textarea'>
-                        <div className={`col-sm-4 ${readOnly?'read-only':''}`}> {question.label} </div>
+                        <div className={`col-sm-4 ${readOnly?'read-only':''}`}> {question.label} {!readOnly && question.mandatory ? '*' : ''}</div>
                         <div className="col-sm-8">
                           {readOnly ? 
                             <span>{answerValue}</span>
@@ -132,7 +132,7 @@ export default class QuestionAnswersInput extends React.Component {
                         </div>                        
                     </div>
                     <div className="field-wrapper-mobile">
-                        <div> {question.label} </div>
+                        <div> {question.label} {!readOnly && question.mandatory ? '*' : ''}</div>
                         <div>
                           {readOnly ? 
                             <span>{answerValue}</span>
@@ -174,7 +174,7 @@ export default class QuestionAnswersInput extends React.Component {
                         <input type="checkbox" id={question.id} checked={(answerValue == "true")}
                                onChange={this.handleChange} className="form-check-input" />
                         <label className="form-check-label" htmlFor={question.id}>
-                            {question.label}
+                            {question.label} {!readOnly && question.mandatory ? '*' : ''}
                         </label>
                     </div>
                   );
@@ -199,7 +199,7 @@ export default class QuestionAnswersInput extends React.Component {
                   return (
                     <React.Fragment>
                       <div className="row field-wrapper">
-                          <div className="col-sm-4"> {question.label} </div>
+                          <div className="col-sm-4"> {question.label} {!readOnly && question.mandatory ? '*' : ''}</div>
                           <div className="col-sm-8">                          
                             <Dropdown
                                 id={question.id}
@@ -210,7 +210,7 @@ export default class QuestionAnswersInput extends React.Component {
                           </div>                        
                       </div>
                       <div className="field-wrapper-mobile">
-                          <div> {question.label} </div>
+                          <div> {question.label} {!readOnly && question.mandatory ? '*' : ''}</div>
                           <div>                          
                             <Dropdown
                                 id={question.id}
@@ -256,7 +256,7 @@ export default class QuestionAnswersInput extends React.Component {
                   return(
                     <React.Fragment>
                       <div className="row field-wrapper">
-                          <div className="col-sm-4"> {question.label} </div>
+                          <div className="col-sm-4"> {question.label} {!readOnly && question.mandatory ? '*' : ''}</div>
                           <div className="col-sm-8">                          
                               <CheckboxList
                                   id={question.id}
@@ -267,7 +267,7 @@ export default class QuestionAnswersInput extends React.Component {
                           </div>                        
                       </div>
                       <div className="field-wrapper-mobile">
-                        <div> {question.label} </div>
+                        <div> {question.label} {!readOnly && question.mandatory ? '*' : ''}</div>
                         <div>                          
                             <CheckboxList
                                 id={question.id}
@@ -307,7 +307,7 @@ export default class QuestionAnswersInput extends React.Component {
                 } else {
                   return (
                       <div className="row field-wrapper--radio-list">
-                          <div className="col-sm-4"> {question.label} </div>
+                          <div className="col-sm-4"> {question.label} {!readOnly && question.mandatory ? '*' : ''}</div>
                           <div className="col-sm-8">
                             {readOnly ? 
                               <span>{answerValue}</span>

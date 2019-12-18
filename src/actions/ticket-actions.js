@@ -172,10 +172,13 @@ export const assignAttendee = (attendee_email, attendee_first_name, attendee_las
   });
 }
 
-export const editOwnedTicket = (attendee_email, attendee_first_name, attendee_last_name, attendee_company, disclaimer_accepted, extra_questions) => (dispatch, getState) => {  
+export const editOwnedTicket = (attendee_email, attendee_first_name, attendee_last_name, attendee_company, disclaimer_accepted, extra_questions, updateOrder = false) => (dispatch, getState) => {  
 
-  let { loggedUserState, ticketState: { selectedTicket, current_page } } = getState();
+  let { loggedUserState, orderState: { selectedOrder }, ticketState: { selectedTicket } } = getState();
   let { accessToken }     = loggedUserState;
+
+  let orderPage = getState().orderState.current_page;   
+  let ticketPage = getState().ticketState.current_page;   
 
   dispatch(startLoading());
 
@@ -193,7 +196,7 @@ export const editOwnedTicket = (attendee_email, attendee_first_name, attendee_la
       normalizedEntity,
       authErrorHandler
   )(params)(dispatch).then(() => {
-      dispatch(getUserTickets(null, current_page));
+      updateOrder ? dispatch(getUserOrders(selectedOrder.id, orderPage)) : dispatch(getUserTickets(null, ticketPage));      
     }
   ).catch(e => {
     dispatch(stopLoading());

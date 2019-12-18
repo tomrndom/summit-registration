@@ -149,7 +149,8 @@ class OrderDetailPage extends React.Component {
       if(owner.email !== attendee_email) {
         this.props.removeAttendee(tempTicket);
       } else if(owner.email === member.email) {
-        this.props.editOwnedTicket(attendee_email, attendee_first_name, attendee_surname, attendee_company, disclaimer_accepted, extra_questions);      
+        let updateOrder = true;
+        this.props.editOwnedTicket(attendee_email, attendee_first_name, attendee_surname, attendee_company, disclaimer_accepted, extra_questions, updateOrder);
       } else {
         this.props.assignAttendee(attendee_email, attendee_first_name, attendee_surname, attendee_company, extra_questions);  
       }

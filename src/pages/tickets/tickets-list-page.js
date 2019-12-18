@@ -70,7 +70,9 @@ class TicketsListPage extends React.Component {
           loadingTickets, 
           loadingSummits, 
           errors} = this.props;
-        return (
+        
+        if(ticket.length > 0) {
+          return (
             tickets.length > 0 &&
             <div>
                 <TicketList 
@@ -95,7 +97,19 @@ class TicketsListPage extends React.Component {
                   pageChange={this.handlePageChange}
                 />
             </div>
-        );
+          );
+        } else if (ticket.length === 0 && !loadingTickets) {
+          return (
+            <div className="mt-5 p-5">
+              <div className="row">
+                  <div className="col-sm-12 mt-5 text-center">
+                      <i className="fa fa-5x fa-ticket"></i>
+                      <h5>{T.translate("tickets.empty")}</h5>
+                  </div>
+              </div>
+            </div>
+          )
+        }        
     }
 }
 

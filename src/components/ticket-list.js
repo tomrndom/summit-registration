@@ -303,18 +303,7 @@ class TicketList extends React.Component {
               }
           </div>
         )        
-      } else {
-        return (
-          <div className="mt-5 p-5">
-              <div className="row">
-                  <div className="col-sm-12 mt-5 text-center">
-                      <i className="fa fa-5x fa-ticket"></i>
-                      <h5>{T.translate("tickets.empty")}</h5>
-                  </div>
-              </div>
-          </div>
-          )
-      }                       
+      }           
     }
 }
 

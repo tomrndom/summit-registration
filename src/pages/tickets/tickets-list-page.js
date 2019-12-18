@@ -71,7 +71,7 @@ class TicketsListPage extends React.Component {
           loadingSummits, 
           errors} = this.props;
         
-        if(ticket.length > 0) {
+        if(tickets.length > 0) {
           return (
             tickets.length > 0 &&
             <div>
@@ -98,7 +98,7 @@ class TicketsListPage extends React.Component {
                 />
             </div>
           );
-        } else if (ticket.length === 0 && !loadingTickets) {
+        } else if (tickets.length === 0 && !loadingTickets) {
           return (
             <div className="mt-5 p-5">
               <div className="row">

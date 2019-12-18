@@ -117,7 +117,8 @@ class OrderDetailPage extends React.Component {
     } else if (ticket.owner.extra_questions.length > 0) {            
       let incomplete = false;
       ticket.owner.extra_questions.map((eq) => {
-        let mandatory = summitExtraQuestions.find(question => question.id === eq.question_id).mandatory;
+        let mandatory = summitExtraQuestions.find(question => question.id === eq.question_id) 
+                        && summitExtraQuestions.find(question => question.id === eq.question_id).mandatory ? true : false;
         incomplete = mandatory && eq.value == '' ? true : false;
       });
       if(!incomplete && ticket.owner.first_name && ticket.owner.surname) {

@@ -144,7 +144,8 @@ class OrderList extends React.Component {
             t.status !== "Cancelled"){
               if(t.owner && t.owner.first_name && t.owner.surname && (summitExtraQuestions.length > 0 && t.owner.extra_questions.length > 0)){
                 t.owner.extra_questions.map(eq => {
-                  let mandatory = summitExtraQuestions.find(question => question.id === eq.question_id).mandatory;
+                  let mandatory = summitExtraQuestions.find(question => question.id === eq.question_id) 
+                                  && summitExtraQuestions.find(question => question.id === eq.question_id).mandatory ? true : false;
                   if(incomplete) {
                     return status[1];
                   } else {

@@ -109,7 +109,9 @@ class TicketsListPage extends React.Component {
               </div>
             </div>
           )
-        }        
+        } else {
+          return <div></div>
+        }
     }
 }
 

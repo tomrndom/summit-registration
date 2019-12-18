@@ -321,7 +321,7 @@ class OrderDetailPage extends React.Component {
                 <TicketPopup  
                   ticket={ticket}
                   member={member}
-                  owned={true}
+                  orderOwned={true}
                   member={member}
                   status={this.handleTicketStatus(ticket)}
                   onChange={this.handleChange}

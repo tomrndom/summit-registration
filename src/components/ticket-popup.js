@@ -286,7 +286,7 @@ class TicketPopup extends React.Component {
 
     render() {
 
-      let {extraQuestions, status, errors, ticket: {owner, badge, ticket_type_id}, fromTicketList, summit, owned, member, loading} = this.props;
+      let {extraQuestions, status, errors, ticket: {owner, badge, ticket_type_id}, fromTicketList, summit, orderOwned, member, loading} = this.props;
       let {showPopup, tempTicket, tempTicket: {attendee_email}, popupCase, cleanFields, reassignEmail} = this.state;
       let reassign_date = summit.reassign_ticket_till_date < summit.end_date ? summit.reassign_ticket_till_date : summit.end_date;
       let now = summit.timestamp;
@@ -315,7 +315,7 @@ class TicketPopup extends React.Component {
                           `${T.translate("ticket_popup.tab_edit")}` }</Tab>
                         {status.text !== 'UNASSIGNED' && 
                           now < reassign_date && 
-                          (!fromTicketList || (fromTicketList && owned)) &&
+                          (!fromTicketList || (fromTicketList && orderOwned)) &&
                           <Tab>{T.translate("ticket_popup.tab_reassign")}</Tab>
                         }
                         {status.text !== 'UNASSIGNED' && 
@@ -357,7 +357,7 @@ class TicketPopup extends React.Component {
                             ticket={tempTicket} 
                             status={status.text} 
                             ownedTicket={fromTicketList || owner? owner.email === member.email : false }
-                            orderOwned={owned}
+                            orderOwned={orderOwned}
                             extraQuestions={extraQuestions}
                             readOnly={now > reassign_date}
                             onChange={this.handleChange} 
@@ -376,17 +376,21 @@ class TicketPopup extends React.Component {
                         </div>
                         }
                     </TabPanel>
-                    {status.text !== 'UNASSIGNED' && now < reassign_date && (!fromTicketList || (fromTicketList && owned)) &&
+                    {status.text !== 'UNASSIGNED' && now < reassign_date && (!fromTicketList || (fromTicketList && orderOwned)) &&
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--reassign">
                         <div className="popup-scroll">
                           <div className="ticket-reassign-form">
-                              <p>{T.translate("ticket_popup.reassign_text")} <br/> <b>{owner.email}</b></p>
-                              <button className="btn btn-primary" onClick={() => this.handleTicketReassign(true)}>{T.translate("ticket_popup.reassign_me")}</button>  
-                              <div className="popup-separator">
-                                <div><hr/></div>
-                                <span>{T.translate("ticket_popup.assign_or")}</span>
-                                <div><hr/></div>
-                              </div>
+                              {member.email !== owner.email &&
+                              <React.Fragment>
+                                <p>{T.translate("ticket_popup.reassign_text")} <br/> <b>{owner.email}</b></p>
+                                <button className="btn btn-primary" onClick={() => this.handleTicketReassign(true)}>{T.translate("ticket_popup.reassign_me")}</button>  
+                                <div className="popup-separator">
+                                  <div><hr/></div>
+                                  <span>{T.translate("ticket_popup.assign_or")}</span>
+                                  <div><hr/></div>
+                                </div>
+                              </React.Fragment>
+                              }
                               <Input
                                   id="attendee_email"
                                   className="form-control"

@@ -130,7 +130,9 @@ class TicketAssignForm extends React.Component {
                           value={ticket.email}
                         />
                         :
-                        <span>{ticket.attendee_email}{!guest && !readOnly && orderOwned && <span onClick={() => this.setState({input_email: true})}> | <u>Change</u></span>} </span>
+                        <span>{ticket.attendee_email}
+                            {!guest && !readOnly && orderOwned && <span onClick={() => this.setState({input_email: true})}> | <u>Change</u></span>} 
+                        </span>
                     }                    
                   </React.Fragment>                  
                 }
@@ -172,7 +174,9 @@ class TicketAssignForm extends React.Component {
                           value={ticket.email}
                         />
                         :                        
-                        <span>{ticket.attendee_email}{!guest && !readOnly && <span onClick={() => this.setState({input_email: true})}> | <u>Change</u></span>} </span> 
+                        <span>{ticket.attendee_email}
+                            {!guest && !readOnly && orderOwned && <span onClick={() => this.setState({input_email: true})}> | <u>Change</u></span>} 
+                        </span> 
                     }                    
                   </React.Fragment>                  
                 }

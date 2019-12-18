@@ -332,9 +332,11 @@ export default class QuestionAnswersInput extends React.Component {
         let { answers } = this.state;
         let { questions, questions_type, readOnly } = this.props;
 
+        let orderedQuestions = questions.sort((a, b) => (a.order > b.order) ? 1 : -1);
+
         return (
             <div>
-                {questions.filter(q => q.usage === "Both" || q.usage === questions_type).map( q => {
+                {orderedQuestions.filter(q => q.usage === "Both" || q.usage === questions_type).map( q => {
                     let answer = answers.find(ans => ans.question_id == q.id);
                     let answerValue = answer ? answer.answer : null;
                     return (                      

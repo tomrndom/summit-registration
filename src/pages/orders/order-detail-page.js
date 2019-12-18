@@ -118,7 +118,7 @@ class OrderDetailPage extends React.Component {
       let incomplete = false;
       ticket.owner.extra_questions.map((eq) => {
         let mandatory = summitExtraQuestions.find(question => question.id === eq.question_id).mandatory;
-        incomplete = mandatory && q.value == '' ? true : false;
+        incomplete = mandatory && eq.value == '' ? true : false;
       });
       if(!incomplete && ticket.owner.first_name && ticket.owner.surname) {
         return status[2];

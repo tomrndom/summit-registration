@@ -41,7 +41,7 @@ export default class NotFoundSummit extends React.Component {
       let {slug, summits} = this.props;
       let {selectedSummit} = this.state;
 
-      summits = summits.map(s => ({...s, value: s.slug, label: s.name}));
+      summits = summits.filter(s => s.slug && s.registration_begin_date && s.registration_end_date).map(s => ({...s, value: s.slug, label: s.name}));
 
         return (
             <div className="not-found-summit">

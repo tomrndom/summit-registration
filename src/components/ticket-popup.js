@@ -32,7 +32,7 @@ class TicketPopup extends React.Component {
         this.state = {
           showPopup: false,
           popupCase: '',
-          cleanFields: false,
+          cleanFields: false,          
           tempTicket: {
             attendee_email: '',
             attendee_first_name: '',
@@ -41,9 +41,7 @@ class TicketPopup extends React.Component {
             reassign_email: '',
             disclaimer_accepted: null,
             extra_questions: [],
-            errors: {
-              attendee_email: ''
-            }
+            errors: {}
           }
         };
 
@@ -79,9 +77,7 @@ class TicketPopup extends React.Component {
           attendee_company: company,
           disclaimer_accepted: disclaimer_accepted_date ? true : false, 
           extra_questions: formattedQuestions,
-          errors: {
-            attendee_email: ''
-          }
+          errors: {}
         }});        
       }
     }
@@ -129,8 +125,8 @@ class TicketPopup extends React.Component {
     }
 
     hasErrors(field) {
-      let {errors} = this.state.tempTicket;
-      if(field in errors) {
+      let {errors} = this.state.tempTicket;      
+      if(errors && field in errors) {
           return errors[field];
       }
 
@@ -222,16 +218,15 @@ class TicketPopup extends React.Component {
     }
 
     handlePopupSave() {
-      let {tempTicket: {disclaimer_accepted, errors}} = this.state;
+      let {tempTicket: {disclaimer_accepted, attendee_first_name, attendee_surname, errors}} = this.state;
       let {summit:{registration_disclaimer_mandatory}, ticket: {owner}, member} = this.props;
 
-      let assignedTicket = owner? owner.email === member.email : false ;
-      const {reassign_email, ...otherErrors} = errors
-      let saveEnabled = Object.values(otherErrors).every(x => (x === null || x === '')) && otherErrors.constructor === Object;
       let mandatoryExtraQuestions = this.handleMandatoryExtraQuestions();
+      let assignedTicket = owner? owner.email === member.email : false ;
+      let saveEnabled = errors && errors.attendee_email === '' && attendee_first_name && attendee_surname && errors.constructor === Object;
 
       if(registration_disclaimer_mandatory && assignedTicket) {
-        saveEnabled = Object.values(otherErrors).every(x => (x === null || x === '')) && otherErrors.constructor === Object && mandatoryExtraQuestions && disclaimer_accepted;
+        saveEnabled = errors.attendee_email === '' && attendee_first_name && attendee_surname && mandatoryExtraQuestions && disclaimer_accepted;
       }
 
       // return the reverse value for disabled prop
@@ -257,10 +252,9 @@ class TicketPopup extends React.Component {
       }
       
       ticket[id] = value;
+      
+      !validator.isEmail(ticket.attendee_email) ?  ticket.errors.attendee_email = 'Please enter a valid Email.' : ticket.errors.attendee_email = '';      
 
-      validator.isEmpty(ticket.attendee_first_name) ? ticket.errors.attendee_first_name = 'Please enter your First Name.' : ticket.errors.attendee_first_name = '';
-      validator.isEmpty(ticket.attendee_surname) ?  ticket.errors.attendee_surname = 'Please enter your Last Name.' : ticket.errors.attendee_surname = '';
-      !validator.isEmail(ticket.attendee_email) ?  ticket.errors.attendee_email = 'Please enter a valid Email.' : ticket.errors.attendee_email = '';
       this.setState({tempTicket: ticket});
   
       //this.props.handleTicketChange(ticket, errors);
@@ -361,7 +355,7 @@ class TicketPopup extends React.Component {
                                 value={attendee_email}
                             />
                             <button className="btn btn-primary" onClick={() => this.handleTicketAssign(false)}
-                              disabled={this.state.tempTicket.errors.attendee_email !== ''}>
+                            disabled={this.state.tempTicket.errors && this.state.tempTicket.errors.attendee_email !== ''}>
                               {T.translate("ticket_popup.assign_someone")}
                             </button>
                           </div>
@@ -417,7 +411,7 @@ class TicketPopup extends React.Component {
                                   value={reassign_email}
                               />
                               <button className="btn btn-primary" onClick={() => this.handleTicketReassign(false)}
-                              disabled={this.state.tempTicket.errors.reassign_email !== ''}>
+                              disabled={this.state.tempTicket.errors && this.state.tempTicket.errors.reassign_email !== ''}>
                                 {T.translate("ticket_popup.reassign_someone")}
                               </button>
                           </div>

@@ -56,7 +56,7 @@ class TicketAssignForm extends React.Component {
     }
 
     hasErrors(field) {
-      let {errors} = this.props;
+      let {ticket:{errors}} = this.props;
       if(field in errors) {
           return errors[field];
       }
@@ -106,7 +106,7 @@ class TicketAssignForm extends React.Component {
                         className="form-control"                              
                         error={this.hasErrors('attendee_email')}
                         onChange={onChange}
-                        value={ticket.email}
+                        value={ticket.attendee_email}
                       />
                     </React.Fragment>
                     :
@@ -127,7 +127,7 @@ class TicketAssignForm extends React.Component {
                           className="form-control"                              
                           error={this.hasErrors('attendee_email')}
                           onChange={onChange}
-                          value={ticket.email}
+                          value={ticket.attendee_email}
                         />
                         :
                         <span>{ticket.attendee_email}
@@ -150,7 +150,7 @@ class TicketAssignForm extends React.Component {
                         className="form-control"                              
                         error={this.hasErrors('attendee_email')}
                         onChange={onChange}
-                        value={ticket.email}
+                        value={ticket.attendee_email}
                       />
                     </React.Fragment>
                     :
@@ -171,7 +171,7 @@ class TicketAssignForm extends React.Component {
                           className="form-control"                              
                           error={this.hasErrors('attendee_email')}
                           onChange={onChange}
-                          value={ticket.email}
+                          value={ticket.attendee_email}
                         />
                         :                        
                         <span>{ticket.attendee_email}
@@ -227,9 +227,9 @@ class TicketAssignForm extends React.Component {
                   <span>{ticket.attendee_surname}</span>
                   :
                   <Input
-                    id="attendee_last_name"
+                    id="attendee_surname"
                     className="form-control"
-                    error={this.hasErrors('attendee_last_name')}
+                    error={this.hasErrors('attendee_surname')}
                     onChange={onChange}
                     value={ticket.attendee_surname}
                   />
@@ -243,9 +243,9 @@ class TicketAssignForm extends React.Component {
                   <span>{ticket.attendee_surname}</span>
                   :
                   <Input
-                    id="attendee_last_name"
+                    id="attendee_surname"
                     className="form-control"
-                    error={this.hasErrors('attendee_last_name')}
+                    error={this.hasErrors('attendee_surname')}
                     onChange={onChange}
                     value={ticket.attendee_surname}
                   />

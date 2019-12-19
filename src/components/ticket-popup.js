@@ -16,6 +16,7 @@ import T from 'i18n-react/dist/i18n-react'
 import cloneDeep from "lodash.clonedeep";
 import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import { Input, Dropdown, CheckboxList, TextArea } from 'openstack-uicore-foundation/lib/components'
+import validator from "validator"
 
 import TicketAssignForm from '../components/ticket-assign-form';
 import ConfirmPopup from '../components/confirm-popup';
@@ -39,7 +40,8 @@ class TicketPopup extends React.Component {
             attendee_surname: '',
             attendee_company: '',
             disclaimer_accepted: null,
-            extra_questions: []
+            extra_questions: [],
+            errors: {}
           }
         };
 
@@ -74,7 +76,8 @@ class TicketPopup extends React.Component {
           attendee_surname: surname,
           attendee_company: company,
           disclaimer_accepted: disclaimer_accepted_date ? true : false, 
-          extra_questions: formattedQuestions
+          extra_questions: formattedQuestions,
+          errors: {}
         }});        
       }
     }
@@ -215,15 +218,15 @@ class TicketPopup extends React.Component {
     }
 
     handlePopupSave() {
-      let {tempTicket: {attendee_first_name, attendee_surname, disclaimer_accepted}} = this.state;
-      let {summit:{registration_disclaimer_mandatory}, ticket: {owner}, fromTicketList, member} = this.props;
+      let {tempTicket: {disclaimer_accepted, errors}} = this.state;
+      let {summit:{registration_disclaimer_mandatory}, ticket: {owner}, member} = this.props;
 
       let assignedTicket = owner? owner.email === member.email : false ;
-      let saveEnabled = attendee_first_name && attendee_surname;
+      let saveEnabled = Object.values(errors).every(x => (x === null || x === '')) && errors.constructor === Object;
       let mandatoryExtraQuestions = this.handleMandatoryExtraQuestions();
 
       if(registration_disclaimer_mandatory && assignedTicket) {
-        saveEnabled = attendee_first_name && attendee_surname && mandatoryExtraQuestions && disclaimer_accepted;
+        saveEnabled = Object.values(errors).every(x => (x === null || x === '')) && errors.constructor === Object && mandatoryExtraQuestions && disclaimer_accepted;
       }
 
       // return the reverse value for disabled prop
@@ -248,8 +251,12 @@ class TicketPopup extends React.Component {
           value = value.valueOf() / 1000;
       }
       
-
       ticket[id] = value;
+
+      validator.isEmpty(ticket.attendee_first_name) ? ticket.errors.attendee_first_name = 'Please enter your First Name.' : ticket.errors.attendee_first_name = '';
+      validator.isEmpty(ticket.attendee_surname) ?  ticket.errors.attendee_surname = 'Please enter your Last Name.' : ticket.errors.attendee_surname = '';
+      !validator.isEmail(ticket.attendee_email) ?  ticket.errors.attendee_email = 'Please enter a valid Email.' : ticket.errors.attendee_email = '';
+      
 
       this.setState({tempTicket: ticket});
   

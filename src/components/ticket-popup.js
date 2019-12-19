@@ -77,7 +77,11 @@ class TicketPopup extends React.Component {
           attendee_company: company,
           disclaimer_accepted: disclaimer_accepted_date ? true : false, 
           extra_questions: formattedQuestions,
-          errors: {}
+          reassign_email: '',
+          errors: {
+            reassign_email: '',
+            attendee_email: ''
+          }
         }});        
       }
     }
@@ -153,10 +157,11 @@ class TicketPopup extends React.Component {
           this.setState((prevState) => {
             return {
               tempTicket: {                    
-                attendee_first_name: '',
-                attendee_surname: '',
-                extra_questions: [],
-                attendee_email: email
+                attendee_first_name: prevState.tempTicket.attendee_first_name,
+                attendee_surname: prevState.tempTicket.surname,
+                extra_questions: prevState.tempTicket.extra_questions,
+                attendee_email: email,
+                errors: prevState.tempTicket.errors
               }
             }
           }, () => this.handleConfirmPopup('reassign'));
@@ -168,20 +173,24 @@ class TicketPopup extends React.Component {
                 attendee_surname: prevState.tempTicket.attendee_surname,
                 attendee_company: prevState.tempTicket.attendee_company,
                 extra_questions: prevState.tempTicket.extra_questions,
-                attendee_email: email
+                attendee_email: email,
+                errors: prevState.tempTicket.errors
               }
             }
           }, () => this.handleConfirmPopup('reassign'));
         }
       } else {
-        this.setState((prevState) => {
+        console.log(this.state.tempTicket);
+        this.setState((prevState) => {          
           return {
             tempTicket: {                    
-              attendee_first_name: '',
-              attendee_surname: '',
-              attendee_company: '',
-              extra_questions: [],
-              attendee_email: prevState.tempTicket.reassign_email
+              attendee_email: prevState.tempTicket.attendee_email,
+              attendee_first_name: prevState.tempTicket.attendee_first_name,
+              attendee_surname: prevState.tempTicket.surname,
+              attendee_company: prevState.tempTicket.company,
+              extra_questions: prevState.tempTicket.extra_questions,
+              reassign_email: prevState.tempTicket.reassign_email,
+              errors: prevState.tempTicket.errors
             }
           }
         }, () => this.handleConfirmPopup('reassign'));
@@ -189,7 +198,7 @@ class TicketPopup extends React.Component {
       
     }
 
-    handleTicketCancel() {      
+    handleTicketCancel() {
       this.handleConfirmPopup('cancel')      
     }
 
@@ -296,8 +305,8 @@ class TicketPopup extends React.Component {
 
     render() {
 
-      let {extraQuestions, status, errors, ticket: {owner, badge, ticket_type_id}, fromTicketList, summit, orderOwned, member, loading} = this.props;
-      let {showPopup, tempTicket, tempTicket: {attendee_email, reassign_email}, popupCase, cleanFields} = this.state;
+      let {extraQuestions, status, ticket: {owner, badge, ticket_type_id}, fromTicketList, summit, orderOwned, member, loading} = this.props;
+      let {showPopup, tempTicket, tempTicket: {reassign_email, errors}, popupCase, cleanFields} = this.state;
       let reassign_date = summit.reassign_ticket_till_date < summit.end_date ? summit.reassign_ticket_till_date : summit.end_date;
       let now = summit.timestamp;
 
@@ -347,15 +356,15 @@ class TicketPopup extends React.Component {
                               <div><hr/></div>
                             </div>
                             <Input
-                                id="attendee_email"
+                                id="reassign_email"
                                 className="form-control"
                                 placeholder="Email"
-                                error={this.hasErrors('attendee_email')}
+                                error={this.hasErrors('reassign_email')}
                                 onChange={this.handleChange}
-                                value={attendee_email}
+                                value={reassign_email}
                             />
                             <button className="btn btn-primary" onClick={() => this.handleTicketAssign(false)}
-                            disabled={this.state.tempTicket.errors && this.state.tempTicket.errors.attendee_email !== ''}>
+                              disabled={reassign_email === '' || errors.reassign_email !== ''}>
                               {T.translate("ticket_popup.assign_someone")}
                             </button>
                           </div>
@@ -410,8 +419,8 @@ class TicketPopup extends React.Component {
                                   onChange={this.handleChangeEmail}
                                   value={reassign_email}
                               />
-                              <button className="btn btn-primary" onClick={() => this.handleTicketReassign(false)}
-                              disabled={this.state.tempTicket.errors && this.state.tempTicket.errors.reassign_email !== ''}>
+                              <button className="btn btn-primary" onClick={() => this.handleTicketReassign(false)}                                
+                                disabled={reassign_email === '' || errors.reassign_email !== ''}>
                                 {T.translate("ticket_popup.reassign_someone")}
                               </button>
                           </div>

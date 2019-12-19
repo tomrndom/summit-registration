@@ -57,7 +57,7 @@ class TicketAssignForm extends React.Component {
 
     hasErrors(field) {
       let {ticket:{errors}} = this.props;
-      if(field in errors) {
+      if(errors && field in errors) {
           return errors[field];
       }
 

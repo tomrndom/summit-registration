@@ -246,7 +246,9 @@ export const removeAttendee = (tempTicket, fromTicket = false) => (dispatch, get
 
   let orderId = selectedTicket.order ? selectedTicket.order.id : selectedTicket.order_id;
 
-  let {attendee_email, attendee_first_name, attendee_surname, attendee_company, extra_questions} = tempTicket;
+  let {attendee_email, reassign_email} = tempTicket;
+  if(reassign_email) attendee_email = reassign_email;
+  let emptyName, emptySurname = ''
 
   return deleteRequest(
       null,
@@ -255,7 +257,7 @@ export const removeAttendee = (tempTicket, fromTicket = false) => (dispatch, get
       {},
       authErrorHandler
   )(params)(dispatch).then(() => {
-      dispatch(assignAttendee(attendee_email, attendee_first_name, attendee_surname, attendee_company, extra_questions, orderId, fromTicket));
+      dispatch(assignAttendee(attendee_email, emptyName, emptySurname, orderId, fromTicket));
     }).catch((e) => {
       console.log('error', e)
       dispatch(stopLoading());

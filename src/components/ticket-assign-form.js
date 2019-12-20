@@ -333,14 +333,14 @@ class TicketAssignForm extends React.Component {
                 <div className="row field-wrapper">
                   <div className="col-sm-4"></div>
                   <div className="col-sm-8">
-                    <h4 className="popup-cancel-ticket" onClick={this.props.cancelTicket}>Cancel Ticket</h4>
+                    <h4 className="popup-cancel-ticket" onClick={this.props.cancelTicket}>{T.translate("ticket_popup.cancel_ticket")}</h4>
                     <p></p>                  
                   </div>
                 </div>
                 <div className="field-wrapper-mobile">
                   <div></div>
                   <div>
-                    <h4 className="popup-cancel-ticket" onClick={this.props.cancelTicket}>Cancel Ticket</h4>
+                    <h4 className="popup-cancel-ticket" onClick={this.props.cancelTicket}>{T.translate("ticket_popup.cancel_ticket")}</h4>
                     <p></p>                  
                   </div>
                 </div>

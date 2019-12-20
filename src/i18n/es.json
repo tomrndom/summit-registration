@@ -109,7 +109,7 @@
     "resend"              : "Resend Receipt",
     "download"            : "Download Ticket PDF",
     "cancel_order"        : "Cancel Order",
-    "cancel_ticket"       : "Cancel Ticket (Request Refund)",
+    "cancel_ticket"       : "Cancel Ticket",
     "directions"          : "Get Directions",
     "calendar"            : "Add to Calendar"
   },
@@ -151,7 +151,8 @@
     "edit_preferences"      : "Preferences",
     "notify_text_1"         : "All required details must be completed before",
     "notify_text_2"         : "Notify the attendee to",
-    "notify_button"         : "Re-Send Notification",    
+    "notify_button"         : "Re-Send Notification",
+    "cancel_ticket"         : "Cancel Ticket (Request Refund)",
     "save_changes"          : "Save Changes"
   },
   "confirm_popup": {

@@ -108,11 +108,18 @@
     padding: 0 10%;
     p {
       font-size: 16px;      
-      margin: 70px 0 20px;
+      margin: 20px 0 20px;
       padding: 0 15%;
     }
-    p.error-label {
-      margin: 0 0 10px;
+    p:first-of-type {      
+      margin: 40px 0 20px;      
+    }
+    p.error-label {      
+      width: 60%;
+      margin: 0px auto 5px auto;
+      padding: 0;
+      font-size: 14px;
+      text-align: left;
     }
     .popup-separator {      
       display: table;    
@@ -134,12 +141,15 @@
     }
     .form-control {
       width: 60%;
-      margin: 25px auto 25px auto;
+      margin: 25px auto 5px auto;
       background-color: #EEF4F9;
       border-color: @header_lblue_color;
       &::placeholder {
         color: #A4C7E6;
       }
+    }
+    button:last-of-type {
+      margin-top: 20px;
     }
   }
   &--reassign {
@@ -147,11 +157,18 @@
     padding: 0 10%;
     p {
       font-size: 16px;      
-      margin: 70px 0 20px;
+      margin: 20px 0 20px;
       padding: 0 15%;
     }
-    p.error-label {
-      margin: 0 0 10px;
+    p:first-of-type {      
+      margin: 40px 0 20px;      
+    }
+    p.error-label {      
+      width: 60%;
+      margin: 0px auto 5px auto;
+      padding: 0;
+      font-size: 14px;
+      text-align: left;
     }
     .popup-separator {      
       display: table;    
@@ -173,7 +190,7 @@
     }
     .form-control {
       width: 60%;
-      margin: 25px auto 25px auto;
+      margin: 25px auto 5px auto;
       background-color: #EEF4F9;
       border-color: @header_lblue_color;
       &::placeholder {
@@ -182,6 +199,9 @@
     }
     .popup-clean {
       margin-bottom: 30px;
+    }
+    button:last-of-type {
+      margin-top: 20px;
     }
   }
   &--edit {            

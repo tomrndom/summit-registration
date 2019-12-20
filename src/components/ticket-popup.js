@@ -242,22 +242,17 @@ class TicketPopup extends React.Component {
 
     handlePopupSave() {
       let {tempTicket: {disclaimer_accepted, attendee_first_name, attendee_surname, errors}} = this.state;
-      let {summit:{registration_disclaimer_mandatory}, ticket: {owner}, member} = this.props;
+      let {summit:{registration_disclaimer_mandatory}} = this.props;
 
       let mandatoryExtraQuestions = this.handleMandatoryExtraQuestions();
-      let assignedTicket = owner? owner.email === member.email : false ;
-      let saveEnabled = errors && errors.attendee_email === '' && attendee_first_name && attendee_surname && errors.constructor === Object;
-
-      if(assignedTicket) {        
-        saveEnabled = errors.attendee_email === '' && attendee_first_name && attendee_surname && mandatoryExtraQuestions;                                        
-      }
-      else if (registration_disclaimer_mandatory && assignedTicket) {
+      let saveEnabled = errors && errors.attendee_email === '' && attendee_first_name && attendee_surname && errors.constructor === Object && mandatoryExtraQuestions;
+      
+      if (registration_disclaimer_mandatory) {
         saveEnabled = errors.attendee_email === '' && attendee_first_name && attendee_surname && mandatoryExtraQuestions && disclaimer_accepted;
       }
 
       // return the reverse value for disabled prop
       return !saveEnabled;
-      
     }
 
     handleChange(ev) {
@@ -372,6 +367,8 @@ class TicketPopup extends React.Component {
                               <span>{T.translate("ticket_popup.assign_or")}</span>
                               <div><hr/></div>
                             </div>
+                            <p>{T.translate("ticket_popup.assign_want_text")}</p>
+                            <span>{T.translate("ticket_popup.reassign_enter_email")}</span>
                             <Input
                                 id="reassign_email"
                                 className="form-control"
@@ -428,6 +425,8 @@ class TicketPopup extends React.Component {
                                 </div>
                               </React.Fragment>
                               }
+                              <p>{T.translate("ticket_popup.reassign_want_text")}</p>
+                              <span>{T.translate("ticket_popup.reassign_enter_email")}</span>
                               <Input
                                   id="reassign_email"
                                   className="form-control"

@@ -52,7 +52,7 @@
     "add_ticket"        : "Add Ticket",
     "no_tickets"        : "No tickets selected.",
     "placeholders": {
-      "coupon"          : "Coupon Code (Optional)",
+      "coupon"          : "Promo Code (Optional)",
       "email"           : "Email (Optional)"
     }
   },
@@ -109,7 +109,7 @@
     "resend"              : "Resend Receipt",
     "download"            : "Download Ticket PDF",
     "cancel_order"        : "Cancel Order",
-    "cancel_ticket"       : "Cancel Ticket",
+    "cancel_ticket"       : "Cancel Ticket (Request Refund)",
     "directions"          : "Get Directions",
     "calendar"            : "Add to Calendar"
   },
@@ -156,7 +156,7 @@
   },
   "confirm_popup": {
     "question_title_cancel"           : "Cancel",
-    "question_text_cancel"            : "Are you sure you want cancel this ticket?",
+    "question_text_cancel"            : "Are you sure you want to cancel the ticket and request a refund?",
     "question_title_assign"           : "Assign Request",
     "question_text_assign"            : "Are you sure you want to clean all the fields?",
     "question_title_reassign"         : "Re-Assign Request",

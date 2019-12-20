@@ -41,7 +41,10 @@ class TicketPopup extends React.Component {
             reassign_email: '',
             disclaimer_accepted: null,
             extra_questions: [],
-            errors: {}
+            errors: {
+                reassign_email: '',
+                attendee_email: ''
+            }
           }
         };
 
@@ -180,7 +183,6 @@ class TicketPopup extends React.Component {
           }, () => this.handleConfirmPopup('reassign'));
         }
       } else {
-        console.log(this.state.tempTicket);
         this.setState((prevState) => {          
           return {
             tempTicket: {                    
@@ -218,7 +220,7 @@ class TicketPopup extends React.Component {
       if(extraQuestions){
         extraQuestions.map(eq => {
           if(eq.mandatory === true && answeredQuestions === true) {
-            let findEq = extra_questions.find(q => q.question_id === eq.id);
+            let findEq = extra_questions.find(q => q.question_id === eq.id);            
             answeredQuestions = findEq && findEq.answer ? true : false;          
           }
         });
@@ -294,7 +296,7 @@ class TicketPopup extends React.Component {
       ticket[id] = value;
 
       !validator.isEmail(ticket.reassign_email) ? ticket.errors.reassign_email = 'Please enter a valid Email.' : ticket.errors.reassign_email = '';
-      this.setState({tempTicket: ticket}, console.log(this.state.tempTicket));
+      this.setState({tempTicket: ticket});
     }
 
     handleFormatReassignDate() {
@@ -360,7 +362,7 @@ class TicketPopup extends React.Component {
                                 className="form-control"
                                 placeholder="Email"
                                 error={this.hasErrors('reassign_email')}
-                                onChange={this.handleChange}
+                                onChange={this.handleChangeEmail}
                                 value={reassign_email}
                             />
                             <button className="btn btn-primary" onClick={() => this.handleTicketAssign(false)}

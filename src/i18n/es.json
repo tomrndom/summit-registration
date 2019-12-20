@@ -107,7 +107,7 @@
   "order_info": {
     "print"               : "Print",
     "resend"              : "Resend Receipt",
-    "download"            : "Download PDF",
+    "download"            : "Download Ticket PDF",
     "cancel_order"        : "Cancel Order",
     "cancel_ticket"       : "Cancel Ticket",
     "directions"          : "Get Directions",

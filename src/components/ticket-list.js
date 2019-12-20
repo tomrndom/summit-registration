@@ -286,7 +286,7 @@ class TicketList extends React.Component {
                   member={member}
                   status={this.handleTicketStatus(selectedTicket)}
                   onChange={this.handleChange}
-                  orderOwned={selectedTicket.owner.owner_id === member.id}
+                  orderOwned={selectedTicket.order.owner_id === member.id}
                   extraQuestions={extraQuestions}
                   loading={loadingSummits}
                   downloadTicket={this.handleTicketDownload}

@@ -220,22 +220,21 @@ class TicketPopup extends React.Component {
       if(extraQuestions.length > 0 && extra_questions.length > 0){
         extraQuestions.map(eq => {
           if(eq.mandatory === true && answeredQuestions === true) {
-            let findEq = extra_questions.find(q => q.question_id === eq.id);
+            let findEq = extra_questions.find(q => q.question_id === eq.id);            
             switch(eq.type) {
               case 'TextArea': 
-              case 'Text': 
-              case 'ComboBox': //one is selected
-              case 'RadioButtonList': // one is selected
-                  answeredQuestions = findEq && findEq.answer ? true : false;
-              case 'CheckBox': 
-              case 'CheckBoxList': //at least one is selected                  
-                  answeredQuestions = findEq && findEq.answer === "true" ? true : false;                  
+              case 'Text':
+              case 'ComboBox':
+              case 'RadioButtonList':
+              case 'CheckBoxList':
+                  return answeredQuestions = findEq && findEq.answer !== "" ? true : false;
+              case 'CheckBox':
+                  return answeredQuestions = findEq && findEq.answer === "true" ? true : false;
               //case 'RadioButton': (dont think this one will be ever used; will discuss to be removed from admin) is always answered                                
             }
-            
           }
         });
-      } else if (extraQuestions.length > 0 && extra_questions.length === 0) {
+      } else if (extraQuestions.length > 0 && extra_questions.length === 0) {        
         answeredQuestions = false;
       }
       return answeredQuestions;
@@ -249,8 +248,8 @@ class TicketPopup extends React.Component {
       let assignedTicket = owner? owner.email === member.email : false ;
       let saveEnabled = errors && errors.attendee_email === '' && attendee_first_name && attendee_surname && errors.constructor === Object;
 
-      if(assignedTicket) {
-        saveEnabled = errors.attendee_email === '' && attendee_first_name && attendee_surname && mandatoryExtraQuestions;
+      if(assignedTicket) {        
+        saveEnabled = errors.attendee_email === '' && attendee_first_name && attendee_surname && mandatoryExtraQuestions;                                        
       }
       else if (registration_disclaimer_mandatory && assignedTicket) {
         saveEnabled = errors.attendee_email === '' && attendee_first_name && attendee_surname && mandatoryExtraQuestions && disclaimer_accepted;

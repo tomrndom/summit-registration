@@ -43,6 +43,8 @@ class GuestsLayout extends React.Component {
     this.handleReassignDate = this.handleReassignDate.bind(this);
     this.handleTicketUpdate = this.handleTicketUpdate.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handlePopupSave = this.handlePopupSave.bind(this);
+    this.handleMandatoryExtraQuestions = this.handleMandatoryExtraQuestions.bind(this);
   }
 
     componentDidMount() {
@@ -123,6 +125,48 @@ class GuestsLayout extends React.Component {
       });        
     }
 
+    handleMandatoryExtraQuestions() {
+      let {summit: {order_extra_questions}} = this.props;
+      let {tempTicket: {extra_questions}} = this.state;
+      let answeredQuestions = true;      
+      if(order_extra_questions.length > 0 && extra_questions.length > 0){
+        order_extra_questions.map(eq => {
+          if(eq.mandatory === true && answeredQuestions === true) {
+            let findEq = extra_questions.find(q => q.question_id === eq.id);            
+            switch(eq.type) {
+              case 'TextArea': 
+              case 'Text':
+              case 'ComboBox':
+              case 'RadioButtonList':
+              case 'CheckBoxList':
+                  return answeredQuestions = findEq && findEq.answer !== "" ? true : false;
+              case 'CheckBox':
+                  return answeredQuestions = findEq && findEq.answer === "true" ? true : false;
+              //case 'RadioButton': (dont think this one will be ever used; will discuss to be removed from admin) is always answered                                
+            }
+          }
+        });
+      } else if (order_extra_questions.length > 0 && extra_questions.length === 0) {        
+        answeredQuestions = false;
+      }
+      return answeredQuestions;
+    }
+
+    handlePopupSave() {
+      let {tempTicket: {disclaimer_accepted, attendee_first_name, attendee_surname}} = this.state;
+      let {summit:{registration_disclaimer_mandatory}} = this.props;
+
+      let mandatoryExtraQuestions = this.handleMandatoryExtraQuestions();
+      let saveEnabled = attendee_first_name && attendee_surname;
+      
+      if (registration_disclaimer_mandatory) {
+        saveEnabled = attendee_first_name && attendee_surname && mandatoryExtraQuestions && disclaimer_accepted;
+      }
+
+      // return the reverse value for disabled prop
+      return !saveEnabled;
+    }
+
     handleReassignDate() {
       let {summit} = this.props;
       let reassign_date = summit.reassign_ticket_till_date < summit.end_date ? summit.reassign_ticket_till_date : summit.end_date;
@@ -130,7 +174,7 @@ class GuestsLayout extends React.Component {
     }
     
     render() {
-      let {ticket: {owner, order_extra_questions}, ticket, errors, ticketLoading, summitLoading, summit, summits} = this.props;
+      let {ticket: {owner}, ticket, errors, ticketLoading, summitLoading, summit, summit:{order_extra_questions}, summits} = this.props;
       let now = summit.timestamp;
       let {tempTicket} = this.state;
       
@@ -165,10 +209,7 @@ class GuestsLayout extends React.Component {
                 <div className="row submit-buttons-wrapper">
                     <div className="col-md-12">                      
                         <button className="btn btn-primary continue-btn" 
-                          disabled={
-                            !tempTicket.attendee_first_name || 
-                            !tempTicket.attendee_surname ||
-                            (!tempTicket.disclaimer_accepted && summit.registration_disclaimer_mandatory === true)} 
+                          disabled={this.handlePopupSave()} 
                           onClick={() =>this.handleTicketUpdate(tempTicket)}>
                             {T.translate("guests.save")}
                         </button>

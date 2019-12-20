@@ -70,7 +70,7 @@ class TicketsListPage extends React.Component {
           loadingTickets, 
           loadingSummits, 
           errors} = this.props;
-        
+
         if(tickets.length > 0) {
           return (
             tickets.length > 0 &&

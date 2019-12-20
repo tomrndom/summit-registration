@@ -60,6 +60,7 @@ const customFetchErrorHandler = (response) => {
           Swal.fire("ERROR", T.translate("errors.session_expired"), "error");
           break;
       case 412:
+          msg = '';
           for (var [key, value] of Object.entries(err.response.body.errors)) {
               if (isNaN(key)) {
                   msg += key + ': ';

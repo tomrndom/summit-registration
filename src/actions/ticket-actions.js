@@ -48,6 +48,32 @@ export const REGENERATE_TICKET_HASH   = 'REGENERATE_TICKET_HASH';
 export const GET_TICKET_PDF_BY_HASH   = 'GET_TICKET_PDF_BY_HASH';
 export const RESEND_NOTIFICATION      = 'RESEND_NOTIFICATION';
 
+const customFetchErrorHandler = (response) => {
+  let code = response.status;
+  let msg = response.statusText;
+
+  switch (code) {
+      case 403:
+          Swal.fire("ERROR", T.translate("errors.user_not_authz"), "warning");
+          break;
+      case 401:
+          Swal.fire("ERROR", T.translate("errors.session_expired"), "error");
+          break;
+      case 412:
+          for (var [key, value] of Object.entries(err.response.body.errors)) {
+              if (isNaN(key)) {
+                  msg += key + ': ';
+              }
+
+              msg += value + '<br>';
+          }
+          Swal.fire("Validation error", msg, "warning");          
+          break;
+      case 500:
+          Swal.fire("ERROR", T.translate("errors.server_error"), "error");
+  }
+}
+
 export const handleResetTicket = () => (dispatch, getState) => {
   dispatch(createAction(RESET_TICKET)({}));
 }
@@ -299,7 +325,7 @@ export const getTicketPDF = () => (dispatch, getState) => {
             link.download = 'ticket.pdf';
             link.dispatchEvent(new MouseEvent('click'));
         })
-        .catch(authErrorHandler);
+        .catch(customFetchErrorHandler);
 };
 
 export const refundTicket = (ticket) => (dispatch, getState) => {

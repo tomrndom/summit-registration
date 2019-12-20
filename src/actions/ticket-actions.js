@@ -299,7 +299,7 @@ export const getTicketPDF = () => (dispatch, getState) => {
             link.download = 'ticket.pdf';
             link.dispatchEvent(new MouseEvent('click'));
         })
-        .catch(fetchErrorHandler);
+        .catch(authErrorHandler);
 };
 
 export const refundTicket = (ticket) => (dispatch, getState) => {

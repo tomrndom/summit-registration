@@ -242,13 +242,13 @@ class TicketPopup extends React.Component {
     }
 
     handlePopupSave() {
-      let {tempTicket: {disclaimer_accepted, attendee_first_name, attendee_surname, errors}} = this.state;
-      let {summit:{registration_disclaimer_mandatory}} = this.props;
+      let {tempTicket: {disclaimer_accepted, attendee_first_name, attendee_surname, attendee_email, errors}} = this.state;
+      let {summit:{registration_disclaimer_mandatory}, member} = this.props;
 
       let mandatoryExtraQuestions = this.handleMandatoryExtraQuestions();
       let saveEnabled = errors && errors.attendee_email === '' && attendee_first_name && attendee_surname && errors.constructor === Object && mandatoryExtraQuestions;
       
-      if (registration_disclaimer_mandatory) {
+      if (registration_disclaimer_mandatory && member.email === attendee_email) {
         saveEnabled = errors.attendee_email === '' && attendee_first_name && attendee_surname && mandatoryExtraQuestions && disclaimer_accepted;
       }
 

@@ -47,7 +47,6 @@ class HeaderTitle extends React.Component {
         if(location) {
           summitLocation = `${location.city}, ${location.country} `;
         }
-        console.log(summitDate, location);
         if(summitLocation !== '') {
           return (
             <React.Fragment>

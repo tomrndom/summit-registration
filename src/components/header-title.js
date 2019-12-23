@@ -46,7 +46,8 @@ class HeaderTitle extends React.Component {
         }
         if(location) {
           summitLocation = `${location.city}, ${location.country} `;
-        }      
+        }
+        console.log(summitDate, location);
         if(summitLocation !== '') {
           return (
             <React.Fragment>
@@ -55,8 +56,12 @@ class HeaderTitle extends React.Component {
               {summitLocation}
             </React.Fragment>
           );
-        } else {
-          return null;
+        } else if (summitDate) {
+          return (
+            <React.Fragment>
+              {summitDate}                        
+            </React.Fragment>
+          );
         }
       } else {
         return null;
@@ -73,9 +78,18 @@ class HeaderTitle extends React.Component {
       let purchaseLocation = '/register/';
 
         return (
-          <div className="header-title">
-              <h4>{summit?summit.logo:''}<b>{!location.match(purchaseLocation) ? 'Registration' : summit && summit.name ? summit.name : 'Registration'}</b></h4>
-              <h5>{!location.match(purchaseLocation) ? '' : summit ? this.handleEventDateLocation() : ''}</h5>
+          <div className="header-title">              
+              <div className="summit-info">
+                {location.match(purchaseLocation) && summit && summit.logo && 
+                  <img className="summit-logo" src={summit.logo} alt={summit.name ? summit.name : ''}/>
+                }
+                <div className="summit-text">
+                  <h4>
+                    <b>{!location.match(purchaseLocation) ? 'Registration' : summit && summit.name ? summit.name : 'Registration'}</b>                                
+                  </h4>
+                  <h5>{location.match(purchaseLocation) ? this.handleEventDateLocation() : ''}</h5>
+                </div>
+              </div>              
           </div>
         );
     }

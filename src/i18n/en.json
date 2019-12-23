@@ -1,7 +1,7 @@
 {
   "landing": {
     "sign_out"            : "Sign out",
-    "sign_in"              : "Sign in",
+    "sign_in"              : "fnID Sign In",
     "not_logged_in"       : "You are not logged in. Please log in to continue:"
   },
   "errors": {

@@ -63,7 +63,7 @@ const customFetchErrorHandler = (response) => {
           break;
       case 412:
           msg = '';
-          for (var [key, value] of Object.entries(err.response.body.errors)) {
+          for (var [key, value] of Object.entries(response.response.body.errors)) {
               if (isNaN(key)) {
                   msg += key + ': ';
               }

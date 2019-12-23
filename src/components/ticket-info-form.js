@@ -90,7 +90,9 @@ class TicketInfoForm extends React.Component {
                                     placeholder={T.translate("step_two.placeholders.email")}
                                     error={this.hasErrors(`tix_email_${tix.tempId}`)}
                                     onChange={this.ticketInfoChange.bind(this, tix.tempId, 'attendee_email')}
-                                    value={tix.attendee_email ? tix.attendee_email : ''}
+                                    value={
+                                      i === 0 && orderedTickets.length === 1 && !tix.attendee_email ? tix.attendee_email = order.email : tix.attendee_email ? tix.attendee_email : ''
+                                    }
                                 />
                             </div>
                             <div className="col-md-2">

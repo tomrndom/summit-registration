@@ -34,6 +34,8 @@ import { selectSummitById } from "./summit-actions";
 import { getUserSummits } from '../actions/summit-actions';
 import { getUserOrders } from "./order-actions";
 
+import Swal from 'sweetalert2';
+
 export const RESET_TICKET             = 'RESET_TICKET';
 export const GET_TICKETS              = 'GET_TICKETS';
 export const SELECT_TICKET            = 'SELECT_TICKET';

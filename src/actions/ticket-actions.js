@@ -45,6 +45,7 @@ export const REMOVE_TICKET_ATTENDEE   = 'REMOVE_TICKET_ATTENDEE';
 export const GET_TICKET_PDF           = 'GET_TICKET_PDF';
 export const REFUND_TICKET            = 'REFUND_TICKET';
 export const GET_TICKET_BY_HASH       = 'GET_TICKET_BY_HASH';
+export const GET_TICKET_BY_HASH_ERROR = 'GET_TICKET_BY_HASH_ERROR';
 export const ASSIGN_TICKET_BY_HASH    = 'ASSIGN_TICKET_BY_HASH';
 export const REGENERATE_TICKET_HASH   = 'REGENERATE_TICKET_HASH';
 export const GET_TICKET_PDF_BY_HASH   = 'GET_TICKET_PDF_BY_HASH';
@@ -381,8 +382,9 @@ export const getTicketByHash = (hash) => (dispatch, getState) => {
       authErrorHandler
   )(params)(dispatch).then((ticket) => {     
       dispatch(selectSummitById(ticket.response.owner.summit_id, true));      
-    }).catch(() => {      
-      dispatch(handleResetTicket());
+    }).catch((err) => {      
+      dispatch(createAction(GET_TICKET_BY_HASH_ERROR)(err.res));
+      //dispatch(handleResetTicket());
       dispatch(stopLoading());
     });
       

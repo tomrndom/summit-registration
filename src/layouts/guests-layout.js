@@ -45,6 +45,7 @@ class GuestsLayout extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handlePopupSave = this.handlePopupSave.bind(this);
     this.handleMandatoryExtraQuestions = this.handleMandatoryExtraQuestions.bind(this);
+    this.handleHashRegenerate = this.handleHashRegenerate.bind(this);
   }
 
     componentDidMount() {
@@ -167,6 +168,11 @@ class GuestsLayout extends React.Component {
       return !saveEnabled;
     }
 
+    handleHashRegenerate() {
+      let ticketHash = this.props.match.params.ticket_hash;
+      this.props.regenerateTicketHash(ticketHash);
+    }
+
     handleReassignDate() {
       let {summit} = this.props;
       let reassign_date = summit.reassign_ticket_till_date < summit.end_date ? summit.reassign_ticket_till_date : summit.end_date;
@@ -174,20 +180,40 @@ class GuestsLayout extends React.Component {
     }
     
     render() {
-      let {ticket: {owner}, ticket, errors, ticketLoading, summitLoading, summit, summit:{order_extra_questions}, summits} = this.props;
+      let {ticket: {owner, invalidHash}, ticket, errors, ticketLoading, summitLoading, summit, summit:{order_extra_questions}, summits} = this.props;
       let now = summit.timestamp;
       let {tempTicket} = this.state;
       
       let loading = ticketLoading && summitLoading;
 
-      if(!loading && !owner) {
+      if(!loading && !owner && invalidHash) {
         //history.push('/a/member/tickets/');
         return (
           <div>
             Ticket not found
           </div>
         )
-      } else {
+      } else if (!loading && !invalidHash) {
+        return (
+          <div className="invalid-hash">
+            <h4>
+              {T.translate("guests.invalid_thanks")}
+            </h4>
+            <p>
+              {T.translate("guests.invalid_text_1")}
+            </p>
+            <button className="btn btn-primary" onClick={() => this.handleHashRegenerate()}>{T.translate("guests.invalid_button")}</button>
+            <br/><br/>
+            <p>
+              {T.translate("guests.invalid_text_2")} <b>expiry time</b> {T.translate("guests.invalid_text_3")}
+            </p>
+            <p>
+              {T.translate("guests.invalid_contact")} <a href={`mailto:${window.SUPPORT_EMAIL}`}>{window.SUPPORT_EMAIL}</a>.
+            </p>
+          </div>
+        )
+      }
+      else {
         return (
           !loading &&
             <div>

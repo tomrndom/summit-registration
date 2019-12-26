@@ -82,7 +82,7 @@ class HeaderTitle extends React.Component {
                 {location.match(purchaseLocation) && summit && summit.logo && 
                   <img className="summit-logo" src={summit.logo} alt={summit.name ? summit.name : ''}/>
                 }
-                <div className="summit-text">
+                <div className={`${summit.logo ? 'summit-text' : 'summit-text--no-logo'}`}>
                   <h4>
                     <b>{!location.match(purchaseLocation) ? 'Registration' : summit && summit.name ? summit.name : 'Registration'}</b>                                
                   </h4>

@@ -157,7 +157,7 @@ class GuestsLayout extends React.Component {
       let {summit:{registration_disclaimer_mandatory}} = this.props;
 
       let mandatoryExtraQuestions = this.handleMandatoryExtraQuestions();
-      let saveEnabled = attendee_first_name && attendee_surname;
+      let saveEnabled = attendee_first_name && attendee_surname && mandatoryExtraQuestions;
       
       if (registration_disclaimer_mandatory) {
         saveEnabled = attendee_first_name && attendee_surname && mandatoryExtraQuestions && disclaimer_accepted;

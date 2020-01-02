@@ -95,7 +95,7 @@ class SubmitButtons extends React.Component {
 
                     {step == 2 &&
                     <button className="btn btn-primary continue-btn" onClick={this.reservationClick} disabled={!canContinue}>
-                        {T.translate("general.continue")}
+                        {T.translate("general.save_and_continue")}
                     </button>
                     }
 

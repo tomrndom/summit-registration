@@ -45,7 +45,8 @@ class TicketInfoForm extends React.Component {
         let {value} = ev.target;
         ev.preventDefault();
         if(index === 0) {
-          this.setState({firstTicket: true}, () => this.props.onChange(ticketId, field, value))
+          this.props.onChange(ticketId, field, value)
+          this.setState({firstTicket: true})
         } else {          
           this.props.onChange(ticketId, field, value);
         }        

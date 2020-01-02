@@ -22,7 +22,7 @@ class TicketInfoForm extends React.Component {
         super(props);
 
         this.state = {
-
+          firstTicket: false
         };
 
         this.addTicket = this.addTicket.bind(this);
@@ -41,9 +41,14 @@ class TicketInfoForm extends React.Component {
         this.props.onRemoveTicket(ticketId);
     }
 
-    ticketInfoChange(ticketId, field, ev) {
+    ticketInfoChange(ticketId, index, field, ev) {
+        let {value} = ev.target;
         ev.preventDefault();
-        this.props.onChange(ticketId, field, ev.target.value);
+        if(index === 0) {
+          this.setState({firstTicket: true}, () => this.props.onChange(ticketId, field, value))
+        } else {          
+          this.props.onChange(ticketId, field, value);
+        }        
     }
 
     hasErrors(field) {
@@ -58,6 +63,7 @@ class TicketInfoForm extends React.Component {
 
     render() {
         let {order, onChange, ticketType, summit} = this.props;
+        let {firstTicket} = this.state;
         let orderedTickets = order.tickets.filter(tix => {
           let tixId = tix.type_id ? tix.type_id : tix.ticket_type_id;
           return tixId == ticketType.id
@@ -82,17 +88,17 @@ class TicketInfoForm extends React.Component {
                                     className="form-control"
                                     placeholder={T.translate("step_two.placeholders.coupon")}
                                     error={this.hasErrors(`tix_coupon_${tix.tempId}`)}
-                                    onChange={this.ticketInfoChange.bind(this, tix.tempId, 'promo_code')}
+                                    onChange={this.ticketInfoChange.bind(this, tix.tempId, i, 'promo_code')}
                                     value={tix.promo_code ? tix.promo_code : ''}
                                 />
                                 <Input
                                     className="form-control email"
                                     placeholder={T.translate("step_two.placeholders.email")}
                                     error={this.hasErrors(`tix_email_${tix.tempId}`)}
-                                    onChange={this.ticketInfoChange.bind(this, tix.tempId, 'attendee_email')}
+                                    onChange={this.ticketInfoChange.bind(this, tix.tempId, i, 'attendee_email')}
                                     value={
-                                      i === 0 && orderedTickets.length === 1 && !tix.attendee_email ? tix.attendee_email = order.email : tix.attendee_email ? tix.attendee_email : ''
-                                    }
+                                      (i === 0 && orderedTickets.length > 0 && !firstTicket) ? 
+                                      tix.attendee_email = order.email : tix.attendee_email ? tix.attendee_email : '' }
                                 />
                             </div>
                             <div className="col-md-2">

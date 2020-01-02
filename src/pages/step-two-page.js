@@ -156,7 +156,7 @@ class StepTwoPage extends React.Component {
                                 key={`tixinfo_${t.ticket_type_id}_${i}`}
                                 ticketType={t}
                                 order={order}
-                                errors={errors}
+                                errors={dirty? errors : {}}
                                 onAddTicket={this.handleAddTicket}
                                 onRemoveTicket={this.handleRemoveTicket}
                                 onChange={this.handleTicketInfoChange}

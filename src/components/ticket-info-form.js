@@ -97,7 +97,7 @@ class TicketInfoForm extends React.Component {
                                     error={this.hasErrors(`tix_email_${tix.tempId}`)}
                                     onChange={this.ticketInfoChange.bind(this, tix.tempId, i, 'attendee_email')}
                                     value={
-                                      (i === 0 && orderedTickets.length > 0 && !firstTicket) ? 
+                                      (i === 0 && orderedTickets.length === 1 && !firstTicket) ? 
                                       tix.attendee_email = order.email : tix.attendee_email ? tix.attendee_email : '' }
                                 />
                             </div>

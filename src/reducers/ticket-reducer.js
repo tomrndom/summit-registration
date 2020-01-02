@@ -12,7 +12,15 @@
  **/
 
 import { START_LOADING, STOP_LOADING, LOGOUT_USER } from "openstack-uicore-foundation/lib/actions";
-import { RESET_TICKET, GET_TICKETS, GET_TICKET_BY_HASH, GET_TICKET_BY_HASH_ERROR, SELECT_TICKET, CHANGE_TICKET, REMOVE_TICKET_ATTENDEE, ASSIGN_TICKET } from "../actions/ticket-actions";
+import { RESET_TICKET,
+         GET_TICKETS,
+         GET_TICKET_BY_HASH,
+         GET_TICKET_BY_HASH_ERROR,
+         SELECT_TICKET,
+         CHANGE_TICKET,
+         REMOVE_TICKET_ATTENDEE,
+         GUEST_TICKET_COMPLETED,
+         ASSIGN_TICKET } from "../actions/ticket-actions";
 
 const DEFAULT_STATE = {
     loading: false,
@@ -55,7 +63,9 @@ const memberReducer = (state = DEFAULT_STATE, action) => {
               return {...state, selectedTicket: {invalidHash}};
             } else {
               return {...state, selectedTicket: {}}
-            }            
+            }
+        case GUEST_TICKET_COMPLETED:
+            return {...state, selectedTicket: {...state.selectedTicket, completed: true}}
         case SELECT_TICKET:
             return {...state, selectedTicket: payload};
         case ASSIGN_TICKET:

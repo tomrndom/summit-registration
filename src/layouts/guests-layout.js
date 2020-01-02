@@ -180,20 +180,20 @@ class GuestsLayout extends React.Component {
     }
     
     render() {
-      let {ticket: {owner, invalidHash}, ticket, errors, ticketLoading, summitLoading, summit, summit:{order_extra_questions}, summits} = this.props;
+      let {ticket: {owner, invalidHash, completed}, ticket, errors, ticketLoading, summitLoading, summit, summit:{order_extra_questions}, summits} = this.props;
       let now = summit.timestamp;
       let {tempTicket} = this.state;
       
       let loading = ticketLoading && summitLoading;
 
-      if(!loading && !owner && invalidHash) {
+      if(!loading && !owner && !invalidHash) {
         //history.push('/a/member/tickets/');
         return (
           <div>
             Ticket not found
           </div>
         )
-      } else if (!loading && !invalidHash) {
+      } else if (!loading && invalidHash) {
         return (
           <div className="invalid-hash">
             <h4>
@@ -203,15 +203,24 @@ class GuestsLayout extends React.Component {
               {T.translate("guests.invalid_text_1")}
             </p>
             <button className="btn btn-primary" onClick={() => this.handleHashRegenerate()}>{T.translate("guests.invalid_button")}</button>
-            <br/><br/>
-            <p>
-              {T.translate("guests.invalid_text_2")} <b>expiry time</b> {T.translate("guests.invalid_text_3")}
-            </p>
+            <br/><br/>            
             <p>
               {T.translate("guests.invalid_contact")} <a href={`mailto:${window.SUPPORT_EMAIL}`}>{window.SUPPORT_EMAIL}</a>.
             </p>
           </div>
         )
+      } else if (completed) {
+        return (
+          <div className="guest-complete">
+
+            <h5>{T.translate("guests.completed_text_1")}</h5>
+
+            <button className="btn btn-primary" onClick={() => this.handleTicketDownload()}>{T.translate("guests.completed_button")} {summit.name}</button>
+
+            <h5>{T.translate("guests.completed_text_2")}</h5>
+
+          </div>
+        );
       }
       else {
         return (
@@ -253,6 +262,7 @@ class GuestsLayout extends React.Component {
 const mapStateToProps = ({ ticketState, summitState }) => ({
   ticketLoading: ticketState.loading,
   ticket: ticketState.selectedTicket,
+  guestCompleted: ticketState.selectedTicket.completed,
   errors: ticketState.errors,
   summit: summitState.selectedSummit,
   summits: summitState.summits,

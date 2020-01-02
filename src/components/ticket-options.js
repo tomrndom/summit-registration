@@ -96,7 +96,6 @@ class TicketOptions extends React.Component {
                       <p className="role-badge">{this.handleTicketRole(ticket.badge)}</p>
                     </div>
                   </div>
-                  <hr />
                 </React.Fragment>
                 }
                 {!guest && summit.start_date > now && 
@@ -106,13 +105,13 @@ class TicketOptions extends React.Component {
                     </div>
                 </div>
                 }
-                {guest && 
+                {/* {guest && 
                 <div className="row">
                     <div className="col-md-12">
                         <a onClick={this.props.downloadTicket}>{T.translate("order_info.download")}<br/></a>                        
                     </div>
                 </div>
-                }
+                } */}
             </div>
         );
     }

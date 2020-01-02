@@ -47,6 +47,7 @@ export const REFUND_TICKET            = 'REFUND_TICKET';
 export const GET_TICKET_BY_HASH       = 'GET_TICKET_BY_HASH';
 export const GET_TICKET_BY_HASH_ERROR = 'GET_TICKET_BY_HASH_ERROR';
 export const ASSIGN_TICKET_BY_HASH    = 'ASSIGN_TICKET_BY_HASH';
+export const GUEST_TICKET_COMPLETED   = 'GUEST_TICKET_COMPLETED';
 export const REGENERATE_TICKET_HASH   = 'REGENERATE_TICKET_HASH';
 export const GET_TICKET_PDF_BY_HASH   = 'GET_TICKET_PDF_BY_HASH';
 export const RESEND_NOTIFICATION      = 'RESEND_NOTIFICATION';
@@ -407,6 +408,7 @@ export const assignTicketByHash = (attendee_first_name, attendee_last_name, atte
     normalizedEntity,
     authErrorHandler
   )(params)(dispatch).then(() => {
+    dispatch(createAction(GUEST_TICKET_COMPLETED)({}));
     dispatch(stopLoading());
   }).catch(e => {
     dispatch(stopLoading());
@@ -423,6 +425,7 @@ export const regenerateTicketHash = (formerHash) => (dispatch, getState) => {
       `${window.API_BASE_URL}/api/public/v1/summits/all/orders/orders/all/tickets/${formerHash}/regenerate`,
       authErrorHandler
   )()(dispatch).then(() => {
+      Swal.fire("SUCCESS", T.translate("guests.hash_regenerated"), "success");
       dispatch(stopLoading());
     }
   ).catch(e => {

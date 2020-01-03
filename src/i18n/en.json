@@ -107,6 +107,7 @@
     "save"                : "Save"
   },
   "orders": {
+    "purchased"           : "Purchased on",
     "empty"               : "There are no active orders so far"
   },
   "no-summit": {    

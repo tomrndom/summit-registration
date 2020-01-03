@@ -39,9 +39,9 @@
     "no_tickets"            : "No tickets for sale!"
   },
   "step_two": {
-    "basic_info"        : "Basic Information",
+    "basic_info"        : "Purchaser Information",
     "required"          : "Required fields",
-    "have_account"      : "Do you have an FNid account?",
+    "have_account"      : "Do you have an fnID account?",
     "sign_in"           : "Sign in",
     "sign_in_account"   : "to autopopulate this info and manage this order.",
     "first_name"        : "First Name",
@@ -107,6 +107,7 @@
     "save"                : "Save"
   },
   "orders": {
+    "purchased"           : "Purchased on",
     "empty"               : "There are no active orders so far"
   },
   "no-summit": {    

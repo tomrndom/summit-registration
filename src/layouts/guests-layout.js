@@ -196,16 +196,16 @@ class GuestsLayout extends React.Component {
       } else if (!loading && invalidHash) {
         return (
           <div className="invalid-hash">
-            <h4>
+            <h3>
               {T.translate("guests.invalid_thanks")}
-            </h4>
-            <p>
+            </h3>
+            <h4>
               {T.translate("guests.invalid_text_1")}
-            </p>
+            </h4>
             <button className="btn btn-primary" onClick={() => this.handleHashRegenerate()}>{T.translate("guests.invalid_button")}</button>
             <br/><br/>            
             <p>
-              {T.translate("guests.invalid_contact")} <a href={`mailto:${window.SUPPORT_EMAIL}`}>{window.SUPPORT_EMAIL}</a>.
+              {T.translate("guests.invalid_contact")} <br/><u><a href={`mailto:${window.SUPPORT_EMAIL}`}>{window.SUPPORT_EMAIL}</a></u>.
             </p>
           </div>
         )
@@ -213,11 +213,11 @@ class GuestsLayout extends React.Component {
         return (
           <div className="guest-complete">
 
-            <h5>{T.translate("guests.completed_text_1")}</h5>
+            <h3>{T.translate("guests.completed_text_1")}</h3>
 
             <button className="btn btn-primary" onClick={() => this.handleTicketDownload()}>{T.translate("guests.completed_button")} {summit.name}</button>
 
-            <h5>{T.translate("guests.completed_text_2")}</h5>
+            <p>{T.translate("guests.completed_text_2")}</p>
 
           </div>
         );

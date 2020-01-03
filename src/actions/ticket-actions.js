@@ -380,7 +380,7 @@ export const getTicketByHash = (hash) => (dispatch, getState) => {
       null,
       createAction(GET_TICKET_BY_HASH),
       `${window.API_BASE_URL}/api/public/v1/summits/all/orders/orders/all/tickets/${hash}`,
-      authErrorHandler
+      null,
   )(params)(dispatch).then((ticket) => {     
       dispatch(selectSummitById(ticket.response.owner.summit_id, true));      
     }).catch((err) => {      

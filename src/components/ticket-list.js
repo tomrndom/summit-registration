@@ -141,7 +141,7 @@ class TicketList extends React.Component {
     handleTicketLocation(ticket) {
       let {summits} = this.props;
       let summit = summits.find(s => s.id === ticket.owner.summit_id);
-      let location = summit.locations.filter(l => l.class_name === "SummitVenue").find(l => l.is_main === true);      
+      let location = summit.locations.filter(l => l.class_name === "SummitVenue").find(l => l.is_main === true);
       if(location) {
         return `${location.city}, ${location.country}`;
       } else {
@@ -164,6 +164,9 @@ class TicketList extends React.Component {
       if(dateRange.length > 1) {     
         let startDate = getFormatedDate(dateRange[0], summit.time_zone_id);
         let endDate = getFormatedDate(dateRange[dateRange.length-1], summit.time_zone_id);
+        let startMonth = startDate.split(' ')[0];
+        let endMonth = endDate.split(' ')[0];
+        if(startMonth === endMonth) endDate = endDate.substr(endDate.indexOf(" ") + 1);
         let startYear = startDate.substring(startDate.length, startDate.length-4);
         let endYear = endDate.substring(endDate.length, endDate.length-4);
         if (startYear === endYear) startDate = startDate.substring(0, startDate.length-4);   
@@ -233,12 +236,12 @@ class TicketList extends React.Component {
                           <i className={`fa fa-2x ${this.handleTicketStatus(t).icon} ${this.handleTicketStatus(t).class}`}></i>                             
                       </div>
                       <div className="col-sm-5">
-                          <h4>{this.handleEventName(t)}</h4>
+                          <h4>{this.handleEventName(t)} <br/> {this.handleTicketDate(t)}</h4>
                           <p className={`status ${this.handleTicketStatus(t).class}`}>{this.handleTicketStatus(t).text}</p>
                       </div>                      
                       <div className="col-sm-4">
                           <h5>{this.handleTicketName(t)}</h5>
-                          <p>{this.handleTicketDate(t)} <br /> {this.handleTicketLocation(t)} </p>
+                          <p>{this.handleTicketLocation(t)} </p>
                       </div>
                       {(t.status === "Cancelled" || t.status === "RefundRequested" || t.status === "Refunded") ?
                         <div className="arrow col-sm-2"></div>

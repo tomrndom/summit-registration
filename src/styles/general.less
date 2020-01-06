@@ -168,6 +168,14 @@ input {
   }
 }
 
+@media not all and (min-resolution:.001dpcm) {
+   @supports (-webkit-appearance:none) and (stroke-color:transparent) {
+      .header-title--no-logo { 
+        margin-top: 10px; 
+      } 
+  } 
+}
+
 .header-title.center {
   text-align: center;
   font-size: 34px;
@@ -707,13 +715,4 @@ input {
   .header-title {
     padding-left: 30px;
   }
-}
-
-
-_::-webkit-full-page-media, _:future, :root .header-title {      
-  .summit-info {
-    .summit-text--no-logo {
-      margin-top: 10px;
-    }
-  }        
 }

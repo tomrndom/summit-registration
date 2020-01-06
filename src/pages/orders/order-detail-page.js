@@ -46,6 +46,7 @@ class OrderDetailPage extends React.Component {
     this.handleTicketCancel = this.handleTicketCancel.bind(this);    
     this.handleTicketRole = this.handleTicketRole.bind(this);
     this.handleReassignDate = this.handleReassignDate.bind(this);
+    this.handlePastSummit = this.handlePastSummit.bind(this);
 
   }
 
@@ -99,7 +100,13 @@ class OrderDetailPage extends React.Component {
         orderClass: 'cancel',
         class: 'order-cancel'
       },
-    ];
+      { 
+        text: '',
+        icon: '',
+        orderClass: '',
+        class: ''
+      },
+    ];    
     if(ticket.status === "Cancelled") {
       return status[3];
     }else if(ticket.status === "RefundRequested") {
@@ -108,24 +115,14 @@ class OrderDetailPage extends React.Component {
       return status[5];
     } else if(ticket.owner_id === 0) {
       return status[0];
+    } else if(this.handlePastSummit()) {
+      return status[6];
     } else if (!ticket.owner.first_name || !ticket.owner.surname) {
       return status[1];
-    } else if (ticket.owner.first_name && ticket.owner.surname && (summitExtraQuestions.length === 0 && ticket.owner.extra_questions.length === 0)) {
+    } else if (ticket.owner && ticket.owner.status === "Complete") {
       return status[2];
-    } else if (ticket.owner.first_name && ticket.owner.surname && (summitExtraQuestions.length > 0 && ticket.owner.extra_questions.length === 0)) {
+    } else if (ticket.owner && ticket.owner.status === "Incomplete") {
       return status[1];
-    } else if (ticket.owner.extra_questions.length > 0) {            
-      let incomplete = false;
-      ticket.owner.extra_questions.map((eq) => {
-        let mandatory = summitExtraQuestions.find(question => question.id === eq.question_id) 
-                        && summitExtraQuestions.find(question => question.id === eq.question_id).mandatory ? true : false;
-        incomplete = mandatory && eq.value == '' ? true : false;
-      });
-      if(!incomplete && ticket.owner.first_name && ticket.owner.surname) {
-        return status[2];
-      } else {
-        return status[1];
-      }
     }
   }
 
@@ -166,6 +163,13 @@ class OrderDetailPage extends React.Component {
 
   handleResendNotification() {
     this.props.resendNotification();
+  }
+
+  handlePastSummit() {
+    let {summit} = this.props;    
+    let reassign_date = summit.reassign_ticket_till_date < summit.end_date ? summit.reassign_ticket_till_date : summit.end_date;
+    let now = summit.timestamp;
+    return now > reassign_date ? true : false;
   }
 
   handleChange(ev) {

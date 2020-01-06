@@ -33,6 +33,7 @@ class OrderList extends React.Component {
         this.getSummitName = this.getSummitName.bind(this);
         this.handleOrderStatus = this.handleOrderStatus.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);
+        this.handlePastSummit = this.handlePastSummit.bind(this);
 
     }
 
@@ -83,7 +84,6 @@ class OrderList extends React.Component {
     handleOrderStatus(order){
 
       let { summits } = this.props;
-      let summitExtraQuestions = summits.find(s => s.id === order.summit_id).order_extra_questions;
 
       const status = [
         { 
@@ -133,39 +133,33 @@ class OrderList extends React.Component {
           icon: 'fa-fw',
           orderClass: 'pending',
           class: 'order-pending'
-        },      
+        },
+        {
+          text: '',
+          icon: '',
+          orderClass: '',
+          class: '',
+        }
       ];
       switch(order.status) {
         case "Paid":
-          let incomplete = false;
-          order.tickets.map(t => {
-            if(t.status !== "RefundRequested" &&
-            t.status !== "Refunded" &&
-            t.status !== "Cancelled"){
-              if(t.owner && t.owner.first_name && t.owner.surname && (summitExtraQuestions.length > 0 && t.owner.extra_questions.length > 0)){
-                t.owner.extra_questions.map(eq => {
-                  let mandatory = summitExtraQuestions.find(question => question.id === eq.question_id) 
-                                  && summitExtraQuestions.find(question => question.id === eq.question_id).mandatory ? true : false;
-                  if(incomplete) {
-                    return status[1];
-                  } else {
-                    if(!eq.value && mandatory){
-                      incomplete = true;
-                    }
-                  }
-                });
-              } else if(t.owner && t.owner.first_name && t.owner.surname && summitExtraQuestions.length === 0) {
-                incomplete = false;
-              } else {
+          if(this.handlePastSummit(order)) {
+            return status[8]
+          } else {          
+            let incomplete = false;
+            order.tickets.map(t => {
+              if (!t.owner) {
+                incomplete = true;
+              } else if(t.owner && t.owner.status === "Incomplete") {
                 incomplete = true;
               }
-            }
-          });
-          if(incomplete === false) {
-            return status[0];
-          } else {
-            return status[1];
-          };
+            });
+            if(incomplete === false) {
+              return status[0];
+            } else {
+              return status[1];
+            };
+          }
         case "Reserved":
           return status[2];
         case "Cancelled":
@@ -190,6 +184,14 @@ class OrderList extends React.Component {
       const ConfirmedStatus       = 'Confirmed';
       const PaidStatus            = 'Paid';
       const ErrorStatus           = 'Error';
+    }
+
+    handlePastSummit(order) {
+      let {summits} = this.props;
+      let summit = summits.find(s => s.id === order.summit_id);
+      let reassign_date = summit.reassign_ticket_till_date < summit.end_date ? summit.reassign_ticket_till_date : summit.end_date;
+      let now = summit.timestamp;
+      return now > reassign_date ? true : false;
     }
 
     getSummitName(order) {
@@ -226,7 +228,7 @@ class OrderList extends React.Component {
 
     render() {
 
-      let { summits, currentPage, lastPage, loading, orders } = this.props;
+      let { currentPage, lastPage, loading, orders } = this.props;
 
       if (orders.length > 0 && !loading) {
           return (
@@ -240,7 +242,7 @@ class OrderList extends React.Component {
                                   <i className={`fa fa-2x ${this.handleOrderStatus(o).icon} ${this.handleOrderStatus(o).class}`}></i>                             
                               </div>
                               <div className="col-sm-5">
-                                  <h4>{this.getSummitName(o)} {this.getSummitDate(o)}</h4>
+                                  <h4>{this.getSummitName(o)} <br/> {this.getSummitDate(o)}</h4>
                                   <p className={`status ${this.handleOrderStatus(o).class}`}>{this.handleOrderStatus(o).text}</p>
                               </div>
                               <div className="col-sm-4">

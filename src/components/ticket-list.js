@@ -38,6 +38,7 @@ class TicketList extends React.Component {
         this.handleTicketDate = this.handleTicketDate.bind(this);        
         this.handleReassignDate = this.handleReassignDate.bind(this);
         this.handleTicketCancel = this.handleTicketCancel.bind(this);
+        this.handlePastSummit = this.handlePastSummit.bind(this);
         this.handlePageChange = this.handlePageChange.bind(this);
         
     }
@@ -89,6 +90,12 @@ class TicketList extends React.Component {
           orderClass: 'cancel',
           class: 'order-cancel'
         },
+        { 
+          text: '',
+          icon: '',
+          orderClass: '',
+          class: ''
+        },
       ];
       if(ticket.status === "Cancelled") {
         return status[3];
@@ -99,18 +106,15 @@ class TicketList extends React.Component {
         return status[5];
       } else if(ticket.owner_id === 0) {
         return status[0];
+      } else if(this.handlePastSummit(ticket)) {
+        return status[6];
       } else if (!ticket.owner.first_name || !ticket.owner.surname) {
         return status[1];
-      } else if (ticket.owner.first_name && ticket.owner.surname && ticket.owner.extra_questions.length === 0) {
+      } else if (ticket.owner && ticket.owner.status === "Complete") {
         return status[2];
-      } else if (ticket.owner.extra_questions.length) {
-        let incomplete = ticket.owner.extra_questions.filter((q) => q.value == '');
-        if(incomplete.length === 0 && ticket.owner.first_name && ticket.owner.surname) {
-          return status[2];
-        } else {
-          return status[1];
-        }
-      }
+      } else if (ticket.owner && ticket.owner.status === "Incomplete") {
+        return status[1];
+      };
     }
 
     handleTicketDownload() {    
@@ -184,6 +188,12 @@ class TicketList extends React.Component {
       return event;
     }
 
+    handlePastSummit(ticket) {
+      let {summits, now} = this.props;      
+      let summit = summits.find(s => s.id === ticket.order.summit_id);
+      let reassign_date = summit.reassign_ticket_till_date < summit.end_date ? summit.reassign_ticket_till_date : summit.end_date;      
+      return now > reassign_date ? true : false;
+    }
 
     handleTicketCancel() {
       let {selectedTicket, refundTicket} = this.props;      

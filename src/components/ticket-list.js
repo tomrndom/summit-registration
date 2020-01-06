@@ -241,7 +241,7 @@ class TicketList extends React.Component {
                       </div>                      
                       <div className="col-sm-4">
                           <h5>{this.handleTicketName(t)}</h5>
-                          <p>{this.handleTicketLocation(t)} </p>
+                          {/* <p>{this.handleTicketLocation(t)} </p> */}
                       </div>
                       {(t.status === "Cancelled" || t.status === "RefundRequested" || t.status === "Refunded") ?
                         <div className="arrow col-sm-2"></div>

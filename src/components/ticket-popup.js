@@ -351,7 +351,7 @@ class TicketPopup extends React.Component {
                           <Tab>{T.translate("ticket_popup.tab_reassign")}</Tab>
                         }
                         {status.text !== 'UNASSIGNED' && 
-                          (!fromTicketList && member.email !== owner.email) && 
+                          (!fromTicketList && member.email !== owner.email && now < reassign_date) && 
                           <Tab>{T.translate("ticket_popup.tab_notify")}</Tab>
                         }
                     </TabList>
@@ -444,7 +444,7 @@ class TicketPopup extends React.Component {
                         </div>
                       </TabPanel>
                     }
-                    {status.text !== 'UNASSIGNED' && (!fromTicketList && member.email !== owner.email) &&
+                    {status.text !== 'UNASSIGNED' && (!fromTicketList && member.email !== owner.email && now < reassign_date) &&
                       <TabPanel ref={this.popUpPanelRef} className="popup-panel popup-panel--notify">
                         <div className="popup-scroll">
                           <div className="ticket-notify-form">

@@ -75,43 +75,50 @@ export default class QuestionAnswersInput extends React.Component {
 
         switch(question.type) {
             case 'Text':
-                return (
-                  <React.Fragment>
-                    <div className="row field-wrapper">
-                        <div className="col-sm-4"> {question.label} {!readOnly && question.mandatory ? '*' : ''} </div>
-                        <div className="col-sm-8">
-                          {readOnly ? 
-                            <span>{answerValue}</span>
-                            :
-                            <Input
-                                id={question.id}
-                                value={answerValue}
-                                onChange={this.handleChange}
-                                placeholder={question.placeholder}
-                                className="form-control"
-                            />
-                          }                            
-                        </div>                        
-                    </div>
-                    <div className="field-wrapper-mobile">
-                    <div> {question.label} {!readOnly && question.mandatory ? '*' : ''}</div>
-                        <div>
-                          {readOnly ? 
-                            <span>{answerValue}</span>
-                            :
-                            <Input
-                                id={question.id}
-                                value={answerValue}
-                                onChange={this.handleChange}
-                                placeholder={question.placeholder}
-                                className="form-control"
-                            />
-                          }                            
-                        </div>                        
-                    </div>
-                  </React.Fragment>
-                );
+                if(readOnly && !answerValue) {
+                  return null;
+                } else {
+                  return (
+                    <React.Fragment>
+                      <div className="row field-wrapper">
+                          <div className="col-sm-4"> {question.label} {!readOnly && question.mandatory ? '*' : ''} </div>
+                          <div className="col-sm-8">
+                            {readOnly ? 
+                              <span>{answerValue}</span>
+                              :
+                              <Input
+                                  id={question.id}
+                                  value={answerValue}
+                                  onChange={this.handleChange}
+                                  placeholder={question.placeholder}
+                                  className="form-control"
+                              />
+                            }                            
+                          </div>                        
+                      </div>
+                      <div className="field-wrapper-mobile">
+                      <div> {question.label} {!readOnly && question.mandatory ? '*' : ''}</div>
+                          <div>
+                            {readOnly ? 
+                              <span>{answerValue}</span>
+                              :
+                              <Input
+                                  id={question.id}
+                                  value={answerValue}
+                                  onChange={this.handleChange}
+                                  placeholder={question.placeholder}
+                                  className="form-control"
+                              />
+                            }
+                          </div>
+                      </div>
+                    </React.Fragment>
+                  );
+                }                
             case 'TextArea':
+              if(readOnly && !answerValue) {
+                return null;
+              } else {
                 return (
                   <React.Fragment>
                     <div className='row field-wrapper--textarea'>
@@ -150,7 +157,11 @@ export default class QuestionAnswersInput extends React.Component {
                     </div>
                   </React.Fragment>
                 );
+              }
             case 'CheckBox':
+              if(readOnly && !answerValue) {
+                return null;
+              } else {
                 if(readOnly) {
                   return (
                     <React.Fragment>
@@ -178,8 +189,12 @@ export default class QuestionAnswersInput extends React.Component {
                         </label>
                     </div>
                   );
-                }                                
+                }           
+              }
             case 'ComboBox':
+              if(readOnly && !answerValue) {
+                return null;
+              } else {
                 let value = answerValue ? questionValues.find(val => val.id == parseInt(answerValue)) : null;
                 questionValues = questionValues.map(val => ({...val, value: val.id}));
                 if(readOnly) {
@@ -223,8 +238,11 @@ export default class QuestionAnswersInput extends React.Component {
                     </React.Fragment>
                   );
                 }
-                
+              }
             case 'CheckBoxList':
+              if(readOnly && !answerValue) {
+                return null;
+              } else {
                 questionValues = questionValues.map(val => ({...val, value: val.id}));
                 answerValue = answerValue ? answerValue.split(',').map(ansVal => parseInt(ansVal)) : [];                
                 if(readOnly) {
@@ -280,7 +298,11 @@ export default class QuestionAnswersInput extends React.Component {
                     </React.Fragment>
                   );
                 }
+              }
             case 'RadioButtonList':
+              if(readOnly && !answerValue) {
+                return null;
+              } else {
                 questionValues = questionValues.map(val => ({...val, value: val.id}));
                 if(readOnly){
                   return(
@@ -324,8 +346,8 @@ export default class QuestionAnswersInput extends React.Component {
                       </div>
                   );
                 }
+              }
         }
-
     }
 
     render() {

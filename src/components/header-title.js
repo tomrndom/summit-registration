@@ -37,9 +37,13 @@ class HeaderTitle extends React.Component {
         if(dateRange.length > 1) {
           let startDate = getFormatedDate(dateRange[0], summit.time_zone_id);
           let endDate = getFormatedDate(dateRange[dateRange.length-1], summit.time_zone_id);
+          let startMonth = startDate.split(' ')[0];
+          let endMonth = endDate.split(' ')[0];
+          if(startMonth === endMonth) endDate = endDate.substr(endDate.indexOf(" ") + 1);
           let startYear = startDate.substring(startDate.length, startDate.length-4);
           let endYear = endDate.substring(endDate.length, endDate.length-4);
-          if (startYear === endYear) startDate = startDate.substring(0, startDate.length-4);        
+          if (startYear === endYear) startDate = startDate.substring(0, startDate.length-4);
+          endDate = endDate.substring(0, endDate.length-5) + ', ' + endDate.substring(endDate.length-4);
           summitDate = `${startDate} - ${endDate}`;
         } else {
           summitDate = getFormatedDate(summit.start_date, summit.time_zone_id);        

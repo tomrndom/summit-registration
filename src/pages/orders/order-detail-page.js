@@ -92,18 +92,18 @@ class OrderDetailPage extends React.Component {
         text: 'REFUND REQUESTED',
         icon: 'fa-fw',
         orderClass: 'cancel',
-        class: 'order-cancel'
+        class: 'ticket-cancel'
       },
       { 
         text: 'REFUNDED',
         icon: 'fa-fw',
         orderClass: 'cancel',
-        class: 'order-cancel'
+        class: 'ticket-cancel'
       },
       { 
         text: '',
-        icon: '',
-        orderClass: '',
+        icon: 'fa-fw',
+        orderClass: 'past',
         class: ''
       },
     ];    

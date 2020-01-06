@@ -136,9 +136,9 @@ class OrderList extends React.Component {
         },
         {
           text: '',
-          icon: '',
-          orderClass: '',
-          class: '',
+          icon: 'fa-fw',
+          orderClass: 'past',
+          class: ''
         }
       ];
       switch(order.status) {

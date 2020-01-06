@@ -16,7 +16,9 @@
     "save_and_continue"  : "Save and Continue",
     "back"               : "Back",
     "pay_now"            : "Pay Now",
-    "confirm"            : "Confirm"
+    "confirm"            : "Confirm",
+    "yes"                : "Yes",
+    "no"                 : "No"
   },
   "order_summary": {
     "order_summary"   : "Order Summary",

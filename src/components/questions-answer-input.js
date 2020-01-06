@@ -168,13 +168,13 @@ export default class QuestionAnswersInput extends React.Component {
                       <div className="row field-wrapper">
                           <div className="col-sm-4"> {question.label} </div>
                           <div className="col-sm-8">
-                              <span>{answerValue}</span>                                                     
+                              <span>{answerValue === 'true' ? T.translate("general.yes") : T.translate("general.no")}</span>                                                     
                           </div>                        
                       </div>
                       <div className="field-wrapper-mobile">
                         <div> {question.label} </div>
                         <div>
-                            <span>{answerValue}</span>                                                     
+                            <span>{answerValue === 'true' ? T.translate("general.yes") : T.translate("general.no")}</span>                                                     
                         </div>                        
                     </div>
                     </React.Fragment>
